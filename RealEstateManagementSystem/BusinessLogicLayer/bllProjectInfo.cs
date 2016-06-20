@@ -16,6 +16,8 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         private dalProjectInfo dLayer = new dalProjectInfo();
 
         #region Properties
+
+        #region Project Properties
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
         public string ProjectName_InBangla { get; set; }
@@ -44,11 +46,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         public bool IsEstimatedHandoverDateSet { get; set; }
 
-        public DateTime HandoverDate { get; set; }
+        public DateTime ActualHandoverDate { get; set; }
         public bool IsHandedOver { get; set; }
 
-        public int ConstructionDuration { get; set; }
-        public int ConstructionGracePeriod { get; set; }
+        public decimal ConstructionDuration { get; set; }
+        public decimal ConstructionGracePeriod { get; set; }
         public decimal LandArea { get; set; }
         public string Remarks { get; set; }
         public int ProjectCode { get; set; }
@@ -82,6 +84,22 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         public bool IsCancelledProject { get; set; }
         public string CancelledProject { get; set; }
+        #endregion
+
+        #region Building Properties
+        public int BuildingId { get; set; }
+        public int BuildingNumber { get; set; }
+        public string BuildingName { get; set; }
+        public decimal CountOfBasements { get; set; }
+        public decimal CountOfFloors { get; set; }
+        public string FloorInformation { get; set; }
+        #endregion
+
+        #region Building Specification
+        public int SpecificationTypeId { get; set; }
+        public string SpecificationType { get; set; }
+        public string SpecificationDetails { get; set; }
+        #endregion
 
         #endregion
 
@@ -113,7 +131,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         internal void PopulateLocationDetails(ListView lstLocationDetails, string districtName)
         {
-            try { clsCommonFunctions.PopulateListViewFromDataTable(dataTable: dLayer.PopulateLocationDetails(districtName), lView: lstLocationDetails, alternateColor: Color.OldLace); }
+            try { clsCommonFunctions.PopulateListViewFromDataTable(dataTable: dLayer.PopulateLocationDetails(districtName), lView: lstLocationDetails); }
             catch (Exception ex) { throw ex; }
         }
 
@@ -220,6 +238,12 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             catch (Exception ex) { throw ex; }
         }
 
+        internal void ManipulateProjectInfo()
+        {
+            try { dLayer.ManipulateProjectInfo(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
         internal void PopulateSignatoryCombo(ComboBox cmbSignatory)
         {
             try
@@ -236,6 +260,36 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         internal void GetProjectDetails()
         {
             try { dLayer.GetProjectDetails(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void ManipulateBuildingCount(int countOfBuilding)
+        {
+            try { dLayer.ManipulateBuildingCount(this.ProjectId, countOfBuilding); }
+            catch (Exception ex){ throw ex; }
+        }
+
+        internal void GetBuildingDetails()
+        {
+            try { dLayer.GetBuildingDetails(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void ManipulateBuildingData()
+        {
+            try { dLayer.ManipulateBuildingData(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void ManipulateProjectSpecification()
+        {
+            try { dLayer.ManipulateProjectSpecification(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void GetProjectSpecificationDetails()
+        {
+            try { dLayer.GetProjectSpecificationDetails(this); }
             catch (Exception ex) { throw ex; }
         }
     }

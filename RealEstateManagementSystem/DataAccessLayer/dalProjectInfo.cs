@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using RealEstateManagementSystem.Utilities;
+using RealEstateManagementSystem.BusinessLogicLayer;
 
 namespace RealEstateManagementSystem.DataAccessLayer
 {
@@ -89,7 +90,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     while (dr.Read())
                     {
                         b.ProjectLocation = dr["ProjectLocation"].ToString();
-                        b.ProjectCode = Convert.ToInt32(dr["ProjectCode"].ToString());
+                        b.ProjectCode = dr["ProjectCode"] != DBNull.Value ? Convert.ToInt32(dr["ProjectCode"].ToString()) : 0;
 
                         b.ProjectName = dr["ProjectName"].ToString();
                         b.ProjectName_InBangla = dr["ProjectName_Bangla"].ToString();
@@ -101,8 +102,8 @@ namespace RealEstateManagementSystem.DataAccessLayer
 
                         b.PlotTakeOverDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["PlotTakeOverDate"].ToString()));
                         b.IsPlotTakenOver = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["PlotTakeOverDate"].ToString()));
-                        b.ConstructionDuration = Convert.ToInt32(dr["ConstructionDuration"].ToString());
-                        b.ConstructionGracePeriod = Convert.ToInt32(dr["ConstructionGracePeriod"].ToString());
+                        b.ConstructionDuration = dr["ConstructionDuration"] != DBNull.Value ? Convert.ToInt32(dr["ConstructionDuration"].ToString()) : 0;
+                        b.ConstructionGracePeriod = dr["ConstructionGracePeriod"] != DBNull.Value ? Convert.ToInt32(dr["ConstructionGracePeriod"].ToString()) : 0;
 
                         b.ConstructionStartedOn = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["StartedOn"].ToString()));
                         b.IsConstructionStarted = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["StartedOn"].ToString()));
@@ -113,12 +114,12 @@ namespace RealEstateManagementSystem.DataAccessLayer
                         b.EstimatedHandoverDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["Completion"].ToString()));
                         b.IsEstimatedHandoverDateSet = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["Completion"].ToString()));
 
-                        b.HandoverDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["Handover"].ToString()));
+                        b.ActualHandoverDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["Handover"].ToString()));
                         b.IsHandedOver = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["Handover"].ToString()));
 
                         b.ProjectType = dr["ProjectType"].ToString();
                         b.LandType = dr["LandType"].ToString();
-                        b.LandArea = Convert.ToDecimal(dr["Area"].ToString());
+                        b.LandArea = dr["Area"] != DBNull.Value ? Convert.ToDecimal(dr["Area"].ToString()) : 0;
 
                         b.GeoLocation = dr["GeoLocation"].ToString();
 
@@ -134,12 +135,8 @@ namespace RealEstateManagementSystem.DataAccessLayer
                         b.ProjectSignatory = dr["Name"].ToString();
 
                         b.IsAvailableInDB = Convert.ToBoolean(dr["EntryAvailable"].ToString() == "1" ? true : false);
-
-
                         b.IsPilingNeeded = Convert.ToBoolean(dr["Pile"].ToString() == "1" ? true : false);
-
                         b.IsVisibleInWeb = Convert.ToBoolean(dr["ShowInWeb"].ToString() == "1" ? true : false);
-
                         b.IsCancelledProject = Convert.ToBoolean(dr["IsCanceledProject"].ToString() == "1" ? true : false);
 
                     }
@@ -170,6 +167,157 @@ namespace RealEstateManagementSystem.DataAccessLayer
             }
         }
 
+        internal void ManipulateProjectInfo(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "prcManipulateProjectInfo";
+                cmd.Parameters.AddWithValue("@projectId", b.ProjectId);
+                cmd.Parameters.AddWithValue("@projectName", b.ProjectName);
+                cmd.Parameters.AddWithValue("@projectName_Bangla", b.ProjectName_InBangla);
+                cmd.Parameters.AddWithValue("@address", b.ProjectAddress);
+                cmd.Parameters.AddWithValue("@address_Bangla", b.ProjectAddress_InBangla);
+                cmd.Parameters.AddWithValue("@locationId", b.LocationId);
+                cmd.Parameters.AddWithValue("@inChargeId", b.InChargeId);
+                cmd.Parameters.AddWithValue("@architectId", b.ArchitectId);
+                cmd.Parameters.AddWithValue("@structuralDesignerId", b.ProjectStructuralDesignerId);
+                cmd.Parameters.AddWithValue("@area", b.LandArea);
+                cmd.Parameters.AddWithValue("@remarks", b.Remarks);
+                cmd.Parameters.AddWithValue("@plotTakeover", b.IsPlotTakenOver == true ? b.PlotTakeOverDate : clsGlobalClass.defaultDate);
+                cmd.Parameters.AddWithValue("@agreementSign", b.IsAgreementSigned == true ? b.AgreementSignDate : clsGlobalClass.defaultDate);
+                cmd.Parameters.AddWithValue("@startedOn", b.IsConstructionStarted == true ? b.ConstructionStartedOn : clsGlobalClass.defaultDate);
+                cmd.Parameters.AddWithValue("@approvalDate", b.IsProjectApproved == true ? b.ApprovalDate : clsGlobalClass.defaultDate);
+                cmd.Parameters.AddWithValue("@constructionDuration", b.ConstructionDuration);
+                cmd.Parameters.AddWithValue("@constructionGracePeriod", b.ConstructionGracePeriod);
+                cmd.Parameters.AddWithValue("@saleStartedOn", b.IsSaleStarted == true ? b.SaleStartedOn : clsGlobalClass.defaultDate);
+                cmd.Parameters.AddWithValue("@approxCompletion", b.IsEstimatedHandoverDateSet == true ? b.EstimatedHandoverDate : clsGlobalClass.defaultDate);
+                cmd.Parameters.AddWithValue("@handoverDate", b.IsHandedOver == true ? b.ActualHandoverDate : clsGlobalClass.defaultDate);
+                cmd.Parameters.AddWithValue("@landTypeId", b.LandTypeId);
+                cmd.Parameters.AddWithValue("@projectCode", b.ProjectCode);
+                cmd.Parameters.AddWithValue("@entryAvailable", b.IsAvailableInDB == true ? 1 : 0);
+                cmd.Parameters.AddWithValue("@showInWeb", b.IsVisibleInWeb == true ? 1 : 0);
+                cmd.Parameters.AddWithValue("@geoLocation", b.GeoLocation);
+                cmd.Parameters.AddWithValue("@SignatoryId", b.ProjectSignatoryId);
+                cmd.Parameters.AddWithValue("@pile", b.IsPilingNeeded == true ? 1 : 0);
+                cmd.Parameters.AddWithValue("@isCancelledProject", b.IsCancelledProject == true ? 1 : 0);
+                cmd.Parameters.AddWithValue("@projectTypeId", b.ProjectTypeId);
+                cmd.Parameters.AddWithValue("@rajukNumber", b.ApprovalNumber);
+                cmd.Parameters.AddWithValue("@manipulatedBy", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@manipulatedFrom", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void GetProjectSpecificationDetails(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM ProjectSpecification WHERE ProjectId = @projectId AND SpecName = @specificationType";
+                cmd.Parameters.AddWithValue("@projectId", b.ProjectId);
+                cmd.Parameters.AddWithValue("@specificationType", b.SpecificationType);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        b.SpecificationType = dr["SpecName"].ToString();
+                        b.SpecificationDetails = dr["SpecDetails"].ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); dr.Close(); }
+        }
+
+        internal void ManipulateProjectSpecification(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateProjectSpecification";
+                cmd.Parameters.AddWithValue("@projectId", b.ProjectId);
+                cmd.Parameters.AddWithValue("@specificationTypeId", b.SpecificationTypeId);
+                cmd.Parameters.AddWithValue("@specificationDetails", b.SpecificationDetails);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void ManipulateBuildingData(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateBuildingData";
+                cmd.Parameters.AddWithValue("@buildingId", b.BuildingId);
+                cmd.Parameters.AddWithValue("@buildingName", b.BuildingName);
+                cmd.Parameters.AddWithValue("@countOfBasements", b.CountOfBasements);
+                cmd.Parameters.AddWithValue("@countOfFloors", b.CountOfFloors);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstationIp", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal void GetBuildingDetails(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM BuildingNumber WHERE BuildingID = @buildingId";
+                cmd.Parameters.AddWithValue("@buildingId", b.BuildingId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        b.BuildingName = dr["Name"].ToString();
+                        b.CountOfBasements = Convert.ToDecimal(dr["NumOfBasements"].ToString());
+                        b.CountOfFloors = Convert.ToDecimal(dr["NumOfFloors"].ToString());
+                        b.FloorInformation = dr["FloorInformation"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); dr.Close(); }
+        }
+
+        internal void ManipulateBuildingCount(int projectId, int countOfBuilding)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateBuildingCount";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                cmd.Parameters.AddWithValue("@countOfBuilding", countOfBuilding);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@manipulatedFrom", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
         internal DataTable GetListOfBuildingsInProject(int projectId)
         {
             SqlCommand cmd = new SqlCommand();
@@ -179,7 +327,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
             {
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT BuildingId ,BNumber, FloorInformation FROM BuildingNumber WHERE ProjectId=@projectId";
+                cmd.CommandText = "SELECT * FROM BuildingNumber WHERE ProjectId=@projectId";
                 cmd.Parameters.AddWithValue("@projectId", projectId);
                 da.SelectCommand = cmd;
                 da.Fill(dt);

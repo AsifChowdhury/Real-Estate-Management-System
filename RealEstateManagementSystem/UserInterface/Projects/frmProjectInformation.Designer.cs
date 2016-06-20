@@ -35,6 +35,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpProjectInfo = new System.Windows.Forms.TabPage();
+            this.txtLandArea = new System.Windows.Forms.TextBox();
+            this.txtConstructionGracePeriod = new System.Windows.Forms.TextBox();
+            this.txtConstructionDuration = new System.Windows.Forms.TextBox();
+            this.txtProjectCode = new System.Windows.Forms.TextBox();
             this.chkNeedPiling = new System.Windows.Forms.CheckBox();
             this.chkShowInWeb = new System.Windows.Forms.CheckBox();
             this.chkIsCancelled = new System.Windows.Forms.CheckBox();
@@ -42,8 +46,6 @@
             this.txtGeoLocation = new System.Windows.Forms.TextBox();
             this.btnRefresh_PI = new System.Windows.Forms.Button();
             this.btnSaveData = new System.Windows.Forms.Button();
-            this.nudGracePeriod = new System.Windows.Forms.NumericUpDown();
-            this.nudDuration = new System.Windows.Forms.NumericUpDown();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -61,8 +63,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.dtpAgreementDate = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
-            this.nudProjectCode = new System.Windows.Forms.NumericUpDown();
-            this.nudLandArea = new System.Windows.Forms.NumericUpDown();
             this.btnDefProjectLocation = new System.Windows.Forms.Button();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -96,19 +96,27 @@
             this.cmbLocation = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tpBuildingFloor = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.txtCountOfFloor = new System.Windows.Forms.TextBox();
+            this.txtCountOfBasement = new System.Windows.Forms.TextBox();
+            this.nudBuildingCount = new System.Windows.Forms.NumericUpDown();
+            this.label23 = new System.Windows.Forms.Label();
+            this.btnSaveBuildingList = new System.Windows.Forms.Button();
+            this.btnSaveBuidingData = new System.Windows.Forms.Button();
             this.label38 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label37 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtBuildingName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lstBuildingDetails = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpSpecification = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnResetSpec = new System.Windows.Forms.Button();
+            this.btnManipulateSpecification = new System.Windows.Forms.Button();
             this.lstProjectSpecifications = new System.Windows.Forms.ListView();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtSpecDetails = new System.Windows.Forms.TextBox();
             this.cmbProjectSpecificationType = new System.Windows.Forms.ComboBox();
             this.label40 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
@@ -117,13 +125,8 @@
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpProjectInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudGracePeriod)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDuration)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudProjectCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudLandArea)).BeginInit();
             this.tpBuildingFloor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBuildingCount)).BeginInit();
             this.tpSpecification.SuspendLayout();
             this.ssProjectInformation.SuspendLayout();
             this.SuspendLayout();
@@ -151,13 +154,16 @@
             this.btnProjectSummaryReport.TabIndex = 2;
             this.btnProjectSummaryReport.TabStop = false;
             this.btnProjectSummaryReport.UseVisualStyleBackColor = false;
+            this.btnProjectSummaryReport.Click += new System.EventHandler(this.btnProjectSummaryReport_Click);
             // 
             // cmbProjectName
             // 
+            this.cmbProjectName.ForeColor = System.Drawing.Color.Maroon;
             this.cmbProjectName.FormattingEnabled = true;
             this.cmbProjectName.Location = new System.Drawing.Point(116, 10);
             this.cmbProjectName.Name = "cmbProjectName";
             this.cmbProjectName.Size = new System.Drawing.Size(552, 22);
+            this.cmbProjectName.Sorted = true;
             this.cmbProjectName.TabIndex = 1;
             this.cmbProjectName.SelectionChangeCommitted += new System.EventHandler(this.cmbProjectName_SelectionChangeCommitted);
             // 
@@ -185,6 +191,10 @@
             // 
             this.tpProjectInfo.BackColor = System.Drawing.Color.Honeydew;
             this.tpProjectInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tpProjectInfo.Controls.Add(this.txtLandArea);
+            this.tpProjectInfo.Controls.Add(this.txtConstructionGracePeriod);
+            this.tpProjectInfo.Controls.Add(this.txtConstructionDuration);
+            this.tpProjectInfo.Controls.Add(this.txtProjectCode);
             this.tpProjectInfo.Controls.Add(this.chkNeedPiling);
             this.tpProjectInfo.Controls.Add(this.chkShowInWeb);
             this.tpProjectInfo.Controls.Add(this.chkIsCancelled);
@@ -192,8 +202,6 @@
             this.tpProjectInfo.Controls.Add(this.txtGeoLocation);
             this.tpProjectInfo.Controls.Add(this.btnRefresh_PI);
             this.tpProjectInfo.Controls.Add(this.btnSaveData);
-            this.tpProjectInfo.Controls.Add(this.nudGracePeriod);
-            this.tpProjectInfo.Controls.Add(this.nudDuration);
             this.tpProjectInfo.Controls.Add(this.label17);
             this.tpProjectInfo.Controls.Add(this.label16);
             this.tpProjectInfo.Controls.Add(this.label15);
@@ -211,8 +219,6 @@
             this.tpProjectInfo.Controls.Add(this.label9);
             this.tpProjectInfo.Controls.Add(this.dtpAgreementDate);
             this.tpProjectInfo.Controls.Add(this.label8);
-            this.tpProjectInfo.Controls.Add(this.nudProjectCode);
-            this.tpProjectInfo.Controls.Add(this.nudLandArea);
             this.tpProjectInfo.Controls.Add(this.btnDefProjectLocation);
             this.tpProjectInfo.Controls.Add(this.txtAddress);
             this.tpProjectInfo.Controls.Add(this.label19);
@@ -252,13 +258,53 @@
             this.tpProjectInfo.TabIndex = 0;
             this.tpProjectInfo.Text = "Project Information";
             // 
+            // txtLandArea
+            // 
+            this.txtLandArea.Location = new System.Drawing.Point(569, 233);
+            this.txtLandArea.Name = "txtLandArea";
+            this.txtLandArea.Size = new System.Drawing.Size(56, 22);
+            this.txtLandArea.TabIndex = 16;
+            this.txtLandArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtLandArea.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtLandArea.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
+            // 
+            // txtConstructionGracePeriod
+            // 
+            this.txtConstructionGracePeriod.Location = new System.Drawing.Point(576, 149);
+            this.txtConstructionGracePeriod.Name = "txtConstructionGracePeriod";
+            this.txtConstructionGracePeriod.Size = new System.Drawing.Size(56, 22);
+            this.txtConstructionGracePeriod.TabIndex = 12;
+            this.txtConstructionGracePeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtConstructionGracePeriod.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtConstructionGracePeriod.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
+            // 
+            // txtConstructionDuration
+            // 
+            this.txtConstructionDuration.Location = new System.Drawing.Point(503, 149);
+            this.txtConstructionDuration.Name = "txtConstructionDuration";
+            this.txtConstructionDuration.Size = new System.Drawing.Size(56, 22);
+            this.txtConstructionDuration.TabIndex = 11;
+            this.txtConstructionDuration.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtConstructionDuration.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtConstructionDuration.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
+            // 
+            // txtProjectCode
+            // 
+            this.txtProjectCode.Location = new System.Drawing.Point(631, 8);
+            this.txtProjectCode.Name = "txtProjectCode";
+            this.txtProjectCode.Size = new System.Drawing.Size(56, 22);
+            this.txtProjectCode.TabIndex = 1;
+            this.txtProjectCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtProjectCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtProjectCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
+            // 
             // chkNeedPiling
             // 
             this.chkNeedPiling.AutoSize = true;
             this.chkNeedPiling.Location = new System.Drawing.Point(263, 407);
             this.chkNeedPiling.Name = "chkNeedPiling";
             this.chkNeedPiling.Size = new System.Drawing.Size(110, 18);
-            this.chkNeedPiling.TabIndex = 31;
+            this.chkNeedPiling.TabIndex = 26;
             this.chkNeedPiling.Text = "Need Piling?";
             this.chkNeedPiling.UseVisualStyleBackColor = true;
             // 
@@ -268,7 +314,7 @@
             this.chkShowInWeb.Location = new System.Drawing.Point(117, 431);
             this.chkShowInWeb.Name = "chkShowInWeb";
             this.chkShowInWeb.Size = new System.Drawing.Size(110, 18);
-            this.chkShowInWeb.TabIndex = 31;
+            this.chkShowInWeb.TabIndex = 27;
             this.chkShowInWeb.Text = "Show in Web?";
             this.chkShowInWeb.UseVisualStyleBackColor = true;
             // 
@@ -278,7 +324,7 @@
             this.chkIsCancelled.Location = new System.Drawing.Point(263, 431);
             this.chkIsCancelled.Name = "chkIsCancelled";
             this.chkIsCancelled.Size = new System.Drawing.Size(173, 18);
-            this.chkIsCancelled.TabIndex = 31;
+            this.chkIsCancelled.TabIndex = 28;
             this.chkIsCancelled.Text = "Is Cancelled Project?";
             this.chkIsCancelled.UseVisualStyleBackColor = true;
             // 
@@ -288,7 +334,7 @@
             this.chkDetailsInDB.Location = new System.Drawing.Point(117, 407);
             this.chkDetailsInDB.Name = "chkDetailsInDB";
             this.chkDetailsInDB.Size = new System.Drawing.Size(124, 18);
-            this.chkDetailsInDB.TabIndex = 31;
+            this.chkDetailsInDB.TabIndex = 25;
             this.chkDetailsInDB.Text = "Details in DB?";
             this.chkDetailsInDB.UseVisualStyleBackColor = true;
             // 
@@ -298,7 +344,8 @@
             this.txtGeoLocation.Location = new System.Drawing.Point(112, 261);
             this.txtGeoLocation.Name = "txtGeoLocation";
             this.txtGeoLocation.Size = new System.Drawing.Size(324, 22);
-            this.txtGeoLocation.TabIndex = 0;
+            this.txtGeoLocation.TabIndex = 17;
+            this.txtGeoLocation.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
             // 
             // btnRefresh_PI
             // 
@@ -306,44 +353,27 @@
             this.btnRefresh_PI.FlatAppearance.BorderSize = 0;
             this.btnRefresh_PI.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh_PI.Image = global::RealEstateManagementSystem.Properties.Resources.refresh;
-            this.btnRefresh_PI.Location = new System.Drawing.Point(570, 401);
+            this.btnRefresh_PI.Location = new System.Drawing.Point(545, 401);
             this.btnRefresh_PI.Name = "btnRefresh_PI";
             this.btnRefresh_PI.Size = new System.Drawing.Size(34, 28);
             this.btnRefresh_PI.TabIndex = 30;
             this.btnRefresh_PI.TabStop = false;
             this.btnRefresh_PI.UseVisualStyleBackColor = true;
+            this.btnRefresh_PI.Click += new System.EventHandler(this.btnRefresh_PI_Click);
             // 
             // btnSaveData
             // 
             this.btnSaveData.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSaveData.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
-            this.btnSaveData.Location = new System.Drawing.Point(610, 401);
+            this.btnSaveData.Location = new System.Drawing.Point(585, 401);
             this.btnSaveData.Name = "btnSaveData";
-            this.btnSaveData.Size = new System.Drawing.Size(77, 48);
+            this.btnSaveData.Size = new System.Drawing.Size(102, 48);
             this.btnSaveData.TabIndex = 29;
-            this.btnSaveData.Text = "Insert";
+            this.btnSaveData.Text = "Save Data";
             this.btnSaveData.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnSaveData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnSaveData.UseVisualStyleBackColor = true;
             this.btnSaveData.Click += new System.EventHandler(this.btnSaveData_Click);
-            // 
-            // nudGracePeriod
-            // 
-            this.nudGracePeriod.Location = new System.Drawing.Point(585, 149);
-            this.nudGracePeriod.Name = "nudGracePeriod";
-            this.nudGracePeriod.Size = new System.Drawing.Size(49, 22);
-            this.nudGracePeriod.TabIndex = 12;
-            this.nudGracePeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudGracePeriod.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            // 
-            // nudDuration
-            // 
-            this.nudDuration.Location = new System.Drawing.Point(510, 149);
-            this.nudDuration.Name = "nudDuration";
-            this.nudDuration.Size = new System.Drawing.Size(49, 22);
-            this.nudDuration.TabIndex = 11;
-            this.nudDuration.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudDuration.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
             // 
             // label17
             // 
@@ -442,7 +472,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(442, 292);
+            this.label26.Location = new System.Drawing.Point(442, 293);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(105, 14);
             this.label26.TabIndex = 6;
@@ -505,30 +535,6 @@
             this.label8.TabIndex = 6;
             this.label8.Text = "Agreement Signed On:";
             // 
-            // nudProjectCode
-            // 
-            this.nudProjectCode.Location = new System.Drawing.Point(629, 8);
-            this.nudProjectCode.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nudProjectCode.Name = "nudProjectCode";
-            this.nudProjectCode.Size = new System.Drawing.Size(58, 22);
-            this.nudProjectCode.TabIndex = 1;
-            this.nudProjectCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudProjectCode.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            // 
-            // nudLandArea
-            // 
-            this.nudLandArea.DecimalPlaces = 2;
-            this.nudLandArea.Location = new System.Drawing.Point(568, 233);
-            this.nudLandArea.Name = "nudLandArea";
-            this.nudLandArea.Size = new System.Drawing.Size(58, 22);
-            this.nudLandArea.TabIndex = 16;
-            this.nudLandArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.nudLandArea.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            // 
             // btnDefProjectLocation
             // 
             this.btnDefProjectLocation.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -549,6 +555,7 @@
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(605, 22);
             this.txtAddress.TabIndex = 4;
+            this.txtAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
             // 
             // label19
             // 
@@ -593,6 +600,7 @@
             this.txtAddress_Bangla.Name = "txtAddress_Bangla";
             this.txtAddress_Bangla.Size = new System.Drawing.Size(605, 22);
             this.txtAddress_Bangla.TabIndex = 5;
+            this.txtAddress_Bangla.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
             // 
             // label18
             // 
@@ -610,6 +618,7 @@
             this.txtProjectName_Bangla.Name = "txtProjectName_Bangla";
             this.txtProjectName_Bangla.Size = new System.Drawing.Size(271, 22);
             this.txtProjectName_Bangla.TabIndex = 3;
+            this.txtProjectName_Bangla.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
             // 
             // label14
             // 
@@ -627,6 +636,7 @@
             this.txtRemarks.Name = "txtRemarks";
             this.txtRemarks.Size = new System.Drawing.Size(554, 22);
             this.txtRemarks.TabIndex = 20;
+            this.txtRemarks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
             // 
             // label27
             // 
@@ -643,6 +653,7 @@
             this.txtApprovalNumber.Name = "txtApprovalNumber";
             this.txtApprovalNumber.Size = new System.Drawing.Size(303, 22);
             this.txtApprovalNumber.TabIndex = 18;
+            this.txtApprovalNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
             // 
             // label25
             // 
@@ -659,6 +670,7 @@
             this.txtProjectName.Name = "txtProjectName";
             this.txtProjectName.Size = new System.Drawing.Size(254, 22);
             this.txtProjectName.TabIndex = 2;
+            this.txtProjectName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
             // 
             // label4
             // 
@@ -749,7 +761,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(8, 377);
+            this.label30.Location = new System.Drawing.Point(9, 377);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(91, 14);
             this.label30.TabIndex = 0;
@@ -775,15 +787,15 @@
             // cmbInCharge
             // 
             this.cmbInCharge.FormattingEnabled = true;
-            this.cmbInCharge.Location = new System.Drawing.Point(82, 345);
+            this.cmbInCharge.Location = new System.Drawing.Point(104, 345);
             this.cmbInCharge.Name = "cmbInCharge";
-            this.cmbInCharge.Size = new System.Drawing.Size(280, 22);
+            this.cmbInCharge.Size = new System.Drawing.Size(258, 22);
             this.cmbInCharge.TabIndex = 21;
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(8, 349);
+            this.label28.Location = new System.Drawing.Point(30, 349);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(70, 14);
             this.label28.TabIndex = 0;
@@ -810,12 +822,15 @@
             // 
             this.tpBuildingFloor.BackColor = System.Drawing.Color.Honeydew;
             this.tpBuildingFloor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tpBuildingFloor.Controls.Add(this.button1);
-            this.tpBuildingFloor.Controls.Add(this.numericUpDown2);
+            this.tpBuildingFloor.Controls.Add(this.txtCountOfFloor);
+            this.tpBuildingFloor.Controls.Add(this.txtCountOfBasement);
+            this.tpBuildingFloor.Controls.Add(this.nudBuildingCount);
+            this.tpBuildingFloor.Controls.Add(this.label23);
+            this.tpBuildingFloor.Controls.Add(this.btnSaveBuildingList);
+            this.tpBuildingFloor.Controls.Add(this.btnSaveBuidingData);
             this.tpBuildingFloor.Controls.Add(this.label38);
-            this.tpBuildingFloor.Controls.Add(this.numericUpDown1);
             this.tpBuildingFloor.Controls.Add(this.label37);
-            this.tpBuildingFloor.Controls.Add(this.textBox1);
+            this.tpBuildingFloor.Controls.Add(this.txtBuildingName);
             this.tpBuildingFloor.Controls.Add(this.label2);
             this.tpBuildingFloor.Controls.Add(this.lstBuildingDetails);
             this.tpBuildingFloor.Location = new System.Drawing.Point(4, 23);
@@ -825,62 +840,103 @@
             this.tpBuildingFloor.TabIndex = 1;
             this.tpBuildingFloor.Text = "Building && Floor Information";
             // 
-            // button1
+            // txtCountOfFloor
             // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
-            this.button1.Location = new System.Drawing.Point(611, 246);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(77, 48);
-            this.button1.TabIndex = 30;
-            this.button1.Text = "Insert";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.button1.UseVisualStyleBackColor = true;
+            this.txtCountOfFloor.Location = new System.Drawing.Point(504, 314);
+            this.txtCountOfFloor.Name = "txtCountOfFloor";
+            this.txtCountOfFloor.Size = new System.Drawing.Size(53, 22);
+            this.txtCountOfFloor.TabIndex = 5;
+            this.txtCountOfFloor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCountOfFloor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtCountOfFloor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
             // 
-            // numericUpDown2
+            // txtCountOfBasement
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(552, 273);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(53, 22);
-            this.numericUpDown2.TabIndex = 4;
+            this.txtCountOfBasement.Location = new System.Drawing.Point(504, 286);
+            this.txtCountOfBasement.Name = "txtCountOfBasement";
+            this.txtCountOfBasement.Size = new System.Drawing.Size(53, 22);
+            this.txtCountOfBasement.TabIndex = 4;
+            this.txtCountOfBasement.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCountOfBasement.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtCountOfBasement.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
+            // 
+            // nudBuildingCount
+            // 
+            this.nudBuildingCount.Location = new System.Drawing.Point(140, 10);
+            this.nudBuildingCount.Name = "nudBuildingCount";
+            this.nudBuildingCount.Size = new System.Drawing.Size(43, 22);
+            this.nudBuildingCount.TabIndex = 0;
+            this.nudBuildingCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudBuildingCount.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(8, 14);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(126, 14);
+            this.label23.TabIndex = 32;
+            this.label23.Text = "# of Building(s):";
+            // 
+            // btnSaveBuildingList
+            // 
+            this.btnSaveBuildingList.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSaveBuildingList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveBuildingList.Image = global::RealEstateManagementSystem.Properties.Resources.add_to_list;
+            this.btnSaveBuildingList.Location = new System.Drawing.Point(189, 6);
+            this.btnSaveBuildingList.Name = "btnSaveBuildingList";
+            this.btnSaveBuildingList.Size = new System.Drawing.Size(211, 30);
+            this.btnSaveBuildingList.TabIndex = 1;
+            this.btnSaveBuildingList.Text = " Insert to Database";
+            this.btnSaveBuildingList.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveBuildingList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSaveBuildingList.UseVisualStyleBackColor = true;
+            this.btnSaveBuildingList.Click += new System.EventHandler(this.btnSaveBuildingList_Click);
+            // 
+            // btnSaveBuidingData
+            // 
+            this.btnSaveBuidingData.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSaveBuidingData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveBuidingData.Image = global::RealEstateManagementSystem.Properties.Resources.add_to_list;
+            this.btnSaveBuidingData.Location = new System.Drawing.Point(581, 287);
+            this.btnSaveBuidingData.Name = "btnSaveBuidingData";
+            this.btnSaveBuidingData.Size = new System.Drawing.Size(107, 48);
+            this.btnSaveBuidingData.TabIndex = 6;
+            this.btnSaveBuidingData.Text = "Save ";
+            this.btnSaveBuidingData.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnSaveBuidingData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSaveBuidingData.UseVisualStyleBackColor = true;
+            this.btnSaveBuidingData.Click += new System.EventHandler(this.btnSaveBuidingData_Click);
             // 
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(270, 277);
+            this.label38.Location = new System.Drawing.Point(218, 318);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(280, 14);
             this.label38.TabIndex = 3;
             this.label38.Text = "# of Floor(s) {Including Ground Floor}:";
             // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(552, 245);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(53, 22);
-            this.numericUpDown1.TabIndex = 4;
-            // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(438, 249);
+            this.label37.Location = new System.Drawing.Point(386, 290);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(112, 14);
             this.label37.TabIndex = 3;
             this.label37.Text = "# of Basements:";
             // 
-            // textBox1
+            // txtBuildingName
             // 
-            this.textBox1.Location = new System.Drawing.Point(285, 245);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(131, 22);
-            this.textBox1.TabIndex = 2;
+            this.txtBuildingName.Location = new System.Drawing.Point(233, 286);
+            this.txtBuildingName.Name = "txtBuildingName";
+            this.txtBuildingName.Size = new System.Drawing.Size(131, 22);
+            this.txtBuildingName.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(125, 249);
+            this.label2.Location = new System.Drawing.Point(73, 290);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(154, 14);
             this.label2.TabIndex = 1;
@@ -888,22 +944,56 @@
             // 
             // lstBuildingDetails
             // 
+            this.lstBuildingDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
             this.lstBuildingDetails.GridLines = true;
-            this.lstBuildingDetails.Location = new System.Drawing.Point(6, 6);
+            this.lstBuildingDetails.Location = new System.Drawing.Point(6, 46);
             this.lstBuildingDetails.Name = "lstBuildingDetails";
             this.lstBuildingDetails.Size = new System.Drawing.Size(682, 234);
-            this.lstBuildingDetails.TabIndex = 0;
+            this.lstBuildingDetails.TabIndex = 2;
             this.lstBuildingDetails.UseCompatibleStateImageBehavior = false;
             this.lstBuildingDetails.View = System.Windows.Forms.View.Details;
+            this.lstBuildingDetails.SelectedIndexChanged += new System.EventHandler(this.lstBuildingDetails_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "BuildingID";
+            this.columnHeader1.Width = 0;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Building #";
+            this.columnHeader2.Width = 99;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Name";
+            this.columnHeader3.Width = 168;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "# of Basement(s)";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader4.Width = 151;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "# of Floor(s)";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader5.Width = 132;
             // 
             // tpSpecification
             // 
             this.tpSpecification.BackColor = System.Drawing.Color.Honeydew;
             this.tpSpecification.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tpSpecification.Controls.Add(this.button2);
-            this.tpSpecification.Controls.Add(this.button3);
+            this.tpSpecification.Controls.Add(this.btnResetSpec);
+            this.tpSpecification.Controls.Add(this.btnManipulateSpecification);
             this.tpSpecification.Controls.Add(this.lstProjectSpecifications);
-            this.tpSpecification.Controls.Add(this.textBox2);
+            this.tpSpecification.Controls.Add(this.txtSpecDetails);
             this.tpSpecification.Controls.Add(this.cmbProjectSpecificationType);
             this.tpSpecification.Controls.Add(this.label40);
             this.tpSpecification.Controls.Add(this.label39);
@@ -914,31 +1004,33 @@
             this.tpSpecification.TabIndex = 2;
             this.tpSpecification.Text = "Specification(s)";
             // 
-            // button2
+            // btnResetSpec
             // 
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Image = global::RealEstateManagementSystem.Properties.Resources.refresh;
-            this.button2.Location = new System.Drawing.Point(653, 379);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(34, 28);
-            this.button2.TabIndex = 32;
-            this.button2.TabStop = false;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnResetSpec.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnResetSpec.FlatAppearance.BorderSize = 0;
+            this.btnResetSpec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResetSpec.Image = global::RealEstateManagementSystem.Properties.Resources.refresh;
+            this.btnResetSpec.Location = new System.Drawing.Point(653, 379);
+            this.btnResetSpec.Name = "btnResetSpec";
+            this.btnResetSpec.Size = new System.Drawing.Size(34, 28);
+            this.btnResetSpec.TabIndex = 32;
+            this.btnResetSpec.TabStop = false;
+            this.btnResetSpec.UseVisualStyleBackColor = true;
+            this.btnResetSpec.Click += new System.EventHandler(this.btnResetSpec_Click);
             // 
-            // button3
+            // btnManipulateSpecification
             // 
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button3.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
-            this.button3.Location = new System.Drawing.Point(610, 410);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(77, 48);
-            this.button3.TabIndex = 31;
-            this.button3.Text = "Insert";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnManipulateSpecification.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnManipulateSpecification.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
+            this.btnManipulateSpecification.Location = new System.Drawing.Point(610, 410);
+            this.btnManipulateSpecification.Name = "btnManipulateSpecification";
+            this.btnManipulateSpecification.Size = new System.Drawing.Size(77, 48);
+            this.btnManipulateSpecification.TabIndex = 31;
+            this.btnManipulateSpecification.Text = "Save";
+            this.btnManipulateSpecification.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnManipulateSpecification.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnManipulateSpecification.UseVisualStyleBackColor = true;
+            this.btnManipulateSpecification.Click += new System.EventHandler(this.btnManipulateSpecification_Click);
             // 
             // lstProjectSpecifications
             // 
@@ -950,14 +1042,15 @@
             this.lstProjectSpecifications.TabIndex = 3;
             this.lstProjectSpecifications.UseCompatibleStateImageBehavior = false;
             this.lstProjectSpecifications.View = System.Windows.Forms.View.Details;
+            this.lstProjectSpecifications.SelectedIndexChanged += new System.EventHandler(this.lstProjectSpecifications_SelectedIndexChanged);
             // 
-            // textBox2
+            // txtSpecDetails
             // 
-            this.textBox2.Location = new System.Drawing.Point(154, 383);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(450, 75);
-            this.textBox2.TabIndex = 2;
+            this.txtSpecDetails.Location = new System.Drawing.Point(154, 383);
+            this.txtSpecDetails.Multiline = true;
+            this.txtSpecDetails.Name = "txtSpecDetails";
+            this.txtSpecDetails.Size = new System.Drawing.Size(450, 75);
+            this.txtSpecDetails.TabIndex = 2;
             // 
             // cmbProjectSpecificationType
             // 
@@ -1032,14 +1125,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tpProjectInfo.ResumeLayout(false);
             this.tpProjectInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudGracePeriod)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDuration)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudProjectCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudLandArea)).EndInit();
             this.tpBuildingFloor.ResumeLayout(false);
             this.tpBuildingFloor.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBuildingCount)).EndInit();
             this.tpSpecification.ResumeLayout(false);
             this.tpSpecification.PerformLayout();
             this.ssProjectInformation.ResumeLayout(false);
@@ -1066,7 +1154,6 @@
         private System.Windows.Forms.Button btnDefProjectLocation;
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown nudLandArea;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DateTimePicker dtpAgreementDate;
@@ -1081,8 +1168,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DateTimePicker dtpPlotTakeOverDate;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown nudGracePeriod;
-        private System.Windows.Forms.NumericUpDown nudDuration;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
@@ -1091,7 +1176,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtAddress_Bangla;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.NumericUpDown nudProjectCode;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cmbLandType;
         private System.Windows.Forms.Label label21;
@@ -1119,22 +1203,34 @@
         private System.Windows.Forms.Button btnRefresh_PI;
         private System.Windows.Forms.ListView lstBuildingDetails;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.TextBox txtBuildingName;
         private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSaveBuidingData;
         private System.Windows.Forms.ComboBox cmbProjectSpecificationType;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtSpecDetails;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.ListView lstProjectSpecifications;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnResetSpec;
+        private System.Windows.Forms.Button btnManipulateSpecification;
         private System.Windows.Forms.CheckBox chkNeedPiling;
         private System.Windows.Forms.CheckBox chkShowInWeb;
         private System.Windows.Forms.CheckBox chkIsCancelled;
         private System.Windows.Forms.CheckBox chkDetailsInDB;
+        private System.Windows.Forms.Button btnSaveBuildingList;
+        private System.Windows.Forms.NumericUpDown nudBuildingCount;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.TextBox txtProjectCode;
+        private System.Windows.Forms.TextBox txtLandArea;
+        private System.Windows.Forms.TextBox txtConstructionGracePeriod;
+        private System.Windows.Forms.TextBox txtConstructionDuration;
+        private System.Windows.Forms.TextBox txtCountOfFloor;
+        private System.Windows.Forms.TextBox txtCountOfBasement;
     }
 }

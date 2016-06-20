@@ -28,13 +28,113 @@ namespace RealEstateManagementSystem.Utilities
             }
         }
 
+
+        public static DataTable CompanyInformation()
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetCompanyInformation";
+                cmd.Parameters.AddWithValue("@concernId", 1);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
         #endregion
 
-        #region Populate/Format ComboBoxes
+        #region Reset Control
+
+        public static void ResetCheckBoxes(Control root, bool isChecked = false)
+        {
+            try
+            {
+                foreach (CheckBox chk in GetAllChildren(root).OfType<CheckBox>())
+                {
+                    chk.Checked = isChecked;
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public static void ResetNumericUpDown(Control root, decimal defaultValue = 0)
+        {
+            try
+            {
+                foreach (NumericUpDown nud in GetAllChildren(root).OfType<NumericUpDown>())
+                {
+                    nud.Value = defaultValue;
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+
+        public static void ResetTextBoxes(Control root, string resetWith = "")
+        {
+            try
+            {
+                foreach (TextBox txt in GetAllChildren(root).OfType<TextBox>())
+                {
+
+                    txt.Text = resetWith == "" ? string.Empty : resetWith;
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public static void AutoFormatListViews(
+                            Control root,
+                            bool? isAlternateColor = null,
+                            Color? alternateColor = null,
+                            bool checkBoxes = false)
+        {
+
+            try
+            {
+                foreach (var lView in GetAllChildren(root).OfType<ListView>())
+                {
+                    lView.AllowColumnReorder = false;
+                    lView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                    lView.BackColor = lView.Parent.BackColor;
+                    lView.BorderStyle = BorderStyle.FixedSingle;
+                    lView.CheckBoxes = checkBoxes;
+                    lView.ForeColor = root.ForeColor;
+                    lView.FullRowSelect = true;
+                    lView.GridLines = true;
+                    lView.HideSelection = false;
+                    lView.Items.Clear();
+                    lView.MultiSelect = false;
+                    lView.View = View.Details;
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public static void ResetAllDateTimePicker
+            (Control root, bool isChecked = true)
+        {
+            try
+            {
+                foreach (DateTimePicker item in GetAllChildren(root).OfType<DateTimePicker>())
+                {
+                    item.Checked = isChecked;
+                    item.Value = DateTime.Now;
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
 
         public static void AutoFormatComboBoxes
-                (Control root, ComboBoxStyle? listStyle = null,
-                Color? backColor = null, FlatStyle? flatStyle = null)
+        (Control root, ComboBoxStyle? listStyle = null,
+        Color? backColor = null, FlatStyle? flatStyle = null, Color? foreColor = null)
         {
             try
             {
@@ -46,10 +146,14 @@ namespace RealEstateManagementSystem.Utilities
                     cb.BackColor = backColor ?? root.BackColor;
                     cb.DropDownStyle = listStyle ?? ComboBoxStyle.DropDownList;
                     cb.FlatStyle = flatStyle ?? FlatStyle.Flat;
+                    cb.ForeColor = foreColor ?? root.ForeColor;
                 }
             }
             catch (Exception ex) { throw ex; }
         }
+        #endregion
+
+        #region Populate/Format ComboBoxes
 
         public static Dictionary<string, string> GetDisplayAndValueMemberForComboBox(CommandType cmdType, string sqlQuery, string displayMember,
                 string valueMember, bool addAnEmptyLine = false)
@@ -124,8 +228,6 @@ namespace RealEstateManagementSystem.Utilities
                                     (DataTable dataTable,
                                     ListView lView,
                                     Label lblRecordCount = null,
-                                    Boolean decorateAlternateRows = true,
-                                    Color? alternateColor = null,
                                     Boolean hideFirstColumn = false,
                                     ToolStripStatusLabel stripLabel = null)
         {
@@ -146,7 +248,7 @@ namespace RealEstateManagementSystem.Utilities
                     ListViewItem item = new ListViewItem(rows[0].ToString());
                     for (int i = 1; i < dataTable.Columns.Count; i++) { item.SubItems.Add(rows[i].ToString()); }
                     lView.Items.Add(item);
-                    if (decorateAlternateRows == true && (item.Index % 2) == 0) { item.BackColor = alternateColor ?? Color.WhiteSmoke; }
+                    //if (decorateAlternateRows == true && (item.Index % 2) == 0) { item.BackColor = alternateColor ?? Color.WhiteSmoke; }
                 }
                 lView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 if (hideFirstColumn == true) { lView.Columns[0].Width = 0; }
@@ -156,32 +258,29 @@ namespace RealEstateManagementSystem.Utilities
             catch (Exception ex) { throw ex; }
         }
 
-        public static void AutoFormatListViews(Control root, bool isAlternateColor = true)
-        {
-
-            try
-            {
-                foreach (var lView in GetAllChildren(root).OfType<ListView>())
-                {
-                    lView.AllowColumnReorder = false;
-                    lView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                    lView.BackColor = lView.Parent.BackColor;
-                    lView.BorderStyle = BorderStyle.FixedSingle;
-                    lView.FullRowSelect = true;
-                    lView.GridLines = true;
-                    lView.HideSelection = false;
-                    lView.Items.Clear();
-                    lView.MultiSelect = false;
-                    lView.View = View.Details;
-                }
-            }
-            catch (Exception ex) { throw ex; }
 
 
-        }
+
+
         #endregion
 
         #region SandBox
+
+        public static void SelectAllInTextBox(object textBox, EventArgs e)
+        {
+            (textBox as TextBox).SelectAll();
+        }
+
+        public static void NumericTextBox(object txtBox, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.') { e.Handled = true; }
+            if (e.KeyChar == '.' && (txtBox as TextBox).Text.IndexOf('.') > -1) { e.Handled = true; }
+        }
+
+        public void SetdtPickerValue(DateTimePicker dtPicker, DateTime dtDate)
+        {
+            if (dtDate < clsGlobalClass.calculateAsNULLDate) { dtPicker.Value = dtDate; dtPicker.Checked = true; } else { dtPicker.Value = DateTime.Now; dtPicker.Checked = false; }
+        }
 
         public static void ConvertEnterToTab(Form formName, KeyEventArgs e)
         {
@@ -195,26 +294,34 @@ namespace RealEstateManagementSystem.Utilities
 
         public static void LogError(Exception ex)
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = Program.cnConn;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "sp_LogErrorMessages";
-            cmd.Parameters.AddWithValue("@appName", clsGlobalClass.applicationName);
-            cmd.Parameters.AddWithValue("@message", ex.Message.ToString());
-            cmd.Parameters.AddWithValue("@stackTrace", ex.StackTrace.ToString());
-            cmd.Parameters.AddWithValue("@source", ex.Source.ToString());
-            cmd.Parameters.AddWithValue("@targetSites", ex.TargetSite.ToString());
-            cmd.Parameters.AddWithValue("@userId", clsGlobalClass.userId);
-            cmd.Parameters.AddWithValue("@workstationIP", clsGlobalClass.workStationIP);
-            cmd.ExecuteNonQuery();
-            MessageBox.Show(Resources.strFailedMessage + ex.Message.ToString(), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!ex.GetType().IsAssignableFrom(typeof(ApplicationException)))
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_LogErrorMessages";
+                cmd.Parameters.AddWithValue("@appName", clsGlobalClass.applicationName);
+                cmd.Parameters.AddWithValue("@message", ex.Message.ToString());
+                cmd.Parameters.AddWithValue("@exceptionType", ex.GetType().Name.ToString());
+                cmd.Parameters.AddWithValue("@stackTrace", ex.StackTrace.ToString());
+                cmd.Parameters.AddWithValue("@source", ex.Source.ToString());
+                cmd.Parameters.AddWithValue("@targetSites", ex.TargetSite.ToString());
+                cmd.Parameters.AddWithValue("@userId", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstationIP", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+                MessageBox.Show(Resources.strFailedMessage + ex.Message.ToString(), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show(ex.Message.ToString(), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         #endregion
 
         #region Date Functions
         internal static DateTime ReturnIfValidDate(DateTime dateTime)
         {
-            if (dateTime < clsGlobalClass.calculateAsNullValue)
+            if (dateTime < clsGlobalClass.calculateAsNULLDate)
             {
                 return DateTime.Now;
             }
@@ -227,7 +334,7 @@ namespace RealEstateManagementSystem.Utilities
 
         internal static bool CheckIfValidDate(DateTime dateTime)
         {
-            if (dateTime < clsGlobalClass.calculateAsNullValue)
+            if (dateTime < clsGlobalClass.calculateAsNULLDate)
             {
                 return false;
             }
@@ -240,6 +347,21 @@ namespace RealEstateManagementSystem.Utilities
 
         #endregion
 
+        #region Image to Byte & Byte to Image
+        public static Byte[] ImageToByte(System.Drawing.Image Img)
+        {
 
+            System.Drawing.ImageConverter d = new System.Drawing.ImageConverter();
+            Byte[] bta;
+            bta = (Byte[])(d.ConvertTo(Img, typeof(Byte[])));
+            return bta;
+        }
+
+        public static System.Drawing.Image ImageFromByte(object bta)
+        {
+            System.IO.MemoryStream ms = new System.IO.MemoryStream((Byte[])(bta));
+            return System.Drawing.Image.FromStream(ms);
+        }
+        #endregion
     }
 }

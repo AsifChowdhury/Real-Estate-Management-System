@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RealEstateManagementSystem.UserInterface.Reports.Projects {
+namespace RealEstateManagementSystem.Reports {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -16,14 +16,14 @@ namespace RealEstateManagementSystem.UserInterface.Reports.Projects {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class crptProjectInfo : ReportClass {
+    public class crptReportHeading : ReportClass {
         
-        public crptProjectInfo() {
+        public crptReportHeading() {
         }
         
         public override string ResourceName {
             get {
-                return "crptProjectInfo.rpt";
+                return "crptReportHeading.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace RealEstateManagementSystem.UserInterface.Reports.Projects {
         
         public override string FullResourceName {
             get {
-                return "RealEstateManagementSystem.UserInterface.Reports.Projects.crptProjectInfo.rpt";
+                return "RealEstateManagementSystem.Reports.crptReportHeading.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace RealEstateManagementSystem.UserInterface.Reports.Projects {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedcrptProjectInfo : Component, ICachedReport {
+    public class CachedcrptReportHeading : Component, ICachedReport {
         
-        public CachedcrptProjectInfo() {
+        public CachedcrptReportHeading() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace RealEstateManagementSystem.UserInterface.Reports.Projects {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            crptProjectInfo rpt = new crptProjectInfo();
+            crptReportHeading rpt = new crptReportHeading();
             rpt.Site = this.Site;
             return rpt;
         }

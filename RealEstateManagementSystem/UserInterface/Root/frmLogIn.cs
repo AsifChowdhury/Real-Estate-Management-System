@@ -17,7 +17,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
     public partial class frmLogIn : Form
     {
         bllUserControl _bLayer = new bllUserControl();
-        string regKey = Resources.regRoot + "\\" + Resources.regSubKey;
+
 
         public frmLogIn()
         {
@@ -35,25 +35,26 @@ namespace RealEstateManagementSystem.UserInterface.Root
                 {
                     clsGlobalClass.userId = txtUserId.Text.ToString();
                     this.Hide();
-                    root.Show();
-                    
-                    Registry.SetValue(regKey, "UserId", chkRememberLogIn.Checked == true ? txtUserId.Text.ToString() : "");
-                    Registry.SetValue(regKey, "RememberLogIn", chkRememberLogIn.Checked == true ? 1 : 0);
+                    root.ShowDialog();
+
+                    Registry.SetValue(clsGlobalClass.regKey, "UserId", chkRememberLogIn.Checked == true ? txtUserId.Text.ToString() : "");
+                    Registry.SetValue(clsGlobalClass.regKey, "RememberLogIn", chkRememberLogIn.Checked == true ? 1 : 0);
+
                 }
             }
-            catch (Exception ex) { MessageBox.Show(Resources.strFailedMessage + ex.Message.ToString(), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex) { clsCommonFunctions.LogError(ex); }
         }
 
         private void frmLogIn_Load(object sender, EventArgs e)
         {
-            if (Registry.GetValue(regKey, "RememberLogIn", 1) == null || (int)Registry.GetValue(regKey, "RememberLogIn", 1) == 0)
+            if (Registry.GetValue(clsGlobalClass.regKey, "RememberLogIn", 0) == null || (int)Registry.GetValue(clsGlobalClass.regKey, "RememberLogIn", 0) == 0)
             {
                 txtUserId.Text = "";
                 chkRememberLogIn.Checked = false;
             }
             else
             {
-                txtUserId.Text = (string)Registry.GetValue(regKey, "UserId", "Not Found");
+                txtUserId.Text = (string)Registry.GetValue(clsGlobalClass.regKey, "UserId", "");
                 chkRememberLogIn.Checked = true;
                 txtPassword.TabIndex = 0;
                 cmdLogIn.TabIndex = 1;

@@ -137,8 +137,8 @@
     <value>Failed!!</value>
   </data>
   <data name="strFailedMessage" xml:space="preserve">
-    <value>Operation Failed. Please read the following exception message carefully. If needed, feel free to contact IT.
-Exception Message: </value>
+    <value>Operation Failed.
+Reason: </value>
   </data>
   <data name="house" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\house.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -238,5 +238,144 @@ Exception Message: </value>
   </data>
   <data name="report1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\report.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="strReadyStatus" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="strCollectingData" xml:space="preserve">
+    <value>Collecting Data...</value>
+  </data>
+  <data name="strPreparingData" xml:space="preserve">
+    <value>Preparing Data...</value>
+  </data>
+  <data name="CarParking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CarParking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CommercialUnit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CommercialUnit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ResidentialUnit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ResidentialUnit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Building" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Building.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ServicedApartment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ServicedApartment.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Shop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Shop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShowRoom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShowRoom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UnitTypeNotFound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UnitTypeNotFound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Building1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Building.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClientInformation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClientInformation.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="family_512" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\family_512.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="family_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\family_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="search" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="search1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\search.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoPhoto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoPhoto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NoSign" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NoSign.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SearchClient" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SearchClient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClientSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClientSearch.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="strInsertConfirmation" xml:space="preserve">
+    <value>Sure about insert this new record?</value>
+  </data>
+  <data name="strUpdateConfirmation" xml:space="preserve">
+    <value>Sure about update this existing record?</value>
+  </data>
+  <data name="strSystemErrorMessage" xml:space="preserve">
+    <value>The operation failed because of a system error. We apologize for that and one of our developers is being notified. Please read the following exception message carefully. If needed, feel free to contact IT.
+Exception Message: </value>
+  </data>
+  <data name="cross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cross.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="copy_client" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\copy-client.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="new_client" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new-client.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="admin_console" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\admin-console.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Sales" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sales.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="strNotApplicableInBangla" xml:space="preserve">
+    <value>প্রযোজ্য নয়</value>
+  </data>
+  <data name="load_to_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\load_to_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="login_circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\login_circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="login_sketch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\login-sketch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="regPassword" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="regUserId" xml:space="preserve">
+    <value>UserId</value>
+  </data>
+  <data name="payment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\payment.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="payment1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\payment.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="recovery" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\recovery.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cancelled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cancelled.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sold.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sold1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sold.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

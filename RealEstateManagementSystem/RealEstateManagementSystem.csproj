@@ -16,7 +16,7 @@
     <PublishUrl>\\192.168.1.10\rems\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
@@ -28,7 +28,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -86,6 +86,7 @@
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -113,7 +114,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -127,12 +129,19 @@
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="SpellNumber">
+      <HintPath>..\packages\SpellNumber.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -143,10 +152,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogicLayer\bllClientInfo.cs" />
+    <Compile Include="BusinessLogicLayer\bllGlobal.cs" />
     <Compile Include="BusinessLogicLayer\bllProjectInfo.cs" />
+    <Compile Include="BusinessLogicLayer\bllRecovery.cs" />
     <Compile Include="BusinessLogicLayer\bllUserControl.cs" />
+    <Compile Include="DataAccessLayer\dalClientInfo.cs" />
+    <Compile Include="DataAccessLayer\dalGlobal.cs" />
     <Compile Include="DataAccessLayer\dalProjectInfo.cs" />
+    <Compile Include="DataAccessLayer\dalRecovery.cs" />
     <Compile Include="DataAccessLayer\dalUserControl.cs" />
+    <Compile Include="ReportDataSet\dsClientProfile.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsClientProfile.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsCollectionSummary.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsCollectionSummary.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsPartnerInformation.cs">
+      <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsPartnerInformation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsPaymentSchedule.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPaymentSchedule.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsProjectSummary.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsProjectSummary.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDataSet\dsReportHeading.Designer.cs">
@@ -154,11 +197,69 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsReportHeading.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ReportDataSet\dsUnitDetails.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsUnitDetails.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Clients\crptClientProfile.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptClientProfile.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\Clients\crpt_sr_PartnerInformation.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crpt_sr_PartnerInformation.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\Clients\crpt_sr_PaymentSchedule.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crpt_sr_PaymentSchedule.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\clsReports.cs" />
     <Compile Include="Reports\frmReportViewer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Reports\frmReportViewer.Designer.cs">
       <DependentUpon>frmReportViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Projects\crptUnitInformation.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptUnitInformation.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmClientInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmClientInformation.Designer.cs">
+      <DependentUpon>frmClientInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmDefinition_LoanProvider.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmDefinition_LoanProvider.Designer.cs">
+      <DependentUpon>frmDefinition_LoanProvider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmDefinition_NOR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmDefinition_NOR.Designer.cs">
+      <DependentUpon>frmDefinition_NOR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmDefinition_SaleOffer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmDefinition_SaleOffer.Designer.cs">
+      <DependentUpon>frmDefinition_SaleOffer.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Projects\frmDef_Locations.cs">
       <SubType>Form</SubType>
@@ -186,6 +287,30 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="UserInterface\Projects\frmUnitInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Projects\frmUnitInformation.Designer.cs">
+      <DependentUpon>frmUnitInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmDefinition_BankBranch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmDefinition_BankBranch.Designer.cs">
+      <DependentUpon>frmDefinition_BankBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmPayment.Designer.cs">
+      <DependentUpon>frmPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmAbout.Designer.cs">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Root\frmDBLogIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +322,30 @@
     </Compile>
     <Compile Include="UserInterface\Root\frmLogIn.Designer.cs">
       <DependentUpon>frmLogIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmRoot_CancelList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmRoot_CancelList.Designer.cs">
+      <DependentUpon>frmRoot_CancelList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmRoot_SoldList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmRoot_SoldList.Designer.cs">
+      <DependentUpon>frmRoot_SoldList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmSandBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmSandBox.Designer.cs">
+      <DependentUpon>frmSandBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmSearchClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmSearchClient.Designer.cs">
+      <DependentUpon>frmSearchClient.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Root\frmSplash.cs">
       <SubType>Form</SubType>
@@ -218,6 +367,7 @@
     </Compile>
     <Compile Include="Utilities\clsCommonFunctions.cs" />
     <Compile Include="Utilities\clsEncryption.cs" />
+    <Compile Include="Utilities\clsExtensions.cs" />
     <Compile Include="Utilities\clsGlobalClass.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -229,8 +379,40 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reports\Clients\crptClientProfile.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptClientProfile.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Clients\crpt_sr_PartnerInformation.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crpt_sr_PartnerInformation.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Clients\crpt_sr_PaymentSchedule.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crpt_sr_PaymentSchedule.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\frmReportViewer.resx">
       <DependentUpon>frmReportViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptUnitInformation.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptUnitInformation.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Clients\frmClientInformation.resx">
+      <DependentUpon>frmClientInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Clients\frmDefinition_LoanProvider.resx">
+      <DependentUpon>frmDefinition_LoanProvider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Clients\frmDefinition_NOR.resx">
+      <DependentUpon>frmDefinition_NOR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Clients\frmDefinition_SaleOffer.resx">
+      <DependentUpon>frmDefinition_SaleOffer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Projects\frmDef_Locations.resx">
       <DependentUpon>frmDef_Locations.cs</DependentUpon>
@@ -243,6 +425,62 @@
       <LastGenOutput>crptReportHeading.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="ReportDataSet\dsClientProfile.xsc">
+      <DependentUpon>dsClientProfile.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsClientProfile.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsClientProfile.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsClientProfile.xss">
+      <DependentUpon>dsClientProfile.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsCollectionSummary.xsc">
+      <DependentUpon>dsCollectionSummary.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsCollectionSummary.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsCollectionSummary.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsCollectionSummary.xss">
+      <DependentUpon>dsCollectionSummary.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPartnerInformation.xsc">
+      <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPartnerInformation.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPartnerInformation.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsPartnerInformation.xss">
+      <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPaymentSchedule.xsc">
+      <DependentUpon>dsPaymentSchedule.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPaymentSchedule.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPaymentSchedule.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsPaymentSchedule.xss">
+      <DependentUpon>dsPaymentSchedule.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsProjectSummary.xsc">
+      <DependentUpon>dsProjectSummary.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsProjectSummary.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsProjectSummary.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ReportDataSet\dsProjectSummary.xss">
+      <DependentUpon>dsProjectSummary.xsd</DependentUpon>
+    </None>
     <None Include="RealEstateManagementSystem_TemporaryKey.pfx" />
     <None Include="ReportDataSet\dsReportHeading.xsc">
       <DependentUpon>dsReportHeading.xsd</DependentUpon>
@@ -255,23 +493,57 @@
     <None Include="ReportDataSet\dsReportHeading.xss">
       <DependentUpon>dsReportHeading.xsd</DependentUpon>
     </None>
+    <None Include="ReportDataSet\dsUnitDetails.xsc">
+      <DependentUpon>dsUnitDetails.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsUnitDetails.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsUnitDetails.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsUnitDetails.xss">
+      <DependentUpon>dsUnitDetails.xsd</DependentUpon>
+    </None>
     <None Include="Resources\userauthentication.ico" />
     <None Include="Resources\userauthentication.png" />
     <None Include="Resources\server-check.ico" />
     <None Include="Resources\server-check.png" />
     <None Include="Resources\DBLogIn.png" />
     <None Include="Resources\menuAuthentication.png" />
-    <None Include="Resources\add-to-list.png" />
     <EmbeddedResource Include="Reports\Projects\crptProjectInfo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptProjectInfo.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Projects\frmUnitInformation.resx">
+      <DependentUpon>frmUnitInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Recovery\frmDefinition_BankBranch.resx">
+      <DependentUpon>frmDefinition_BankBranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Recovery\frmPayment.resx">
+      <DependentUpon>frmPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Root\frmAbout.resx">
+      <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Root\frmDBLogIn.resx">
       <DependentUpon>frmDBLogIn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Root\frmLogIn.resx">
       <DependentUpon>frmLogIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Root\frmRoot_CancelList.resx">
+      <DependentUpon>frmRoot_CancelList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Root\frmRoot_SoldList.resx">
+      <DependentUpon>frmRoot_SoldList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Root\frmSandBox.resx">
+      <DependentUpon>frmSandBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Root\frmSearchClient.resx">
+      <DependentUpon>frmSearchClient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Root\frmSplash.resx">
       <DependentUpon>frmSplash.cs</DependentUpon>
@@ -297,8 +569,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UserInterface\Accounts\" />
-    <Folder Include="UserInterface\Clients\" />
-    <Folder Include="UserInterface\Recovery\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\REMS.ico" />
@@ -363,16 +633,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <PublishFile Include="CrystalDecisions.CrystalReports.Engine">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.ClientDoc">
       <Visible>False</Visible>
       <Group>
@@ -559,6 +819,123 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\businessreport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ResidentialUnit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CarParking.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CommercialUnit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Building.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ServicedApartment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShowRoom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UnitTypeNotFound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Building.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\family_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\family_512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClientInformation.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NoPhoto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SearchClient.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NoSign.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add-to-list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClientSearch.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clients.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy-client.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new-client.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Sales.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\admin-console.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load_to_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\login-sketch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\login_circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\recovery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\payment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\payment.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sold.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancelled.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

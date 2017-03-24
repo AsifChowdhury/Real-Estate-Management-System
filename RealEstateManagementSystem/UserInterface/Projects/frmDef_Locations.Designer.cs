@@ -28,232 +28,351 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDef_Locations));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label14 = new System.Windows.Forms.Label();
-            this.btnRefresh_PI = new System.Windows.Forms.Button();
-            this.btnSaveData = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.txtLocationName = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lstLocationDetails = new System.Windows.Forms.ListView();
-            this.cmbArea_Edit = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cmbAreas = new System.Windows.Forms.ComboBox();
-            this.cmbDistrict_Edit = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cmbDistrict = new System.Windows.Forms.ComboBox();
+            this.tvLocationDetails = new System.Windows.Forms.TreeView();
+            this.imgDefLocation = new System.Windows.Forms.ImageList(this.components);
+            this.pnlDistrict = new System.Windows.Forms.Panel();
+            this.txtDistrictName_Bangla = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtDistrictName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.pnlArea = new System.Windows.Forms.Panel();
+            this.txtAreaName_Bangla = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtAreaName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmbA_District = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pnlLocation = new System.Windows.Forms.Panel();
+            this.txtLocationName_Bangla = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtLocationName = new System.Windows.Forms.TextBox();
+            this.cmbL_Area = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbL_District = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.rbLocation = new System.Windows.Forms.RadioButton();
+            this.rbArea = new System.Windows.Forms.RadioButton();
+            this.rbDistrict = new System.Windows.Forms.RadioButton();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.pnlDistrict.SuspendLayout();
+            this.pnlArea.SuspendLayout();
+            this.pnlLocation.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tvLocationDetails
             // 
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(552, 448);
-            this.tabControl1.TabIndex = 0;
+            this.tvLocationDetails.ImageIndex = 0;
+            this.tvLocationDetails.ImageList = this.imgDefLocation;
+            this.tvLocationDetails.Location = new System.Drawing.Point(2, 1);
+            this.tvLocationDetails.Name = "tvLocationDetails";
+            this.tvLocationDetails.SelectedImageIndex = 0;
+            this.tvLocationDetails.Size = new System.Drawing.Size(272, 446);
+            this.tvLocationDetails.TabIndex = 0;
+            this.tvLocationDetails.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvLocationDetails_NodeMouseClick);
             // 
-            // tabPage2
+            // imgDefLocation
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.Honeydew;
-            this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPage2.Controls.Add(this.label14);
-            this.tabPage2.Controls.Add(this.btnRefresh_PI);
-            this.tabPage2.Controls.Add(this.btnSaveData);
-            this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Controls.Add(this.txtLocationName);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.lstLocationDetails);
-            this.tabPage2.Controls.Add(this.cmbArea_Edit);
-            this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.cmbAreas);
-            this.tabPage2.Controls.Add(this.cmbDistrict_Edit);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.cmbDistrict);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(544, 420);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Location";
+            this.imgDefLocation.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgDefLocation.ImageStream")));
+            this.imgDefLocation.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgDefLocation.Images.SetKeyName(0, "route.png");
+            this.imgDefLocation.Images.SetKeyName(1, "locations.png");
+            this.imgDefLocation.Images.SetKeyName(2, "placeholder.png");
             // 
-            // label14
+            // pnlDistrict
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(285, 330);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(54, 18);
-            this.label14.TabIndex = 33;
-            this.label14.Text = "(বাংলায়ঃ)";
+            this.pnlDistrict.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlDistrict.Controls.Add(this.txtDistrictName_Bangla);
+            this.pnlDistrict.Controls.Add(this.label18);
+            this.pnlDistrict.Controls.Add(this.txtDistrictName);
+            this.pnlDistrict.Controls.Add(this.label1);
+            this.pnlDistrict.Location = new System.Drawing.Point(278, 152);
+            this.pnlDistrict.Name = "pnlDistrict";
+            this.pnlDistrict.Size = new System.Drawing.Size(329, 69);
+            this.pnlDistrict.TabIndex = 2;
+            this.pnlDistrict.Visible = false;
             // 
-            // btnRefresh_PI
+            // txtDistrictName_Bangla
             // 
-            this.btnRefresh_PI.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRefresh_PI.FlatAppearance.BorderSize = 0;
-            this.btnRefresh_PI.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh_PI.Image = global::RealEstateManagementSystem.Properties.Resources.refresh;
-            this.btnRefresh_PI.Location = new System.Drawing.Point(354, 378);
-            this.btnRefresh_PI.Name = "btnRefresh_PI";
-            this.btnRefresh_PI.Size = new System.Drawing.Size(34, 28);
-            this.btnRefresh_PI.TabIndex = 32;
-            this.btnRefresh_PI.TabStop = false;
-            this.btnRefresh_PI.UseVisualStyleBackColor = true;
+            this.txtDistrictName_Bangla.BackColor = System.Drawing.SystemColors.Window;
+            this.txtDistrictName_Bangla.Location = new System.Drawing.Point(127, 36);
+            this.txtDistrictName_Bangla.Name = "txtDistrictName_Bangla";
+            this.txtDistrictName_Bangla.Size = new System.Drawing.Size(189, 23);
+            this.txtDistrictName_Bangla.TabIndex = 1;
             // 
-            // btnSaveData
+            // label18
             // 
-            this.btnSaveData.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSaveData.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
-            this.btnSaveData.Location = new System.Drawing.Point(394, 376);
-            this.btnSaveData.Name = "btnSaveData";
-            this.btnSaveData.Size = new System.Drawing.Size(92, 33);
-            this.btnSaveData.TabIndex = 31;
-            this.btnSaveData.Text = "Insert";
-            this.btnSaveData.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSaveData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSaveData.UseVisualStyleBackColor = true;
-            this.btnSaveData.Click += new System.EventHandler(this.btnSaveData_Click);
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(67, 38);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(54, 18);
+            this.label18.TabIndex = 6;
+            this.label18.Text = "(বাংলায়ঃ)";
             // 
-            // textBox1
+            // txtDistrictName
             // 
-            this.textBox1.Location = new System.Drawing.Point(345, 329);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(141, 23);
-            this.textBox1.TabIndex = 4;
-            // 
-            // txtLocationName
-            // 
-            this.txtLocationName.Location = new System.Drawing.Point(138, 328);
-            this.txtLocationName.Name = "txtLocationName";
-            this.txtLocationName.Size = new System.Drawing.Size(141, 23);
-            this.txtLocationName.TabIndex = 4;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 332);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(105, 15);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Location Name:";
-            // 
-            // lstLocationDetails
-            // 
-            this.lstLocationDetails.Location = new System.Drawing.Point(16, 38);
-            this.lstLocationDetails.Name = "lstLocationDetails";
-            this.lstLocationDetails.Size = new System.Drawing.Size(514, 282);
-            this.lstLocationDetails.TabIndex = 2;
-            this.lstLocationDetails.UseCompatibleStateImageBehavior = false;
-            // 
-            // cmbArea_Edit
-            // 
-            this.cmbArea_Edit.FormattingEnabled = true;
-            this.cmbArea_Edit.Location = new System.Drawing.Point(138, 386);
-            this.cmbArea_Edit.Name = "cmbArea_Edit";
-            this.cmbArea_Edit.Size = new System.Drawing.Size(141, 23);
-            this.cmbArea_Edit.TabIndex = 1;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(55, 390);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 15);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Area Name:";
-            // 
-            // cmbAreas
-            // 
-            this.cmbAreas.FormattingEnabled = true;
-            this.cmbAreas.Location = new System.Drawing.Point(372, 9);
-            this.cmbAreas.Name = "cmbAreas";
-            this.cmbAreas.Size = new System.Drawing.Size(158, 23);
-            this.cmbAreas.TabIndex = 1;
-            // 
-            // cmbDistrict_Edit
-            // 
-            this.cmbDistrict_Edit.FormattingEnabled = true;
-            this.cmbDistrict_Edit.Location = new System.Drawing.Point(138, 357);
-            this.cmbDistrict_Edit.Name = "cmbDistrict_Edit";
-            this.cmbDistrict_Edit.Size = new System.Drawing.Size(141, 23);
-            this.cmbDistrict_Edit.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(289, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Area Name:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 361);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(105, 15);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "District Name:";
-            // 
-            // cmbDistrict
-            // 
-            this.cmbDistrict.FormattingEnabled = true;
-            this.cmbDistrict.Location = new System.Drawing.Point(124, 9);
-            this.cmbDistrict.Name = "cmbDistrict";
-            this.cmbDistrict.Size = new System.Drawing.Size(159, 23);
-            this.cmbDistrict.TabIndex = 1;
-            this.cmbDistrict.SelectionChangeCommitted += new System.EventHandler(this.cmbDistrict_SelectionChangeCommitted);
+            this.txtDistrictName.Location = new System.Drawing.Point(127, 7);
+            this.txtDistrictName.Name = "txtDistrictName";
+            this.txtDistrictName.Size = new System.Drawing.Size(189, 23);
+            this.txtDistrictName.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(16, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "District Name:";
             // 
-            // tabPage1
+            // btnSave
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.Honeydew;
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(544, 420);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Area";
+            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
+            this.btnSave.Location = new System.Drawing.Point(506, 287);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(101, 49);
+            this.btnSave.TabIndex = 5;
+            this.btnSave.Text = "Insert";
+            this.btnSave.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // tabPage3
+            // pnlArea
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.Honeydew;
-            this.tabPage3.Location = new System.Drawing.Point(4, 24);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(544, 420);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "District";
+            this.pnlArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlArea.Controls.Add(this.txtAreaName_Bangla);
+            this.pnlArea.Controls.Add(this.label7);
+            this.pnlArea.Controls.Add(this.txtAreaName);
+            this.pnlArea.Controls.Add(this.label3);
+            this.pnlArea.Controls.Add(this.cmbA_District);
+            this.pnlArea.Controls.Add(this.label2);
+            this.pnlArea.Location = new System.Drawing.Point(278, 152);
+            this.pnlArea.Name = "pnlArea";
+            this.pnlArea.Size = new System.Drawing.Size(329, 101);
+            this.pnlArea.TabIndex = 3;
+            this.pnlArea.Visible = false;
+            // 
+            // txtAreaName_Bangla
+            // 
+            this.txtAreaName_Bangla.BackColor = System.Drawing.SystemColors.Window;
+            this.txtAreaName_Bangla.Location = new System.Drawing.Point(130, 70);
+            this.txtAreaName_Bangla.Name = "txtAreaName_Bangla";
+            this.txtAreaName_Bangla.Size = new System.Drawing.Size(189, 23);
+            this.txtAreaName_Bangla.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(70, 72);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(54, 18);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "(বাংলায়ঃ)";
+            // 
+            // txtAreaName
+            // 
+            this.txtAreaName.Location = new System.Drawing.Point(130, 41);
+            this.txtAreaName.Name = "txtAreaName";
+            this.txtAreaName.Size = new System.Drawing.Size(189, 23);
+            this.txtAreaName.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(44, 45);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 15);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Area Name:";
+            // 
+            // cmbA_District
+            // 
+            this.cmbA_District.FormattingEnabled = true;
+            this.cmbA_District.Location = new System.Drawing.Point(130, 12);
+            this.cmbA_District.Name = "cmbA_District";
+            this.cmbA_District.Size = new System.Drawing.Size(189, 23);
+            this.cmbA_District.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(51, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 15);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "District:";
+            // 
+            // pnlLocation
+            // 
+            this.pnlLocation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlLocation.Controls.Add(this.txtLocationName_Bangla);
+            this.pnlLocation.Controls.Add(this.label8);
+            this.pnlLocation.Controls.Add(this.txtLocationName);
+            this.pnlLocation.Controls.Add(this.cmbL_Area);
+            this.pnlLocation.Controls.Add(this.label6);
+            this.pnlLocation.Controls.Add(this.cmbL_District);
+            this.pnlLocation.Controls.Add(this.label5);
+            this.pnlLocation.Controls.Add(this.label4);
+            this.pnlLocation.Location = new System.Drawing.Point(278, 152);
+            this.pnlLocation.Name = "pnlLocation";
+            this.pnlLocation.Size = new System.Drawing.Size(329, 129);
+            this.pnlLocation.TabIndex = 4;
+            this.pnlLocation.Visible = false;
+            // 
+            // txtLocationName_Bangla
+            // 
+            this.txtLocationName_Bangla.BackColor = System.Drawing.SystemColors.Window;
+            this.txtLocationName_Bangla.Location = new System.Drawing.Point(127, 97);
+            this.txtLocationName_Bangla.Name = "txtLocationName_Bangla";
+            this.txtLocationName_Bangla.Size = new System.Drawing.Size(189, 23);
+            this.txtLocationName_Bangla.TabIndex = 3;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(67, 99);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(54, 18);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "(বাংলায়ঃ)";
+            // 
+            // txtLocationName
+            // 
+            this.txtLocationName.Location = new System.Drawing.Point(127, 68);
+            this.txtLocationName.Name = "txtLocationName";
+            this.txtLocationName.Size = new System.Drawing.Size(189, 23);
+            this.txtLocationName.TabIndex = 2;
+            // 
+            // cmbL_Area
+            // 
+            this.cmbL_Area.FormattingEnabled = true;
+            this.cmbL_Area.Location = new System.Drawing.Point(127, 36);
+            this.cmbL_Area.Name = "cmbL_Area";
+            this.cmbL_Area.Size = new System.Drawing.Size(189, 23);
+            this.cmbL_Area.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(44, 40);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(77, 15);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Area Name:";
+            // 
+            // cmbL_District
+            // 
+            this.cmbL_District.FormattingEnabled = true;
+            this.cmbL_District.Location = new System.Drawing.Point(127, 7);
+            this.cmbL_District.Name = "cmbL_District";
+            this.cmbL_District.Size = new System.Drawing.Size(189, 23);
+            this.cmbL_District.TabIndex = 0;
+            this.cmbL_District.SelectedIndexChanged += new System.EventHandler(this.cmbL_District_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 71);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(105, 15);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Location Name:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(51, 11);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(70, 15);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "District:";
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.rbLocation);
+            this.panel4.Controls.Add(this.rbArea);
+            this.panel4.Controls.Add(this.rbDistrict);
+            this.panel4.Location = new System.Drawing.Point(278, 112);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(329, 35);
+            this.panel4.TabIndex = 1;
+            // 
+            // rbLocation
+            // 
+            this.rbLocation.AutoSize = true;
+            this.rbLocation.Location = new System.Drawing.Point(196, 7);
+            this.rbLocation.Name = "rbLocation";
+            this.rbLocation.Size = new System.Drawing.Size(81, 19);
+            this.rbLocation.TabIndex = 2;
+            this.rbLocation.TabStop = true;
+            this.rbLocation.Text = "Location";
+            this.rbLocation.UseVisualStyleBackColor = true;
+            this.rbLocation.CheckedChanged += new System.EventHandler(this.rbLocation_CheckedChanged);
+            // 
+            // rbArea
+            // 
+            this.rbArea.AutoSize = true;
+            this.rbArea.Location = new System.Drawing.Point(137, 7);
+            this.rbArea.Name = "rbArea";
+            this.rbArea.Size = new System.Drawing.Size(53, 19);
+            this.rbArea.TabIndex = 1;
+            this.rbArea.TabStop = true;
+            this.rbArea.Text = "Area";
+            this.rbArea.UseVisualStyleBackColor = true;
+            this.rbArea.CheckedChanged += new System.EventHandler(this.rbArea_CheckedChanged);
+            // 
+            // rbDistrict
+            // 
+            this.rbDistrict.AutoSize = true;
+            this.rbDistrict.Location = new System.Drawing.Point(50, 7);
+            this.rbDistrict.Name = "rbDistrict";
+            this.rbDistrict.Size = new System.Drawing.Size(81, 19);
+            this.rbDistrict.TabIndex = 0;
+            this.rbDistrict.TabStop = true;
+            this.rbDistrict.Text = "District";
+            this.rbDistrict.UseVisualStyleBackColor = true;
+            this.rbDistrict.CheckedChanged += new System.EventHandler(this.rbDistrict_CheckedChanged);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Image = global::RealEstateManagementSystem.Properties.Resources.refresh;
+            this.btnRefresh.Location = new System.Drawing.Point(458, 287);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(42, 34);
+            this.btnRefresh.TabIndex = 6;
+            this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // frmDef_Locations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Honeydew;
-            this.ClientSize = new System.Drawing.Size(552, 448);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(622, 448);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.pnlDistrict);
+            this.Controls.Add(this.tvLocationDetails);
+            this.Controls.Add(this.pnlLocation);
+            this.Controls.Add(this.pnlArea);
             this.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Maroon;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -265,36 +384,48 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Project Locations";
             this.Load += new System.EventHandler(this.frmDef_Locations_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.pnlDistrict.ResumeLayout(false);
+            this.pnlDistrict.PerformLayout();
+            this.pnlArea.ResumeLayout(false);
+            this.pnlArea.PerformLayout();
+            this.pnlLocation.ResumeLayout(false);
+            this.pnlLocation.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.ComboBox cmbAreas;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbDistrict;
+        private System.Windows.Forms.TreeView tvLocationDetails;
+        private System.Windows.Forms.Panel pnlDistrict;
+        private System.Windows.Forms.TextBox txtDistrictName;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListView lstLocationDetails;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Panel pnlArea;
+        private System.Windows.Forms.TextBox txtAreaName;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbA_District;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel pnlLocation;
         private System.Windows.Forms.TextBox txtLocationName;
-        private System.Windows.Forms.ComboBox cmbArea_Edit;
+        private System.Windows.Forms.ComboBox cmbL_Area;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cmbL_District;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cmbDistrict_Edit;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnRefresh_PI;
-        private System.Windows.Forms.Button btnSaveData;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label14;
-
-
-
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.TextBox txtDistrictName_Bangla;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtAreaName_Bangla;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtLocationName_Bangla;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ImageList imgDefLocation;
+        public System.Windows.Forms.RadioButton rbLocation;
+        public System.Windows.Forms.RadioButton rbArea;
+        public System.Windows.Forms.RadioButton rbDistrict;
     }
 }

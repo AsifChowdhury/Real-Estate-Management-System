@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace RealEstateManagementSystem.BusinessLogicLayer
 {
+
     class bllProjectInfo
     {
         private dalProjectInfo dLayer = new dalProjectInfo();
@@ -23,44 +24,31 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public string ProjectName_InBangla { get; set; }
         public string ProjectAddress { get; set; }
         public string ProjectAddress_InBangla { get; set; }
-
         public DateTime AgreementSignDate { get; set; }
         public bool IsAgreementSigned { get; set; }
-
         public DateTime PlotTakeOverDate { get; set; }
         public bool IsPlotTakenOver { get; set; }
-
         public DateTime ApprovalDate { get; set; }
         public bool IsProjectApproved { get; set; }
-
         public DateTime ConstructionStartedOn { get; set; }
         public bool IsConstructionStarted { get; set; }
-
         public DateTime SaleStartedOn { get; set; }
         public bool IsSaleStarted { get; set; }
-
         public DateTime ActualCompletion { get; set; }
         public bool IsActuallyCompleted { get; set; }
-
         public DateTime EstimatedHandoverDate { get; set; }
-
         public bool IsEstimatedHandoverDateSet { get; set; }
-
         public DateTime ActualHandoverDate { get; set; }
         public bool IsHandedOver { get; set; }
-
         public decimal ConstructionDuration { get; set; }
         public decimal ConstructionGracePeriod { get; set; }
         public decimal LandArea { get; set; }
         public string Remarks { get; set; }
         public int ProjectCode { get; set; }
         public string GeoLocation { get; set; }
-        public string GeoLocation_Lat { get; set; }
-
         public int ProjectSignatoryId { get; set; }
         public string ProjectSignatory { get; set; }
         public string ApprovalNumber { get; set; }
-        public int LocationId { get; set; }
         public string ProjectLocation { get; set; }
         public int InChargeId { get; set; }
         public string ProjectInCharge { get; set; }
@@ -72,18 +60,13 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public string ProjectType { get; set; }
         public int LandTypeId { get; set; }
         public string LandType { get; set; }
-
         public bool IsAvailableInDB { get; set; }
+
+
         public string AvailableInDB { get; set; }
-
         public bool IsPilingNeeded { get; set; }
-        public string PilingNeeded { get; set; }
-
         public bool IsVisibleInWeb { get; set; }
-        public string ShowInWeb { get; set; }
-
         public bool IsCancelledProject { get; set; }
-        public string CancelledProject { get; set; }
         #endregion
 
         #region Building Properties
@@ -93,12 +76,66 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public decimal CountOfBasements { get; set; }
         public decimal CountOfFloors { get; set; }
         public string FloorInformation { get; set; }
+        public int FloorId { get; set; }
+        public string FloorType { get; set; }
+        public string FormattedFloorNumber { get; set; }
+
         #endregion
 
         #region Building Specification
         public int SpecificationTypeId { get; set; }
         public string SpecificationType { get; set; }
         public string SpecificationDetails { get; set; }
+        #endregion
+
+        #region District/Area/Location
+        public int DistrictId { get; set; }
+        public string DistrictName { get; set; }
+        public string DistrictName_Bangla { get; set; }
+        public int AreaId { get; set; }
+        public string AreaName { get; set; }
+        public string AreaName_Bangla { get; set; }
+        public int LocationId { get; set; }
+        public string LocationName { get; set; }
+        public string LocationName_Bangla { get; set; }
+        #endregion
+
+        #region Payment Policy
+        public int BookingMoney { get; set; }
+        public int DownPayment { get; set; }
+        public int UtilityConnectionFee { get; set; }
+        #endregion
+
+        #region UnitProperties
+        public bool IsEditable { get; set; }
+        public int UnitId { get; set; }
+        public string UnitNumber { get; set; }
+        public int UnitTypeId { get; set; }
+        public string UnitType { get; set; }
+        public decimal UnitArea { get; set; }
+        public decimal Rate { get; set; }
+        public string UnitSpecification { get; set; }
+        public string Owner { get; set; }
+        public int FacingId { get; set; }
+        public string Facing { get; set; }
+        public int TypeOfUnitId { get; set; }
+        public string TypeOfUnit { get; set; }
+        public bool IsNumberEnabled { get; set; }
+        public bool IsTypeEnabled { get; set; }
+        public bool IsFacingEnabled { get; set; }
+        public bool IsAreaEnabled { get; set; }
+        public bool IsMasterUnit { get; set; }
+        public string UnitInitial { get; set; }
+        public bool IsSaleable { get; set; }
+        public bool IsBlocked { get; set; }
+        public bool IsParkingAvailable { get; set; }
+        #endregion
+
+        #region UnitBlocking
+        public DateTime BlockStart { get; set; }
+        public DateTime BlockEnd { get; set; }
+        public string BlockRemarks { get; set; }
+
         #endregion
 
         #endregion
@@ -117,11 +154,23 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             catch (Exception ex) { throw ex; }
         }
 
+        internal void GetAreaInfo()
+        {
+            try { dLayer.GetAreaInfo(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void GetLocationInfo()
+        {
+            try { dLayer.GetLocationInfo(this); }
+            catch (Exception ex) { throw ex; }
+        }
 
         internal void PopulateListOfAreas(ComboBox cmbAreas, string districtName)
         {
             try
             {
+                clsCommonFunctions.ResetComboBox(cmbAreas);
                 cmbAreas.DataSource = dLayer.PopulateListOfAreas(districtName).Tables[0];
                 cmbAreas.DisplayMember = "AreaName";
                 cmbAreas.ValueMember = "AreaId";
@@ -149,16 +198,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             catch (Exception ex) { throw ex; }
         }
 
-        internal void PopulateProjectsCombo(ComboBox cmbProjectName, clsGlobalClass.ProjectStatus projectStatus)
-        {
-            try
-            {
-                cmbProjectName.DataSource = dLayer.PopulateProjectsCombo(projectStatus).Tables[0];
-                cmbProjectName.DisplayMember = "ProjectName";
-                cmbProjectName.ValueMember = "ProjectId";
-            }
-            catch (Exception ex) { throw ex; }
-        }
+
 
         internal DataTable GetListOfProjectSpecifications()
         {
@@ -238,6 +278,12 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             catch (Exception ex) { throw ex; }
         }
 
+        internal void ManipulateUnitInformation()
+        {
+            try { dLayer.ManipulateUnitInformation(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
         internal void ManipulateProjectInfo()
         {
             try { dLayer.ManipulateProjectInfo(this); }
@@ -266,7 +312,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         internal void ManipulateBuildingCount(int countOfBuilding)
         {
             try { dLayer.ManipulateBuildingCount(this.ProjectId, countOfBuilding); }
-            catch (Exception ex){ throw ex; }
+            catch (Exception ex) { throw ex; }
         }
 
         internal void GetBuildingDetails()
@@ -291,6 +337,180 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         {
             try { dLayer.GetProjectSpecificationDetails(this); }
             catch (Exception ex) { throw ex; }
+        }
+
+        internal DataSet GetProjectSummary(int projectId)
+        {
+            try { return dLayer.GetProjectSummary(projectId); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal DataTable GetListOfDistricts()
+        {
+            try { return dLayer.GetListOfDistricts(); }
+            catch (Exception ex) { throw ex; }
+        }
+        internal DataTable GetListOfAreas(int districtId)
+        {
+            try { return dLayer.GetListOfAreas(districtId); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal DataTable GetListOfLocations(int areaId)
+        {
+            try { return dLayer.GetListOfLocations(areaId); }
+            catch (Exception ex) { throw ex; }
+        }
+        internal void ManipulateDistrictInfo()
+        {
+            try { dLayer.ManipulateDistrictInfo(this.DistrictId, this.DistrictName, this.DistrictName_Bangla); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal int GetNewProjectCode()
+        {
+            return dLayer.GetNewProjectCode();
+        }
+
+        internal DataSet GetUnitDetailsOfProject(int projectId)
+        {
+            return dLayer.GetUnitDetailsOfProject(projectId);
+        }
+
+        internal void ManipulateAreaInfo()
+        {
+            try { dLayer.ManipulateAreaInfo(this.DistrictId, this.AreaId, this.AreaName, this.AreaName_Bangla); }
+            catch (Exception ex) { throw ex; }
+        }
+        internal void ManipulateLocationInfo()
+        {
+            try { dLayer.ManipulateLocationInfo(this.AreaId, this.LocationId, this.LocationName, this.LocationName_Bangla); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void GetDistrictInfo()
+        {
+            try { dLayer.GetDistrictInfo(this); }
+            catch (Exception ex) { throw ex; }
+        }
+        internal DataTable GetListOfUnitTypesInBuilding(int buildingId)
+        {
+            try { return dLayer.GetListOfUnitTypesInBuilding(buildingId); }
+            catch (Exception ex) { throw ex; }
+        }
+        internal DataTable GetListOfUnitsByUnitTypeAndBuildingId(string unitType, int buildingId)
+        {
+            try { return dLayer.GetListOfUnitsByUnitTypeAndBuildingId(unitType, buildingId); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void ManipulateProjectPaymentPolicy()
+        {
+            try { dLayer.ManipulateProjectPaymentPolicy(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void PopulateBuildingsCombo(int projectId, ComboBox cmbBuilding)
+        {
+            try
+            {
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember
+                                  (CommandType.Text,
+                                  "SELECT BNumber, BuildingId FROM BuildingNumber WHERE ProjectId = " + projectId,
+                                  "BNumber", "BuildingId", cmbBuilding, false);
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void BlockUnit()
+        {
+            dLayer.BlockUnit(this);
+        }
+
+        internal void PopulateFloorsCombo(int buildingId, ComboBox cmbFloorNumber)
+        {
+            try
+            {
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember
+                            (CommandType.Text,
+                             "SELECT FloorId, dbo.fnGetFormattedFloorNumber(FloorType, FloorNumber) [Floor], FloorNumber FROM FloorInfo where BuildingId = " + buildingId + " ORDER BY FloorType, FloorNumber ASC",
+                             "Floor", "FloorId", cmbFloorNumber, false);
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal DataTable GetUnitBlockingHistory(int unitId)
+        {
+            return dLayer.GetUnitBlockingHistory(unitId);
+        }
+
+        internal void PopulateTypeOfUnitCombo(ComboBox cmbType)
+        {
+            try
+            {
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT * FROM defFlatType ORDER BY FlatType", "FlatType", "FlatTypeId", cmbType, false);
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void UnBlockUnit(int unitId)
+        {
+            dLayer.UnBlockUnit(unitId);
+        }
+
+        internal void PopulateFacingCombo(ComboBox cmbFacing)
+        {
+            try
+            {
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT FacingId, FacingDefinition FROM defFacing ORDER BY FacingDefinition", "FacingDefinition", "FacingId", cmbFacing, false);
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void PopulateUnitTypeCombo(ComboBox cmbUnitType)
+        {
+            try
+            {
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember
+                                (CommandType.Text,
+                                 "SELECT ObjectTypeID, ObjectType FROM ObjectType ORDER BY ObjectType",
+                                 "ObjectType", "ObjectTypeId",
+                                 cmbUnitType, false);
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal void GetUnitTypeProperties()
+        {
+            try { dLayer.GetUnitTypeProperties(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal string GenerateUnitNumber(int unitTypeId, int typeOfUnitId, int floorId)
+        {
+            try { return dLayer.GenerateUnitNumber(unitTypeId, typeOfUnitId, floorId); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal DataTable GetListOfUnitsInProject()
+        {
+            try { return dLayer.GetListOfUnitsInProject(this.ProjectId); }
+            catch (Exception ex) { throw ex; }
+        }
+        internal void GetUnitInformation()
+        {
+            try { dLayer.GetUnitInformation(this); }
+            catch (Exception ex) { throw ex; }
+        }
+
+        internal DataTable GetListOfHashParking(int projectId)
+        {
+            return dLayer.GetListOfHashParking(ProjectId);
+        }
+
+        internal void UpdateHashParking(int unitId, string parkingNumber, int projectId)
+        {
+            dLayer.UpdateHashParking(unitId, parkingNumber, projectId);
         }
     }
 }

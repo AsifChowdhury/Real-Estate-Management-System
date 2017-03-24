@@ -63,6 +63,16 @@ namespace RealEstateManagementSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Add {
+            get {
+                object obj = ResourceManager.GetObject("Add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap add_definition {
             get {
                 object obj = ResourceManager.GetObject("add_definition", resourceCulture);
@@ -76,6 +86,16 @@ namespace RealEstateManagementSystem.Properties {
         internal static System.Drawing.Bitmap add_to_list {
             get {
                 object obj = ResourceManager.GetObject("add_to_list", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap admin_console {
+            get {
+                object obj = ResourceManager.GetObject("admin_console", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -110,9 +130,109 @@ namespace RealEstateManagementSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Building {
+            get {
+                object obj = ResourceManager.GetObject("Building", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Building1 {
+            get {
+                object obj = ResourceManager.GetObject("Building1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap businessreport {
             get {
                 object obj = ResourceManager.GetObject("businessreport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon cancelled {
+            get {
+                object obj = ResourceManager.GetObject("cancelled", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CarParking {
+            get {
+                object obj = ResourceManager.GetObject("CarParking", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon ClientInformation {
+            get {
+                object obj = ResourceManager.GetObject("ClientInformation", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon ClientSearch {
+            get {
+                object obj = ResourceManager.GetObject("ClientSearch", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CommercialUnit {
+            get {
+                object obj = ResourceManager.GetObject("CommercialUnit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap copy {
+            get {
+                object obj = ResourceManager.GetObject("copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap copy_client {
+            get {
+                object obj = ResourceManager.GetObject("copy_client", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cross {
+            get {
+                object obj = ResourceManager.GetObject("cross", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -134,6 +254,36 @@ namespace RealEstateManagementSystem.Properties {
             get {
                 object obj = ResourceManager.GetObject("definition", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete {
+            get {
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap family_512 {
+            get {
+                object obj = ResourceManager.GetObject("family_512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap family_64 {
+            get {
+                object obj = ResourceManager.GetObject("family_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -179,9 +329,39 @@ namespace RealEstateManagementSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap load_to_right {
+            get {
+                object obj = ResourceManager.GetObject("load_to_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap login {
             get {
                 object obj = ResourceManager.GetObject("login", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap login_circle {
+            get {
+                object obj = ResourceManager.GetObject("login_circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap login_sketch {
+            get {
+                object obj = ResourceManager.GetObject("login_sketch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -219,9 +399,69 @@ namespace RealEstateManagementSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap new_client {
+            get {
+                object obj = ResourceManager.GetObject("new_client", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NoPhoto {
+            get {
+                object obj = ResourceManager.GetObject("NoPhoto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NoSign {
+            get {
+                object obj = ResourceManager.GetObject("NoSign", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap payment {
+            get {
+                object obj = ResourceManager.GetObject("payment", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon payment1 {
+            get {
+                object obj = ResourceManager.GetObject("payment1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap printer {
             get {
                 object obj = ResourceManager.GetObject("printer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap recovery {
+            get {
+                object obj = ResourceManager.GetObject("recovery", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,6 +513,15 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        internal static string regPassword {
+            get {
+                return ResourceManager.GetString("regPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HKEY_CURRENT_USER.
         /// </summary>
         internal static string regRoot {
@@ -287,6 +536,25 @@ namespace RealEstateManagementSystem.Properties {
         internal static string regSubKey {
             get {
                 return ResourceManager.GetString("regSubKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UserId.
+        /// </summary>
+        internal static string regUserId {
+            get {
+                return ResourceManager.GetString("regUserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Remove {
+            get {
+                object obj = ResourceManager.GetObject("Remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -331,6 +599,66 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ResidentialUnit {
+            get {
+                object obj = ResourceManager.GetObject("ResidentialUnit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sales {
+            get {
+                object obj = ResourceManager.GetObject("Sales", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap save {
+            get {
+                object obj = ResourceManager.GetObject("save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap search {
+            get {
+                object obj = ResourceManager.GetObject("search", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon search1 {
+            get {
+                object obj = ResourceManager.GetObject("search1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SearchClient {
+            get {
+                object obj = ResourceManager.GetObject("SearchClient", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon server_check {
@@ -341,11 +669,70 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ServicedApartment {
+            get {
+                object obj = ResourceManager.GetObject("ServicedApartment", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Shop {
+            get {
+                object obj = ResourceManager.GetObject("Shop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ShowRoom {
+            get {
+                object obj = ResourceManager.GetObject("ShowRoom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sold {
+            get {
+                object obj = ResourceManager.GetObject("sold", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon sold1 {
+            get {
+                object obj = ResourceManager.GetObject("sold1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation Cancelled by User..
         /// </summary>
         internal static string strCancelledByUser {
             get {
                 return ResourceManager.GetString("strCancelledByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collecting Data....
+        /// </summary>
+        internal static string strCollectingData {
+            get {
+                return ResourceManager.GetString("strCollectingData", resourceCulture);
             }
         }
         
@@ -377,12 +764,48 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operation Failed. Please read the following exception message carefully. If needed, feel free to contact IT.
-        ///Exception Message: .
+        ///   Looks up a localized string similar to Operation Failed.
+        ///Reason: .
         /// </summary>
         internal static string strFailedMessage {
             get {
                 return ResourceManager.GetString("strFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sure about insert this new record?.
+        /// </summary>
+        internal static string strInsertConfirmation {
+            get {
+                return ResourceManager.GetString("strInsertConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to প্রযোজ্য নয়.
+        /// </summary>
+        internal static string strNotApplicableInBangla {
+            get {
+                return ResourceManager.GetString("strNotApplicableInBangla", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing Data....
+        /// </summary>
+        internal static string strPreparingData {
+            get {
+                return ResourceManager.GetString("strPreparingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready.
+        /// </summary>
+        internal static string strReadyStatus {
+            get {
+                return ResourceManager.GetString("strReadyStatus", resourceCulture);
             }
         }
         
@@ -410,6 +833,35 @@ namespace RealEstateManagementSystem.Properties {
         internal static string strSuccessMessage {
             get {
                 return ResourceManager.GetString("strSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation failed because of a system error. We apologize for that and one of our developers is being notified. Please read the following exception message carefully. If needed, feel free to contact IT.
+        ///Exception Message: .
+        /// </summary>
+        internal static string strSystemErrorMessage {
+            get {
+                return ResourceManager.GetString("strSystemErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sure about update this existing record?.
+        /// </summary>
+        internal static string strUpdateConfirmation {
+            get {
+                return ResourceManager.GetString("strUpdateConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UnitTypeNotFound {
+            get {
+                object obj = ResourceManager.GetObject("UnitTypeNotFound", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

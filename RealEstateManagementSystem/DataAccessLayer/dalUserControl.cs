@@ -23,6 +23,9 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@userId", b.UserId);
                 cmd.Parameters.AddWithValue("@password", b.Password);
+                cmd.Parameters.AddWithValue("@applicationId", clsGlobalClass.applicationId);
+                cmd.Parameters.AddWithValue("@version", clsGlobalClass.currentVersion);
+                cmd.Parameters.AddWithValue("@terminal", clsGlobalClass.workStationIP);
                 SqlParameter isValid = new SqlParameter("@isValid", SqlDbType.Bit);
                 isValid.Direction = ParameterDirection.Output;
                 cmd.Parameters.Add(isValid);

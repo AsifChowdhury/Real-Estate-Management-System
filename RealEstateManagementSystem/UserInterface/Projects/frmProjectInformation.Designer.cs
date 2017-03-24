@@ -120,6 +120,17 @@
             this.cmbProjectSpecificationType = new System.Windows.Forms.ComboBox();
             this.label40 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnPaymentPolicy = new System.Windows.Forms.Button();
+            this.label41 = new System.Windows.Forms.Label();
+            this.txtUtilityConnectionFee = new System.Windows.Forms.TextBox();
+            this.txtDownPayment = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.txtBookingMoney = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.ssProjectInformation = new System.Windows.Forms.StatusStrip();
             this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1.SuspendLayout();
@@ -128,6 +139,7 @@
             this.tpBuildingFloor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudBuildingCount)).BeginInit();
             this.tpSpecification.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.ssProjectInformation.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -181,6 +193,7 @@
             this.tabControl1.Controls.Add(this.tpProjectInfo);
             this.tabControl1.Controls.Add(this.tpBuildingFloor);
             this.tabControl1.Controls.Add(this.tpSpecification);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(9, 63);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -265,7 +278,7 @@
             this.txtLandArea.Size = new System.Drawing.Size(56, 22);
             this.txtLandArea.TabIndex = 16;
             this.txtLandArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtLandArea.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtLandArea.Enter += new System.EventHandler(this.SelectAll);
             this.txtLandArea.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
             // 
             // txtConstructionGracePeriod
@@ -274,8 +287,8 @@
             this.txtConstructionGracePeriod.Name = "txtConstructionGracePeriod";
             this.txtConstructionGracePeriod.Size = new System.Drawing.Size(56, 22);
             this.txtConstructionGracePeriod.TabIndex = 12;
-            this.txtConstructionGracePeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtConstructionGracePeriod.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtConstructionGracePeriod.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtConstructionGracePeriod.Enter += new System.EventHandler(this.SelectAll);
             this.txtConstructionGracePeriod.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
             // 
             // txtConstructionDuration
@@ -284,8 +297,8 @@
             this.txtConstructionDuration.Name = "txtConstructionDuration";
             this.txtConstructionDuration.Size = new System.Drawing.Size(56, 22);
             this.txtConstructionDuration.TabIndex = 11;
-            this.txtConstructionDuration.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtConstructionDuration.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtConstructionDuration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtConstructionDuration.Enter += new System.EventHandler(this.SelectAll);
             this.txtConstructionDuration.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
             // 
             // txtProjectCode
@@ -294,8 +307,8 @@
             this.txtProjectCode.Name = "txtProjectCode";
             this.txtProjectCode.Size = new System.Drawing.Size(56, 22);
             this.txtProjectCode.TabIndex = 1;
-            this.txtProjectCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtProjectCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtProjectCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtProjectCode.Enter += new System.EventHandler(this.SelectAll);
             this.txtProjectCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
             // 
             // chkNeedPiling
@@ -345,7 +358,7 @@
             this.txtGeoLocation.Name = "txtGeoLocation";
             this.txtGeoLocation.Size = new System.Drawing.Size(324, 22);
             this.txtGeoLocation.TabIndex = 17;
-            this.txtGeoLocation.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtGeoLocation.Enter += new System.EventHandler(this.SelectAll);
             // 
             // btnRefresh_PI
             // 
@@ -364,6 +377,7 @@
             // btnSaveData
             // 
             this.btnSaveData.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSaveData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveData.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
             this.btnSaveData.Location = new System.Drawing.Point(585, 401);
             this.btnSaveData.Name = "btnSaveData";
@@ -555,7 +569,7 @@
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(605, 22);
             this.txtAddress.TabIndex = 4;
-            this.txtAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtAddress.Enter += new System.EventHandler(this.SelectAll);
             // 
             // label19
             // 
@@ -600,13 +614,13 @@
             this.txtAddress_Bangla.Name = "txtAddress_Bangla";
             this.txtAddress_Bangla.Size = new System.Drawing.Size(605, 22);
             this.txtAddress_Bangla.TabIndex = 5;
-            this.txtAddress_Bangla.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtAddress_Bangla.Enter += new System.EventHandler(this.SelectAll);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(30, 93);
+            this.label18.Location = new System.Drawing.Point(30, 94);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(54, 18);
             this.label18.TabIndex = 2;
@@ -618,7 +632,7 @@
             this.txtProjectName_Bangla.Name = "txtProjectName_Bangla";
             this.txtProjectName_Bangla.Size = new System.Drawing.Size(271, 22);
             this.txtProjectName_Bangla.TabIndex = 3;
-            this.txtProjectName_Bangla.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtProjectName_Bangla.Enter += new System.EventHandler(this.SelectAll);
             // 
             // label14
             // 
@@ -636,7 +650,7 @@
             this.txtRemarks.Name = "txtRemarks";
             this.txtRemarks.Size = new System.Drawing.Size(554, 22);
             this.txtRemarks.TabIndex = 20;
-            this.txtRemarks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtRemarks.Enter += new System.EventHandler(this.SelectAll);
             // 
             // label27
             // 
@@ -653,7 +667,7 @@
             this.txtApprovalNumber.Name = "txtApprovalNumber";
             this.txtApprovalNumber.Size = new System.Drawing.Size(303, 22);
             this.txtApprovalNumber.TabIndex = 18;
-            this.txtApprovalNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtApprovalNumber.Enter += new System.EventHandler(this.SelectAll);
             // 
             // label25
             // 
@@ -670,7 +684,7 @@
             this.txtProjectName.Name = "txtProjectName";
             this.txtProjectName.Size = new System.Drawing.Size(254, 22);
             this.txtProjectName.TabIndex = 2;
-            this.txtProjectName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtProjectName.Enter += new System.EventHandler(this.SelectAll);
             // 
             // label4
             // 
@@ -847,7 +861,7 @@
             this.txtCountOfFloor.Size = new System.Drawing.Size(53, 22);
             this.txtCountOfFloor.TabIndex = 5;
             this.txtCountOfFloor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtCountOfFloor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtCountOfFloor.Enter += new System.EventHandler(this.SelectAll);
             this.txtCountOfFloor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
             // 
             // txtCountOfBasement
@@ -857,7 +871,7 @@
             this.txtCountOfBasement.Size = new System.Drawing.Size(53, 22);
             this.txtCountOfBasement.TabIndex = 4;
             this.txtCountOfBasement.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtCountOfBasement.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SelectAll);
+            this.txtCountOfBasement.Enter += new System.EventHandler(this.SelectAll);
             this.txtCountOfBasement.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
             // 
             // nudBuildingCount
@@ -1021,6 +1035,7 @@
             // btnManipulateSpecification
             // 
             this.btnManipulateSpecification.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnManipulateSpecification.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnManipulateSpecification.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
             this.btnManipulateSpecification.Location = new System.Drawing.Point(610, 410);
             this.btnManipulateSpecification.Name = "btnManipulateSpecification";
@@ -1078,6 +1093,126 @@
             this.label39.TabIndex = 0;
             this.label39.Text = "Specification Type:";
             // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.Color.Honeydew;
+            this.tabPage1.Controls.Add(this.btnPaymentPolicy);
+            this.tabPage1.Controls.Add(this.label41);
+            this.tabPage1.Controls.Add(this.txtUtilityConnectionFee);
+            this.tabPage1.Controls.Add(this.txtDownPayment);
+            this.tabPage1.Controls.Add(this.label35);
+            this.tabPage1.Controls.Add(this.label36);
+            this.tabPage1.Controls.Add(this.txtBookingMoney);
+            this.tabPage1.Controls.Add(this.label34);
+            this.tabPage1.Controls.Add(this.label32);
+            this.tabPage1.Controls.Add(this.label24);
+            this.tabPage1.Location = new System.Drawing.Point(4, 23);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(696, 466);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Payment Policy";
+            // 
+            // btnPaymentPolicy
+            // 
+            this.btnPaymentPolicy.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaymentPolicy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPaymentPolicy.Image = global::RealEstateManagementSystem.Properties.Resources.insert;
+            this.btnPaymentPolicy.Location = new System.Drawing.Point(530, 19);
+            this.btnPaymentPolicy.Name = "btnPaymentPolicy";
+            this.btnPaymentPolicy.Size = new System.Drawing.Size(77, 48);
+            this.btnPaymentPolicy.TabIndex = 3;
+            this.btnPaymentPolicy.Text = "Save";
+            this.btnPaymentPolicy.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnPaymentPolicy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnPaymentPolicy.UseVisualStyleBackColor = true;
+            this.btnPaymentPolicy.Click += new System.EventHandler(this.btnPaymentPolicy_Click);
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(475, 49);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(49, 14);
+            this.label41.TabIndex = 2;
+            this.label41.Text = "/= Tk.";
+            // 
+            // txtUtilityConnectionFee
+            // 
+            this.txtUtilityConnectionFee.Location = new System.Drawing.Point(344, 45);
+            this.txtUtilityConnectionFee.Name = "txtUtilityConnectionFee";
+            this.txtUtilityConnectionFee.Size = new System.Drawing.Size(130, 22);
+            this.txtUtilityConnectionFee.TabIndex = 2;
+            this.txtUtilityConnectionFee.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtUtilityConnectionFee.Enter += new System.EventHandler(this.SelectAll);
+            this.txtUtilityConnectionFee.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
+            this.txtUtilityConnectionFee.Leave += new System.EventHandler(this.txtUtilityConnectionFee_Leave);
+            // 
+            // txtDownPayment
+            // 
+            this.txtDownPayment.Location = new System.Drawing.Point(152, 45);
+            this.txtDownPayment.Name = "txtDownPayment";
+            this.txtDownPayment.Size = new System.Drawing.Size(48, 22);
+            this.txtDownPayment.TabIndex = 1;
+            this.txtDownPayment.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtDownPayment.Enter += new System.EventHandler(this.SelectAll);
+            this.txtDownPayment.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(202, 49);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(14, 14);
+            this.label35.TabIndex = 0;
+            this.label35.Text = "%";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(224, 49);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(119, 14);
+            this.label36.TabIndex = 0;
+            this.label36.Text = "Additional Cost:";
+            // 
+            // txtBookingMoney
+            // 
+            this.txtBookingMoney.Location = new System.Drawing.Point(152, 17);
+            this.txtBookingMoney.Name = "txtBookingMoney";
+            this.txtBookingMoney.Size = new System.Drawing.Size(48, 22);
+            this.txtBookingMoney.TabIndex = 0;
+            this.txtBookingMoney.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBookingMoney.Enter += new System.EventHandler(this.SelectAll);
+            this.txtBookingMoney.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumericOnly);
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(48, 49);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(98, 14);
+            this.label34.TabIndex = 0;
+            this.label34.Text = "Down Payment:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(202, 21);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(14, 14);
+            this.label32.TabIndex = 0;
+            this.label32.Text = "%";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(41, 21);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(105, 14);
+            this.label24.TabIndex = 0;
+            this.label24.Text = "Booking Money:";
+            // 
             // ssProjectInformation
             // 
             this.ssProjectInformation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1115,7 +1250,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmProjectInformation";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Project Information";
             this.Load += new System.EventHandler(this.frmProjectInformation_Load);
@@ -1130,6 +1264,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudBuildingCount)).EndInit();
             this.tpSpecification.ResumeLayout(false);
             this.tpSpecification.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ssProjectInformation.ResumeLayout(false);
             this.ssProjectInformation.PerformLayout();
             this.ResumeLayout(false);
@@ -1232,5 +1368,16 @@
         private System.Windows.Forms.TextBox txtConstructionDuration;
         private System.Windows.Forms.TextBox txtCountOfFloor;
         private System.Windows.Forms.TextBox txtCountOfBasement;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TextBox txtBookingMoney;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox txtUtilityConnectionFee;
+        private System.Windows.Forms.TextBox txtDownPayment;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Button btnPaymentPolicy;
     }
 }

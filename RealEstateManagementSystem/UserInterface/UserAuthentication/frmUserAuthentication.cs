@@ -59,7 +59,7 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
                     }
                 }
             }
-            catch (Exception ex) { clsCommonFunctions.LogError(ex); }
+            catch (Exception ex) { ex.Display(); }
         }
 
         private void PopulateAuthenticationList()
@@ -87,18 +87,17 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
             try
             {
                 DialogResult dr = MessageBox.Show(Resources.strConfirmationMessage, Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == DialogResult.No)
-                {
-                    throw new ApplicationException(Resources.strCancelledByUser);
-                }
+                if (dr == DialogResult.No) { throw new ApplicationException(Resources.strCancelledByUser); }
+                if (MessageBox.Show("Are you sure you want to authenticate selected users to use this app?", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) throw new ApplicationException(Resources.strCancelledByUser);
                 foreach (ListViewItem lvItems in lvAppAuthentication.Items)
                 {
                     bLayer.UserId = lvItems.Text.ToString();
                     bLayer.IsAllowed = lvItems.Checked;
                     bLayer.SetAppAuthentication();
                 }
+                MessageBox.Show("User authenticated successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { clsCommonFunctions.LogError(ex); }
+            catch (Exception ex) { ex.Display(); }
 
 
         }
@@ -127,7 +126,7 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
                     btnSetMenuPermission.Enabled = false;
                 }
             }
-            catch (Exception ex) { clsCommonFunctions.LogError(ex); }
+            catch (Exception ex) { ex.Display(); }
 
         }
 
@@ -136,12 +135,12 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
             try
             {
                 DialogResult dr = MessageBox.Show("Are you sure about approve this authentication list?", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == DialogResult.No) throw new  ApplicationException(Resources.strCancelledByUser);
+                if (dr == DialogResult.No) throw new ApplicationException(Resources.strCancelledByUser);
                 UpdateMenuItems();
                 SetMenuPermission();
                 MessageBox.Show("Authentication applied successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { clsCommonFunctions.LogError(ex); }
+            catch (Exception ex) { ex.Display(); }
         }
 
         private void SetMenuPermission()

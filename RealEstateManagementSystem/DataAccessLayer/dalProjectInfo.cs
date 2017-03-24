@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using RealEstateManagementSystem.Utilities;
 using RealEstateManagementSystem.BusinessLogicLayer;
 
+
+
 namespace RealEstateManagementSystem.DataAccessLayer
 {
     class dalProjectInfo
@@ -51,6 +53,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 return dt;
             }
             catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
         internal DataSet PopulateProjectsCombo(clsGlobalClass.ProjectStatus projectStatus)
@@ -62,10 +65,23 @@ namespace RealEstateManagementSystem.DataAccessLayer
             {
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = projectStatus != clsGlobalClass.ProjectStatus.All ?
-                                  "SELECT ProjectId, ProjectName FROM ProjectDetails WHERE ProjectStatus = @projectStatus ORDER BY ProjectName" :
-                                  "SELECT ProjectId, ProjectName FROM ProjectDetails ORDER BY ProjectName";
+                string qry = "SELECT ProjectId, ProjectName FROM ProjectDetails";
+                switch (projectStatus)
+                {
+                    case clsGlobalClass.ProjectStatus.All:
+                        qry = qry + " ";
+                        break;
+                    case clsGlobalClass.ProjectStatus.AllExceptCancelled:
+                        qry = qry + " WHERE ProjectStatus <> @projectStatus";
+                        break;
+                    default:
+                        qry = qry + " WHERE ProjectStatus = @projectStatus";
+                        break;
+                }
+                qry = qry + " ORDER BY ProjectName";
+                cmd.CommandText = qry;
                 cmd.Parameters.AddWithValue("@projectStatus", projectStatus.ToString());
+
                 da.SelectCommand = cmd;
                 da.Fill(ds);
                 return ds;
@@ -138,12 +154,66 @@ namespace RealEstateManagementSystem.DataAccessLayer
                         b.IsPilingNeeded = Convert.ToBoolean(dr["Pile"].ToString() == "1" ? true : false);
                         b.IsVisibleInWeb = Convert.ToBoolean(dr["ShowInWeb"].ToString() == "1" ? true : false);
                         b.IsCancelledProject = Convert.ToBoolean(dr["IsCanceledProject"].ToString() == "1" ? true : false);
-
+                        //clsExDllClass ex = new clsExDllClass();
+                        b.BookingMoney = Convert.ToInt32(dr["BookingMoney"].ToString());
+                        b.DownPayment = Convert.ToInt32(dr["DownPayment"].ToString());
+                        b.UtilityConnectionFee = Convert.ToInt32(dr["UtilityConnectionFee"].ToString());
                     }
                 }
             }
             catch (Exception ex) { throw ex; }
-            finally { cmd.Dispose(); dr.Dispose(); }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
+        }
+
+        internal void GetLocationInfo(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM LocationDetails WHERE LocationId = @locationId";
+                cmd.Parameters.AddWithValue("@locationId", b.LocationId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        b.DistrictName = dr["DistrictName"].ToString();
+                        b.AreaName = dr["AreaName"].ToString();
+                        b.LocationName = dr["LocationName"].ToString();
+                        b.LocationName_Bangla = dr["LocationName_Bangla"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
+        }
+
+        internal void GetAreaInfo(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT dbo.defArea.*, dbo.defDistrict.DistrictName FROM dbo.defArea INNER JOIN dbo.defDistrict ON dbo.defArea.DistrictId = dbo.defDistrict.DistrictId WHERE (dbo.defArea.AreaId = @areaId)";
+                cmd.Parameters.AddWithValue("@areaId", b.AreaId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        b.AreaName = dr["AreaName"].ToString();
+                        b.AreaName_Bangla = dr["AreaName_Bangla"].ToString();
+                        b.DistrictName = dr["DistrictName"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
         internal DataTable GetListOfProjectSpecifications(int projectId)
@@ -161,10 +231,72 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex)
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal void ManipulateUnitInformation(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
             {
-                throw ex;
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateUnitInformation";
+                cmd.Parameters.AddWithValue("@unitid", b.UnitId);
+                cmd.Parameters.AddWithValue("@floorId", b.FloorId);
+                cmd.Parameters.AddWithValue("@unitNumber", b.UnitNumber);
+                cmd.Parameters.AddWithValue("@area", b.UnitArea);
+                cmd.Parameters.AddWithValue("@rate", b.Rate);
+                cmd.Parameters.AddWithValue("@owner", b.Owner);
+                cmd.Parameters.AddWithValue("@typeOfUnitId", b.TypeOfUnitId);
+                cmd.Parameters.AddWithValue("@facingId", b.FacingId);
+                //cmd.Parameters.AddWithValue("@isBlocked", b.IsBlocked.ConverBooleanToSmallInt());
+                cmd.Parameters.AddWithValue("@unitTypeId", b.UnitTypeId);
+                cmd.Parameters.AddWithValue("@isSaleable", b.IsSaleable.ConverBooleanToSmallInt());
+                cmd.Parameters.AddWithValue("@cpAvailable", b.IsParkingAvailable.ConverBooleanToSmallInt());
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+                //cmd.Dispose();
             }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataSet GetUnitDetailsOfProject(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfUnitInProject";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+            return ds;
+        }
+
+        internal int GetNewProjectCode()
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetNewProjectCode";
+                SqlParameter projectCode = new SqlParameter("@projectCode", SqlDbType.Int);
+                projectCode.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(projectCode);
+                cmd.ExecuteNonQuery();
+                return projectCode.Value.ToString().ConvertToInt32();
+            }
+            finally { cmd.Dispose(); }
         }
 
         internal void ManipulateProjectInfo(bllProjectInfo b)
@@ -210,6 +342,417 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataTable GetUnitBlockingHistory(int unitId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetBlockingHistory";
+                cmd.Parameters.AddWithValue("@unitId", unitId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal void UnBlockUnit(int unitId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateUnitUnBlock";
+                cmd.Parameters.AddWithValue("@unitId", unitId);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal void UpdateHashParking(int unitId, string parkingNumber, int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateHashParking";
+                cmd.Parameters.AddWithValue("@unitId", unitId);
+                cmd.Parameters.AddWithValue("@parkingNumber", parkingNumber);
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataTable GetListOfHashParking(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetHashParkingList";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); }
+        }
+        internal void BlockUnit(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateUnitBlock";
+                cmd.Parameters.AddWithValue("@unitId", b.UnitId);
+                cmd.Parameters.AddWithValue("@blockStart", b.BlockStart);
+                cmd.Parameters.AddWithValue("@blockEnd", b.BlockEnd);
+                cmd.Parameters.AddWithValue("@remarks", b.BlockRemarks);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal void ManipulateProjectPaymentPolicy(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateProjectPaymentPolicy";
+                cmd.Parameters.AddWithValue("@projectId", b.ProjectId);
+                cmd.Parameters.AddWithValue("@bookingMoney", b.BookingMoney);
+                cmd.Parameters.AddWithValue("@downPayment", b.DownPayment);
+                cmd.Parameters.AddWithValue("@utilityConnectionFee", b.UtilityConnectionFee);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataTable GetListOfUnitsByUnitTypeAndBuildingId(string unitType, int buildingId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfUnitsByUnitTypeAndBuildingId";
+                cmd.Parameters.AddWithValue("@buildingId", buildingId);
+                cmd.Parameters.AddWithValue("@unitType", unitType);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetListOfUnitsInProject(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfUnitInProject";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal void GetUnitInformation(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetUnitInfo";
+                cmd.Parameters.AddWithValue("@unitId", b.UnitId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        //b.IsEditable = (dr["ClientId"].ToString().ConvertToInt32() == 0) || (dr["ObjectType"].ToString() == "Car Parking" && dr["FlatNumber"].ToString().Contains("#") == true) ? true : false;
+                        b.IsEditable = Convert.ToString(dr["IsEditable"]).ConvertToBoolean();
+                        b.BuildingName = Convert.ToString(dr["BNumber"]);
+                        b.UnitType = Convert.ToString(dr["ObjectType"]);
+                        b.FormattedFloorNumber = Convert.ToString(dr["FormattedFloorNumber"]);
+                        b.Facing = Convert.ToString(dr["FacingDefinition"]);
+                        b.TypeOfUnit = Convert.ToString(dr["FlatType"]);
+                        b.UnitNumber = Convert.ToString(dr["FlatNumber"]);
+                        b.Owner = Convert.ToString(dr["Owner"]);
+                        b.UnitArea = Convert.ToString(dr["Area"]).ConvertToDecimal();
+                        b.Rate = Convert.ToString(dr["Rate"]).ConvertToDecimal();
+                        b.IsNumberEnabled = Convert.ToString(dr["NumberEnabled"]).ConvertToBoolean();
+                        b.IsFacingEnabled = Convert.ToString(dr["FacingEnabled"]).ConvertToBoolean();
+                        b.IsTypeEnabled = Convert.ToString(dr["TypeEnabled"]).ConvertToBoolean();
+                        b.IsAreaEnabled = Convert.ToString(dr["AreaEnabled"]).ConvertToBoolean();
+                        b.IsSaleable = Convert.ToString(dr["IsSaleable"]).ConvertToBoolean();
+                        b.IsBlocked = Convert.ToString(dr["Blocked"]).ConvertToBoolean();
+                        b.IsParkingAvailable = Convert.ToString(dr["CPAvailable"]).ConvertToBoolean();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { dr.Close(); cmd.Dispose(); }
+        }
+
+        internal DataTable GetListOfUnitTypesInBuilding(int buildingId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT DISTINCT ObjectType FROM vwUnitDetails WHERE BuildingId = @buildingId";
+                cmd.Parameters.AddWithValue("@buildingId", buildingId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal void GetUnitTypeProperties(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM ObjectType WHERE ObjectTypeId = @unitTypeId";
+                cmd.Parameters.AddWithValue("@unitTypeId", b.UnitTypeId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        b.IsNumberEnabled = dr["NumberEnabled"].ToString().ConvertToBoolean();
+                        b.IsFacingEnabled = dr["FacingEnabled"].ToString().ConvertToBoolean();
+                        b.IsTypeEnabled = dr["TypeEnabled"].ToString().ConvertToBoolean();
+                        b.IsAreaEnabled = dr["AreaEnabled"].ToString().ConvertToBoolean();
+                        b.IsMasterUnit = dr["IsMasterObject"].ToString().ConvertToBoolean();
+                        b.UnitInitial = dr["Initial"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); dr.Close(); }
+        }
+
+        internal string GenerateUnitNumber(int unitTypeId, int typeOfUnitId, int floorId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GenerateUnitNumber";
+                cmd.Parameters.AddWithValue("@unitTypeId", unitTypeId);
+                cmd.Parameters.AddWithValue("@typeOfUnitId", typeOfUnitId);
+                cmd.Parameters.AddWithValue("@floorId", floorId);
+                SqlParameter prmUnitNumber = new SqlParameter("@unitNumber", SqlDbType.VarChar, 10);
+                prmUnitNumber.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(prmUnitNumber);
+                cmd.ExecuteNonQuery();
+                return prmUnitNumber.Value.ToString();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal void ManipulateAreaInfo(int districtId, int areaId, string areaName, string areaName_Bangla)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateAreaInfo";
+                cmd.Parameters.AddWithValue("@districtId", districtId);
+                cmd.Parameters.AddWithValue("@areaId", areaId);
+                cmd.Parameters.AddWithValue("@areaName", areaName);
+                cmd.Parameters.AddWithValue("@areaName_Bangla", areaName_Bangla);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal void GetDistrictInfo(bllProjectInfo b)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM defDistrict WHERE DistrictId = @districtId";
+                cmd.Parameters.AddWithValue("@districtId", b.DistrictId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        b.DistrictName = dr["DistrictName"].ToString();
+                        b.DistrictName_Bangla = dr["DistrictName_Bangla"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); dr.Close(); }
+        }
+
+        internal void ManipulateLocationInfo(int areaId, int locationId, string locationName, string locationName_Bangla)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateLocationInfo";
+                cmd.Parameters.AddWithValue("@locationId", locationId);
+                cmd.Parameters.AddWithValue("@areaId", areaId);
+                cmd.Parameters.AddWithValue("@locationName", locationName);
+                cmd.Parameters.AddWithValue("@locationName_Bangla", locationName_Bangla);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal void ManipulateDistrictInfo(int districtId, string districtName, string districtName_Bangla)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateDistrictInfo";
+                cmd.Parameters.AddWithValue("@districtId", districtId);
+                cmd.Parameters.AddWithValue("@districtName", districtName);
+                cmd.Parameters.AddWithValue("@districtName_Bangla", districtName_Bangla);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataTable GetListOfLocations(int areaId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM Location WHERE AreaId = @areaId";
+                cmd.Parameters.AddWithValue("@areaId", areaId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetListOfAreas(int districtId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT AreaId, AreaName FROM defArea WHERE DistrictId = @districtId";
+                cmd.Parameters.AddWithValue("@districtId", districtId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetListOfDistricts()
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT DistrictId, DistrictName FROM defDistrict ORDER BY DistrictName";
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataSet GetProjectSummary(int projectId)
+        {
+            SqlCommand cmdDetails = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmdDetails.Connection = Program.cnConn;
+                cmdDetails.CommandType = CommandType.Text;
+                cmdDetails.CommandText = "SELECT * FROM ProjectSummary WHERE ProjectId = @projectId";
+                cmdDetails.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmdDetails;
+                da.Fill(ds);
+                return ds;
+            }
+            catch (Exception ex) { throw ex; }
         }
 
         internal void GetProjectSpecificationDetails(bllProjectInfo b)
@@ -235,7 +778,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
 
             }
             catch (Exception ex) { throw ex; }
-            finally { cmd.Dispose(); dr.Close(); }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
         internal void ManipulateProjectSpecification(bllProjectInfo b)
@@ -252,6 +795,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
         }
 
         internal void ManipulateBuildingData(bllProjectInfo b)
@@ -297,7 +841,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 }
             }
             catch (Exception ex) { throw ex; }
-            finally { cmd.Dispose(); dr.Close(); }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
         internal void ManipulateBuildingCount(int projectId, int countOfBuilding)

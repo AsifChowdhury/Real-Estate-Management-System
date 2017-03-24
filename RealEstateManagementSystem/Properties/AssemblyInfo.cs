@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("REMS")]
-[assembly: AssemblyDescription("Real Estate Management System")]
+[assembly: AssemblyTitle("REMS®")]
+[assembly: AssemblyDescription("Warning: This computer program is protected by copyright law and internatioanl treaties. Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under the law.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("The Structural Engineers Ltd.")]
-[assembly: AssemblyProduct("REMS")]
-[assembly: AssemblyCopyright("Copyright © The Structural Engineers Ltd 2016")]
+[assembly: AssemblyProduct("REMS®")]
+[assembly: AssemblyCopyright("Copyright© The Structural Engineers Ltd.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

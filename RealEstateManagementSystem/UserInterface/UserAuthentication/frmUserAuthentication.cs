@@ -59,7 +59,7 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
                     }
                 }
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void PopulateAuthenticationList()
@@ -97,7 +97,7 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
                 }
                 MessageBox.Show("User authenticated successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
 
         }
@@ -126,7 +126,7 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
                     btnSetMenuPermission.Enabled = false;
                 }
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
         }
 
@@ -140,7 +140,7 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
                 SetMenuPermission();
                 MessageBox.Show("Authentication applied successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void SetMenuPermission()

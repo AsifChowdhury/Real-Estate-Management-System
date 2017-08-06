@@ -142,7 +142,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 ResetForm();
                 MessageBox.Show(Resources.strSuccessMessage, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void tvLocationDetails_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -184,7 +184,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                         break;
                 }
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
     }
 }

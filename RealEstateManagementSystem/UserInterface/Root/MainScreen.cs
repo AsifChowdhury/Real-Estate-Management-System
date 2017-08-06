@@ -14,6 +14,8 @@ using RealEstateManagementSystem.BusinessLogicLayer;
 using RealEstateManagementSystem.UserInterface.UserAuthentication;
 using RealEstateManagementSystem.UserInterface.Clients;
 using RealEstateManagementSystem.UserInterface.Recovery;
+using RealEstateManagementSystem.UserInterface.Accounts;
+using RealEstateManagementSystem.UserInterface.Reports;
 
 namespace RealEstateManagementSystem.UserInterface.Root
 {
@@ -27,6 +29,8 @@ namespace RealEstateManagementSystem.UserInterface.Root
         private frmClientInformation clientInfo = null;
         private frmAbout about = null;
         private frmPayment payment = null;
+        private frmChequeManagement chequeManagement = null;
+        private frmGeneralReports generalReport = null;
         public MainScreen()
         {
             InitializeComponent();
@@ -34,30 +38,24 @@ namespace RealEstateManagementSystem.UserInterface.Root
 
         private Form ShowOrActiveForm(Form form, Type t)
         {
-            try
+            if (form == null)
             {
-                if (form == null)
+                form = (Form)Activator.CreateInstance(t);
+                form.Show();
+            }
+            else
+            {
+                if (form.IsDisposed)
                 {
                     form = (Form)Activator.CreateInstance(t);
-                    //form.MdiParent = this;
                     form.Show();
                 }
                 else
                 {
-                    if (form.IsDisposed)
-                    {
-                        form = (Form)Activator.CreateInstance(t);
-                        //form.MdiParent = this;
-                        form.Show();
-                    }
-                    else
-                    {
-                        form.Activate();
-                    }
+                    form.Activate();
                 }
-                return form;
             }
-            catch (Exception ex) { throw ex; }
+            return form;
         }
 
         private void MainScreen_Load(object sender, EventArgs e)
@@ -72,7 +70,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
                 dtpDataDate.Value = DateTime.Now.AddDays(-30);
                 PopulateChartData();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
 
@@ -81,7 +79,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
             bllGlobal b = new bllGlobal();
             b.StartDate = dtpDataDate.Value;
             b.GetSummaryDataForMainScreen();
-            btnTotalCollection.Text = "Total Collection\n" + b.Collection.FormatAsMoney(true) ;
+            btnTotalCollection.Text = "Total Collection\n" + b.Collection.FormatAsMoney(true);
             btnUnitSold.Text = "Unit(s) Sold\n" + b.UnitSold.FormatAsMoney();
             btnUnitCancelled.Text = "Unit(s) Cancelled\n" + b.UnitCancelled.FormatAsMoney();
         }
@@ -112,7 +110,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
@@ -130,31 +128,31 @@ namespace RealEstateManagementSystem.UserInterface.Root
                     else { e.Cancel = true; }
                 }
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void tsmiProjectInformation_Click(object sender, EventArgs e)
         {
             try { projectInformation = ShowOrActiveForm(projectInformation, typeof(frmProjectInformation)) as frmProjectInformation; }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void tsmiUserAuthentication_Click(object sender, EventArgs e)
         {
             try { userAuthentication = ShowOrActiveForm(userAuthentication, typeof(frmUserAuthentication)) as frmUserAuthentication; }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void tsmiUnitInformation_Click(object sender, EventArgs e)
         {
             try { unitInformation = ShowOrActiveForm(unitInformation, typeof(frmUnitInformation)) as frmUnitInformation; }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void AboutUs_Click(object sender, EventArgs e)
         {
             try { about = ShowOrActiveForm(about, typeof(frmAbout)) as frmAbout; }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { ex.ProcessException(); }
 
 
             //try { sandBox = ShowOrActiveForm(sandBox, typeof(frmSandBox)) as frmSandBox; }
@@ -164,7 +162,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
         private void tsmiClientInformation_Click(object sender, EventArgs e)
         {
             try { clientInfo = ShowOrActiveForm(clientInfo, typeof(frmClientInformation)) as frmClientInformation; }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -174,24 +172,23 @@ namespace RealEstateManagementSystem.UserInterface.Root
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            try
-            {
-                PopulateChartData();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            try { PopulateChartData(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
         }
 
         private void btnTotalCollection_Click(object sender, EventArgs e)
         {
-
+            frmRoot_Collection collection = new frmRoot_Collection();
+            collection.dtpStartDate.Value = dtpDataDate.Value;
+            collection.ShowDialog();
         }
 
         private void btnUnitSold_Click(object sender, EventArgs e)
         {
             PopulateChartData();
             frmRoot_SoldList soldList = new frmRoot_SoldList();
-            soldList.startDate = dtpDataDate.Value;
+            soldList.dtpStartDate.Value = dtpDataDate.Value;
             soldList.ShowDialog();
         }
 
@@ -199,14 +196,26 @@ namespace RealEstateManagementSystem.UserInterface.Root
         {
             PopulateChartData();
             frmRoot_CancelList cancelList = new frmRoot_CancelList();
-            cancelList.startDate = dtpDataDate.Value;
+            cancelList.dtpStartDate.Value = dtpDataDate.Value;
             cancelList.ShowDialog();
         }
 
         private void tsmiPayment_Click(object sender, EventArgs e)
         {
             try { payment = ShowOrActiveForm(payment, typeof(frmPayment)) as frmPayment; }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void tsmiChequeManagement_Click(object sender, EventArgs e)
+        {
+            try { chequeManagement = ShowOrActiveForm(chequeManagement, typeof(frmChequeManagement)) as frmChequeManagement; }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void tsmiClientReports_Click(object sender, EventArgs e)
+        {
+            try { generalReport = ShowOrActiveForm(generalReport, typeof(frmGeneralReports)) as frmGeneralReports; }
+            catch (Exception ex) { ex.ProcessException(); }
         }
     }
 }

@@ -63,7 +63,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 MessageBox.Show(Resources.strSuccessMessage, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 RefreshForm();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)

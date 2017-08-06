@@ -29,7 +29,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 PopulateBankList();
                 PopulateBranchList();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void PopulateBranchList()
@@ -71,7 +71,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 RefreshBankTab();
 
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnRefreshBank_Click(object sender, EventArgs e)
@@ -98,7 +98,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 def.GetBranchInfo(b);
                 txtBranchName.Text = b.BranchName;
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnRefreshBranchTab_Click(object sender, EventArgs e)
@@ -128,7 +128,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 MessageBox.Show("Branch information saved successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 RefreshBranchTab();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void lstBank_SelectedIndexChanged(object sender, EventArgs e)
@@ -142,7 +142,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 def.GetBankInfo(b);
                 txtBankName.Text = b.BankName;
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
         }
     }

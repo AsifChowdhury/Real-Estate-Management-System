@@ -39,7 +39,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
             {
                 PopulateComboBoxes();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
         }
 
@@ -51,13 +51,13 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 clsCommonFunctions.SearchClient(txtClientId);
                 if (txtClientId.Text != string.Empty) LoadClientData(strClientId: txtClientId.Text.ToString());
             }
-            catch (Exception ex) { ex.Display(); tssStatus.Text = Resources.strReadyStatus; }
+            catch (Exception ex) { ex.ProcessException(); tssStatus.Text = Resources.strReadyStatus; }
         }
 
         private void btnLoadClientPhoto_Click(object sender, EventArgs e)
         {
             try { clsCommonFunctions.LoadImageToPictureBox(pbClientPhoto, 500, Resources.NoPhoto); }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnClearClientPhoto_Click(object sender, EventArgs e)
@@ -74,6 +74,10 @@ namespace RealEstateManagementSystem.UserInterface.Clients
         {
             try
             {
+                if (txtClientId.Text == string.Empty)
+                {
+                    return;
+                }
                 if (clsCommonFunctions.CheckIfValidClientId(txtClientId.Text) == true)
                 {
                     txtClientId.Text = clsCommonFunctions.GetFullClientId(txtClientId.Text.ToString());
@@ -85,7 +89,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                     ResetForm(true);
                 }
             }
-            catch (Exception ex) { ex.Display(); tssStatus.Text = Resources.strReadyStatus; }
+            catch (Exception ex) { ex.ProcessException(); tssStatus.Text = Resources.strReadyStatus; }
         }
 
 
@@ -138,7 +142,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
         private void txtReferrer_Leave(object sender, EventArgs e)
         {
             try { txtReferrer.Text = !string.IsNullOrEmpty(txtReferrer.Text.ToString()) ? clsCommonFunctions.GetFullClientId(txtReferrer.Text.ToString()) : string.Empty; }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void AddNationality(object sender, EventArgs e)
@@ -230,7 +234,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 int newClientId = 0;
                 PersonInformation pi = new PersonInformation();
                 pi.ClientId = clsCommonFunctions.GetNumericPartOfFullClientId(txtClientId.Text.ToString());
-                message = pi.ClientId > 0 ? "Sure about update Client Information of Id # " + txtClientId.Text.ToString(): "Sure about insert new client information?";
+                message = pi.ClientId > 0 ? "Sure about update Client Information of Id # " + txtClientId.Text.ToString() : "Sure about insert new client information?";
                 if (MessageBox.Show(message, Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     throw new ApplicationException(Resources.strCancelledByUser);
@@ -289,7 +293,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 }
                 MessageBox.Show(message, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void LoadClientData(string strClientId)
@@ -305,7 +309,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
             PopulatePartnerList(clientId, clientStatus);
             this.Refresh(); tssStatus.Text = "Collecting Allocation and Installment Data...";
             PopulateAllocationAndInstallmentData(clientId, clientStatus);
-            lblAllocationSummary.Text = bLayer.GetUnitSummaryOfClient(clientId, true);
+            lblAllocationSummary.Text = bLayer.GetUnitSummaryOfClient(clientId, true, true);
             switch (clientStatus)
             {
                 case clsGlobalClass.ClientStatus.Cancelled:
@@ -512,18 +516,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
 
         private void cmbProjectName_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            lstAllocation.Items.Clear();
-            bllAllocationAndInstallment b = new bllAllocationAndInstallment();
-            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT DISTINCT ObjectTypeId, ObjectType FROM FlatDetails WHERE ProjectId = " + cmbProjectName.SelectedValue.ToString() + " ORDER BY ObjectTypeID", "ObjectType", "ObjectTypeId", false, cmbUnitType);
-            if (cmbUnitType.Items.Count < 1 || cmbUnitType.SelectedValue.ToString() == string.Empty) return;
-            //clsCommonFunctions.PopulateListViewFromDataTable(bLayer.GetListOfSaleableUnitsByUnitTypeFromProject(projectId: cmbProjectName.SelectedValue.ToString().ConvertToInt32(), unitTypeId: cmbUnitType.SelectedValue.ToString().ConvertToInt32(), includeLandOwnersUnits: chkIncludeLandOwnerUnits.Checked), lstAvailableUnits, lblAvailableUnitCount, true, null);
-            PopulateSaleableUnitList();
-            DateTime approximateCompletionDate = b.GetApproximateCompletionDate(cmbProjectName.SelectedValue.ToString().ConvertToInt32());
 
-            lblApproximateCompletionDate.Text = String.Format("Approx. Completion >> {0}", clsGlobalClass.considerAsNULLDate > approximateCompletionDate ? "N/A" : approximateCompletionDate.ToString().ShowAsStandardDateFormat());
-            txtNumberOfInstallment.Text = clsGlobalClass.considerAsNULLDate > approximateCompletionDate ? "1" : b.CalculateNumberOfInstallment(projectId: cmbProjectName.SelectedValue.ToString().ConvertToInt32()).ToString();
-            ClearPricingPanel();
-            clsCommonFunctions.ResetTextBoxes(gbGrandTotals, "0");
         }
 
         private void PopulateSaleableUnitList()
@@ -547,6 +540,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
         {
             //clsCommonFunctions.PopulateListViewFromDataTable(bLayer.GetListOfSaleableUnitsByUnitTypeFromProject(projectId: cmbProjectName.SelectedValue.ToString().ConvertToInt32(), unitTypeId: cmbUnitType.SelectedValue.ToString().ConvertToInt32(), includeLandOwnersUnits: chkIncludeLandOwnerUnits.Checked), lstAvailableUnits, lblAvailableUnitCount, true, null);
             PopulateSaleableUnitList();
+            txtSearchUnitNumber.Text = string.Empty;
             ClearPricingPanel();
         }
 
@@ -571,7 +565,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 txtUnitArea.Text = u.UnitArea.FormatAsMoney();
                 txtFaceValue.Text = txtSaleValue.Text = u.AreaEnabled == true ? (u.SaleRate * u.UnitArea).FormatAsMoney() : u.SaleRate.FormatAsMoney();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void txtRebateAmount_TextChanged(object sender, EventArgs e)
@@ -628,7 +622,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 CalculateTotalRegularPaymentAmount();
                 ClearPricingPanel();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void ClearPricingPanel()
@@ -708,7 +702,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 CalculateTotalPayableAmount();
                 txtAmount_OtherExpenses.Text = "0";
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void CalculateTotalPayableAmount()
@@ -725,7 +719,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 txtGrandTotal.Text = grandTotal.FormatAsMoney();
                 txtTotalOtherAmount.Text = totalOtherExpenses.FormatAsMoney();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void lstPaymentSchedule_MouseUp(object sender, MouseEventArgs e)
@@ -797,10 +791,10 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                     }
                 }
                 bi.SaveAllocationAndInstallment(clientId, allocationList, regularInstallments, otherInstallments);
-                MessageBox.Show("Allocation and Installment Data Saved Successfully.", Resources.strSuccessCaption,MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Allocation and Installment Data Saved Successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnSaveAllocation.Enabled = false;
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void RegularInstallmentAction(bool saveInstallment = false)
@@ -830,7 +824,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                     bi.ManipulteInstallmentSchedule(booking, clsCommonFunctions.GetNumericPartOfFullClientId(txtClientId.Text.ToString()), true);
 
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
         }
 
@@ -842,7 +836,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
         private void btnLoadClientSignature_Click(object sender, EventArgs e)
         {
             try { clsCommonFunctions.LoadImageToPictureBox(pbClientSignature, 200, Resources.NoSign); }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
 
@@ -886,7 +880,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 ResetPartnerTab();
                 PopulatePartnerList(pi.ClientId);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
 
@@ -921,12 +915,14 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 txtPartner_PassportNumber.Text = pi.PassportNumber;
                 txtPartner_TINNumber.Text = pi.TINNumber;
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnNewClient_Click(object sender, EventArgs e)
         {
             ResetForm(true);
+            tpPersonalData.Focus();
+            cmbClientType.Focus();
         }
 
         private void btnNewSaleOffer_Click(object sender, EventArgs e)
@@ -966,7 +962,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 ResetPartnerTab();
                 lstPartner.SelectedItems[0].Remove();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnCopyClientProfile_Click(object sender, EventArgs e)
@@ -978,7 +974,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 txtClientId.Text = bLayer.CopyClientProfile(clsCommonFunctions.GetNumericPartOfFullClientId(txtClientId.Text.ToString()));
                 LoadClientData(txtClientId.Text);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         #region Reset Form Controls
@@ -1023,6 +1019,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
 
         private void ResetForm(bool clearClientId = false)
         {
+
             tssStatus.Text = "Regenerating DropDown boxes..."; this.Refresh();
             PopulateComboBoxes();
             tssStatus.Text = "Resetting Client Information Tab..."; this.Refresh();
@@ -1031,19 +1028,21 @@ namespace RealEstateManagementSystem.UserInterface.Clients
             ResetPartnerTab();
             tssStatus.Text = "Resetting Allocation Tab..."; this.Refresh();
             ResetAllocationAndInstallmentTab();
-
             tpClientData.ImageKey = tpPartner.ImageKey = tpAllocation.ImageKey = null;
             if (clearClientId == true) txtClientId.Text = string.Empty;
             lblProfileStatus.Text = string.Empty;
             lblAllocationSummary.Text = string.Empty;
-            pnlProfileStatus.BackColor = Color.White;
+            pnlProfileStatus.BackColor = pnlClientIds.BackColor = Color.White;
             tssStatus.Text = "Ready";
             this.Refresh();
+
+
         }
 
         private void PopulateComboBoxes()
         {
-            clsCommonFunctions.AutoFormatComboBoxes(this, ComboBoxStyle.DropDownList);
+
+            //clsCommonFunctions.AutoFormatComboBoxes(this, ComboBoxStyle.DropDownList);
             cmbClient_Gender.Items.Add("Male");
             cmbClient_Gender.Items.Add("Female");
             cmbClient_Gender.SelectedIndex = 0;
@@ -1066,19 +1065,26 @@ namespace RealEstateManagementSystem.UserInterface.Clients
             cmbPostalCountry.Text = "Bangladesh";
             cmbClient_Religion.Text = "Islam";
             cmbPartner_Religion.Text = "Islam";
+            cmbSaleOffer.Text = "N/A";
+            cmbLoanProvider.Text = "N/A";
             cmbReferrer.Text = cmbSoldBy.Text = clsCommonFunctions.GetEmployeeNameFromLogInId();
-            clsCommonFunctions.PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.AllExceptCancelled);
+            clsCommonFunctions.PopulateListOfProjects(cmbProjectName);
+
         }
         #endregion
 
         private void btnAddNewPartner_Click(object sender, EventArgs e)
         {
-            ResetPartnerTab();
-            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT OccupationId, Occupation FROM defOccupation ORDER BY Occupation", "Occupation", "OccupationId", false, cmbPartner_Occupation);
-            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT ReligionId, Religion FROM defReligion ORDER BY ReligionID", "Religion", "ReligionID", false, cmbPartner_Religion);
-            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT NationalityID, Nationality FROM defNationality ORDER BY NationalityId", "Nationality", "NationalityID", false, cmbPartner_Nationality);
-            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT * FROM defMaritalStatus ORDER BY MaritalStatusId", "MaritalStatus", "MaritalStatusId", false, cmbPartner_MaritalStatus);
-            PopulatePartnerList(clsCommonFunctions.GetNumericPartOfFullClientId(txtClientId.Text.ToString()));
+            try
+            {
+                ResetPartnerTab();
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT OccupationId, Occupation FROM defOccupation ORDER BY Occupation", "Occupation", "OccupationId", false, cmbPartner_Occupation);
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT ReligionId, Religion FROM defReligion ORDER BY ReligionID", "Religion", "ReligionID", false, cmbPartner_Religion);
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT NationalityID, Nationality FROM defNationality ORDER BY NationalityId", "Nationality", "NationalityID", false, cmbPartner_Nationality);
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT * FROM defMaritalStatus ORDER BY MaritalStatusId", "MaritalStatus", "MaritalStatusId", false, cmbPartner_MaritalStatus);
+                PopulatePartnerList(clsCommonFunctions.GetNumericPartOfFullClientId(txtClientId.Text.ToString()));
+            }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void chkNeedBankLoan_CheckedChanged(object sender, EventArgs e)
@@ -1097,9 +1103,9 @@ namespace RealEstateManagementSystem.UserInterface.Clients
         {
             try
             {
-                clsReports.ShowReport_ClientProfile(txtClientId.Text, tssStatus);
+                clsReports.ClientProfile(txtClientId.Text, tssStatus);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void cmbClientType_SelectionChangeCommitted(object sender, EventArgs e)
@@ -1173,5 +1179,30 @@ namespace RealEstateManagementSystem.UserInterface.Clients
             nor.ShowDialog();
             clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT OccupationId, Occupation FROM defOccupation ORDER BY Occupation", "Occupation", "OccupationId", false, cmbClient_Occupation, cmbPartner_Occupation);
         }
+
+        private void cmbProjectName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                lstAvailableUnits.Items.Clear();
+                bllAllocationAndInstallment b = new bllAllocationAndInstallment();
+                int projectId = 0;
+                if (!string.IsNullOrEmpty(cmbProjectName.Text) & cmbProjectName.Text != "") projectId = clsCommonFunctions.GetProjectIdFromProjectName(cmbProjectName.Text);
+                //clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.StoredProcedure)
+                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("EXEC sp_GetDistinctTypeOfUnitsInProject " + projectId, "ObjectType", "ObjectTypeId", false, cmbUnitType);
+                if (cmbUnitType.Items.Count < 1 || cmbUnitType.SelectedValue.ToString() == string.Empty) return;
+                //clsCommonFunctions.PopulateListViewFromDataTable(bLayer.GetListOfSaleableUnitsByUnitTypeFromProject(projectId: cmbProjectName.SelectedValue.ToString().ConvertToInt32(), unitTypeId: cmbUnitType.SelectedValue.ToString().ConvertToInt32(), includeLandOwnersUnits: chkIncludeLandOwnerUnits.Checked), lstAvailableUnits, lblAvailableUnitCount, true, null);
+                PopulateSaleableUnitList();
+                DateTime approximateCompletionDate = b.GetApproximateCompletionDate(cmbProjectName.SelectedValue.ToString().ConvertToInt32());
+
+                lblApproximateCompletionDate.Text = String.Format("Approx. Completion >> {0}", clsGlobalClass.considerAsNULLDate > approximateCompletionDate ? "N/A" : approximateCompletionDate.ToString().ShowAsStandardDateFormat());
+                txtNumberOfInstallment.Text = clsGlobalClass.considerAsNULLDate > approximateCompletionDate ? "1" : b.CalculateNumberOfInstallment(projectId: cmbProjectName.SelectedValue.ToString().ConvertToInt32()).ToString();
+                ClearPricingPanel();
+                clsCommonFunctions.ResetTextBoxes(gbGrandTotals, "0");
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+
     }
 }

@@ -29,53 +29,44 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         internal DataTable GetListOfAuthenticatedUsers(bool authorizedOnly = false)
         {
-            try { return _dLayer.GetListOfAuthenticatedUsers(authorizedOnly); }
-            catch (Exception ex) { throw ex; }
+            return _dLayer.GetListOfAuthenticatedUsers(authorizedOnly);
+
         }
 
         internal bool ValidateUserLogIn()
         {
-            try { return _dLayer.ValidateUserLogIn(this); }
-            catch (Exception ex) { throw ex; }
+            return _dLayer.ValidateUserLogIn(this);
         }
 
         internal void GetUserDetails()
         {
-            try { _dLayer.GetUserDetails(this); }
-            catch (Exception ex) { throw ex; }
+            _dLayer.GetUserDetails(this);
         }
 
         internal void SetAppAuthentication()
         {
-            try
-            {
-                _dLayer.SetAppAuthentication(this.UserId, this.IsAllowed);
-            }
-            catch (Exception ex) { throw ex; }
+            _dLayer.SetAppAuthentication(this.UserId, this.IsAllowed);
         }
 
         internal DataSet GetActiveMenuList()
         {
-            try { return _dLayer.GetActiveMenuList(); }
-            catch (Exception ex) { throw ex; }
+            return _dLayer.GetActiveMenuList();
         }
 
         internal DataTable GetListOfAuthorizedUsers_ByMenuKey()
         {
-            try { return _dLayer.GetListOfAuthorizedUsers_ByMenuKey(this.MenuKey); }
-            catch (Exception ex) { throw ex; }
+            return _dLayer.GetListOfAuthorizedUsers_ByMenuKey(this.MenuKey);
+
         }
 
         internal void ManipulateApplicationMenu()
         {
-            try { _dLayer.ManipulateApplicationMenu(this.MenuKey); }
-            catch (Exception ex) { throw ex; }
+            _dLayer.ManipulateApplicationMenu(this.MenuKey);
         }
 
         internal void SetAppMenuAuthentication()
         {
-            try { _dLayer.SetAppMenuAuthentication(this.MenuKey, this.UserId, this.IsAllowed); }
-            catch (Exception ex) { throw ex; }
+            _dLayer.SetAppMenuAuthentication(this.MenuKey, this.UserId, this.IsAllowed);
         }
     }
 }

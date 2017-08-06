@@ -35,6 +35,7 @@
             // crptMasterReport
             // 
             this.crptMasterReport.ActiveViewIndex = -1;
+            this.crptMasterReport.AutoSize = true;
             this.crptMasterReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.crptMasterReport.Cursor = System.Windows.Forms.Cursors.Default;
             this.crptMasterReport.DisplayBackgroundEdge = false;
@@ -63,6 +64,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmReportViewer_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

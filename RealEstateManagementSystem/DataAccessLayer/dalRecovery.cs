@@ -178,6 +178,11 @@ namespace RealEstateManagementSystem.DataAccessLayer
                         cpr.ClientStatus = Convert.ToString(dr["StatusName"]);
                         cpr.IsActiveClient = Convert.ToString(dr["IsAllowed"]).ConvertToBoolean();
                         cpr.ClientType = Convert.ToString(dr["ClientType"]);
+
+                        cpr.RegistrationDate = dr["RegistrationDate"] != DBNull.Value ? Convert.ToString(dr["RegistrationDate"]).ShowAsStandardDateFormat():string.Empty;
+                        cpr.IsKeyLetterProcessed = Convert.ToString(dr["KeyLetter"]).ConvertToBoolean();
+                        cpr.IsHandoverCertificateProcessed = Convert.ToString(dr["Handover"]).ConvertToBoolean();
+                        cpr.LoanChequeInfo = Convert.ToString(dr["LoanCheckInfo"]);
                     }
                 }
                 else { throw new ApplicationException("Data not found"); }
@@ -188,7 +193,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
 
     class dalPayment
     {
-        internal void InstallmentAlgorithm(int clientId, decimal dblPAmount, out int intLastInstallPayable, out string strInstallInWord)
+        internal void InstallmentAlgorithm(int clientId, decimal dblPAmount, int installmentId, int transactionId, out int intLastInstallPayable, out string strInstallInWord)
         {
             SqlCommand cmd = new SqlCommand();
             try
@@ -198,6 +203,8 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.CommandText = "sp_InstallmentAlgorithm";
                 cmd.Parameters.AddWithValue("@clientId", clientId);
                 cmd.Parameters.AddWithValue("@dblPAmount", dblPAmount);
+                cmd.Parameters.AddWithValue("@installmentId", installmentId);
+                cmd.Parameters.AddWithValue("@transactionId", transactionId);
                 SqlParameter lastInstall = new SqlParameter("@lastInstallmentId", SqlDbType.Int);
                 lastInstall.Direction = ParameterDirection.Output;
                 lastInstall.Value = 0;
@@ -213,6 +220,182 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); }
         }
 
+        internal DataSet GetPaymentComparison(string clientId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_PaymentComparison";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataTable GetSummartForPaymentClearance(int clientId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_PaymentSummaryForClearance";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal bool IsKeyListDelivered(int clientId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT KeyLetterId FROM KeyLetter WHERE ClientId = @clientId";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                dr = cmd.ExecuteReader();
+                return dr.HasRows;
+            }
+            finally { cmd.Dispose(); if (dr != null) { dr.Close(); } }
+        }
+
+        internal bool IsHandoverCertficateDelivered(int clientId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT HOCId FROM HOCLetter WHERE ClientId = @clientId";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                dr = cmd.ExecuteReader();
+                return dr.HasRows;
+            }
+            finally { cmd.Dispose(); if (dr != null) { dr.Close(); } }
+        }
+
+        internal DataTable GetPaymentSummaryOfClient_ByInstallment(string clientId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetPaymentSummaryOfClient_ByInstallment";
+                cmd.Parameters.AddWithValue("@clientId", clsCommonFunctions.GetNumericPartOfFullClientId(clientId));
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataSet GetPaymentHistoryOfClient_WithBankAccount(string clientIds)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetPaymentHistoryOfClient_WithAccountNumber";
+                cmd.Parameters.AddWithValue("@clientIds", clientIds);
+                cmd.Parameters.AddWithValue("@signedBy", clsGlobalClass.userId);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal void ManipulateOAInstallment(int clientId, InstallmentInfo i)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                if (i.InstallmentAmount <= 0) { throw new ApplicationException("Installment amount cannot be less than zero"); }
+
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateOAInstallment";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                cmd.Parameters.AddWithValue("@installmentId", i.InstallmentId);
+                cmd.Parameters.AddWithValue("@amount", i.InstallmentAmount);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataTable SearchClientCheckInformation(clsGlobalClass.ChequeSearchBy searchBy, int invoiceNumber, int clientId, int bankId, DateTime startDate, DateTime endDate, bool excludeReceived, bool excludeCashTransactions)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_SearchClientCheckInformation";
+                string strSearchBy = string.Empty;
+                switch (searchBy)
+                {
+                    case clsGlobalClass.ChequeSearchBy.Invoice: strSearchBy = "Invoice"; break;
+                    case clsGlobalClass.ChequeSearchBy.ClientId: strSearchBy = "ClientId"; break;
+                    case clsGlobalClass.ChequeSearchBy.Bank: strSearchBy = "Bank"; break;
+                    case clsGlobalClass.ChequeSearchBy.DateRange: strSearchBy = "DateRange"; break;
+                    default: break;
+                }
+                cmd.Parameters.AddWithValue("@searchBy", strSearchBy);
+                cmd.Parameters.AddWithValue("@invoiceNumber", invoiceNumber);
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                cmd.Parameters.AddWithValue("@bankId", bankId);
+                cmd.Parameters.AddWithValue("@startDate", startDate);
+                cmd.Parameters.AddWithValue("@endDate", endDate);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+
+        }
+
+        internal DataTable GetTransactionUpdateHistory(int transactionId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetTransactionUpdateHistory";
+                cmd.Parameters.AddWithValue("@transactionId", transactionId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
         internal void GetPaymentModeDetails(PaymentModeInfo pMode)
         {
             SqlCommand cmd = new SqlCommand();
@@ -225,6 +408,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
+                    pMode.PaymentModeName = Convert.ToString(dr["PaymentMode"]);
                     pMode.PaymentModeInitial = Convert.ToString(dr["PaymentInitial"]);
                     pMode.IsBankInfoNeeded = Convert.ToBoolean(dr["NeedBankInfo"]);
                 }
@@ -353,6 +537,295 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
+        internal bool IsBankInfoNeeded(int paymentModeId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            bool isNeeded = false;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT NeedBankInfo FROM defPaymentMode WHERE PaymentModeId = @paymentModeId";
+                cmd.Parameters.AddWithValue("@paymentModeId", paymentModeId);
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    isNeeded = dr["NeedBankInfo"].ToString().ConvertToBoolean();
+                }
+                return isNeeded;
+            }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
+        }
+
+        internal int CommitTransaction(Payment p)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ManipulateTransaction";
+                SqlParameter transactionId = new SqlParameter("@transactionId", p.TransactionId);
+                transactionId.Direction = ParameterDirection.InputOutput;
+                cmd.Parameters.Add(transactionId);
+                cmd.Parameters.AddWithValue("@clientId", p.CommonProperties.ClientId);
+                cmd.Parameters.AddWithValue("@transactionDate", p.TransactionDate);
+                cmd.Parameters.AddWithValue("@amountPaid", p.TransactionAmount);
+                cmd.Parameters.AddWithValue("@chequeDate", p.ParticularDate);
+                cmd.Parameters.AddWithValue("@particulars", p.Particulars);
+                cmd.Parameters.AddWithValue("@remarks", p.Remarks);
+                cmd.Parameters.AddWithValue("@installmentId", p.Installment.InstallmentId);
+                cmd.Parameters.AddWithValue("@paymentModeId", p.PaymentMode.PaymentModeId);
+                cmd.Parameters.AddWithValue("@bankId", p.Bank.BankId);
+                cmd.Parameters.AddWithValue("@branchId", p.Branch.BranchId);
+                cmd.Parameters.AddWithValue("@districtId", p.District.DistrictId);
+                cmd.Parameters.AddWithValue("@countryId", p.Country.CountryId);
+                cmd.Parameters.AddWithValue("@returnText", p.ReturnText);
+                cmd.Parameters.AddWithValue("@bankAccountNumber", p.BankAccountNumber);
+                cmd.Parameters.AddWithValue("@updateReason", p.UpdateReason);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workStation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+                return transactionId.Value.ToString().ConvertToInt32();
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal void DeleteTransaction(int transactionId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_DeleteTransaction";
+                cmd.Parameters.AddWithValue("@transactionId", transactionId);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workStation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataSet GetMoneyReceipt(int transactionId, bool isDuplicate)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetMoneyReciept";
+                cmd.Parameters.AddWithValue("@transactionId", transactionId);
+                cmd.Parameters.AddWithValue("@isDuplicate", isDuplicate);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal decimal GetAmountPaidInTransaction(int transactionId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            decimal amountPaid = 0;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT AmountPaid FROM [Transaction] WHERE TransactionId = @transactionId";
+                cmd.Parameters.AddWithValue("@transactionId", transactionId);
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    amountPaid = Convert.ToDecimal(dr["AmountPaid"]);
+                }
+                return amountPaid;
+            }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
+        }
+
+        internal DataSet GetPaymentHistoryOfClient(string clientIds)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetPaymentHistoryOfClient";
+                cmd.Parameters.AddWithValue("@clientIds", clientIds);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataSet AcknowledgementReceipt(int transactionId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetAcknowledgementReceipt";
+                cmd.Parameters.AddWithValue("@transactionId", transactionId);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataTable GetListOfInstallmentsByInstallType(int clientId, int installTypeId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfInstallmentsByInstallType";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                cmd.Parameters.AddWithValue("@installTypeId", installTypeId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal int GetProjectIdFromProjectName(string projectName)
+        {
+            SqlCommand cmd = new SqlCommand();
+            int projectId = 0;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetProjectIdFromProjectName";
+                cmd.Parameters.AddWithValue("@projectName", projectName);
+                SqlParameter pId = new SqlParameter("@projectId", SqlDbType.Int);
+                pId.Direction = ParameterDirection.Output;
+                pId.Value = 0;
+                cmd.Parameters.Add(pId);
+                cmd.ExecuteNonQuery();
+                projectId = Convert.ToInt32(pId.Value);
+                return projectId;
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal int IsTransactionEdited(int transactionId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            int numberOfEdits = 0;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_IsTransactionEdited";
+                cmd.Parameters.AddWithValue("@transactionId", transactionId);
+                SqlParameter edited = new SqlParameter("@numberOfEdits", SqlDbType.Int);
+                edited.Value = 0;
+                edited.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(edited);
+                cmd.ExecuteNonQuery();
+                numberOfEdits = Convert.ToInt32(edited.Value);
+                return numberOfEdits;
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataSet GetLoanDisbursementHistory(string clientIds)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_LoanDisbursementHistory";
+                cmd.Parameters.AddWithValue("@clientIds", clientIds);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataSet GetPaymentClearanceCertificate(int clientId, int verifiedBy, int checkedBy, int recommendedBy)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_PaymentComparison";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                cmd.Parameters.AddWithValue("@verifiedBy", verifiedBy);
+                cmd.Parameters.AddWithValue("@checkedBy", checkedBy);
+                cmd.Parameters.AddWithValue("@recommendedBy", recommendedBy);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataSet GetKeyList(int clientId, int projectEngineer)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetKeyLetter";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                cmd.Parameters.AddWithValue("@pe_CompanyId", projectEngineer);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataSet GetHandoverCertificate(int clientId, DateTime handoverDate, int handoverBy, int forwardedBy, int recommendedBy)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetHandoverCertificate";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                cmd.Parameters.AddWithValue("@processDate", handoverDate);
+                cmd.Parameters.AddWithValue("@preparedBy", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@handoverBy", handoverBy);
+                cmd.Parameters.AddWithValue("@forwardedBy", forwardedBy);
+                cmd.Parameters.AddWithValue("@RecommendedBy", recommendedBy);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
     }
 
     class dalRecovery

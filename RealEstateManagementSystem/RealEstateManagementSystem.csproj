@@ -27,8 +27,8 @@
     <PublisherName>The Structural Engineers Ltd.</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -101,10 +101,10 @@
     <ApplicationIcon>Resources\REMS.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>6EC34E3D5E573E076A795D141F360F2CF7327D28</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>06F1B70BEB21F3732F09BB2B8850C2A3B59103B2</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>RealEstateManagementSystem_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>RealEstateManagementSystem_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -125,6 +125,10 @@
     </Reference>
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=0.0.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.1\lib\net45\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304">
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -150,6 +154,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogicLayer\bllClientInfo.cs" />
@@ -162,6 +167,16 @@
     <Compile Include="DataAccessLayer\dalProjectInfo.cs" />
     <Compile Include="DataAccessLayer\dalRecovery.cs" />
     <Compile Include="DataAccessLayer\dalUserControl.cs" />
+    <Compile Include="ReportDataSet\dsAcknowledgementReceipt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAcknowledgementReceipt.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsAllotmentLetter.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAllotmentLetter.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ReportDataSet\dsClientProfile.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,6 +187,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsCollectionSummary.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ReportDataSet\dsHandoverCertificate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsHandoverCertificate.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsKeyList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsKeyList.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsListOfClientsByProjectId.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsListOfClientsByProjectId.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsLoanDisbursementHistory.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsLoanDisbursementHistory.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsMoneyReceipt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsMoneyReceipt.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ReportDataSet\dsPartnerInformation.cs">
       <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
     </Compile>
@@ -179,6 +219,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsPaymentHistoryOfClient.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPaymentHistoryOfClient.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsPaymentHistoryWithAccount.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPaymentHistoryWithAccount.xsd</DependentUpon>
     </Compile>
     <Compile Include="ReportDataSet\dsPaymentSchedule.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -192,6 +242,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportDataSet\dsRegistrationAcknowledgementReceipt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsRegistrationAcknowledgementReceipt.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ReportDataSet\dsReportHeading.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -202,12 +257,41 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsUnitDetails.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ReportDataSet\ds_PaymentComparison.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_PaymentComparison.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Clients\crptAllotmentLetter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptAllotmentLetter.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Clients\crptClientProfile.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptClientProfile.rpt</DependentUpon>
-      <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Clients\crptPaymentScheduleStatus.cs">
+      <DependentUpon>crptPaymentScheduleStatus.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\Clients\crptPaymentSchedule.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptPaymentSchedule.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Clients\crptRegistrationAcknowledgementReceipt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptRegistrationAcknowledgementReceipt.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Clients\crpt_sr_PartnerInformation.cs">
       <AutoGen>True</AutoGen>
@@ -220,8 +304,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crpt_sr_PaymentSchedule.rpt</DependentUpon>
-      <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\clsReports.cs" />
     <Compile Include="Reports\frmReportViewer.cs">
@@ -230,12 +314,78 @@
     <Compile Include="Reports\frmReportViewer.Designer.cs">
       <DependentUpon>frmReportViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Projects\crptListOfClientsByProjectId.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptListOfClientsByProjectId.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Projects\crptUnitInformation.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptUnitInformation.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\Recovery\crptAcknowledgementReceipt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptAcknowledgementReceipt.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Recovery\crptHandoverCertificate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptHandoverCertificate.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Recovery\crptKeyList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptKeyList.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Recovery\crptLoanDisbursementHistory.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptLoanDisbursementHistory.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Recovery\crptMoneyReceipt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptMoneyReceipt.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Recovery\crptPaymentHistoryOfClient.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptPaymentHistoryOfClient.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Recovery\crptPaymentHistoryOfClient_WithAccountNumber.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptPaymentHistoryOfClient_WithAccountNumber.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Recovery\crpt_PaymentClearanceCertificate.cs">
+      <DependentUpon>crpt_PaymentClearanceCertificate.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\Recovery\crpt_PaymentComparison.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crpt_PaymentComparison.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Accounts\frmChequeManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Accounts\frmChequeManagement.Designer.cs">
+      <DependentUpon>frmChequeManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Clients\frmClientInformation.cs">
       <SubType>Form</SubType>
@@ -267,6 +417,12 @@
     <Compile Include="UserInterface\Projects\frmDef_Locations.Designer.cs">
       <DependentUpon>frmDef_Locations.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Projects\frmListOfBlockedUnits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Projects\frmListOfBlockedUnits.Designer.cs">
+      <DependentUpon>frmListOfBlockedUnits.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Projects\frmProjectInformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -293,6 +449,12 @@
     <Compile Include="UserInterface\Projects\frmUnitInformation.Designer.cs">
       <DependentUpon>frmUnitInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Recovery\frmAddInstallment_OA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmAddInstallment_OA.Designer.cs">
+      <DependentUpon>frmAddInstallment_OA.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Recovery\frmDefinition_BankBranch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -304,6 +466,24 @@
     </Compile>
     <Compile Include="UserInterface\Recovery\frmPayment.Designer.cs">
       <DependentUpon>frmPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmTransactionEditHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmTransactionEditHistory.Designer.cs">
+      <DependentUpon>frmTransactionEditHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmGeneralReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmGeneralReports.Designer.cs">
+      <DependentUpon>frmGeneralReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmHandoverProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmHandoverProcess.Designer.cs">
+      <DependentUpon>frmHandoverProcess.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Root\frmAbout.cs">
       <SubType>Form</SubType>
@@ -328,6 +508,12 @@
     </Compile>
     <Compile Include="UserInterface\Root\frmRoot_CancelList.Designer.cs">
       <DependentUpon>frmRoot_CancelList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmRoot_Collection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Root\frmRoot_Collection.Designer.cs">
+      <DependentUpon>frmRoot_Collection.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Root\frmRoot_SoldList.cs">
       <SubType>Form</SubType>
@@ -369,6 +555,7 @@
     <Compile Include="Utilities\clsEncryption.cs" />
     <Compile Include="Utilities\clsExtensions.cs" />
     <Compile Include="Utilities\clsGlobalClass.cs" />
+    <Compile Include="Utilities\CreateExcelFile.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -379,10 +566,26 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reports\Clients\crptAllotmentLetter.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptAllotmentLetter.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Clients\crptClientProfile.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptClientProfile.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Clients\crptPaymentScheduleStatus.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptPaymentScheduleStatus.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Clients\crptPaymentSchedule.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptPaymentSchedule.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Clients\crptRegistrationAcknowledgementReceipt.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptRegistrationAcknowledgementReceipt.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Clients\crpt_sr_PartnerInformation.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -397,10 +600,53 @@
     <EmbeddedResource Include="Reports\frmReportViewer.resx">
       <DependentUpon>frmReportViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptListOfClientsByProjectId.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptListOfClientsByProjectId.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Projects\crptUnitInformation.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptUnitInformation.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crptAcknowledgementReceipt.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptAcknowledgementReceipt.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crptHandoverCertificate.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptHandoverCertificate.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crptKeyList.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptKeyList.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crptLoanDisbursementHistory.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptLoanDisbursementHistory.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crptMoneyReceipt.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptMoneyReceipt.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crptPaymentHistoryOfClient.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptPaymentHistoryOfClient.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crptPaymentHistoryOfClient_WithAccountNumber.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptPaymentHistoryOfClient_WithAccountNumber.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crpt_PaymentClearanceCertificate.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crpt_PaymentClearanceCertificate.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Recovery\crpt_PaymentComparison.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crpt_PaymentComparison.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Accounts\frmChequeManagement.resx">
+      <DependentUpon>frmChequeManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Clients\frmClientInformation.resx">
       <DependentUpon>frmClientInformation.cs</DependentUpon>
@@ -417,6 +663,9 @@
     <EmbeddedResource Include="UserInterface\Projects\frmDef_Locations.resx">
       <DependentUpon>frmDef_Locations.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Projects\frmListOfBlockedUnits.resx">
+      <DependentUpon>frmListOfBlockedUnits.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Projects\frmProjectInformation.resx">
       <DependentUpon>frmProjectInformation.cs</DependentUpon>
     </EmbeddedResource>
@@ -425,7 +674,32 @@
       <LastGenOutput>crptReportHeading.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RealEstateManagementSystem_1_TemporaryKey.pfx" />
+    <None Include="ReportDataSet\dsAcknowledgementReceipt.xsc">
+      <DependentUpon>dsAcknowledgementReceipt.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsAcknowledgementReceipt.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAcknowledgementReceipt.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsAcknowledgementReceipt.xss">
+      <DependentUpon>dsAcknowledgementReceipt.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsAllotmentLetter.xsc">
+      <DependentUpon>dsAllotmentLetter.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsAllotmentLetter.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAllotmentLetter.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsAllotmentLetter.xss">
+      <DependentUpon>dsAllotmentLetter.xsd</DependentUpon>
+    </None>
     <None Include="ReportDataSet\dsClientProfile.xsc">
       <DependentUpon>dsClientProfile.xsd</DependentUpon>
     </None>
@@ -448,6 +722,61 @@
     <None Include="ReportDataSet\dsCollectionSummary.xss">
       <DependentUpon>dsCollectionSummary.xsd</DependentUpon>
     </None>
+    <None Include="ReportDataSet\dsHandoverCertificate.xsc">
+      <DependentUpon>dsHandoverCertificate.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsHandoverCertificate.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsHandoverCertificate.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsHandoverCertificate.xss">
+      <DependentUpon>dsHandoverCertificate.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsKeyList.xsc">
+      <DependentUpon>dsKeyList.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsKeyList.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsKeyList.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsKeyList.xss">
+      <DependentUpon>dsKeyList.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsListOfClientsByProjectId.xsc">
+      <DependentUpon>dsListOfClientsByProjectId.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsListOfClientsByProjectId.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsListOfClientsByProjectId.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsListOfClientsByProjectId.xss">
+      <DependentUpon>dsListOfClientsByProjectId.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsLoanDisbursementHistory.xsc">
+      <DependentUpon>dsLoanDisbursementHistory.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsLoanDisbursementHistory.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsLoanDisbursementHistory.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsLoanDisbursementHistory.xss">
+      <DependentUpon>dsLoanDisbursementHistory.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsMoneyReceipt.xsc">
+      <DependentUpon>dsMoneyReceipt.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsMoneyReceipt.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsMoneyReceipt.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsMoneyReceipt.xss">
+      <DependentUpon>dsMoneyReceipt.xsd</DependentUpon>
+    </None>
     <None Include="ReportDataSet\dsPartnerInformation.xsc">
       <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
     </None>
@@ -458,6 +787,28 @@
     </None>
     <None Include="ReportDataSet\dsPartnerInformation.xss">
       <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPaymentHistoryOfClient.xsc">
+      <DependentUpon>dsPaymentHistoryOfClient.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPaymentHistoryOfClient.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPaymentHistoryOfClient.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsPaymentHistoryOfClient.xss">
+      <DependentUpon>dsPaymentHistoryOfClient.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPaymentHistoryWithAccount.xsc">
+      <DependentUpon>dsPaymentHistoryWithAccount.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPaymentHistoryWithAccount.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPaymentHistoryWithAccount.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsPaymentHistoryWithAccount.xss">
+      <DependentUpon>dsPaymentHistoryWithAccount.xsd</DependentUpon>
     </None>
     <None Include="ReportDataSet\dsPaymentSchedule.xsc">
       <DependentUpon>dsPaymentSchedule.xsd</DependentUpon>
@@ -482,6 +833,17 @@
       <DependentUpon>dsProjectSummary.xsd</DependentUpon>
     </None>
     <None Include="RealEstateManagementSystem_TemporaryKey.pfx" />
+    <None Include="ReportDataSet\dsRegistrationAcknowledgementReceipt.xsc">
+      <DependentUpon>dsRegistrationAcknowledgementReceipt.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsRegistrationAcknowledgementReceipt.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsRegistrationAcknowledgementReceipt.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsRegistrationAcknowledgementReceipt.xss">
+      <DependentUpon>dsRegistrationAcknowledgementReceipt.xsd</DependentUpon>
+    </None>
     <None Include="ReportDataSet\dsReportHeading.xsc">
       <DependentUpon>dsReportHeading.xsd</DependentUpon>
     </None>
@@ -504,6 +866,17 @@
     <None Include="ReportDataSet\dsUnitDetails.xss">
       <DependentUpon>dsUnitDetails.xsd</DependentUpon>
     </None>
+    <None Include="ReportDataSet\ds_PaymentComparison.xsc">
+      <DependentUpon>ds_PaymentComparison.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\ds_PaymentComparison.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_PaymentComparison.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\ds_PaymentComparison.xss">
+      <DependentUpon>ds_PaymentComparison.xsd</DependentUpon>
+    </None>
     <None Include="Resources\userauthentication.ico" />
     <None Include="Resources\userauthentication.png" />
     <None Include="Resources\server-check.ico" />
@@ -518,11 +891,23 @@
     <EmbeddedResource Include="UserInterface\Projects\frmUnitInformation.resx">
       <DependentUpon>frmUnitInformation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Recovery\frmAddInstallment_OA.resx">
+      <DependentUpon>frmAddInstallment_OA.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Recovery\frmDefinition_BankBranch.resx">
       <DependentUpon>frmDefinition_BankBranch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Recovery\frmPayment.resx">
       <DependentUpon>frmPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Recovery\frmTransactionEditHistory.resx">
+      <DependentUpon>frmTransactionEditHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Reports\frmGeneralReports.resx">
+      <DependentUpon>frmGeneralReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Reports\frmHandoverProcess.resx">
+      <DependentUpon>frmHandoverProcess.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Root\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
@@ -535,6 +920,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Root\frmRoot_CancelList.resx">
       <DependentUpon>frmRoot_CancelList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Root\frmRoot_Collection.resx">
+      <DependentUpon>frmRoot_Collection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Root\frmRoot_SoldList.resx">
       <DependentUpon>frmRoot_SoldList.cs</DependentUpon>
@@ -565,10 +953,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UserInterface\Accounts\" />
+    <None Include="Resources\ChequeManagementIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\REMS.ico" />
@@ -936,6 +1326,71 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unblock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\block.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\block.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChequeManagement.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accountsSection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClientReport.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClientReport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\handover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HandoverProcess.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

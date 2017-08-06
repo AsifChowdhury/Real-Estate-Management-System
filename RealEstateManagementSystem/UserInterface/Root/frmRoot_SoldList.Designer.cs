@@ -42,6 +42,10 @@
             this.colSaleValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colPaid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colBookingDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblRecordCount = new System.Windows.Forms.Label();
+            this.btnReload = new System.Windows.Forms.Button();
+            this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +57,6 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.statusStrip1.Size = new System.Drawing.Size(1019, 22);
-            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -78,14 +81,13 @@
             this.colSaleValue,
             this.colPaid,
             this.colBookingDate});
-            this.lstSold.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstSold.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstSold.ForeColor = System.Drawing.Color.Maroon;
             this.lstSold.FullRowSelect = true;
             this.lstSold.GridLines = true;
-            this.lstSold.Location = new System.Drawing.Point(0, 0);
+            this.lstSold.Location = new System.Drawing.Point(0, 32);
             this.lstSold.Name = "lstSold";
-            this.lstSold.Size = new System.Drawing.Size(1019, 541);
+            this.lstSold.Size = new System.Drawing.Size(1019, 492);
             this.lstSold.TabIndex = 1;
             this.lstSold.UseCompatibleStateImageBehavior = false;
             this.lstSold.View = System.Windows.Forms.View.Details;
@@ -144,11 +146,57 @@
             // 
             this.colBookingDate.Text = "Booking Date";
             // 
+            // label1
+            // 
+            this.lblRecordCount.AutoSize = true;
+            this.lblRecordCount.Location = new System.Drawing.Point(4, 526);
+            this.lblRecordCount.Name = "label1";
+            this.lblRecordCount.Size = new System.Drawing.Size(127, 13);
+            this.lblRecordCount.TabIndex = 2;
+            this.lblRecordCount.Text = "# of Unit(s) Sold: 0";
+            // 
+            // btnReload
+            // 
+            this.btnReload.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnReload.FlatAppearance.BorderSize = 0;
+            this.btnReload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReload.ForeColor = System.Drawing.Color.Teal;
+            this.btnReload.Image = global::RealEstateManagementSystem.Properties.Resources.update;
+            this.btnReload.Location = new System.Drawing.Point(184, 4);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(27, 25);
+            this.btnReload.TabIndex = 7;
+            this.btnReload.UseVisualStyleBackColor = false;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
+            // 
+            // dtpStartDate
+            // 
+            this.dtpStartDate.CustomFormat = "dd-MMM-yyyy";
+            this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpStartDate.Location = new System.Drawing.Point(72, 6);
+            this.dtpStartDate.Name = "dtpStartDate";
+            this.dtpStartDate.Size = new System.Drawing.Size(106, 20);
+            this.dtpStartDate.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(61, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Sold From";
+            // 
             // frmRoot_SoldList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1019, 563);
+            this.Controls.Add(this.btnReload);
+            this.Controls.Add(this.dtpStartDate);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblRecordCount);
             this.Controls.Add(this.lstSold);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -181,5 +229,9 @@
         private System.Windows.Forms.ColumnHeader colPaid;
         private System.Windows.Forms.ToolStripStatusLabel tssSoldCount;
         private System.Windows.Forms.ColumnHeader colBookingDate;
+        private System.Windows.Forms.Label lblRecordCount;
+        private System.Windows.Forms.Button btnReload;
+        public System.Windows.Forms.DateTimePicker dtpStartDate;
+        private System.Windows.Forms.Label label2;
     }
 }

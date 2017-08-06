@@ -25,14 +25,15 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public decimal UnitCancelled { get; set; }
         public DateTime StartDate { get; set; }
 
-        
+
+
         #endregion
 
 
 
-        internal DataTable GetListOfClients()
+        internal DataTable GetListOfClients(bool includeCancelledClients = false)
         {
-            return dLayer.GetListOfClients(this);
+            return dLayer.GetListOfClients(this, includeCancelledClients);
         }
 
         internal DataTable GetCollectionData(DateTime startDate)
@@ -52,6 +53,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         internal DataTable GetRootCancelledList(DateTime startDate)
         {
             return dLayer.GetRootCancelledList(startDate);
+        }
+
+        internal DataTable GetCollectionDetails(DateTime startDate)
+        {
+            return dLayer.GetCollectionDetails(startDate);
         }
 
         #endregion

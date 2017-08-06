@@ -99,7 +99,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 MessageBox.Show(Resources.strSuccessMessage, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         public frmDefinition_NOR()

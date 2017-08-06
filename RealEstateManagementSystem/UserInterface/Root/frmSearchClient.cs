@@ -56,7 +56,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
             b.ClientName = txtClientName.Text.ToString();
             b.UnitNumber = txtUnitNumber.Text.ToString();
 
-            foreach (DataRow drItems in b.GetListOfClients().Rows)
+            foreach (DataRow drItems in b.GetListOfClients(true).Rows)
             {
                 ListViewItem lvItem = new ListViewItem(Convert.ToString(drItems["ClientId"]));
                 lvItem.SubItems.Add(Convert.ToString(drItems["BookingDate"]).ShowAsStandardDateFormat());

@@ -31,7 +31,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(ds);
                 return ds;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
 
@@ -52,7 +51,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -81,16 +79,14 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 qry = qry + " ORDER BY ProjectName";
                 cmd.CommandText = qry;
                 cmd.Parameters.AddWithValue("@projectStatus", projectStatus.ToString());
-
                 da.SelectCommand = cmd;
                 da.Fill(ds);
                 return ds;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
 
-        internal void GetProjectDetails(BusinessLogicLayer.bllProjectInfo b)
+        internal void GetProjectDetails(bllProjectInfo b)
         {
             SqlCommand cmd = new SqlCommand();
             SqlDataReader dr = null;
@@ -113,25 +109,26 @@ namespace RealEstateManagementSystem.DataAccessLayer
                         b.ProjectAddress = dr["Address"].ToString();
                         b.ProjectAddress_InBangla = dr["Address_Bangla"].ToString();
 
-                        b.AgreementSignDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["AgreementSign"].ToString()));
-                        b.IsAgreementSigned = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["AgreementSign"].ToString()));
+                        b.AgreementSignDate = Convert.ToDateTime(dr["AgreementSign"]).ManageInvalidDate();
+                        b.IsAgreementSigned = Convert.ToDateTime(dr["AgreementSign"]).IsValidDate();
 
-                        b.PlotTakeOverDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["PlotTakeOverDate"].ToString()));
-                        b.IsPlotTakenOver = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["PlotTakeOverDate"].ToString()));
+                        b.PlotTakeOverDate = Convert.ToDateTime(dr["PlotTakeoverDate"]).ManageInvalidDate();
+                        b.IsPlotTakenOver = Convert.ToDateTime(dr["PlotTakeOverDate"]).IsValidDate();
+
                         b.ConstructionDuration = dr["ConstructionDuration"] != DBNull.Value ? Convert.ToInt32(dr["ConstructionDuration"].ToString()) : 0;
                         b.ConstructionGracePeriod = dr["ConstructionGracePeriod"] != DBNull.Value ? Convert.ToInt32(dr["ConstructionGracePeriod"].ToString()) : 0;
 
-                        b.ConstructionStartedOn = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["StartedOn"].ToString()));
-                        b.IsConstructionStarted = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["StartedOn"].ToString()));
+                        b.ConstructionStartedOn = Convert.ToDateTime(dr["StartedOn"]).ManageInvalidDate();
+                        b.IsConstructionStarted = Convert.ToDateTime(dr["StartedOn"]).IsValidDate();
 
-                        b.SaleStartedOn = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["SaleStartedOn"].ToString()));
-                        b.IsSaleStarted = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["SaleStartedOn"].ToString()));
+                        b.SaleStartedOn = Convert.ToDateTime(dr["SaleStartedOn"]).ManageInvalidDate();
+                        b.IsSaleStarted = Convert.ToDateTime(dr["SaleStartedOn"]).IsValidDate();
 
-                        b.EstimatedHandoverDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["Completion"].ToString()));
-                        b.IsEstimatedHandoverDateSet = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["Completion"].ToString()));
+                        b.EstimatedHandoverDate = Convert.ToDateTime(dr["Completion"]).ManageInvalidDate();
+                        b.IsEstimatedHandoverDateSet = Convert.ToDateTime(dr["Completion"]).IsValidDate();
 
-                        b.ActualHandoverDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["Handover"].ToString()));
-                        b.IsHandedOver = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["Handover"].ToString()));
+                        b.ActualHandoverDate = Convert.ToDateTime(dr["Handover"]).ManageInvalidDate();
+                        b.IsHandedOver = Convert.ToDateTime(dr["Handover"]).IsValidDate();
 
                         b.ProjectType = dr["ProjectType"].ToString();
                         b.LandType = dr["LandType"].ToString();
@@ -139,8 +136,8 @@ namespace RealEstateManagementSystem.DataAccessLayer
 
                         b.GeoLocation = dr["GeoLocation"].ToString();
 
-                        b.ApprovalDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["ApprovalDate"].ToString()));
-                        b.IsProjectApproved = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["ApprovalDate"].ToString()));
+                        b.ApprovalDate = Convert.ToDateTime(dr["ApprovalDate"]).ManageInvalidDate();
+                        b.IsProjectApproved = Convert.ToDateTime(dr["ApprovalDate"]).IsValidDate();
                         b.ApprovalNumber = dr["RAJUKNumber"].ToString();
 
                         b.Remarks = dr["Remarks"].ToString();
@@ -161,8 +158,42 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
+        }
+
+        internal DataTable GetBlockedUnitOfProject(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfBlockedUnits";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetListOfProjectsWithBlockedUnit()
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfProjectsWithBlockedUnits";
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
         internal void GetLocationInfo(bllProjectInfo b)
@@ -187,7 +218,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -212,7 +242,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -231,7 +260,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -260,7 +288,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
                 //cmd.Dispose();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -277,9 +304,10 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@projectId", projectId);
                 da.SelectCommand = cmd;
                 da.Fill(ds);
+                return ds;
             }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
-            return ds;
+
         }
 
         internal int GetNewProjectCode()
@@ -341,7 +369,95 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@manipulatedFrom", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal DataSet GetListOfClientsByProjectId(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfClientsByProjectId";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal bool IsFloorInfoAvailable(int buildingId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT ISNULL(COUNT(FloorId), 0) CountOfFloors FROM FloorInfo WHERE BuildingId = @buildingId";
+                cmd.Parameters.AddWithValue("@buildingId", buildingId);
+                dr = cmd.ExecuteReader();
+
+                int countOfFloors = 0;
+                if (dr.HasRows)
+                {
+                    while (dr.Read()) { countOfFloors = dr["CountOfFloors"].ToString().ConvertToInt32(); }
+                }
+                return countOfFloors > 0 ? true : false;
+            }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
+        }
+
+        internal DataTable GetLisOfProjects(clsGlobalClass.ProjectStatus projectStatus)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                string qry = "SELECT ProjectId, ProjectName, ProjectCode FROM ProjectDetails";
+                switch (projectStatus)
+                {
+                    case clsGlobalClass.ProjectStatus.All:
+                        qry = qry + " ";
+                        break;
+                    case clsGlobalClass.ProjectStatus.AllExceptCancelled:
+                        qry = qry + " WHERE ProjectStatus <> @projectStatus";
+                        break;
+                    default:
+                        qry = qry + " WHERE ProjectStatus = @projectStatus";
+                        break;
+                }
+                qry = qry + " ORDER BY ProjectName";
+                cmd.CommandText = qry;
+                cmd.Parameters.AddWithValue("@projectStatus", projectStatus.ToString());
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal void AddFloorToBuilding(int buildingId, bool isBasement)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_AddFloorToBuilding";
+                cmd.Parameters.AddWithValue("@buildingId", buildingId);
+                cmd.Parameters.AddWithValue("@isBasement", isBasement);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
             finally { cmd.Dispose(); }
         }
 
@@ -449,7 +565,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -469,7 +584,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -488,7 +602,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -528,8 +641,26 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { dr.Close(); cmd.Dispose(); }
+        }
+
+        internal string ProjectLoadQuery(clsGlobalClass.ProjectStatus projectStatus)
+        {
+            string qry = "SELECT ProjectId, ProjectName FROM ProjectDetails";
+            switch (projectStatus)
+            {
+                case clsGlobalClass.ProjectStatus.All:
+                    qry = qry + " ";
+                    break;
+                case clsGlobalClass.ProjectStatus.AllExceptCancelled:
+                    qry = qry + " WHERE ProjectStatus <> '" + projectStatus.ToString() + "' ";
+                    break;
+                default:
+                    qry = qry + " WHERE ProjectStatus = @projectStatus";
+                    break;
+            }
+            qry = qry + " ORDER BY ProjectName";
+            return qry;
         }
 
         internal DataTable GetListOfUnitTypesInBuilding(int buildingId)
@@ -547,7 +678,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -575,7 +705,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); dr.Close(); }
         }
 
@@ -596,7 +725,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return prmUnitNumber.Value.ToString();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -614,7 +742,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@areaName_Bangla", areaName_Bangla);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -638,7 +765,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); dr.Close(); }
         }
 
@@ -658,7 +784,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -677,7 +802,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -696,7 +820,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -715,7 +838,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -733,7 +855,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -752,7 +873,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(ds);
                 return ds;
             }
-            catch (Exception ex) { throw ex; }
+            finally { cmdDetails.Dispose(); da.Dispose(); ds.Dispose(); }
         }
 
         internal void GetProjectSpecificationDetails(bllProjectInfo b)
@@ -777,7 +898,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 }
 
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -794,7 +914,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@specificationDetails", b.SpecificationDetails);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -814,7 +933,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstationIp", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -840,7 +958,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -858,7 +975,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@manipulatedFrom", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -877,7 +993,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
     }

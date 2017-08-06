@@ -28,11 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmProjectInformation));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnProjectSummaryReport = new System.Windows.Forms.Button();
-            this.cmbProjectName = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpProjectInfo = new System.Windows.Forms.TabPage();
             this.txtLandArea = new System.Windows.Forms.TextBox();
@@ -112,10 +109,14 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.tpSpecification = new System.Windows.Forms.TabPage();
             this.btnResetSpec = new System.Windows.Forms.Button();
             this.btnManipulateSpecification = new System.Windows.Forms.Button();
             this.lstProjectSpecifications = new System.Windows.Forms.ListView();
+            this.colSpecificationType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtSpecDetails = new System.Windows.Forms.TextBox();
             this.cmbProjectSpecificationType = new System.Windows.Forms.ComboBox();
             this.label40 = new System.Windows.Forms.Label();
@@ -133,7 +134,12 @@
             this.label24 = new System.Windows.Forms.Label();
             this.ssProjectInformation = new System.Windows.Forms.StatusStrip();
             this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panel1.SuspendLayout();
+            this.ttProjectInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.lstProjects = new System.Windows.Forms.ListView();
+            this.colProjectId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colProjectName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colProjectCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblProjectCount = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tpProjectInfo.SuspendLayout();
             this.tpBuildingFloor.SuspendLayout();
@@ -143,58 +149,13 @@
             this.ssProjectInformation.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.btnProjectSummaryReport);
-            this.panel1.Controls.Add(this.cmbProjectName);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(9, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(704, 45);
-            this.panel1.TabIndex = 0;
-            // 
-            // btnProjectSummaryReport
-            // 
-            this.btnProjectSummaryReport.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnProjectSummaryReport.FlatAppearance.BorderSize = 0;
-            this.btnProjectSummaryReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProjectSummaryReport.Image = global::RealEstateManagementSystem.Properties.Resources.printer;
-            this.btnProjectSummaryReport.Location = new System.Drawing.Point(674, 9);
-            this.btnProjectSummaryReport.Name = "btnProjectSummaryReport";
-            this.btnProjectSummaryReport.Size = new System.Drawing.Size(25, 25);
-            this.btnProjectSummaryReport.TabIndex = 2;
-            this.btnProjectSummaryReport.TabStop = false;
-            this.btnProjectSummaryReport.UseVisualStyleBackColor = false;
-            this.btnProjectSummaryReport.Click += new System.EventHandler(this.btnProjectSummaryReport_Click);
-            // 
-            // cmbProjectName
-            // 
-            this.cmbProjectName.ForeColor = System.Drawing.Color.Maroon;
-            this.cmbProjectName.FormattingEnabled = true;
-            this.cmbProjectName.Location = new System.Drawing.Point(116, 10);
-            this.cmbProjectName.Name = "cmbProjectName";
-            this.cmbProjectName.Size = new System.Drawing.Size(552, 22);
-            this.cmbProjectName.Sorted = true;
-            this.cmbProjectName.TabIndex = 1;
-            this.cmbProjectName.SelectionChangeCommitted += new System.EventHandler(this.cmbProjectName_SelectionChangeCommitted);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 14);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Project Name:";
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tpProjectInfo);
             this.tabControl1.Controls.Add(this.tpBuildingFloor);
             this.tabControl1.Controls.Add(this.tpSpecification);
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(9, 63);
+            this.tabControl1.Location = new System.Drawing.Point(336, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(704, 493);
@@ -241,7 +202,6 @@
             this.tpProjectInfo.Controls.Add(this.txtAddress_Bangla);
             this.tpProjectInfo.Controls.Add(this.label18);
             this.tpProjectInfo.Controls.Add(this.txtProjectName_Bangla);
-            this.tpProjectInfo.Controls.Add(this.label14);
             this.tpProjectInfo.Controls.Add(this.txtRemarks);
             this.tpProjectInfo.Controls.Add(this.label27);
             this.tpProjectInfo.Controls.Add(this.txtApprovalNumber);
@@ -264,6 +224,7 @@
             this.tpProjectInfo.Controls.Add(this.label28);
             this.tpProjectInfo.Controls.Add(this.cmbLocation);
             this.tpProjectInfo.Controls.Add(this.label3);
+            this.tpProjectInfo.Controls.Add(this.label14);
             this.tpProjectInfo.Location = new System.Drawing.Point(4, 23);
             this.tpProjectInfo.Name = "tpProjectInfo";
             this.tpProjectInfo.Padding = new System.Windows.Forms.Padding(3);
@@ -383,7 +344,7 @@
             this.btnSaveData.Name = "btnSaveData";
             this.btnSaveData.Size = new System.Drawing.Size(102, 48);
             this.btnSaveData.TabIndex = 29;
-            this.btnSaveData.Text = "Save Data";
+            this.btnSaveData.Text = "Save";
             this.btnSaveData.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnSaveData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnSaveData.UseVisualStyleBackColor = true;
@@ -620,7 +581,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(30, 94);
+            this.label18.Location = new System.Drawing.Point(23, 94);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(54, 18);
             this.label18.TabIndex = 2;
@@ -638,7 +599,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(364, 37);
+            this.label14.Location = new System.Drawing.Point(357, 37);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(54, 18);
             this.label14.TabIndex = 2;
@@ -697,6 +658,7 @@
             // 
             // cmbLandType
             // 
+            this.cmbLandType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLandType.FormattingEnabled = true;
             this.cmbLandType.Location = new System.Drawing.Point(354, 233);
             this.cmbLandType.Name = "cmbLandType";
@@ -714,6 +676,7 @@
             // 
             // cmbProjectType
             // 
+            this.cmbProjectType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProjectType.FormattingEnabled = true;
             this.cmbProjectType.Location = new System.Drawing.Point(112, 233);
             this.cmbProjectType.Name = "cmbProjectType";
@@ -740,6 +703,7 @@
             // 
             // cmbSignatory
             // 
+            this.cmbSignatory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSignatory.FormattingEnabled = true;
             this.cmbSignatory.Location = new System.Drawing.Point(444, 373);
             this.cmbSignatory.Name = "cmbSignatory";
@@ -766,6 +730,7 @@
             // 
             // cmbDesignEngr
             // 
+            this.cmbDesignEngr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDesignEngr.FormattingEnabled = true;
             this.cmbDesignEngr.Location = new System.Drawing.Point(104, 373);
             this.cmbDesignEngr.Name = "cmbDesignEngr";
@@ -783,6 +748,7 @@
             // 
             // cmbArchitect
             // 
+            this.cmbArchitect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbArchitect.FormattingEnabled = true;
             this.cmbArchitect.Location = new System.Drawing.Point(444, 345);
             this.cmbArchitect.Name = "cmbArchitect";
@@ -800,6 +766,7 @@
             // 
             // cmbInCharge
             // 
+            this.cmbInCharge.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbInCharge.FormattingEnabled = true;
             this.cmbInCharge.Location = new System.Drawing.Point(104, 345);
             this.cmbInCharge.Name = "cmbInCharge";
@@ -817,6 +784,7 @@
             // 
             // cmbLocation
             // 
+            this.cmbLocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLocation.FormattingEnabled = true;
             this.cmbLocation.Location = new System.Drawing.Point(82, 8);
             this.cmbLocation.Name = "cmbLocation";
@@ -847,6 +815,7 @@
             this.tpBuildingFloor.Controls.Add(this.txtBuildingName);
             this.tpBuildingFloor.Controls.Add(this.label2);
             this.tpBuildingFloor.Controls.Add(this.lstBuildingDetails);
+            this.tpBuildingFloor.Controls.Add(this.shapeContainer1);
             this.tpBuildingFloor.Location = new System.Drawing.Point(4, 23);
             this.tpBuildingFloor.Name = "tpBuildingFloor";
             this.tpBuildingFloor.Padding = new System.Windows.Forms.Padding(3);
@@ -964,14 +933,18 @@
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
+            this.lstBuildingDetails.FullRowSelect = true;
             this.lstBuildingDetails.GridLines = true;
+            this.lstBuildingDetails.HideSelection = false;
             this.lstBuildingDetails.Location = new System.Drawing.Point(6, 46);
+            this.lstBuildingDetails.MultiSelect = false;
             this.lstBuildingDetails.Name = "lstBuildingDetails";
             this.lstBuildingDetails.Size = new System.Drawing.Size(682, 234);
             this.lstBuildingDetails.TabIndex = 2;
             this.lstBuildingDetails.UseCompatibleStateImageBehavior = false;
             this.lstBuildingDetails.View = System.Windows.Forms.View.Details;
             this.lstBuildingDetails.SelectedIndexChanged += new System.EventHandler(this.lstBuildingDetails_SelectedIndexChanged);
+            this.lstBuildingDetails.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lstBuildingDetails_MouseUp);
             // 
             // columnHeader1
             // 
@@ -999,6 +972,25 @@
             this.columnHeader5.Text = "# of Floor(s)";
             this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnHeader5.Width = 132;
+            // 
+            // shapeContainer1
+            // 
+            this.shapeContainer1.Location = new System.Drawing.Point(3, 3);
+            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer1.Name = "shapeContainer1";
+            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.lineShape1});
+            this.shapeContainer1.Size = new System.Drawing.Size(688, 458);
+            this.shapeContainer1.TabIndex = 33;
+            this.shapeContainer1.TabStop = false;
+            // 
+            // lineShape1
+            // 
+            this.lineShape1.Name = "lineShape1";
+            this.lineShape1.X1 = 5;
+            this.lineShape1.X2 = 684;
+            this.lineShape1.Y1 = 344;
+            this.lineShape1.Y2 = 344;
             // 
             // tpSpecification
             // 
@@ -1049,6 +1041,9 @@
             // 
             // lstProjectSpecifications
             // 
+            this.lstProjectSpecifications.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colSpecificationType,
+            this.colDescription});
             this.lstProjectSpecifications.FullRowSelect = true;
             this.lstProjectSpecifications.GridLines = true;
             this.lstProjectSpecifications.Location = new System.Drawing.Point(11, 6);
@@ -1058,6 +1053,16 @@
             this.lstProjectSpecifications.UseCompatibleStateImageBehavior = false;
             this.lstProjectSpecifications.View = System.Windows.Forms.View.Details;
             this.lstProjectSpecifications.SelectedIndexChanged += new System.EventHandler(this.lstProjectSpecifications_SelectedIndexChanged);
+            // 
+            // colSpecificationType
+            // 
+            this.colSpecificationType.Text = "Specification Type";
+            this.colSpecificationType.Width = 150;
+            // 
+            // colDescription
+            // 
+            this.colDescription.Text = "Description";
+            this.colDescription.Width = 500;
             // 
             // txtSpecDetails
             // 
@@ -1069,6 +1074,7 @@
             // 
             // cmbProjectSpecificationType
             // 
+            this.cmbProjectSpecificationType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProjectSpecificationType.FormattingEnabled = true;
             this.cmbProjectSpecificationType.Location = new System.Drawing.Point(154, 354);
             this.cmbProjectSpecificationType.Name = "cmbProjectSpecificationType";
@@ -1217,10 +1223,10 @@
             // 
             this.ssProjectInformation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssStatus});
-            this.ssProjectInformation.Location = new System.Drawing.Point(0, 560);
+            this.ssProjectInformation.Location = new System.Drawing.Point(0, 514);
             this.ssProjectInformation.Name = "ssProjectInformation";
             this.ssProjectInformation.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.ssProjectInformation.Size = new System.Drawing.Size(722, 22);
+            this.ssProjectInformation.Size = new System.Drawing.Size(1052, 22);
             this.ssProjectInformation.SizingGrip = false;
             this.ssProjectInformation.TabIndex = 2;
             this.ssProjectInformation.Text = "statusStrip1";
@@ -1228,20 +1234,68 @@
             // tssStatus
             // 
             this.tssStatus.Name = "tssStatus";
-            this.tssStatus.Size = new System.Drawing.Size(707, 17);
+            this.tssStatus.Size = new System.Drawing.Size(1037, 17);
             this.tssStatus.Spring = true;
             this.tssStatus.Text = "Ready";
             this.tssStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ttProjectInfo
+            // 
+            this.ttProjectInfo.IsBalloon = true;
+            // 
+            // lstProjects
+            // 
+            this.lstProjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colProjectId,
+            this.colProjectName,
+            this.colProjectCode});
+            this.lstProjects.FullRowSelect = true;
+            this.lstProjects.GridLines = true;
+            this.lstProjects.HideSelection = false;
+            this.lstProjects.Location = new System.Drawing.Point(12, 12);
+            this.lstProjects.MultiSelect = false;
+            this.lstProjects.Name = "lstProjects";
+            this.lstProjects.Size = new System.Drawing.Size(318, 473);
+            this.lstProjects.TabIndex = 3;
+            this.lstProjects.UseCompatibleStateImageBehavior = false;
+            this.lstProjects.View = System.Windows.Forms.View.Details;
+            this.lstProjects.SelectedIndexChanged += new System.EventHandler(this.lstProjects_SelectedIndexChanged);
+            this.lstProjects.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lstProjects_MouseUp);
+            // 
+            // colProjectId
+            // 
+            this.colProjectId.Width = 0;
+            // 
+            // colProjectName
+            // 
+            this.colProjectName.Text = "Project Name";
+            this.colProjectName.Width = 224;
+            // 
+            // colProjectCode
+            // 
+            this.colProjectCode.Text = "Code";
+            this.colProjectCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.colProjectCode.Width = 80;
+            // 
+            // lblProjectCount
+            // 
+            this.lblProjectCount.AutoSize = true;
+            this.lblProjectCount.Location = new System.Drawing.Point(13, 494);
+            this.lblProjectCount.Name = "lblProjectCount";
+            this.lblProjectCount.Size = new System.Drawing.Size(119, 14);
+            this.lblProjectCount.TabIndex = 4;
+            this.lblProjectCount.Text = "# of Project(s):";
             // 
             // frmProjectInformation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Honeydew;
-            this.ClientSize = new System.Drawing.Size(722, 582);
+            this.ClientSize = new System.Drawing.Size(1052, 536);
+            this.Controls.Add(this.lblProjectCount);
+            this.Controls.Add(this.lstProjects);
             this.Controls.Add(this.ssProjectInformation);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Maroon;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1254,8 +1308,6 @@
             this.Text = "Project Information";
             this.Load += new System.EventHandler(this.frmProjectInformation_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmProjectInformation_KeyDown);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tpProjectInfo.ResumeLayout(false);
             this.tpProjectInfo.PerformLayout();
@@ -1274,11 +1326,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btnProjectSummaryReport;
-        private System.Windows.Forms.ComboBox cmbProjectName;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tpProjectInfo;
         private System.Windows.Forms.TabPage tpBuildingFloor;
@@ -1379,5 +1426,15 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Button btnPaymentPolicy;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
+        private System.Windows.Forms.ToolTip ttProjectInfo;
+        private System.Windows.Forms.ListView lstProjects;
+        private System.Windows.Forms.ColumnHeader colProjectId;
+        private System.Windows.Forms.ColumnHeader colProjectName;
+        private System.Windows.Forms.ColumnHeader colProjectCode;
+        private System.Windows.Forms.ColumnHeader colSpecificationType;
+        private System.Windows.Forms.ColumnHeader colDescription;
+        private System.Windows.Forms.Label lblProjectCount;
     }
 }

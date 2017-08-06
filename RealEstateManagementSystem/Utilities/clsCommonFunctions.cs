@@ -9,11 +9,12 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Excel = Microsoft.Office.Interop.Excel;
 namespace RealEstateManagementSystem.Utilities
 {
 
@@ -28,12 +29,8 @@ namespace RealEstateManagementSystem.Utilities
         internal static int GetNumericPartOfFullClientId(string fullClientId)
         {
             int clientId = 0;
-            try
-            {
-                if (!String.IsNullOrEmpty(fullClientId))
-                    clientId = fullClientId.Substring(9).ToString().ConvertToInt32();
-            }
-            catch (Exception ex) { throw ex; }
+            if (!String.IsNullOrEmpty(fullClientId))
+                clientId = fullClientId.Substring(9).ToString().ConvertToInt32();
             return clientId;
         }
 
@@ -69,9 +66,31 @@ namespace RealEstateManagementSystem.Utilities
 
 
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
             return validity;
+        }
+
+        internal static bool CheckButtonPermission(string formName, string buttonName)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_CheckButtonPermission";
+                cmd.Parameters.AddWithValue("@formName", formName);
+                cmd.Parameters.AddWithValue("@buttonName", buttonName);
+                cmd.Parameters.AddWithValue("@userId", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@applicationId", clsGlobalClass.applicationId);
+                SqlParameter isAllowed = new SqlParameter("@isAllowed", SqlDbType.Bit);
+                isAllowed.Value = false;
+                isAllowed.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(isAllowed);
+                cmd.ExecuteNonQuery();
+                return isAllowed.Value.ToString().ConvertToBoolean();
+            }
+            finally { cmd.Dispose(); }
+
         }
 
         internal static DataTable CompanyInformation()
@@ -89,7 +108,6 @@ namespace RealEstateManagementSystem.Utilities
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -115,7 +133,6 @@ namespace RealEstateManagementSystem.Utilities
                 }
                 return employeeName;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -140,7 +157,6 @@ namespace RealEstateManagementSystem.Utilities
                 }
                 return employeeId;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -188,29 +204,86 @@ namespace RealEstateManagementSystem.Utilities
                             bool showGroups = false, params ListView[] except)
         {
 
+            var source = GetAllChildren(root).OfType<ListView>().Where(ctrl => !except.Contains(ctrl));
+
+            foreach (ListView lView in source)
+            {
+                lView.AllowColumnReorder = false;
+                //lView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                lView.BackColor = lView.Parent.BackColor;
+                lView.BorderStyle = BorderStyle.FixedSingle;
+                lView.CheckBoxes = checkBoxes;
+                lView.ForeColor = root.ForeColor;
+                lView.FullRowSelect = true;
+                lView.GridLines = true;
+                lView.Groups.Clear();
+                lView.ShowGroups = showGroups;
+                lView.HideSelection = false;
+                lView.Items.Clear();
+                lView.MultiSelect = false;
+                lView.View = View.Details;
+            }
+        }
+
+        internal static bool isContainCancelledClient(string clientIds)
+        {
+            SqlCommand cmd = new SqlCommand();
+            bool cancelledClient = false;
             try
             {
-                var source = GetAllChildren(root).OfType<ListView>().Where(ctrl => !except.Contains(ctrl));
-
-                foreach (ListView lView in source)
-                {
-                    lView.AllowColumnReorder = false;
-                    lView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                    lView.BackColor = lView.Parent.BackColor;
-                    lView.BorderStyle = BorderStyle.FixedSingle;
-                    lView.CheckBoxes = checkBoxes;
-                    lView.ForeColor = root.ForeColor;
-                    lView.FullRowSelect = true;
-                    lView.GridLines = true;
-                    lView.Groups.Clear();
-                    lView.ShowGroups = showGroups;
-                    lView.HideSelection = false;
-                    lView.Items.Clear();
-                    lView.MultiSelect = false;
-                    lView.View = View.Details;
-                }
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_CheckClientStatus";
+                cmd.Parameters.AddWithValue("@clientIds", clientIds);
+                SqlParameter spCancelledClient = new SqlParameter("@containCancelledClient", SqlDbType.Bit);
+                spCancelledClient.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(spCancelledClient);
+                cmd.ExecuteNonQuery();
+                cancelledClient = spCancelledClient.Value.ToString().ConvertToBoolean();
+                return cancelledClient;
             }
-            catch (Exception) { throw; }
+            finally { cmd.Dispose(); }
+        }
+
+        internal static bool IsActiveClient(int clientId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            bool isActive = false;
+
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT IsAllowed FROM defClientStatus WHERE StatusId = (SELECT StatusId FROM ClientInfo WHERE ClientId = @clientId)";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    isActive = dr["IsAllowed"].ToString() == "1" ? true : false;
+                }
+                return isActive;
+            }
+            finally { cmd.Dispose(); dr.Close(); }
+        }
+
+        internal static string GetLoanChequeInfo(int clientId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            string loanCheque = string.Empty;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT [LoanCheque] = dbo.fnGetRunningLoanChequeInfo(@clientId)";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows) { while (dr.Read()) { loanCheque = Convert.ToString(dr["LoanCheque"]); } }
+
+                return loanCheque;
+            }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
         internal static void ResetDTPicker
@@ -315,7 +388,7 @@ namespace RealEstateManagementSystem.Utilities
         }
 
 
-        
+
 
         internal static void PopulateComboboxWithDisplayAndValueMember
                     (CommandType cmdType, string sqlQuery,
@@ -392,7 +465,6 @@ namespace RealEstateManagementSystem.Utilities
                     SetComboBoxWidth(cmb);
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
 
@@ -507,6 +579,33 @@ namespace RealEstateManagementSystem.Utilities
 
         #region SandBox
 
+        public static int GetProjectIdFromProjectName(string projectName)
+        {
+            SqlCommand cmd = new SqlCommand();
+            int projectId = 0;
+            try
+            {
+                if (!string.IsNullOrEmpty(projectName) & !string.IsNullOrWhiteSpace(projectName))
+                {
+                    cmd.Connection = Program.cnConn;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "sp_GetProjectIdFromProjectName";
+                    cmd.Parameters.AddWithValue("@projectName", projectName);
+                    SqlParameter pId = new SqlParameter("@projectId", SqlDbType.Int);
+                    pId.Direction = ParameterDirection.Output;
+                    pId.Value = 0;
+                    cmd.Parameters.Add(pId);
+                    cmd.ExecuteNonQuery();
+                    projectId = Convert.ToInt32(pId.Value);
+                }
+                else
+                {
+                    projectId = 0;
+                }
+                return projectId;
+            }
+            finally { cmd.Dispose(); }
+        }
 
         public static string GetDefaultValue(string defaultKey)
         {
@@ -546,18 +645,27 @@ namespace RealEstateManagementSystem.Utilities
 
         }
 
+
+        /// <summary>
+        /// Show report to Default Reporting Interface
+        /// </summary>
+        /// <param name="reportDocumnent"></param>
+        /// <param name="tssStatus"></param>
+        /// <param name="includeCompanyBanner"></param>
+        /// <param name="passPrintedBy">Leave this parameter false if there is no "@PrintedBy" formula available in Report </param>
         public static void ShowReport(
                             CrystalDecisions.CrystalReports.Engine.ReportDocument reportDocumnent,
                             ToolStripStatusLabel tssStatus,
                             bool includeCompanyBanner = false,
-                            string printedBy = "")
+                            bool passPrintedBy = false)
         {
             Reports.frmReportViewer frmReport = new Reports.frmReportViewer();
             if (includeCompanyBanner == true) reportDocumnent.Subreports[0].SetDataSource(clsCommonFunctions.CompanyInformation());
-            if (!string.IsNullOrEmpty(printedBy)) reportDocumnent.DataDefinition.FormulaFields["PrintedBy"].Text = "'" + printedBy + "'";
+            if (passPrintedBy == true) reportDocumnent.DataDefinition.FormulaFields["PrintedBy"].Text = "'" + clsGlobalClass.userFullName + "'";
             frmReport.crptMasterReport.ReportSource = reportDocumnent;
+            frmReport.crptMasterReport.Zoom(100);
             tssStatus.Text = Resources.strPreparingData;
-            //frmReport.ShowDialog();
+            frmReport.crptMasterReport.Update();
             frmReport.Show();
             GC.Collect();
             tssStatus.Text = Resources.strReadyStatus;
@@ -578,32 +686,12 @@ namespace RealEstateManagementSystem.Utilities
             for (int i = 0; i < cmb.Items.Count; i++)
             {
                 stringSize = g.MeasureString(cmb.GetItemText(cmb.Items[i]), cmb.Font);
-                length = stringSize.Width;
+                length = !string.IsNullOrEmpty(cmb.GetItemText(cmb.Items[i])) ? stringSize.Width : 1;
                 if (length > maxLength) { maxLength = length; }
                 cmb.DropDownWidth = Convert.ToInt32(maxLength);
             }
 
         }
-
-
-        //    Public Sub setComboWidth(ByVal cmbComboBox As ComboBox)
-        //    Dim length = 0
-        //    Dim maxlength = 0
-        //    Dim i As Integer = 0
-        //    Dim g As Graphics = cmbComboBox.CreateGraphics
-        //    Dim stringsize As New SizeF
-
-        //    For i = 0 To cmbComboBox.Items.Count - 1
-        //        'cmbComboBox.SelectedIndex = i
-        //        stringsize = g.MeasureString((cmbComboBox.GetItemText(cmbComboBox.Items(i))), cmbComboBox.Font)
-        //        length = stringsize.Width
-        //        If length > maxlength Then
-        //            maxlength = length
-        //        End If
-        //    Next i
-        //    cmbComboBox.DropDownWidth = maxlength
-        //End Sub
-
 
         public string GetLocalIP()
         {
@@ -626,34 +714,38 @@ namespace RealEstateManagementSystem.Utilities
             return _IP;
         }
 
-        //public DateTime GetServerDate()
-        //{
-        //    DateTime dtServerDate = DateTime.Now;
-        //    SqlCommand cmd = new SqlCommand("SELECT GetDate() as CurrentDate", Program.cnConn);
-        //    SqlDataReader reader;
-        //    reader = cmd.ExecuteReader();
-        //    while (reader.Read())
-        //    {
-        //        dtServerDate = Convert.ToDateTime(reader["CurrentDate"].ToString());
-        //    }
-        //    cmd.Dispose();
-        //    reader.Close();
-        //    return dtServerDate;
-        //}
-
-
-        internal static void PopulateListOfProjects(ComboBox cmbProjectName, clsGlobalClass.ProjectStatus projectStatus)
+        internal static void PopulateListOfProjects(ComboBox cmbProjectName, bool addAnEmptyLine = false)
         {
-            try
-            {
-                cmbProjectName.DropDownStyle = ComboBoxStyle.DropDownList;
-                DataAccessLayer.dalProjectInfo d = new DataAccessLayer.dalProjectInfo();
-                cmbProjectName.DataSource = d.PopulateProjectsCombo(projectStatus).Tables[0];
-                cmbProjectName.DisplayMember = "ProjectName";
-                cmbProjectName.ValueMember = "ProjectId";
-                SetComboBoxWidth(cmbProjectName);
-            }
-            catch (Exception ex) { throw ex; }
+            DataAccessLayer.dalProjectInfo d = new DataAccessLayer.dalProjectInfo();
+            cmbProjectName.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cmbProjectName.AutoCompleteSource = AutoCompleteSource.ListItems;
+            PopulateComboboxWithDisplayAndValueMember("SELECT ProjectId, ProjectName FROM ProjectInfo ORDER BY ProjectName", "ProjectName", "ProjectId", true, cmbProjectName);
+        }
+
+        internal static void PopulateListOfProjects(ComboBox cmbProjectName, clsGlobalClass.ProjectStatus projectStatus, bool addAnEmptyLine = false)
+        {
+            //cmbProjectName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            //cmbProjectName.AutoCompleteSource = AutoCompleteSource.ListItems;
+            //DataAccessLayer.dalProjectInfo d = new DataAccessLayer.dalProjectInfo();
+            //DataSet ds = new DataSet();
+            //ds = d.PopulateProjectsCombo(projectStatus);
+            //cmbProjectName.DataSource = ds;
+            //if (addAnEmptyLine == true)
+            //{
+            //    DataRow dr = ds.Tables[0].NewRow();
+            //    dr["ProjectId"] = 0;
+            //    dr["ProjectName"] = "";
+            //    ds.Tables[0].Rows.Add(dr);
+            //    ds.Tables[0].DefaultView.Sort = "ProjectName";
+            //}
+
+            //cmbProjectName.DisplayMember = "ProjectName";
+            //cmbProjectName.ValueMember = "ProjectId";
+            //SetComboBoxWidth(cmbProjectName);
+            DataAccessLayer.dalProjectInfo d = new DataAccessLayer.dalProjectInfo();
+            cmbProjectName.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cmbProjectName.AutoCompleteSource = AutoCompleteSource.ListItems;
+            PopulateComboboxWithDisplayAndValueMember(d.ProjectLoadQuery(projectStatus), "ProjectName", "ProjectId", true, cmbProjectName);
         }
 
         internal static string GetFullClientId(string clientId)
@@ -696,7 +788,6 @@ namespace RealEstateManagementSystem.Utilities
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
             return fullClientId;
         }
@@ -737,17 +828,16 @@ namespace RealEstateManagementSystem.Utilities
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "sp_LogErrorMessages";
                 cmd.Parameters.AddWithValue("@appName", clsGlobalClass.applicationName);
-                cmd.Parameters.AddWithValue("@message", ex.Message.ToString());
-                cmd.Parameters.AddWithValue("@exceptionType", ex.GetType().Name.ToString());
-                cmd.Parameters.AddWithValue("@stackTrace", ex.StackTrace.ToString());
-                cmd.Parameters.AddWithValue("@source", ex.Source.ToString());
-                cmd.Parameters.AddWithValue("@targetSites", ex.TargetSite.ToString());
+                cmd.Parameters.AddWithValue("@message", ex.Message.ToString().Trim());
+                cmd.Parameters.AddWithValue("@exceptionType", ex.GetType().Name.ToString().Trim());
+                cmd.Parameters.AddWithValue("@stackTrace", ex.StackTrace.ToString().Trim());
+                cmd.Parameters.AddWithValue("@source", ex.Source.ToString().Trim());
+                cmd.Parameters.AddWithValue("@targetSites", ex.TargetSite.ToString().Trim());
                 cmd.Parameters.AddWithValue("@userId", clsGlobalClass.userId);
                 cmd.Parameters.AddWithValue("@workstationIP", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
 
             }
-            catch (Exception exception) { throw exception; }
             finally { cmd.Dispose(); }
         }
 
@@ -777,20 +867,20 @@ namespace RealEstateManagementSystem.Utilities
         #endregion
 
         #region Date Functions
-        internal static DateTime ReturnIfValidDate(DateTime dateTime)
-        {
-            return dateTime < clsGlobalClass.considerAsNULLDate ? DateTime.Now : dateTime;
+        //internal static DateTime ReturnIfValidDate(DateTime dateTime)
+        //{
+        //    return dateTime < clsGlobalClass.considerAsNULLDate ? DateTime.Now : dateTime;
 
-        }
-        /// <summary>
-        /// Return false when date is before 01/02/1900
-        /// </summary>
-        /// <param name="dateTime">Date to check</param>
-        /// <returns></returns>
-        internal static bool CheckIfValidDate(DateTime dateTime)
-        {
-            return dateTime < clsGlobalClass.considerAsNULLDate ? false : true;
-        }
+        //}
+        ///// <summary>
+        ///// Return false when date is before 01/02/1900
+        ///// </summary>
+        ///// <param name="dateTime">Date to check</param>
+        ///// <returns></returns>
+        //internal static bool CheckIfValidDate(DateTime dateTime)
+        //{
+        //    return dateTime < clsGlobalClass.considerAsNULLDate ? false : true;
+        //}
 
 
         #endregion

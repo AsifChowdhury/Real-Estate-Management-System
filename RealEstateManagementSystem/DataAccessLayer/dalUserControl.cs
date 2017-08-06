@@ -34,7 +34,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 b.IsValidLogIn = (bool)isValid.Value;
                 return b.IsValidLogIn;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -54,7 +53,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -74,7 +72,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(ds);
                 return ds;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
 
@@ -93,7 +90,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
 
         }
@@ -110,7 +106,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@menuKey", menuKey);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -130,7 +125,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -150,7 +144,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -162,8 +155,8 @@ namespace RealEstateManagementSystem.DataAccessLayer
             try
             {
                 cmd.Connection = Program.cnConn;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT Name, CurrentPosition FROM EmployeeDetails WHERE CompanyId = (SELECT PFNumber FROM Employee WHERE EmpId=@userId)";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_getUserInfo";
                 cmd.Parameters.AddWithValue("@userId", b.UserId);
                 dr = cmd.ExecuteReader();
                 if (dr.HasRows)
@@ -175,8 +168,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
-            finally { cmd.Dispose(); dr.Dispose(); }
+            finally { cmd.Dispose(); if (dr != null) dr.Dispose(); }
         }
     }
 }

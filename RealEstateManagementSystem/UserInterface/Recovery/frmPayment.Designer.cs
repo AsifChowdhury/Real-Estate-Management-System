@@ -146,7 +146,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
-            this.txtAmountPaid = new System.Windows.Forms.TextBox();
+            this.txtPayingAmount = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
             this.cmbPaymentMode = new System.Windows.Forms.ComboBox();
             this.label42 = new System.Windows.Forms.Label();
@@ -159,9 +159,19 @@
             this.cmbUpdateReason = new System.Windows.Forms.ComboBox();
             this.label56 = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.btnAckReceipt = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.ttPayment = new System.Windows.Forms.ToolTip(this.components);
+            this.btnNewTransaction = new System.Windows.Forms.Button();
+            this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.lineShape10 = new Microsoft.VisualBasic.PowerPacks.LineShape();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblLoanChequeInfo = new System.Windows.Forms.Label();
+            this.pnlRegistration = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lblRegistrationDate = new System.Windows.Forms.Label();
+            this.pbHandover = new System.Windows.Forms.PictureBox();
+            this.pbKeyList = new System.Windows.Forms.PictureBox();
             this.ssPayment.SuspendLayout();
             this.panel2.SuspendLayout();
             this.gbClientSummary.SuspendLayout();
@@ -174,13 +184,17 @@
             this.pnlBankInfo.SuspendLayout();
             this.panel5.SuspendLayout();
             this.pnlUpdate.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.pnlRegistration.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbHandover)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbKeyList)).BeginInit();
             this.SuspendLayout();
             // 
             // ssPayment
             // 
             this.ssPayment.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssStatus});
-            this.ssPayment.Location = new System.Drawing.Point(0, 630);
+            this.ssPayment.Location = new System.Drawing.Point(0, 677);
             this.ssPayment.Name = "ssPayment";
             this.ssPayment.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.ssPayment.Size = new System.Drawing.Size(1144, 22);
@@ -210,7 +224,7 @@
             this.lstClients.Location = new System.Drawing.Point(4, 98);
             this.lstClients.MultiSelect = false;
             this.lstClients.Name = "lstClients";
-            this.lstClients.Size = new System.Drawing.Size(298, 527);
+            this.lstClients.Size = new System.Drawing.Size(298, 574);
             this.lstClients.TabIndex = 3;
             this.lstClients.UseCompatibleStateImageBehavior = false;
             this.lstClients.View = System.Windows.Forms.View.Details;
@@ -243,7 +257,6 @@
             // 
             // cmbProjectName
             // 
-            this.cmbProjectName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cmbProjectName.FormattingEnabled = true;
             this.cmbProjectName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.cmbProjectName.Location = new System.Drawing.Point(86, 8);
@@ -251,7 +264,7 @@
             this.cmbProjectName.Size = new System.Drawing.Size(215, 21);
             this.cmbProjectName.Sorted = true;
             this.cmbProjectName.TabIndex = 0;
-            this.cmbProjectName.SelectionChangeCommitted += new System.EventHandler(this.cmbProjectName_SelectionChangeCommitted);
+            this.cmbProjectName.SelectedIndexChanged += new System.EventHandler(this.cmbProjectName_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -269,7 +282,7 @@
             this.panel2.Controls.Add(this.shapeContainer3);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(307, 630);
+            this.panel2.Size = new System.Drawing.Size(307, 677);
             this.panel2.TabIndex = 0;
             // 
             // label6
@@ -322,7 +335,7 @@
             this.shapeContainer3.Name = "shapeContainer3";
             this.shapeContainer3.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.lineShape8});
-            this.shapeContainer3.Size = new System.Drawing.Size(305, 628);
+            this.shapeContainer3.Size = new System.Drawing.Size(305, 675);
             this.shapeContainer3.TabIndex = 0;
             this.shapeContainer3.TabStop = false;
             // 
@@ -370,9 +383,9 @@
             this.panel3.Controls.Add(this.label35);
             this.panel3.Controls.Add(this.lblNumberOfInvoices);
             this.panel3.Controls.Add(this.lblLastInvoiceNumber);
-            this.panel3.Location = new System.Drawing.Point(620, 101);
+            this.panel3.Location = new System.Drawing.Point(621, 166);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(195, 44);
+            this.panel3.Size = new System.Drawing.Size(195, 41);
             this.panel3.TabIndex = 26;
             // 
             // label36
@@ -700,15 +713,16 @@
             this.pnlCurrentDue.Controls.Add(this.lblCountOfDues);
             this.pnlCurrentDue.Controls.Add(this.label33);
             this.pnlCurrentDue.Controls.Add(this.lblCurrentDue);
-            this.pnlCurrentDue.Location = new System.Drawing.Point(619, 148);
+            this.pnlCurrentDue.Controls.Add(this.shapeContainer4);
+            this.pnlCurrentDue.Location = new System.Drawing.Point(621, 101);
             this.pnlCurrentDue.Name = "pnlCurrentDue";
-            this.pnlCurrentDue.Size = new System.Drawing.Size(196, 58);
+            this.pnlCurrentDue.Size = new System.Drawing.Size(196, 63);
             this.pnlCurrentDue.TabIndex = 24;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 37);
+            this.label14.Location = new System.Drawing.Point(3, 5);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(127, 13);
             this.label14.TabIndex = 19;
@@ -718,7 +732,7 @@
             // 
             this.lblCountOfInstallment.AutoSize = true;
             this.lblCountOfInstallment.ForeColor = System.Drawing.Color.Maroon;
-            this.lblCountOfInstallment.Location = new System.Drawing.Point(135, 37);
+            this.lblCountOfInstallment.Location = new System.Drawing.Point(135, 5);
             this.lblCountOfInstallment.Name = "lblCountOfInstallment";
             this.lblCountOfInstallment.Size = new System.Drawing.Size(0, 13);
             this.lblCountOfInstallment.TabIndex = 20;
@@ -727,7 +741,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(16, 20);
+            this.label10.Location = new System.Drawing.Point(21, 43);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(61, 13);
             this.label10.TabIndex = 19;
@@ -737,7 +751,7 @@
             // 
             this.lblCountOfDues.AutoSize = true;
             this.lblCountOfDues.ForeColor = System.Drawing.Color.Maroon;
-            this.lblCountOfDues.Location = new System.Drawing.Point(78, 20);
+            this.lblCountOfDues.Location = new System.Drawing.Point(83, 43);
             this.lblCountOfDues.Name = "lblCountOfDues";
             this.lblCountOfDues.Size = new System.Drawing.Size(0, 13);
             this.lblCountOfDues.TabIndex = 20;
@@ -746,7 +760,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(-2, 3);
+            this.label33.Location = new System.Drawing.Point(3, 26);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(79, 13);
             this.label33.TabIndex = 19;
@@ -755,9 +769,9 @@
             // lblCurrentDue
             // 
             this.lblCurrentDue.ForeColor = System.Drawing.Color.Maroon;
-            this.lblCurrentDue.Location = new System.Drawing.Point(78, 3);
+            this.lblCurrentDue.Location = new System.Drawing.Point(83, 26);
             this.lblCurrentDue.Name = "lblCurrentDue";
-            this.lblCurrentDue.Size = new System.Drawing.Size(115, 13);
+            this.lblCurrentDue.Size = new System.Drawing.Size(107, 13);
             this.lblCurrentDue.TabIndex = 20;
             this.lblCurrentDue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -932,13 +946,14 @@
             this.lstPayments.FullRowSelect = true;
             this.lstPayments.GridLines = true;
             this.lstPayments.HideSelection = false;
-            this.lstPayments.Location = new System.Drawing.Point(314, 217);
+            this.lstPayments.Location = new System.Drawing.Point(314, 270);
             this.lstPayments.Name = "lstPayments";
             this.lstPayments.Size = new System.Drawing.Size(821, 168);
             this.lstPayments.TabIndex = 1;
             this.lstPayments.UseCompatibleStateImageBehavior = false;
             this.lstPayments.View = System.Windows.Forms.View.Details;
             this.lstPayments.SelectedIndexChanged += new System.EventHandler(this.lstPayments_SelectedIndexChanged);
+            this.lstPayments.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lstPayments_MouseUp);
             // 
             // colStatus
             // 
@@ -998,7 +1013,7 @@
             this.pnlTransactionInfo.Controls.Add(this.label40);
             this.pnlTransactionInfo.Controls.Add(this.cmbInstallType);
             this.pnlTransactionInfo.Controls.Add(this.label39);
-            this.pnlTransactionInfo.Location = new System.Drawing.Point(314, 390);
+            this.pnlTransactionInfo.Location = new System.Drawing.Point(314, 443);
             this.pnlTransactionInfo.Name = "pnlTransactionInfo";
             this.pnlTransactionInfo.Size = new System.Drawing.Size(821, 189);
             this.pnlTransactionInfo.TabIndex = 2;
@@ -1034,6 +1049,7 @@
             this.txtAmountInWords.ReadOnly = true;
             this.txtAmountInWords.Size = new System.Drawing.Size(305, 20);
             this.txtAmountInWords.TabIndex = 1;
+            this.txtAmountInWords.TabStop = false;
             // 
             // label55
             // 
@@ -1051,6 +1067,7 @@
             this.txtRemarks.ReadOnly = true;
             this.txtRemarks.Size = new System.Drawing.Size(305, 20);
             this.txtRemarks.TabIndex = 1;
+            this.txtRemarks.TabStop = false;
             // 
             // label54
             // 
@@ -1073,6 +1090,7 @@
             this.btnNewInstallment.TabIndex = 18;
             this.btnNewInstallment.TabStop = false;
             this.btnNewInstallment.UseVisualStyleBackColor = true;
+            this.btnNewInstallment.Click += new System.EventHandler(this.btnNewInstallment_Click);
             // 
             // pnlParticulars
             // 
@@ -1307,7 +1325,7 @@
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel5.Controls.Add(this.label45);
             this.panel5.Controls.Add(this.label44);
-            this.panel5.Controls.Add(this.txtAmountPaid);
+            this.panel5.Controls.Add(this.txtPayingAmount);
             this.panel5.Location = new System.Drawing.Point(90, 30);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(165, 21);
@@ -1337,19 +1355,19 @@
             this.label44.Text = "/-";
             this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // txtAmountPaid
+            // txtPayingAmount
             // 
-            this.txtAmountPaid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.txtPayingAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAmountPaid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtAmountPaid.Location = new System.Drawing.Point(23, 3);
-            this.txtAmountPaid.Name = "txtAmountPaid";
-            this.txtAmountPaid.Size = new System.Drawing.Size(118, 13);
-            this.txtAmountPaid.TabIndex = 0;
-            this.txtAmountPaid.Text = "0";
-            this.txtAmountPaid.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtAmountPaid.Leave += new System.EventHandler(this.txtAmountPaid_Leave);
+            this.txtPayingAmount.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPayingAmount.Location = new System.Drawing.Point(23, 3);
+            this.txtPayingAmount.Name = "txtPayingAmount";
+            this.txtPayingAmount.Size = new System.Drawing.Size(118, 13);
+            this.txtPayingAmount.TabIndex = 0;
+            this.txtPayingAmount.Text = "0";
+            this.txtPayingAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPayingAmount.Leave += new System.EventHandler(this.txtAmountPaid_Leave);
             // 
             // label43
             // 
@@ -1420,6 +1438,7 @@
             this.cmbInstallType.Name = "cmbInstallType";
             this.cmbInstallType.Size = new System.Drawing.Size(165, 21);
             this.cmbInstallType.TabIndex = 0;
+            this.cmbInstallType.SelectedIndexChanged += new System.EventHandler(this.cmbInstallType_SelectedIndexChanged);
             this.cmbInstallType.SelectionChangeCommitted += new System.EventHandler(this.cmbInstallType_SelectionChangeCommitted);
             // 
             // label39
@@ -1436,9 +1455,9 @@
             this.pnlUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlUpdate.Controls.Add(this.cmbUpdateReason);
             this.pnlUpdate.Controls.Add(this.label56);
-            this.pnlUpdate.Location = new System.Drawing.Point(314, 591);
+            this.pnlUpdate.Location = new System.Drawing.Point(314, 644);
             this.pnlUpdate.Name = "pnlUpdate";
-            this.pnlUpdate.Size = new System.Drawing.Size(442, 30);
+            this.pnlUpdate.Size = new System.Drawing.Size(574, 30);
             this.pnlUpdate.TabIndex = 6;
             // 
             // cmbUpdateReason
@@ -1446,7 +1465,7 @@
             this.cmbUpdateReason.FormattingEnabled = true;
             this.cmbUpdateReason.Location = new System.Drawing.Point(102, 4);
             this.cmbUpdateReason.Name = "cmbUpdateReason";
-            this.cmbUpdateReason.Size = new System.Drawing.Size(335, 21);
+            this.cmbUpdateReason.Size = new System.Drawing.Size(467, 21);
             this.cmbUpdateReason.TabIndex = 0;
             // 
             // label56
@@ -1466,7 +1485,7 @@
             this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.Image = global::RealEstateManagementSystem.Properties.Resources.delete;
             this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnDelete.Location = new System.Drawing.Point(1033, 585);
+            this.btnDelete.Location = new System.Drawing.Point(1033, 638);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 42);
             this.btnDelete.TabIndex = 5;
@@ -1474,27 +1493,14 @@
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnDelete.UseVisualStyleBackColor = false;
-            // 
-            // btnAckReceipt
-            // 
-            this.btnAckReceipt.BackColor = System.Drawing.Color.DarkSeaGreen;
-            this.btnAckReceipt.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAckReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAckReceipt.Image = global::RealEstateManagementSystem.Properties.Resources.recovery;
-            this.btnAckReceipt.Location = new System.Drawing.Point(926, 585);
-            this.btnAckReceipt.Name = "btnAckReceipt";
-            this.btnAckReceipt.Size = new System.Drawing.Size(100, 42);
-            this.btnAckReceipt.TabIndex = 4;
-            this.btnAckReceipt.Text = "Ack. Receipt";
-            this.btnAckReceipt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnAckReceipt.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnSave
             // 
             this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Image = global::RealEstateManagementSystem.Properties.Resources.save;
-            this.btnSave.Location = new System.Drawing.Point(819, 585);
+            this.btnSave.Location = new System.Drawing.Point(927, 638);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 42);
             this.btnSave.TabIndex = 3;
@@ -1504,14 +1510,127 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnNewTransaction
+            // 
+            this.btnNewTransaction.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNewTransaction.FlatAppearance.BorderSize = 0;
+            this.btnNewTransaction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewTransaction.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.btnNewTransaction.Image = global::RealEstateManagementSystem.Properties.Resources.refresh;
+            this.btnNewTransaction.Location = new System.Drawing.Point(894, 638);
+            this.btnNewTransaction.Name = "btnNewTransaction";
+            this.btnNewTransaction.Size = new System.Drawing.Size(27, 24);
+            this.btnNewTransaction.TabIndex = 10;
+            this.btnNewTransaction.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.ttPayment.SetToolTip(this.btnNewTransaction, "New Payment Transaction");
+            this.btnNewTransaction.UseVisualStyleBackColor = true;
+            this.btnNewTransaction.Click += new System.EventHandler(this.btnNewTransaction_Click);
+            // 
+            // shapeContainer4
+            // 
+            this.shapeContainer4.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer4.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer4.Name = "shapeContainer4";
+            this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.lineShape10});
+            this.shapeContainer4.Size = new System.Drawing.Size(194, 61);
+            this.shapeContainer4.TabIndex = 21;
+            this.shapeContainer4.TabStop = false;
+            // 
+            // lineShape10
+            // 
+            this.lineShape10.Name = "lineShape10";
+            this.lineShape10.X1 = -5;
+            this.lineShape10.X2 = 198;
+            this.lineShape10.Y1 = 22;
+            this.lineShape10.Y2 = 22;
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.lblLoanChequeInfo);
+            this.panel4.Controls.Add(this.label1);
+            this.panel4.Location = new System.Drawing.Point(314, 216);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(617, 48);
+            this.panel4.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(79, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Loan Cheque:";
+            // 
+            // lblLoanChequeInfo
+            // 
+            this.lblLoanChequeInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblLoanChequeInfo.Location = new System.Drawing.Point(87, 6);
+            this.lblLoanChequeInfo.Name = "lblLoanChequeInfo";
+            this.lblLoanChequeInfo.Size = new System.Drawing.Size(523, 36);
+            this.lblLoanChequeInfo.TabIndex = 1;
+            // 
+            // pnlRegistration
+            // 
+            this.pnlRegistration.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlRegistration.Controls.Add(this.pbHandover);
+            this.pnlRegistration.Controls.Add(this.pbKeyList);
+            this.pnlRegistration.Controls.Add(this.lblRegistrationDate);
+            this.pnlRegistration.Controls.Add(this.label12);
+            this.pnlRegistration.Location = new System.Drawing.Point(935, 216);
+            this.pnlRegistration.Name = "pnlRegistration";
+            this.pnlRegistration.Size = new System.Drawing.Size(195, 48);
+            this.pnlRegistration.TabIndex = 12;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(0, 17);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(67, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Reg. Date:";
+            // 
+            // lblRegistrationDate
+            // 
+            this.lblRegistrationDate.AutoSize = true;
+            this.lblRegistrationDate.Location = new System.Drawing.Point(63, 17);
+            this.lblRegistrationDate.Name = "lblRegistrationDate";
+            this.lblRegistrationDate.Size = new System.Drawing.Size(0, 13);
+            this.lblRegistrationDate.TabIndex = 1;
+            // 
+            // pbHandover
+            // 
+            this.pbHandover.Image = global::RealEstateManagementSystem.Properties.Resources.handover;
+            this.pbHandover.Location = new System.Drawing.Point(165, 12);
+            this.pbHandover.Name = "pbHandover";
+            this.pbHandover.Size = new System.Drawing.Size(25, 23);
+            this.pbHandover.TabIndex = 10;
+            this.pbHandover.TabStop = false;
+            this.pbHandover.Visible = false;
+            // 
+            // pbKeyList
+            // 
+            this.pbKeyList.Image = global::RealEstateManagementSystem.Properties.Resources.key;
+            this.pbKeyList.Location = new System.Drawing.Point(138, 10);
+            this.pbKeyList.Name = "pbKeyList";
+            this.pbKeyList.Size = new System.Drawing.Size(23, 26);
+            this.pbKeyList.TabIndex = 9;
+            this.pbKeyList.TabStop = false;
+            this.pbKeyList.Visible = false;
+            // 
             // frmPayment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1144, 652);
+            this.ClientSize = new System.Drawing.Size(1144, 699);
+            this.Controls.Add(this.pnlRegistration);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.btnNewTransaction);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnAckReceipt);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.pnlUpdate);
             this.Controls.Add(this.ssPayment);
@@ -1554,6 +1673,12 @@
             this.panel5.PerformLayout();
             this.pnlUpdate.ResumeLayout(false);
             this.pnlUpdate.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.pnlRegistration.ResumeLayout(false);
+            this.pnlRegistration.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbHandover)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbKeyList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1635,7 +1760,7 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.TextBox txtAmountPaid;
+        private System.Windows.Forms.TextBox txtPayingAmount;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.ComboBox cmbPaymentMode;
         private System.Windows.Forms.Label label42;
@@ -1670,7 +1795,6 @@
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.ComboBox cmbUpdateReason;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnAckReceipt;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ToolTip ttPayment;
         private System.Windows.Forms.Label label6;
@@ -1692,5 +1816,16 @@
         private System.Windows.Forms.Label lblCountOfInstallment;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lblCountOfDues;
+        private System.Windows.Forms.Button btnNewTransaction;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer4;
+        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape10;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblLoanChequeInfo;
+        private System.Windows.Forms.Panel pnlRegistration;
+        private System.Windows.Forms.Label lblRegistrationDate;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.PictureBox pbHandover;
+        private System.Windows.Forms.PictureBox pbKeyList;
     }
 }

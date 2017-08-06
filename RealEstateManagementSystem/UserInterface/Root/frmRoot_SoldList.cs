@@ -15,7 +15,6 @@ namespace RealEstateManagementSystem.UserInterface.Root
 {
     public partial class frmRoot_SoldList : Form
     {
-        public DateTime startDate;
         public frmRoot_SoldList()
         {
             InitializeComponent();
@@ -23,23 +22,32 @@ namespace RealEstateManagementSystem.UserInterface.Root
 
         private void frmRoot_SoldList_Load(object sender, EventArgs e)
         {
-            this.Text = "List of unit(s) sold since " + startDate.ToString("dddd dd-MMM-yyyy");
-            bllGlobal b = new bllGlobal();
-            foreach (DataRow drItems in b.GetRootSoldList(startDate).Rows)
+            LoadClientlist();
+        }
+
+        private void LoadClientlist()
+        {
+            try
             {
-                ListViewItem lvItems = new ListViewItem(Convert.ToString(drItems["ClientId"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["Name"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["ContactNumber"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["ProjectName"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["UnitNumber"]));
-                lvItems.SubItems.Add(Convert.ToDecimal(drItems["FaceValue"]).FormatAsMoney());
-                lvItems.SubItems.Add(Convert.ToDecimal(drItems["Rebate"]).FormatAsMoney());
-                lvItems.SubItems.Add(Convert.ToDecimal(drItems["SaleValue"]).FormatAsMoney());
-                lvItems.SubItems.Add(Convert.ToDecimal(drItems["Paid"]).FormatAsMoney());
-                lvItems.SubItems.Add(Convert.ToString(drItems["BookingDate"]).ShowAsStandardDateFormat(true));
-                lstSold.Items.Add(lvItems);
+                this.Text = "List of unit(s) sold since " + dtpStartDate.Value.ToString("dddd dd-MMM-yyyy");
+                bllGlobal b = new bllGlobal();
+                foreach (DataRow drItems in b.GetRootSoldList(dtpStartDate.Value).Rows)
+                {
+                    ListViewItem lvItems = new ListViewItem(Convert.ToString(drItems["ClientId"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["Name"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["ContactNumber"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["ProjectName"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["UnitNumber"]));
+                    lvItems.SubItems.Add(Convert.ToDecimal(drItems["FaceValue"]).FormatAsMoney());
+                    lvItems.SubItems.Add(Convert.ToDecimal(drItems["Rebate"]).FormatAsMoney());
+                    lvItems.SubItems.Add(Convert.ToDecimal(drItems["SaleValue"]).FormatAsMoney());
+                    lvItems.SubItems.Add(Convert.ToDecimal(drItems["Paid"]).FormatAsMoney());
+                    lvItems.SubItems.Add(Convert.ToString(drItems["BookingDate"]).ShowAsStandardDateFormat(true));
+                    lstSold.Items.Add(lvItems);
+                }
+                lblRecordCount.Text = "# of Sold unit: " + lstSold.Items.Count.ToString();
             }
-            tssSoldCount.Text = "# of Sold unit: " + lstSold.Items.Count.ToString();
+            catch (Exception ex) { ex.ProcessException(tssSoldCount); }
         }
 
         private void lstSold_MouseUp(object sender, MouseEventArgs e)
@@ -62,18 +70,25 @@ namespace RealEstateManagementSystem.UserInterface.Root
 
         private void paymentHistory_OnClick(object sender, EventArgs e)
         {
-            clsGlobalClass.ShowUnderConstructionMessage();
+            try { clsReports.PaymentHistoryOfClient(Convert.ToString(clsCommonFunctions.GetNumericPartOfFullClientId(lstSold.SelectedItems[0].Text.ToString())), tssSoldCount); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void paymentSchedule_OnClick(object sender, EventArgs e)
         {
-            clsGlobalClass.ShowUnderConstructionMessage();
+            try { clsReports.PaymentSchedule(Convert.ToString(clsCommonFunctions.GetNumericPartOfFullClientId(lstSold.SelectedItems[0].Text.ToString())), true, tssSoldCount); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void clientProfile_OnClick(object sender, EventArgs e)
         {
-            try { clsReports.ShowReport_ClientProfile(lstSold.SelectedItems[0].Text.ToString(), tssSoldCount); }
-            catch (Exception ex) { ex.Display(); }
+            try { clsReports.ClientProfile(lstSold.SelectedItems[0].Text.ToString(), tssSoldCount); }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            LoadClientlist();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RealEstateManagementSystem.Utilities;
 
 namespace RealEstateManagementSystem.BusinessLogicLayer
 {
@@ -40,7 +41,10 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public decimal CurrentDue { get; set; }
         public int CountOfDueInstallment { get; set; }
         public int CountOfRegularInstallment { get; set; }
-
+        public string RegistrationDate { get; set; }
+        public bool IsKeyLetterProcessed { get; set; }
+        public bool IsHandoverCertificateProcessed { get; set; }
+        public string LoanChequeInfo { get; set; }
 
     }
 
@@ -91,6 +95,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
     {
         public int InstallmentId { get; set; }
         public string InstallmentName { get; set; }
+        public float InstallmentAmount { get; set; }
 
     }
 
@@ -104,6 +109,8 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public string BankAccountNumber { get; set; }
         public DateTime ParticularDate { get; set; }
         public string UpdateReason { get; set; }
+        public string ReturnText { get; set; }
+
         public InstallTypeInfo InstallType { get; set; }
 
         public InstallmentInfo Installment { get; set; }
@@ -114,6 +121,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public DistrictInfo District { get; set; }
         public CountryInfo Country { get; set; }
         public PaymentModeInfo PaymentMode { get; set; }
+        public CommonProperties_Recovery CommonProperties { get; set; }
 
         public EntryAndUpdateInfo EntryAndUpdate { get; set; }
     }
@@ -170,15 +178,29 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return payment.GetListOfPayments(clientId);
         }
 
+        internal DataSet GetKeyList(int clientId, int projectEngineer)
+        {
+            return payment.GetKeyList(clientId, projectEngineer);
+        }
+
+        internal DataSet GetHandoverCertificate(int clientId, DateTime handoverDate, int handoverBy, int forwardedBy, int recommendedBy)
+        {
+            return payment.GetHandoverCertificate(clientId, handoverDate, handoverBy, forwardedBy, recommendedBy);
+        }
 
         internal DataTable InstallmentListOfClient(int clientId, int installmentTypeId)
         {
             return payment.InstallmentListOfClient(clientId, installmentTypeId);
         }
 
-        internal void InstallmentAlgorithm(int clientId, decimal dblPAmount, out int lastInstallmentId, out string installInWord)
+        internal DataSet GetPaymentClearanceCertificate(int clientId, int verifiedBy, int checkedBy, int recommnededBy)
         {
-            payment.InstallmentAlgorithm(clientId, dblPAmount, out lastInstallmentId, out installInWord);
+            return payment.GetPaymentClearanceCertificate(clientId, verifiedBy, checkedBy, recommnededBy);
+        }
+
+        internal void InstallmentAlgorithm(int clientId, decimal dblPAmount, int installmentId, int transactionId, out int lastInstallmentId, out string installInWord)
+        {
+            payment.InstallmentAlgorithm(clientId, dblPAmount, installmentId, transactionId, out lastInstallmentId, out installInWord);
         }
 
         internal void GetTransactionDetails(Payment transactionInfo)
@@ -199,6 +221,106 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         internal decimal AmountPayable(int clientId, int installmentId)
         {
             return payment.AmountPayable(clientId, installmentId);
+        }
+
+        internal int CommitTransaction(Payment p)
+        {
+            return payment.CommitTransaction(p);
+        }
+
+        internal bool IsBankInfoNeeded(int paymentModeId)
+        {
+            return payment.IsBankInfoNeeded(paymentModeId);
+        }
+
+        internal void DeleteTransaction(int transactionId)
+        {
+            payment.DeleteTransaction(transactionId);
+        }
+
+        internal DataSet GetMoneyReceipt(int transactionId, bool isDuplicate)
+        {
+            return payment.GetMoneyReceipt(transactionId, isDuplicate);
+        }
+
+        internal DataSet GetLoanDisbursementHistory(string clientIds)
+        {
+            return payment.GetLoanDisbursementHistory(clientIds);
+        }
+
+        internal decimal GetAmountPaidInTransaction(int transactionId)
+        {
+            return payment.GetAmountPaidInTransaction(transactionId);
+        }
+
+        internal DataSet GetPaymentHistoryOfClient(string clientIds)
+        {
+            return payment.GetPaymentHistoryOfClient(clientIds);
+        }
+
+        internal DataSet AcknowledgementReceipt(int transactionId)
+        {
+            return payment.AcknowledgementReceipt(transactionId);
+        }
+
+        internal DataTable GetListOfInstallmentsByInstallType(int clientId, int installTypeId)
+        {
+            return payment.GetListOfInstallmentsByInstallType(clientId, installTypeId);
+        }
+
+        internal int GetProjectIdFromProjectName(string projectName)
+        {
+            return payment.GetProjectIdFromProjectName(projectName);
+        }
+
+        internal int IsTransactionEdited(int transactionId)
+        {
+            return payment.IsTransactionEdited(transactionId);
+        }
+
+        internal DataTable GetTransactionUpdateHostory(int transactionId)
+        {
+            return payment.GetTransactionUpdateHistory(transactionId);
+        }
+
+        internal DataTable SearchClientCheckInformation(clsGlobalClass.ChequeSearchBy searchBy, int invoiceNumber, int clientId, int bankId, DateTime startDate, DateTime endDate, bool excludeReceived, bool excludeCashTransactions)
+        {
+            return payment.SearchClientCheckInformation(searchBy, invoiceNumber, clientId, bankId, startDate, endDate, excludeReceived, excludeCashTransactions);
+        }
+
+        internal DataSet GetPaymentComparison(string clientId)
+        {
+            return payment.GetPaymentComparison(clientId);
+        }
+
+        internal void ManipulateOAInstallment(int clientId, InstallmentInfo i)
+        {
+            payment.ManipulateOAInstallment(clientId, i);
+        }
+
+        internal DataSet GetPaymentHistoryOfClient_WithBankAccount(string clientIds)
+        {
+            return payment.GetPaymentHistoryOfClient_WithBankAccount(clientIds);
+        }
+
+        internal DataTable GetPaymentSummaryOfClient_ByInstallment(string clientId)
+        {
+            return payment.GetPaymentSummaryOfClient_ByInstallment(clientId);
+        }
+
+        internal DataTable GetSummartForPaymentClearance(int clientId)
+        {
+            return payment.GetSummartForPaymentClearance(clientId);
+        }
+
+        internal bool IsHandoverCertficateDelivered(int clientId)
+        {
+            return payment.IsHandoverCertficateDelivered(clientId);
+        }
+
+        internal bool IsKeyListDelivered(int clientId)
+        {
+            return payment.IsKeyListDelivered(clientId);
         }
     }
 

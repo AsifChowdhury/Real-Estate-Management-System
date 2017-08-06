@@ -281,8 +281,6 @@ namespace RealEstateManagementSystem.ReportDataSet {
             
             private global::System.Data.DataColumn columnClientId;
             
-            private global::System.Data.DataColumn columnFullCLientId;
-            
             private global::System.Data.DataColumn columnClientName;
             
             private global::System.Data.DataColumn columnAllocationInfo;
@@ -300,6 +298,22 @@ namespace RealEstateManagementSystem.ReportDataSet {
             private global::System.Data.DataColumn columnDues;
             
             private global::System.Data.DataColumn columnIsDueDate;
+            
+            private global::System.Data.DataColumn columnContactInfo;
+            
+            private global::System.Data.DataColumn columnInstallTypeId;
+            
+            private global::System.Data.DataColumn columnFullClientId;
+            
+            private global::System.Data.DataColumn columnPreparedBy;
+            
+            private global::System.Data.DataColumn columnCheckedBy;
+            
+            private global::System.Data.DataColumn columnRecommendedBy;
+            
+            private global::System.Data.DataColumn columnMasterUnitType;
+            
+            private global::System.Data.DataColumn columnRowId;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -339,14 +353,6 @@ namespace RealEstateManagementSystem.ReportDataSet {
             public global::System.Data.DataColumn ClientIdColumn {
                 get {
                     return this.columnClientId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn FullCLientIdColumn {
-                get {
-                    return this.columnFullCLientId;
                 }
             }
             
@@ -424,6 +430,70 @@ namespace RealEstateManagementSystem.ReportDataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ContactInfoColumn {
+                get {
+                    return this.columnContactInfo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn InstallTypeIdColumn {
+                get {
+                    return this.columnInstallTypeId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FullClientIdColumn {
+                get {
+                    return this.columnFullClientId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PreparedByColumn {
+                get {
+                    return this.columnPreparedBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CheckedByColumn {
+                get {
+                    return this.columnCheckedBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RecommendedByColumn {
+                get {
+                    return this.columnRecommendedBy;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MasterUnitTypeColumn {
+                get {
+                    return this.columnMasterUnitType;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RowIdColumn {
+                get {
+                    return this.columnRowId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -459,11 +529,27 @@ namespace RealEstateManagementSystem.ReportDataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public sp_CalculatePaymentScheduleRow Addsp_CalculatePaymentScheduleRow(double ClientId, string FullCLientId, string ClientName, string AllocationInfo, double Amount, System.DateTime DueDate, string InstallmentName, string InstallType, double AmountPaid, double Dues, double IsDueDate) {
+            public sp_CalculatePaymentScheduleRow Addsp_CalculatePaymentScheduleRow(
+                        double ClientId, 
+                        string ClientName, 
+                        string AllocationInfo, 
+                        double Amount, 
+                        System.DateTime DueDate, 
+                        string InstallmentName, 
+                        string InstallType, 
+                        double AmountPaid, 
+                        double Dues, 
+                        double IsDueDate, 
+                        string ContactInfo, 
+                        int InstallTypeId, 
+                        string FullClientId, 
+                        string PreparedBy, 
+                        string CheckedBy, 
+                        string RecommendedBy, 
+                        string MasterUnitType) {
                 sp_CalculatePaymentScheduleRow rowsp_CalculatePaymentScheduleRow = ((sp_CalculatePaymentScheduleRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ClientId,
-                        FullCLientId,
                         ClientName,
                         AllocationInfo,
                         Amount,
@@ -472,7 +558,15 @@ namespace RealEstateManagementSystem.ReportDataSet {
                         InstallType,
                         AmountPaid,
                         Dues,
-                        IsDueDate};
+                        IsDueDate,
+                        ContactInfo,
+                        InstallTypeId,
+                        FullClientId,
+                        PreparedBy,
+                        CheckedBy,
+                        RecommendedBy,
+                        MasterUnitType,
+                        null};
                 rowsp_CalculatePaymentScheduleRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowsp_CalculatePaymentScheduleRow);
                 return rowsp_CalculatePaymentScheduleRow;
@@ -496,7 +590,6 @@ namespace RealEstateManagementSystem.ReportDataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnClientId = base.Columns["ClientId"];
-                this.columnFullCLientId = base.Columns["FullCLientId"];
                 this.columnClientName = base.Columns["ClientName"];
                 this.columnAllocationInfo = base.Columns["AllocationInfo"];
                 this.columnAmount = base.Columns["Amount"];
@@ -506,6 +599,14 @@ namespace RealEstateManagementSystem.ReportDataSet {
                 this.columnAmountPaid = base.Columns["AmountPaid"];
                 this.columnDues = base.Columns["Dues"];
                 this.columnIsDueDate = base.Columns["IsDueDate"];
+                this.columnContactInfo = base.Columns["ContactInfo"];
+                this.columnInstallTypeId = base.Columns["InstallTypeId"];
+                this.columnFullClientId = base.Columns["FullClientId"];
+                this.columnPreparedBy = base.Columns["PreparedBy"];
+                this.columnCheckedBy = base.Columns["CheckedBy"];
+                this.columnRecommendedBy = base.Columns["RecommendedBy"];
+                this.columnMasterUnitType = base.Columns["MasterUnitType"];
+                this.columnRowId = base.Columns["RowId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -513,8 +614,6 @@ namespace RealEstateManagementSystem.ReportDataSet {
             private void InitClass() {
                 this.columnClientId = new global::System.Data.DataColumn("ClientId", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnClientId);
-                this.columnFullCLientId = new global::System.Data.DataColumn("FullCLientId", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFullCLientId);
                 this.columnClientName = new global::System.Data.DataColumn("ClientName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnClientName);
                 this.columnAllocationInfo = new global::System.Data.DataColumn("AllocationInfo", typeof(string), null, global::System.Data.MappingType.Element);
@@ -533,11 +632,37 @@ namespace RealEstateManagementSystem.ReportDataSet {
                 base.Columns.Add(this.columnDues);
                 this.columnIsDueDate = new global::System.Data.DataColumn("IsDueDate", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsDueDate);
-                this.columnFullCLientId.MaxLength = 50;
+                this.columnContactInfo = new global::System.Data.DataColumn("ContactInfo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContactInfo);
+                this.columnInstallTypeId = new global::System.Data.DataColumn("InstallTypeId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnInstallTypeId);
+                this.columnFullClientId = new global::System.Data.DataColumn("FullClientId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFullClientId);
+                this.columnPreparedBy = new global::System.Data.DataColumn("PreparedBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPreparedBy);
+                this.columnCheckedBy = new global::System.Data.DataColumn("CheckedBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCheckedBy);
+                this.columnRecommendedBy = new global::System.Data.DataColumn("RecommendedBy", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRecommendedBy);
+                this.columnMasterUnitType = new global::System.Data.DataColumn("MasterUnitType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMasterUnitType);
+                this.columnRowId = new global::System.Data.DataColumn("RowId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRowId);
                 this.columnClientName.MaxLength = 100;
                 this.columnAllocationInfo.MaxLength = 2147483647;
                 this.columnInstallmentName.MaxLength = 50;
                 this.columnInstallType.MaxLength = 2147483647;
+                this.columnContactInfo.MaxLength = 2147483647;
+                this.columnFullClientId.MaxLength = 50;
+                this.columnPreparedBy.MaxLength = 100;
+                this.columnCheckedBy.MaxLength = 100;
+                this.columnRecommendedBy.MaxLength = 100;
+                this.columnMasterUnitType.MaxLength = 20;
+                this.columnRowId.AutoIncrement = true;
+                this.columnRowId.AutoIncrementSeed = -1;
+                this.columnRowId.AutoIncrementStep = -1;
+                this.columnRowId.AllowDBNull = false;
+                this.columnRowId.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -697,23 +822,6 @@ namespace RealEstateManagementSystem.ReportDataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string FullCLientId {
-                get {
-                    try {
-                        return ((string)(this[this.tablesp_CalculatePaymentSchedule.FullCLientIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FullCLientId\' in table \'sp_CalculatePaymentSchedule\' is DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tablesp_CalculatePaymentSchedule.FullCLientIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string ClientName {
                 get {
                     try {
@@ -864,6 +972,136 @@ namespace RealEstateManagementSystem.ReportDataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ContactInfo {
+                get {
+                    try {
+                        return ((string)(this[this.tablesp_CalculatePaymentSchedule.ContactInfoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ContactInfo\' in table \'sp_CalculatePaymentSchedule\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_CalculatePaymentSchedule.ContactInfoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int InstallTypeId {
+                get {
+                    try {
+                        return ((int)(this[this.tablesp_CalculatePaymentSchedule.InstallTypeIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'InstallTypeId\' in table \'sp_CalculatePaymentSchedule\' is DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_CalculatePaymentSchedule.InstallTypeIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string FullClientId {
+                get {
+                    try {
+                        return ((string)(this[this.tablesp_CalculatePaymentSchedule.FullClientIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FullClientId\' in table \'sp_CalculatePaymentSchedule\' is DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_CalculatePaymentSchedule.FullClientIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PreparedBy {
+                get {
+                    try {
+                        return ((string)(this[this.tablesp_CalculatePaymentSchedule.PreparedByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PreparedBy\' in table \'sp_CalculatePaymentSchedule\' is DBNul" +
+                                "l.", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_CalculatePaymentSchedule.PreparedByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CheckedBy {
+                get {
+                    try {
+                        return ((string)(this[this.tablesp_CalculatePaymentSchedule.CheckedByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CheckedBy\' in table \'sp_CalculatePaymentSchedule\' is DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_CalculatePaymentSchedule.CheckedByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string RecommendedBy {
+                get {
+                    try {
+                        return ((string)(this[this.tablesp_CalculatePaymentSchedule.RecommendedByColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'RecommendedBy\' in table \'sp_CalculatePaymentSchedule\' is DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_CalculatePaymentSchedule.RecommendedByColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MasterUnitType {
+                get {
+                    try {
+                        return ((string)(this[this.tablesp_CalculatePaymentSchedule.MasterUnitTypeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MasterUnitType\' in table \'sp_CalculatePaymentSchedule\' is D" +
+                                "BNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_CalculatePaymentSchedule.MasterUnitTypeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int RowId {
+                get {
+                    return ((int)(this[this.tablesp_CalculatePaymentSchedule.RowIdColumn]));
+                }
+                set {
+                    this[this.tablesp_CalculatePaymentSchedule.RowIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsClientIdNull() {
                 return this.IsNull(this.tablesp_CalculatePaymentSchedule.ClientIdColumn);
             }
@@ -872,18 +1110,6 @@ namespace RealEstateManagementSystem.ReportDataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetClientIdNull() {
                 this[this.tablesp_CalculatePaymentSchedule.ClientIdColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsFullCLientIdNull() {
-                return this.IsNull(this.tablesp_CalculatePaymentSchedule.FullCLientIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetFullCLientIdNull() {
-                this[this.tablesp_CalculatePaymentSchedule.FullCLientIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -992,6 +1218,90 @@ namespace RealEstateManagementSystem.ReportDataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetIsDueDateNull() {
                 this[this.tablesp_CalculatePaymentSchedule.IsDueDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsContactInfoNull() {
+                return this.IsNull(this.tablesp_CalculatePaymentSchedule.ContactInfoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetContactInfoNull() {
+                this[this.tablesp_CalculatePaymentSchedule.ContactInfoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsInstallTypeIdNull() {
+                return this.IsNull(this.tablesp_CalculatePaymentSchedule.InstallTypeIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetInstallTypeIdNull() {
+                this[this.tablesp_CalculatePaymentSchedule.InstallTypeIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFullClientIdNull() {
+                return this.IsNull(this.tablesp_CalculatePaymentSchedule.FullClientIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFullClientIdNull() {
+                this[this.tablesp_CalculatePaymentSchedule.FullClientIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPreparedByNull() {
+                return this.IsNull(this.tablesp_CalculatePaymentSchedule.PreparedByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPreparedByNull() {
+                this[this.tablesp_CalculatePaymentSchedule.PreparedByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCheckedByNull() {
+                return this.IsNull(this.tablesp_CalculatePaymentSchedule.CheckedByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCheckedByNull() {
+                this[this.tablesp_CalculatePaymentSchedule.CheckedByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRecommendedByNull() {
+                return this.IsNull(this.tablesp_CalculatePaymentSchedule.RecommendedByColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRecommendedByNull() {
+                this[this.tablesp_CalculatePaymentSchedule.RecommendedByColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMasterUnitTypeNull() {
+                return this.IsNull(this.tablesp_CalculatePaymentSchedule.MasterUnitTypeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMasterUnitTypeNull() {
+                this[this.tablesp_CalculatePaymentSchedule.MasterUnitTypeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1155,7 +1465,6 @@ namespace RealEstateManagementSystem.ReportDataSet.dsPaymentScheduleTableAdapter
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "sp_CalculatePaymentSchedule";
             tableMapping.ColumnMappings.Add("ClientId", "ClientId");
-            tableMapping.ColumnMappings.Add("FullCLientId", "FullCLientId");
             tableMapping.ColumnMappings.Add("ClientName", "ClientName");
             tableMapping.ColumnMappings.Add("AllocationInfo", "AllocationInfo");
             tableMapping.ColumnMappings.Add("Amount", "Amount");
@@ -1165,6 +1474,14 @@ namespace RealEstateManagementSystem.ReportDataSet.dsPaymentScheduleTableAdapter
             tableMapping.ColumnMappings.Add("AmountPaid", "AmountPaid");
             tableMapping.ColumnMappings.Add("Dues", "Dues");
             tableMapping.ColumnMappings.Add("IsDueDate", "IsDueDate");
+            tableMapping.ColumnMappings.Add("ContactInfo", "ContactInfo");
+            tableMapping.ColumnMappings.Add("InstallTypeId", "InstallTypeId");
+            tableMapping.ColumnMappings.Add("FullClientId", "FullClientId");
+            tableMapping.ColumnMappings.Add("PreparedBy", "PreparedBy");
+            tableMapping.ColumnMappings.Add("CheckedBy", "CheckedBy");
+            tableMapping.ColumnMappings.Add("RecommendedBy", "RecommendedBy");
+            tableMapping.ColumnMappings.Add("MasterUnitType", "MasterUnitType");
+            tableMapping.ColumnMappings.Add("RowId", "RowId");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1184,20 +1501,20 @@ namespace RealEstateManagementSystem.ReportDataSet.dsPaymentScheduleTableAdapter
             this._commandCollection[0].CommandText = "dbo.sp_CalculatePaymentSchedule";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@clientId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@clientIds", global::System.Data.SqlDbType.NVarChar, 2147483647, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(dsPaymentSchedule.sp_CalculatePaymentScheduleDataTable dataTable, global::System.Nullable<int> clientId) {
+        public virtual int Fill(dsPaymentSchedule.sp_CalculatePaymentScheduleDataTable dataTable, string clientIds) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((clientId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(clientId.Value));
+            if ((clientIds == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(clientIds));
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1210,13 +1527,13 @@ namespace RealEstateManagementSystem.ReportDataSet.dsPaymentScheduleTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual dsPaymentSchedule.sp_CalculatePaymentScheduleDataTable GetData(global::System.Nullable<int> clientId) {
+        public virtual dsPaymentSchedule.sp_CalculatePaymentScheduleDataTable GetData(string clientIds) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((clientId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(clientId.Value));
+            if ((clientIds == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(clientIds));
             }
             dsPaymentSchedule.sp_CalculatePaymentScheduleDataTable dataTable = new dsPaymentSchedule.sp_CalculatePaymentScheduleDataTable();
             this.Adapter.Fill(dataTable);

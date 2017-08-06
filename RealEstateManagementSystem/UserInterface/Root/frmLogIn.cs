@@ -51,7 +51,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
                     MessageBox.Show("Invalid user credentials.\nPlease contact IT.");
                 }
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void frmLogIn_Load(object sender, EventArgs e)

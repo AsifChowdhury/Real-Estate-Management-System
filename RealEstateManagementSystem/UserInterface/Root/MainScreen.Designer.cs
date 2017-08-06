@@ -42,6 +42,7 @@
             this.tsmiPayment = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRecoveryReports = new System.Windows.Forms.ToolStripMenuItem();
             this.AccountsSection = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiChequeManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.AdminControls = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiUserAuthentication = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutUs = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,10 +144,12 @@
             // 
             // tsmiClientReports
             // 
+            this.tsmiClientReports.Image = global::RealEstateManagementSystem.Properties.Resources.ClientReport1;
             this.tsmiClientReports.Name = "tsmiClientReports";
+            this.tsmiClientReports.ShortcutKeys = System.Windows.Forms.Keys.F2;
             this.tsmiClientReports.Size = new System.Drawing.Size(200, 22);
             this.tsmiClientReports.Text = "Reports";
-            this.tsmiClientReports.Visible = false;
+            this.tsmiClientReports.Click += new System.EventHandler(this.tsmiClientReports_Click);
             // 
             // RecoverySection
             // 
@@ -177,12 +180,23 @@
             // 
             // AccountsSection
             // 
+            this.AccountsSection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiChequeManagement});
             this.AccountsSection.ForeColor = System.Drawing.Color.Navy;
+            this.AccountsSection.Image = global::RealEstateManagementSystem.Properties.Resources.accountsSection;
             this.AccountsSection.Name = "AccountsSection";
             this.AccountsSection.Size = new System.Drawing.Size(131, 34);
             this.AccountsSection.Text = "Accounts Section";
             this.AccountsSection.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.AccountsSection.Visible = false;
+            // 
+            // tsmiChequeManagement
+            // 
+            this.tsmiChequeManagement.Image = global::RealEstateManagementSystem.Properties.Resources.ChequeManagement;
+            this.tsmiChequeManagement.Name = "tsmiChequeManagement";
+            this.tsmiChequeManagement.Size = new System.Drawing.Size(193, 22);
+            this.tsmiChequeManagement.Text = "Cheque Management";
+            this.tsmiChequeManagement.Click += new System.EventHandler(this.tsmiChequeManagement_Click);
             // 
             // AdminControls
             // 
@@ -451,5 +465,6 @@
         private System.Windows.Forms.Button btnUnitSold;
         private System.Windows.Forms.Button btnTotalCollection;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ToolStripMenuItem tsmiChequeManagement;
     }
 }

@@ -15,7 +15,6 @@ namespace RealEstateManagementSystem.UserInterface.Root
 {
     public partial class frmRoot_CancelList : Form
     {
-        public DateTime startDate;
         public frmRoot_CancelList()
         {
             InitializeComponent();
@@ -23,19 +22,28 @@ namespace RealEstateManagementSystem.UserInterface.Root
 
         private void frmRoot_CancelList_Load(object sender, EventArgs e)
         {
-            this.Text = "List of Cancelled Client since " + startDate.ToString("dddd dd-MMM-yyyy");
-            bllGlobal b = new bllGlobal();
-            foreach (DataRow drItems in b.GetRootCancelledList(startDate).Rows)
+            LoadClientList();
+        }
+
+        private void LoadClientList()
+        {
+            try
             {
-                ListViewItem lvItems = new ListViewItem(Convert.ToString(drItems["ClientId"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["Name"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["ContactNumber"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["ProjectName"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["UnitNumber"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["CancelDate"]).ShowAsStandardDateFormat(false));
-                lstcancelList.Items.Add(lvItems);
+                this.Text = "List of Cancelled Client since " + dtpStartDate.Value.ToString("dddd dd-MMM-yyyy");
+                bllGlobal b = new bllGlobal();
+                foreach (DataRow drItems in b.GetRootCancelledList(dtpStartDate.Value).Rows)
+                {
+                    ListViewItem lvItems = new ListViewItem(Convert.ToString(drItems["ClientId"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["Name"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["ContactNumber"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["ProjectName"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["UnitNumber"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["CancelDate"]).ShowAsStandardDateFormat(false));
+                    lstcancelList.Items.Add(lvItems);
+                }
+                lblRecordCount.Text = "Total # of Cancelled Unit(s): " + lstcancelList.Items.Count;
             }
-            tssStatus.Text = "Total # of Cancelled Unit(s): " + lstcancelList.Items.Count;
+            catch (Exception ex) { ex.ProcessException(tssStatus); }
         }
 
         private void lstcancelList_MouseUp(object sender, MouseEventArgs e)
@@ -58,18 +66,26 @@ namespace RealEstateManagementSystem.UserInterface.Root
 
         private void paymentHistory_OnClick(object sender, EventArgs e)
         {
-            clsGlobalClass.ShowUnderConstructionMessage();
+            try { clsReports.PaymentHistoryOfClient(Convert.ToString(clsCommonFunctions.GetNumericPartOfFullClientId(lstcancelList.SelectedItems[0].Text.ToString())), tssStatus); }
+            catch (Exception ex) { ex.ProcessException(tssStatus); }
         }
 
         private void paymentSchedule_OnClick(object sender, EventArgs e)
         {
-            clsGlobalClass.ShowUnderConstructionMessage();
+            try { clsReports.PaymentSchedule(Convert.ToString(clsCommonFunctions.GetNumericPartOfFullClientId(lstcancelList.SelectedItems[0].Text.ToString())), true, tssStatus); }
+            catch (Exception ex) { ex.ProcessException(tssStatus); }
+
         }
 
         private void clientProfile_OnClick(object sender, EventArgs e)
         {
-            try { clsReports.ShowReport_ClientProfile(lstcancelList.SelectedItems[0].Text.ToString(), tssStatus); }
-            catch (Exception ex) { ex.Display(); }
+            try { clsReports.ClientProfile(lstcancelList.SelectedItems[0].Text.ToString(), tssStatus); }
+            catch (Exception ex) { ex.ProcessException(tssStatus); }
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            LoadClientList();
         }
     }
 }

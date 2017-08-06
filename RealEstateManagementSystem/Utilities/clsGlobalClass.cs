@@ -28,7 +28,7 @@ namespace RealEstateManagementSystem.Utilities
         public static readonly string workStationIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(o => o.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).First().ToString();
         public static readonly string currentVersion = ApplicationDeployment.IsNetworkDeployed == true ? ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString() : Application.ProductVersion.ToString();
         public static readonly string publishLocation = ApplicationDeployment.IsNetworkDeployed == true ? ApplicationDeployment.CurrentDeployment.UpdateLocation.AbsolutePath.ToString() : "Desktop Deployment";
-        public static readonly DateTime considerAsNULLDate = Convert.ToDateTime("01/02/1900");
+        public static readonly DateTime considerAsNULLDate = Convert.ToDateTime("02/02/1900");
         public static readonly DateTime defaultDate = Convert.ToDateTime("1900-01-01");
 
         public enum ProjectStatus
@@ -49,6 +49,15 @@ namespace RealEstateManagementSystem.Utilities
             Active = 1,
             IncompleteProfile = 2,
             Transferred = 3
+        }
+
+
+        public enum ChequeSearchBy
+        {
+            Invoice,
+            ClientId,
+            Bank,
+            DateRange
         }
 
         internal static void ShowUnderConstructionMessage()

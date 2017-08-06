@@ -378,9 +378,9 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return dLayer.GetBookingDate(clientId);
         }
 
-        internal string GetUnitSummaryOfClient(int clientId, bool includeProjectName)
+        internal string GetUnitSummaryOfClient(int clientId, bool includeProjectName, bool includeParking)
         {
-            return dLayer.GetUnitSummaryOfClient(clientId, includeProjectName);
+            return dLayer.GetUnitSummaryOfClient(clientId, includeProjectName, includeParking);
         }
 
 
@@ -404,9 +404,24 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return dLayer.GetClientType(clientTypeId);
         }
 
-        internal DataSet GetPaymentSchedule(int clientId)
+        internal DataSet GetPaymentSchedule(string clientIds)
         {
-            return dLayer.GetPaymentSchedule(clientId);
+            return dLayer.GetPaymentSchedule(clientIds);
+        }
+
+        internal DataSet GetPaymentSchedule_Multiple(string clientIds)
+        {
+            return dLayer.GetPaymentSchedule_Multiple(clientIds);
+        }
+
+        internal DataSet RegistrationAcknowledgementReceipt(string clientIds)
+        {
+            return dLayer.RegistrationAcknowledgementReceipt(clientIds);
+        }
+
+        internal DataSet GetAllotmentLetter(string clientIds, decimal monthlyRent)
+        {
+            return dLayer.GetAllotmentLetter(clientIds, monthlyRent);
         }
     }
 }

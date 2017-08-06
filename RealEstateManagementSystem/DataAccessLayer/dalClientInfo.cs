@@ -36,7 +36,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -58,7 +57,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
+            finally { cmd.Dispose(); }
         }
     }
 
@@ -78,7 +77,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
 
         }
@@ -104,7 +102,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
 
         }
@@ -126,7 +123,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
     }
@@ -147,7 +143,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -165,7 +160,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -183,7 +177,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
     }
@@ -220,11 +213,11 @@ namespace RealEstateManagementSystem.DataAccessLayer
                         pi.Partner_NOR.Nationality = Convert.ToString(dr["Nationality"]);
                         pi.Partner_NOR.Religion = Convert.ToString(dr["Religion"]);
                         pi.Partner_NOR.Occupation = Convert.ToString(dr["Occupation"]);
-                        pi.IsValidDateOfBirth = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["DOB"]));
-                        pi.DateOfBirth = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["DOB"]));
+                        pi.IsValidDateOfBirth = Convert.ToDateTime(dr["DOB"]).IsValidDate();
+                        pi.DateOfBirth = Convert.ToDateTime(dr["DOB"]).ManageInvalidDate();
                         pi.MaritalStatus = Convert.ToString(dr["MStatus"]);
-                        pi.IsValidMarriageDate = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["MarriageDate"]));
-                        pi.MarriageDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["MarriageDate"]));
+                        pi.IsValidMarriageDate = Convert.ToDateTime(dr["MarriageDate"]).IsValidDate();
+                        pi.MarriageDate = Convert.ToDateTime(dr["MarriageDate"]).ManageInvalidDate();
                         pi.NationalIdNumber = Convert.ToString(dr["NationalIDNum"]).Trim();
                         pi.PassportNumber = Convert.ToString(dr["PassportNumber"]).Trim();
                         pi.TINNumber = Convert.ToString(dr["TINNumber"]).Trim();
@@ -232,7 +225,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 }
 
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -247,7 +239,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@partnerId", partnerId);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -284,7 +275,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
     }
@@ -309,7 +299,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
         internal void GetUnitPricingDetails(UnitInformation u)
@@ -334,7 +323,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -360,7 +348,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 return reservedBy;
 
             }
-            catch (Exception ex) { throw ex; }
             finally { if (dr != null) dr.Close(); cmd.Dispose(); }
         }
 
@@ -390,7 +377,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -415,7 +401,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 }
                 return installmentTypeId == 1 ? true : false;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
         internal bool IsMasterUnit(int unitId)
@@ -437,7 +422,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 //dr = cmd.ExecuteReader();
                 //if (dr.HasRows) { while (dr.Read()) { masterUnit = dr["IsMasterObject"].ToString().ConvertToBoolean(); } }
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
             return masterUnit;
         }
@@ -457,7 +441,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return sp.Value.ToString().ConvertToInt32();
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -482,7 +465,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 }
                 return dtApproximateCompletionDate > clsGlobalClass.considerAsNULLDate ? dtApproximateCompletionDate : clsGlobalClass.defaultDate;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -501,7 +483,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -520,7 +501,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -685,16 +665,11 @@ namespace RealEstateManagementSystem.DataAccessLayer
 
     public class dalClientInfo
     {
-
-
-
-
         internal DataTable GetListOfPartners(int clientId)
         {
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter da = new SqlDataAdapter();
             DataTable dt = new DataTable();
-
             try
             {
                 cmd.Connection = Program.cnConn;
@@ -705,7 +680,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 da.Fill(dt);
                 return dt;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
@@ -738,7 +712,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 }
                 return dr.HasRows;
             }
-            //catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -798,7 +771,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
                 return pi.ClientId == 0 ? newClientId.Value.ToString().ConvertToInt32() : 0;
             }
-            //catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); }
         }
 
@@ -810,7 +782,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
             {
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = @"SELECT Salutation
+                cmd.CommandText = @"SELECT   Salutation
                                            , ClientType
                                            , EngName
                                            , BangName
@@ -830,7 +802,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                                            , MStatus
                                            , MarriageDate
                                            , NationalIdNum
-                                           ,PassportNumber
+                                           , PassportNumber
                                            , TINNumber
                                            , CurrentAddres
                                            , CurrentCountry
@@ -866,11 +838,11 @@ namespace RealEstateManagementSystem.DataAccessLayer
                         pi.NationalityReligionOccupation.Nationality = Convert.ToString(dr["Nationality"]);
                         pi.NationalityReligionOccupation.Religion = Convert.ToString(dr["Religion"]);
                         pi.NationalityReligionOccupation.Occupation = Convert.ToString(dr["Occupation"]);
-                        pi.IsValidDateOfBirth = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["DOB"]));
-                        pi.DateOfBirth = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["DOB"]));
+                        pi.IsValidDateOfBirth = Convert.ToDateTime(dr["DOB"]).IsValidDate();
+                        pi.DateOfBirth = Convert.ToDateTime(dr["DOB"]).ManageInvalidDate();
                         pi.MaritalStatus = Convert.ToString(dr["MStatus"]);
-                        pi.IsValidMarriageDate = clsCommonFunctions.CheckIfValidDate(Convert.ToDateTime(dr["MarriageDate"]));
-                        pi.MarriageDate = clsCommonFunctions.ReturnIfValidDate(Convert.ToDateTime(dr["MarriageDate"]));
+                        pi.IsValidMarriageDate = Convert.ToDateTime(dr["MarriageDate"]).IsValidDate();
+                        pi.MarriageDate = Convert.ToDateTime(dr["MarriageDate"]).ManageInvalidDate();
                         pi.NationalIdNumber = Convert.ToString(dr["NationalIdNum"]).Trim();
                         pi.PassportNumber = Convert.ToString(dr["PassportNumber"]).Trim();
                         pi.TINNumber = Convert.ToString(dr["TINNumber"]).Trim();
@@ -889,7 +861,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 }
                 return dr.HasRows;
             }
-            //catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -914,7 +885,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 }
                 return careOf;
             }
-            //catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
@@ -973,7 +943,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
             return bookingDate;
         }
 
-        internal string GetUnitSummaryOfClient(int clientId, bool includeProjectName)
+        internal string GetUnitSummaryOfClient(int clientId, bool includeProjectName, bool includeParking = true)
         {
             SqlCommand cmd = new SqlCommand();
             SqlDataReader dr = null;
@@ -982,9 +952,10 @@ namespace RealEstateManagementSystem.DataAccessLayer
             {
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT dbo.fnGetUnitInfoOfClient(@clientId, @includeProjectName) AS UnitSummary";
+                cmd.CommandText = "SELECT dbo.fnGetUnitInfoOfClient(@clientId, @includeProjectName, @includeParking) AS UnitSummary";
                 cmd.Parameters.AddWithValue("@clientId", clientId);
                 cmd.Parameters.AddWithValue("@includeProjectName", includeProjectName);
+                cmd.Parameters.AddWithValue("@includeParking", includeParking);
                 dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
@@ -998,8 +969,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
             return unitSummary;
         }
-
-
 
 
         internal string CopyClientProfile(int clientId)
@@ -1096,7 +1065,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
             return clientType;
         }
 
-        internal DataSet GetPaymentSchedule(int clientId)
+        internal DataSet GetPaymentSchedule(string clientIds)
         {
             SqlCommand cmd = new SqlCommand();
             DataSet ds = new DataSet();
@@ -1106,16 +1075,68 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "sp_CalculatePaymentSchedule";
-                cmd.Parameters.AddWithValue("@clientID", clientId);
+                cmd.Parameters.AddWithValue("@clientIDs", clientIds);
                 da.SelectCommand = cmd;
                 da.Fill(ds);
+                return ds;
             }
-            finally 
-            {
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
 
-                cmd.Dispose(); da.Dispose(); ds.Dispose();
+        }
+
+        internal DataSet GetPaymentSchedule_Multiple(string clientIds)
+        {
+            SqlCommand cmd = new SqlCommand();
+            DataSet ds = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_CalculatePaymentSchedule_Multiple";
+                cmd.Parameters.AddWithValue("@clientIds", clientIds);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
             }
-            return ds;
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataSet RegistrationAcknowledgementReceipt(string clientIds)
+        {
+            SqlCommand cmd = new SqlCommand();
+            DataSet ds = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetRegistrationAcknowledgementReceipt";
+                cmd.Parameters.AddWithValue("@clientIds", clientIds);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataSet GetAllotmentLetter(string clientIds, decimal monthlyRent)
+        {
+            SqlCommand cmd = new SqlCommand();
+            DataSet ds = new DataSet();
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetAllotmentLetter";
+                cmd.Parameters.AddWithValue("@clientId", clientIds);
+                cmd.Parameters.AddWithValue("@amountPayableAsRent", monthlyRent);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using RealEstateManagementSystem.BusinessLogicLayer;
 using RealEstateManagementSystem.Properties;
+using RealEstateManagementSystem.Reports;
 using RealEstateManagementSystem.Utilities;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ namespace RealEstateManagementSystem.UserInterface.Projects
     {
         bllProjectInfo bLayer = new bllProjectInfo();
         private int intUnitId = 0;
-        private string unitIds = "";
-
+        //private string unitIds = "";
+        private int intProjectId = 0;
         public frmUnitInformation()
         {
             InitializeComponent();
@@ -28,11 +29,9 @@ namespace RealEstateManagementSystem.UserInterface.Projects
         {
             try
             {
-                clsCommonFunctions.AutoFormatComboBoxes(this);
-                clsCommonFunctions.PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.All);
-                //PopulateComboBoxes();
+                clsCommonFunctions.PopulateListOfProjects(cmbProjectName, true);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void AllowNumericOnly(object sender, KeyPressEventArgs e)
@@ -45,7 +44,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
         {
             try
             {
-                if (withProjectCombo == true) clsCommonFunctions.PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.All);
+                if (withProjectCombo == true) clsCommonFunctions.PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.All, true);
                 bLayer.PopulateUnitTypeCombo(cmbUnitType);
                 bLayer.PopulateTypeOfUnitCombo(cmbTypeOfUnit);
                 bLayer.PopulateFacingCombo(cmbFacing);
@@ -53,120 +52,114 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 cmbOwner.Items.Add("SEL");
                 cmbOwner.Items.Add("Land Owner");
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
-        private void cmbProjectName_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            try
-            {
-                cmbFloorNumber.DataSource = null;
-                PopulateComboBoxes(false);
-                bLayer.PopulateBuildingsCombo(Convert.ToInt32(cmbProjectName.SelectedValue.ToString()), cmbBuilding);
-                if (cmbBuilding.Items.Count == 1) { bLayer.PopulateFloorsCombo(Convert.ToInt32(cmbBuilding.SelectedValue.ToString()), cmbFloorNumber); }
-                PopulateUnitTree();
-                PopulateHashParkingList();
-            }
-            catch (Exception ex) { ex.Display(); }
-        }
 
         private void PopulateHashParkingList()
         {
-            lvHashParkingList.Items.Clear();
-            foreach (DataRow drItems in bLayer.GetListOfHashParking(projectId: cmbProjectName.SelectedValue.ToString().ConvertToInt32()).Rows)
+            try
             {
-                ListViewItem lvItems = new ListViewItem(drItems["FlatId"].ToString());
-                lvItems.SubItems.Add(Convert.ToString(drItems["ClientId"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["Name"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["MasterUnit"]));
-                lvItems.SubItems.Add(Convert.ToString(drItems["ParkingNumber"]));
-                lvHashParkingList.Items.Add(lvItems);
-                unitIds = unitIds + Convert.ToString(drItems["FlatId"]) + ",";
+                lvHashParkingList.Items.Clear();
+                foreach (DataRow drItems in bLayer.GetListOfHashParking(projectId: cmbProjectName.SelectedValue.ToString().ConvertToInt32()).Rows)
+                {
+                    ListViewItem lvItems = new ListViewItem(drItems["FlatId"].ToString());
+                    lvItems.SubItems.Add(Convert.ToString(drItems["ClientId"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["Name"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["MasterUnit"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["ParkingNumber"]));
+                    lvHashParkingList.Items.Add(lvItems);
+                }
             }
-
-            //MessageBox.Show(unitIds);
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void PopulateUnitTree()
         {
-
-            tvUnitDetails.Nodes.Clear();
-            bLayer.ProjectId = Convert.ToInt32(cmbProjectName.SelectedValue);
-            foreach (DataRow drBuildings in bLayer.GetListOfBuildingsInProject().Rows)
+            try
             {
-                TreeNode tnBuilding = new TreeNode(drBuildings["BNumber"].ToString() + " [" + drBuildings["FloorInformation"].ToString() + "]");
-                //tnBuilding.Tag = "B" + drBuildings["BuildingId"].ToString();
-                tvUnitDetails.Nodes.Add(tnBuilding);
-                tnBuilding.ImageIndex = tnBuilding.SelectedImageIndex = 3;
-                foreach (DataRow drUnitType in bLayer.GetListOfUnitTypesInBuilding(drBuildings["BuildingId"].ToString().ConvertToInt32()).Rows)
+                lvBlockingHistory.Items.Clear();
+                tvUnitDetails.Nodes.Clear();
+                //bLayer.ProjectId = Convert.ToInt32(cmbProjectName.SelectedValue);
+                bLayer.ProjectId = intProjectId;
+                foreach (DataRow drBuildings in bLayer.GetListOfBuildingsInProject().Rows)
                 {
-                    TreeNode tnUnitType = new TreeNode();
-                    int imageIndex = 0;
-                    tnBuilding.Nodes.Add(tnUnitType);
-                    switch (drUnitType["ObjectType"].ToString())
+                    TreeNode tnBuilding = new TreeNode(drBuildings["BNumber"].ToString() + " [" + drBuildings["FloorInformation"].ToString() + "]");
+                    //tnBuilding.Tag = "B" + drBuildings["BuildingId"].ToString();
+                    tvUnitDetails.Nodes.Add(tnBuilding);
+                    tnBuilding.ImageIndex = tnBuilding.SelectedImageIndex = 3;
+                    foreach (DataRow drUnitType in bLayer.GetListOfUnitTypesInBuilding(drBuildings["BuildingId"].ToString().ConvertToInt32()).Rows)
                     {
-                        case "Car Parking": imageIndex = 0; break;
-                        case "Flat": imageIndex = 2; break;
-                        case "Office": imageIndex = 1; break;
-                        case "Shop": imageIndex = 4; break;
-                        case "Serviced Apartment": imageIndex = 5; break;
-                        case "Show Room": imageIndex = 6; break;
-                        default: imageIndex = 7; break;
-                    }
-                    tnUnitType.ImageIndex = tnUnitType.SelectedImageIndex = imageIndex;
-                    int intCountOfUnit = 0;
-                    foreach (DataRow drUnitDetails in bLayer.GetListOfUnitsByUnitTypeAndBuildingId(drUnitType["ObjectType"].ToString(), drBuildings["BuildingId"].ToString().ConvertToInt32()).Rows)
-                    {
-                        string strUnitInfo = drUnitDetails["FlatNumber"].ToString();
-                        if (drUnitDetails["FullClientId"].ToString() != "")
+                        TreeNode tnUnitType = new TreeNode();
+                        int imageIndex = 0;
+                        tnBuilding.Nodes.Add(tnUnitType);
+                        switch (drUnitType["ObjectType"].ToString())
                         {
-                            strUnitInfo = strUnitInfo + " [" + drUnitDetails["FullClientId"] + "]";
+                            case "Car Parking": imageIndex = 0; break;
+                            case "Flat": imageIndex = 2; break;
+                            case "Office": imageIndex = 1; break;
+                            case "Shop": imageIndex = 4; break;
+                            case "Serviced Apartment": imageIndex = 5; break;
+                            case "Show Room": imageIndex = 6; break;
+                            default: imageIndex = 7; break;
                         }
-                        strUnitInfo += " - [" + drUnitDetails["Owner"].ToString() + "]";
-                        TreeNode tnUnits = new TreeNode(strUnitInfo);
-                        tnUnits.Tag = drUnitDetails["FlatId"].ToString();
-                        tnUnits.ForeColor = drUnitDetails["Blocked"].ToString().ConvertToBoolean() == true ? Color.Red : Color.Black;
-                        tnUnitType.Nodes.Add(tnUnits);
-                        tnUnits.ImageIndex = tnUnits.SelectedImageIndex = imageIndex;
-                        intCountOfUnit++;
+                        tnUnitType.ImageIndex = tnUnitType.SelectedImageIndex = imageIndex;
+                        int intCountOfUnit = 0;
+                        foreach (DataRow drUnitDetails in bLayer.GetListOfUnitsByUnitTypeAndBuildingId(drUnitType["ObjectType"].ToString(), drBuildings["BuildingId"].ToString().ConvertToInt32()).Rows)
+                        {
+                            string strUnitInfo = drUnitDetails["FlatNumber"].ToString();
+                            if (drUnitDetails["FullClientId"].ToString() != "")
+                            {
+                                strUnitInfo = strUnitInfo + " [" + drUnitDetails["FullClientId"] + "]";
+                            }
+                            strUnitInfo += " - [" + drUnitDetails["Owner"].ToString() + "]";
+                            TreeNode tnUnits = new TreeNode(strUnitInfo);
+                            tnUnits.Tag = drUnitDetails["FlatId"].ToString();
+                            tnUnits.ForeColor = drUnitDetails["Blocked"].ToString().ConvertToBoolean() == true ? Color.Red : Color.Black;
+                            tnUnitType.Nodes.Add(tnUnits);
+                            tnUnits.ImageIndex = tnUnits.SelectedImageIndex = imageIndex;
+                            intCountOfUnit++;
+                        }
+                        tnUnitType.Text = drUnitType["ObjectType"].ToString() + " [" + intCountOfUnit.ToString() + "]";
                     }
-                    tnUnitType.Text = drUnitType["ObjectType"].ToString() + " [" + intCountOfUnit.ToString() + "]";
+
                 }
-
+                if (chkAutoExpand.Checked == true) tvUnitDetails.ExpandAll();
             }
-            if (chkAutoExpand.Checked == true) tvUnitDetails.ExpandAll();
-
-
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void tvUnitDetails_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Tag != null)
+            try
             {
-                intUnitId = e.Node.Tag.ToString().ConvertToInt32();
-                bLayer.UnitId = intUnitId;
-                bLayer.GetUnitInformation();
-                btnSave.Enabled = bLayer.IsEditable;
-                cmbBuilding.Text = bLayer.BuildingName;
-                cmbUnitType.Text = bLayer.UnitType;
-                cmbFloorNumber.Text = bLayer.FormattedFloorNumber;
-                cmbFacing.Text = bLayer.Facing;
-                cmbTypeOfUnit.Text = bLayer.TypeOfUnit;
-                txtUnitNumber.Text = bLayer.UnitNumber;
-                cmbOwner.Text = bLayer.Owner;
-                txtArea.Text = Spell.SpellAmount.comma(bLayer.UnitArea.ToString().ConvertToDecimal());
-                txtRate.Text = bLayer.Rate.ToString().ConvertToDecimal().FormatAsMoney();
-                txtTotalPrice.Text = bLayer.IsAreaEnabled == true ? (bLayer.UnitArea * bLayer.Rate).FormatAsMoney() : bLayer.Rate.FormatAsMoney();
-                chkIsSaleable.Checked = bLayer.IsSaleable;
-                chkIsBlocked.Checked = bLayer.IsBlocked;
-                chkIsCPAvailable.Checked = bLayer.IsParkingAvailable;
-                lblUnit.Text = "Unit #: " + bLayer.UnitNumber;
-                btnUnBlock.Enabled = bLayer.IsBlocked;
-                pnlBlock.Enabled = bLayer.IsBlocked == true ? false : true;
-                PopulateBlockingHistory();
+                if (e.Node.Tag != null)
+                {
+                    intUnitId = e.Node.Tag.ToString().ConvertToInt32();
+                    bLayer.UnitId = intUnitId;
+                    bLayer.GetUnitInformation();
+                    btnSave.Enabled = bLayer.IsEditable;
+                    cmbBuilding.Text = bLayer.BuildingName;
+                    cmbUnitType.Text = bLayer.UnitType;
+                    cmbFloorNumber.Text = bLayer.FormattedFloorNumber;
+                    cmbFacing.Text = bLayer.Facing;
+                    cmbTypeOfUnit.Text = bLayer.TypeOfUnit;
+                    txtUnitNumber.Text = bLayer.UnitNumber;
+                    cmbOwner.Text = bLayer.Owner;
+                    txtArea.Text = Spell.SpellAmount.comma(bLayer.UnitArea.ToString().ConvertToDecimal());
+                    txtRate.Text = bLayer.Rate.ToString().ConvertToDecimal().FormatAsMoney();
+                    txtTotalPrice.Text = bLayer.IsAreaEnabled == true ? (bLayer.UnitArea * bLayer.Rate).FormatAsMoney() : bLayer.Rate.FormatAsMoney();
+                    chkIsSaleable.Checked = bLayer.IsSaleable;
+                    chkIsBlocked.Checked = bLayer.IsBlocked;
+                    chkIsCPAvailable.Checked = bLayer.IsParkingAvailable;
+                    lblUnit.Text = "Unit #: " + bLayer.UnitNumber;
+                    btnUnBlock.Enabled = bLayer.IsBlocked;
+                    pnlBlock.Enabled = bLayer.IsBlocked == true ? false : true;
+                    PopulateBlockingHistory();
+                }
+                else { RefreshUnitPanel(); RefreshBlockingPanel(); }
             }
-            else { RefreshUnitPanel(); RefreshBlockingPanel(); }
-
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
 
@@ -191,7 +184,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
         private void cmbBuilding_SelectionChangeCommitted(object sender, EventArgs e)
         {
             try { bLayer.PopulateFloorsCombo(Convert.ToInt32(cmbBuilding.SelectedValue.ToString()), cmbFloorNumber); }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void cmbUnitType_SelectionChangeCommitted(object sender, EventArgs e)
@@ -202,70 +195,94 @@ namespace RealEstateManagementSystem.UserInterface.Projects
         private void cmbFloorNumber_SelectionChangeCommitted(object sender, EventArgs e)
         {
             try { txtUnitNumber.Text = GenerateUnitNumber(); }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void cmbTypeOfUnit_SelectionChangeCommitted(object sender, EventArgs e)
         {
             try { txtUnitNumber.Text = GenerateUnitNumber(); }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private string GenerateUnitNumber()
         {
-
-            if (txtUnitNumber.Enabled == false && (cmbFloorNumber.Text != string.Empty && cmbTypeOfUnit.Text != string.Empty))
+            string unitNumber = string.Empty;
+            try
             {
-                return bLayer.GenerateUnitNumber(
-                                            Convert.ToInt32(cmbUnitType.SelectedValue.ToString()),
-                                            Convert.ToInt32(cmbTypeOfUnit.SelectedValue.ToString()),
-                                            Convert.ToInt32(cmbFloorNumber.SelectedValue.ToString()));
-            }
-            else { return string.Empty; }
 
+                if (txtUnitNumber.Enabled == false && (cmbFloorNumber.Text != string.Empty && cmbTypeOfUnit.Text != string.Empty))
+                {
+                    unitNumber = bLayer.GenerateUnitNumber(
+                                                            Convert.ToInt32(cmbUnitType.SelectedValue.ToString()),
+                                                            Convert.ToInt32(cmbTypeOfUnit.SelectedValue.ToString()),
+                                                            Convert.ToInt32(cmbFloorNumber.SelectedValue.ToString()));
+                }
+                else { unitNumber = string.Empty; }
+
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+            return unitNumber;
         }
 
         private void txtArea_TextChanged(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(txtArea.Text))
+            try
             {
-                txtTotalPrice.Text =
-                    txtArea.Enabled == true ?
-                                       (txtRate.Text.ConvertToDecimal() * txtArea.Text.ConvertToDecimal()).FormatAsMoney() :
-                                       txtRate.Text.ConvertToDecimal().FormatAsMoney();
-
+                if (!String.IsNullOrEmpty(txtArea.Text))
+                {
+                    txtTotalPrice.Text =
+                        txtArea.Enabled == true ?
+                                           (txtRate.Text.ConvertToDecimal() * txtArea.Text.ConvertToDecimal()).FormatAsMoney() :
+                                           txtRate.Text.ConvertToDecimal().FormatAsMoney();
+                }
+                else { txtArea.Text = "0"; }
             }
-            else { txtArea.Text = "0"; }
-
-
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void txtRate_TextChanged(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(txtArea.Text))
+            try
             {
-                txtTotalPrice.Text =
-                    txtArea.Enabled == true ?
-                                       (txtRate.Text.ConvertToDecimal() * txtArea.Text.ConvertToDecimal()).FormatAsMoney() :
-                                       txtRate.Text.ConvertToDecimal().FormatAsMoney();
-
+                if (!String.IsNullOrEmpty(txtRate.Text))
+                {
+                    txtTotalPrice.Text =
+                        txtArea.Enabled == true ?
+                                           (txtRate.Text.ConvertToDecimal() * txtArea.Text.ConvertToDecimal()).FormatAsMoney() :
+                                           txtRate.Text.ConvertToDecimal().FormatAsMoney();
+                }
+                else { txtRate.Text = "0"; }
             }
-            else { txtRate.Text = "0"; }
+            catch (Exception ex) { ex.ProcessException(); }
+
         }
 
         private void txtArea_Leave(object sender, EventArgs e)
         {
-            txtArea.Text = Spell.SpellAmount.comma(Convert.ToDecimal(txtArea.Text.ToString()));
+            try
+            {
+                txtArea.Text = Spell.SpellAmount.comma(Convert.ToDecimal(txtArea.Text.ToString()));
+            }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void txtRate_Leave(object sender, EventArgs e)
         {
-            txtRate.Text = Spell.SpellAmount.comma(Convert.ToDecimal(txtRate.Text.ToString()));
+            try
+            {
+                txtRate.Text = Spell.SpellAmount.comma(Convert.ToDecimal(txtRate.Text.ToString()));
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+
         }
 
         private void cmbOwner_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            chkIsSaleable.Checked = cmbOwner.Text == "SEL" ? true : false;
+            try
+            {
+                chkIsSaleable.Checked = cmbOwner.Text == "SEL" ? true : false;
+            }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -296,9 +313,10 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 bLayer.ManipulateUnitInformation();
                 PopulateUnitTree();
                 RefreshUnitPanel();
+                intUnitId = 0;
                 MessageBox.Show(Resources.strSuccessMessage, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
         }
 
@@ -306,13 +324,9 @@ namespace RealEstateManagementSystem.UserInterface.Projects
         {
             try
             {
-                tssStatus.Text = Resources.strCollectingData;
-                Reports.Projects.crptUnitInformation rptUnitInformation = new Reports.Projects.crptUnitInformation();
-                //rptUnitInformation.Subreports[0].SetDataSource(clsCommonFunctions.CompanyInformation());
-                rptUnitInformation.SetDataSource(bLayer.GetUnitDetailsOfProject(cmbProjectName.SelectedValue.ToString().ConvertToInt32()).Tables[0]);
-                clsCommonFunctions.ShowReport(rptUnitInformation, tssStatus, true);
+                clsReports.UnitDetailsOfProject(cmbProjectName.SelectedValue.ToString().ConvertToInt32(), tssStatus);
             }
-            catch (Exception ex) { tssStatus.Text = Resources.strReadyStatus; ex.Display(); }
+            catch (Exception ex) { tssStatus.Text = Resources.strReadyStatus; ex.ProcessException(); }
         }
 
 
@@ -335,24 +349,32 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                     PopulateUnitTree();
                 }
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void PopulateBlockingHistory()
         {
-            lvBlockingHistory.Items.Clear();
-            if (!string.IsNullOrEmpty(tvUnitDetails.SelectedNode.Tag.ToString()))
+            try
             {
-                foreach (DataRow drItems in bLayer.GetUnitBlockingHistory(tvUnitDetails.SelectedNode.Tag.ToString().ConvertToInt32()).Rows)
+                lvBlockingHistory.Items.Clear();
+                if (!string.IsNullOrEmpty(tvUnitDetails.SelectedNode.Tag.ToString()))
                 {
-                    ListViewItem lvItems = new ListViewItem(drItems["BlockingId"].ToString());
-                    lvItems.SubItems.Add(Convert.ToString(drItems["BlockedBy"]));
-                    lvItems.SubItems.Add(Convert.ToString(drItems["StartDate"]).ShowAsStandardDateFormat(true));
-                    lvItems.SubItems.Add(Convert.ToString(drItems["EndDate"]).ShowAsStandardDateFormat(true));
-                    lvItems.SubItems.Add(Convert.ToString(drItems["UnBlockedBy"]));
-                    lvItems.SubItems.Add(Convert.ToString(drItems["Remarks"]));
-                    lvBlockingHistory.Items.Add(lvItems);
+                    foreach (DataRow drItems in bLayer.GetUnitBlockingHistory(tvUnitDetails.SelectedNode.Tag.ToString().ConvertToInt32()).Rows)
+                    {
+                        ListViewItem lvItems = new ListViewItem(drItems["BlockingId"].ToString());
+                        lvItems.SubItems.Add(Convert.ToString(drItems["BlockedBy"]));
+                        lvItems.SubItems.Add(Convert.ToString(drItems["StartDate"]).ShowAsStandardDateFormat(true));
+                        lvItems.SubItems.Add(Convert.ToString(drItems["EndDate"]).ShowAsStandardDateFormat(true));
+                        lvItems.SubItems.Add(Convert.ToString(drItems["UnBlockedBy"]));
+                        lvItems.SubItems.Add(Convert.ToString(drItems["Remarks"]));
+                        lvBlockingHistory.Items.Add(lvItems);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+
+                ex.ProcessException();
             }
         }
 
@@ -372,7 +394,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                     PopulateUnitTree();
                 }
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void cmbUnitType_SelectedIndexChanged(object sender, EventArgs e)
@@ -384,17 +406,8 @@ namespace RealEstateManagementSystem.UserInterface.Projects
         {
             try
             {
-                //if (cmbUnitType.Items.Count < 1) return;
                 lblCPHashWarning.Visible = cmbUnitType.Text == "Car Parking" ? true : false;
                 int parseInt = 0;
-                //if (cmbUnitType.Items.Count > 0 && int.TryParse(Convert.ToString(cmbUnitType.SelectedValue), out parseInt) == true)
-                //{
-                //    bLayer.UnitTypeId = Convert.ToString(cmbUnitType.SelectedValue).ConvertToInt32();
-                //}
-                //else
-                //{
-                //    bLayer.UnitTypeId = 1;
-                //}
                 bLayer.UnitTypeId =
                     cmbUnitType.Items.Count > 0 && int.TryParse(Convert.ToString(cmbUnitType.SelectedValue), out parseInt) == true ?
                         Convert.ToString(cmbUnitType.SelectedValue).ConvertToInt32()
@@ -411,7 +424,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 lblUnitNumber.Text = cmbUnitType.Text + " #:";
                 lblUnitType.Text = cmbUnitType.Text + " Type:";
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -444,7 +457,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 lblMasterUnit.Text = txtHashParkingNumber.Text = string.Empty;
                 PopulateUnitTree();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void tpUnit_Enter(object sender, EventArgs e)
@@ -483,7 +496,31 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 tvUnitDetails.ExpandAll();
             else
                 tvUnitDetails.CollapseAll();
+        }
 
+
+        private void btnListOfBlokedUnits_Click(object sender, EventArgs e)
+        {
+            frmListOfBlockedUnits bu = new frmListOfBlockedUnits();
+            bu.ShowDialog();
+        }
+
+        private void cmbProjectName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                cmbFloorNumber.DataSource = null;
+                PopulateComboBoxes(false);
+                if (!string.IsNullOrEmpty(cmbProjectName.Text))
+                {
+                    intProjectId = cmbProjectName.SelectedValue.ToString().ConvertToInt32();
+                    bLayer.PopulateBuildingsCombo(intProjectId, cmbBuilding);
+                    if (cmbBuilding.Items.Count == 1) { bLayer.PopulateFloorsCombo(Convert.ToInt32(cmbBuilding.SelectedValue.ToString()), cmbFloorNumber); }
+                    PopulateUnitTree();
+                    PopulateHashParkingList();
+                }
+            }
+            catch (Exception ex) { ex.ProcessException(); }
         }
     }
 }

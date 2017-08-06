@@ -101,6 +101,7 @@
             this.colUnitNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colParkingNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chkAutoExpand = new System.Windows.Forms.CheckBox();
+            this.btnListOfBlokedUnits = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tcUnitData.SuspendLayout();
@@ -125,9 +126,9 @@
             this.panel1.Controls.Add(this.btnUnitDetailsReport);
             this.panel1.Controls.Add(this.cmbProjectName);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(189, 13);
+            this.panel1.Location = new System.Drawing.Point(12, 13);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(506, 41);
+            this.panel1.Size = new System.Drawing.Size(683, 41);
             this.panel1.TabIndex = 0;
             // 
             // btnUnitDetailsReport
@@ -136,7 +137,7 @@
             this.btnUnitDetailsReport.FlatAppearance.BorderSize = 0;
             this.btnUnitDetailsReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUnitDetailsReport.Image = global::RealEstateManagementSystem.Properties.Resources.printer;
-            this.btnUnitDetailsReport.Location = new System.Drawing.Point(469, 8);
+            this.btnUnitDetailsReport.Location = new System.Drawing.Point(653, 7);
             this.btnUnitDetailsReport.Name = "btnUnitDetailsReport";
             this.btnUnitDetailsReport.Size = new System.Drawing.Size(25, 25);
             this.btnUnitDetailsReport.TabIndex = 1;
@@ -150,9 +151,9 @@
             this.cmbProjectName.FormattingEnabled = true;
             this.cmbProjectName.Location = new System.Drawing.Point(117, 9);
             this.cmbProjectName.Name = "cmbProjectName";
-            this.cmbProjectName.Size = new System.Drawing.Size(346, 22);
+            this.cmbProjectName.Size = new System.Drawing.Size(530, 22);
             this.cmbProjectName.TabIndex = 0;
-            this.cmbProjectName.SelectionChangeCommitted += new System.EventHandler(this.cmbProjectName_SelectionChangeCommitted);
+            this.cmbProjectName.SelectedIndexChanged += new System.EventHandler(this.cmbProjectName_SelectedIndexChanged);
             // 
             // chkIsCPAvailable
             // 
@@ -589,11 +590,14 @@
             // btnBlock
             // 
             this.btnBlock.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBlock.Image = global::RealEstateManagementSystem.Properties.Resources.block;
             this.btnBlock.Location = new System.Drawing.Point(353, 83);
             this.btnBlock.Name = "btnBlock";
             this.btnBlock.Size = new System.Drawing.Size(93, 41);
             this.btnBlock.TabIndex = 3;
             this.btnBlock.Text = "Block";
+            this.btnBlock.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnBlock.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnBlock.UseVisualStyleBackColor = true;
             this.btnBlock.Click += new System.EventHandler(this.btnBlock_Click);
             // 
@@ -715,11 +719,14 @@
             // btnUnBlock
             // 
             this.btnUnBlock.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnUnBlock.Location = new System.Drawing.Point(104, 281);
+            this.btnUnBlock.Image = global::RealEstateManagementSystem.Properties.Resources.unblock;
+            this.btnUnBlock.Location = new System.Drawing.Point(146, 282);
             this.btnUnBlock.Name = "btnUnBlock";
-            this.btnUnBlock.Size = new System.Drawing.Size(311, 41);
+            this.btnUnBlock.Size = new System.Drawing.Size(216, 40);
             this.btnUnBlock.TabIndex = 2;
             this.btnUnBlock.Text = "Un-Block Now";
+            this.btnUnBlock.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnUnBlock.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnUnBlock.UseVisualStyleBackColor = true;
             this.btnUnBlock.Click += new System.EventHandler(this.btnUnBlock_Click);
             // 
@@ -844,12 +851,27 @@
             this.chkAutoExpand.UseVisualStyleBackColor = true;
             this.chkAutoExpand.CheckedChanged += new System.EventHandler(this.chkAutoExpand_CheckedChanged);
             // 
+            // btnListOfBlokedUnits
+            // 
+            this.btnListOfBlokedUnits.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnListOfBlokedUnits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnListOfBlokedUnits.Image = global::RealEstateManagementSystem.Properties.Resources.block;
+            this.btnListOfBlokedUnits.Location = new System.Drawing.Point(720, 12);
+            this.btnListOfBlokedUnits.Name = "btnListOfBlokedUnits";
+            this.btnListOfBlokedUnits.Size = new System.Drawing.Size(155, 42);
+            this.btnListOfBlokedUnits.TabIndex = 6;
+            this.btnListOfBlokedUnits.Text = "List of Blocked Unit(s)";
+            this.btnListOfBlokedUnits.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnListOfBlokedUnits.UseVisualStyleBackColor = true;
+            this.btnListOfBlokedUnits.Click += new System.EventHandler(this.btnListOfBlokedUnits_Click);
+            // 
             // frmUnitInformation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(885, 443);
+            this.Controls.Add(this.btnListOfBlokedUnits);
             this.Controls.Add(this.chkAutoExpand);
             this.Controls.Add(this.tcUnitData);
             this.Controls.Add(this.statusStrip1);
@@ -955,5 +977,6 @@
         private System.Windows.Forms.Label lblMasterUnit;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox chkAutoExpand;
+        private System.Windows.Forms.Button btnListOfBlokedUnits;
     }
 }

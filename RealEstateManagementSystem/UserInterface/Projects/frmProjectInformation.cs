@@ -11,26 +11,50 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Spell;
+using RealEstateManagementSystem.Reports;
+
 namespace RealEstateManagementSystem.UserInterface.Projects
 {
     public partial class frmProjectInformation : Form
     {
         bllProjectInfo bLayer = new bllProjectInfo();
         int projectId = 0;
+        string projectName = string.Empty;
         public frmProjectInformation()
         {
             InitializeComponent();
         }
-
+        //protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        //{
+        //    if (keyData == (Keys.Control | Keys.F))
+        //    {
+        //        MessageBox.Show("What the Ctrl+F?");
+        //        return true;
+        //    }
+        //    return base.ProcessCmdKey(ref msg, keyData);
+        //}
         private void frmProjectInformation_Load(object sender, EventArgs e)
         {
             try
             {
-                clsCommonFunctions.AutoFormatComboBoxes(root: this, backColor: Color.Linen);
-                clsCommonFunctions.AutoFormatListViews(this);
-                ResetForm(true);
+                PopulateListOfProjects();
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void PopulateListOfProjects()
+        {
+            lstProjects.Items.Clear();
+            projectId = 0;
+            projectName = string.Empty;
+            foreach (DataRow drItems in bLayer.GetLisOfProjects(clsGlobalClass.ProjectStatus.All).Rows)
+            {
+                ListViewItem lvItems = new ListViewItem(Convert.ToString(drItems["ProjectId"]));
+                lvItems.SubItems.Add(Convert.ToString(drItems["ProjectName"]));
+                lvItems.SubItems.Add(Convert.ToString(drItems["ProjectCode"]));
+                lstProjects.Items.Add(lvItems);
+            }
+            lblProjectCount.Text = "# of Project(s): " + lstProjects.Items.Count.ToString();
         }
 
         private void frmProjectInformation_KeyDown(object sender, KeyEventArgs e)
@@ -46,21 +70,22 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 def.ShowDialog();
                 bLayer.PopulateProjectLocationCombo(cmbLocation);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void cmbProjectName_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ResetForm(false);
-            projectId = cmbProjectName.SelectedValue.ToString().ConvertToInt32();
-            LoadProjectDetailsInformation(projectId);
+            //ResetForm(false);
+            //projectId = cmbProjectName.SelectedValue.ToString().ConvertToInt32();
+            //LoadProjectDetailsInformation(projectId);
         }
 
         private void LoadProjectDetailsInformation(int projectId)
         {
             try
             {
-                bLayer.ProjectId = Convert.ToInt32(projectId);
+                if (projectId == 0) return;
+                bLayer.ProjectId = projectId;
                 bLayer.GetProjectDetails();
 
                 cmbLocation.Text = bLayer.ProjectLocation;
@@ -118,22 +143,34 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 txtUtilityConnectionFee.Text = Spell.SpellAmount.comma(bLayer.UtilityConnectionFee);
 
                 PopulateListOfBuildings();
+                PopulateListOfSpecifications();
 
-                clsCommonFunctions.PopulateListViewFromDataTable(
-                            dataTable: bLayer.GetListOfProjectSpecifications(),
-                            lView: lstProjectSpecifications, hideFirstColumn: false);
-
-
-
+                btnSaveData.Text = "Update";
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void PopulateListOfSpecifications()
+        {
+            //clsCommonFunctions.PopulateListViewFromDataTable(
+            //                    dataTable: bLayer.GetListOfProjectSpecifications(),
+            //                    lView: lstProjectSpecifications, hideFirstColumn: false);
+
+            lstProjectSpecifications.Items.Clear();
+            bLayer.ProjectId = projectId;
+            foreach (DataRow drItems in bLayer.GetListOfProjectSpecifications().Rows)
+            {
+                ListViewItem lvItem = new ListViewItem(Convert.ToString(drItems["SpecificationType"]));
+                lvItem.SubItems.Add(Convert.ToString(drItems["Details"]));
+                lstProjectSpecifications.Items.Add(lvItem);
+            }
         }
 
         private void btnSaveData_Click(object sender, EventArgs e)
         {
             try
             {
-                string strConfirmationMessage = projectId > 0 ? "Are you sure about update information of Project " + cmbProjectName.Text.ToString() : "Sure about insert new project information?";
+                string strConfirmationMessage = projectId > 0 ? "Are you sure about update information of Project <" + projectName + ">?" : "Sure about insert new project information?";
                 DialogResult dr = MessageBox.Show(strConfirmationMessage, Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No) throw new ApplicationException(Resources.strCancelledByUser);
                 bLayer.ProjectId = projectId;
@@ -175,18 +212,18 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 bLayer.IsPilingNeeded = chkNeedPiling.Checked;
                 bLayer.ManipulateProjectInfo();
                 MessageBox.Show(Resources.strSuccessMessage, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                clsCommonFunctions.PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.All);
+
                 ResetForm(true);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
         }
 
-        private void PopulateComboboxes(bool withProjectCombo = false)
+        private void PopulateComboboxes(bool withProjectList = false)
         {
             try
             {
-                if (withProjectCombo == true) clsCommonFunctions.PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.All);
+                if (withProjectList == true) PopulateListOfProjects();
                 bLayer.PopulateProjectLocationCombo(cmbLocation);
                 bLayer.PopulateProjectTypeCombo(cmbProjectType);
                 bLayer.PopulateLandTypeCombo(cmbLandType);
@@ -196,17 +233,20 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 bLayer.PopulateSignatoryCombo(cmbSignatory);
                 bLayer.PopulateProjectSpecificationTypes(cmbProjectSpecificationType);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
 
         }
 
-        private void ResetForm(bool withProjectCombo)
+        private void ResetForm(bool withProjectList)
         {
+            PopulateComboboxes(withProjectList);
+            projectId = 0;
+            btnSaveData.Text = "Save";
             clsCommonFunctions.ResetCheckBoxes(this, false);
             clsCommonFunctions.ResetTextBoxes(this, "");
             clsCommonFunctions.ResetDTPicker(this, false);
-            PopulateComboboxes(withProjectCombo);
-            projectId = 0;
+            lstBuildingDetails.Items.Clear();
+            lstProjectSpecifications.Items.Clear();
         }
 
         private void btnSaveBuildingList_Click(object sender, EventArgs e)
@@ -214,34 +254,30 @@ namespace RealEstateManagementSystem.UserInterface.Projects
             try
             {
                 if (projectId == 0) { MessageBox.Show("Please select a Project from Top.", Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error); return; };
-                DialogResult dr = MessageBox.Show("This is a one time operation. You cannot change this entry once you save it.\nAre you sure about adding <" + nudBuildingCount.Value.ToString() + "> Building(s) to Project <" + cmbProjectName.Text.ToString() + ">?", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Are you sure about adding <" + nudBuildingCount.Value.ToString() + "> building(s) to Project <" + projectName + ">?\nTHIS ACTION CANNOT BE REVERTED!!", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No) throw new ApplicationException(Resources.strCancelledByUser);
-                bLayer.ProjectId = projectId; //Convert.ToInt32(cmbProjectName.SelectedValue);
+                bLayer.ProjectId = projectId;
                 bLayer.ManipulateBuildingCount(Convert.ToInt32(nudBuildingCount.Value));
                 PopulateListOfBuildings();
                 MessageBox.Show(Resources.strSuccessMessage, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
 
         private void PopulateListOfBuildings()
         {
-            try
+            lstBuildingDetails.Items.Clear();
+            bLayer.ProjectId = projectId;
+            foreach (DataRow item in bLayer.GetListOfBuildingsInProject().Rows)
             {
-                lstBuildingDetails.Items.Clear();
-                bLayer.ProjectId = cmbProjectName.SelectedValue.ToString().ConvertToInt32();
-                foreach (DataRow item in bLayer.GetListOfBuildingsInProject().Rows)
-                {
-                    string[] strItems = { item["BuildingId"].ToString(), item["BuildingNumber"].ToString(), item["Name"].ToString(), item["NumOfBasements"].ToString(), item["NumOfFloors"].ToString() };
-                    ListViewItem lvItems = new ListViewItem(strItems);
-                    lstBuildingDetails.Items.Add(lvItems);
-                }
-                lstBuildingDetails.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                lstBuildingDetails.Columns[0].Width = 0;
-                btnSaveBuildingList.Enabled = lstBuildingDetails.Items.Count > 0 ? false : true;
+                string[] strItems = { item["BuildingId"].ToString(), item["BuildingNumber"].ToString(), item["Name"].ToString(), item["NumOfBasements"].ToString(), item["NumOfFloors"].ToString() };
+                ListViewItem lvItems = new ListViewItem(strItems);
+                lstBuildingDetails.Items.Add(lvItems);
             }
-            catch (Exception ex) { throw ex; }
+            lstBuildingDetails.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            lstBuildingDetails.Columns[0].Width = 0;
+            btnSaveBuildingList.Enabled = lstBuildingDetails.Items.Count > 0 ? false : true;
         }
 
 
@@ -271,32 +307,19 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 PopulateListOfBuildings();
                 MessageBox.Show(Resources.strSuccessMessage, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnRefresh_PI_Click(object sender, EventArgs e)
         {
-            ResetForm(true);
-            txtProjectCode.Text = bLayer.GetNewProjectCode().ToString();
-        }
-
-        private void btnProjectSummaryReport_Click(object sender, EventArgs e)
-        {
             try
             {
-                tssStatus.Text = Resources.strCollectingData;
-                Reports.Projects.crptProjectInfo rptProjectSummary = new Reports.Projects.crptProjectInfo();
-                rptProjectSummary.Subreports[0].SetDataSource(clsCommonFunctions.CompanyInformation());
-                rptProjectSummary.SetDataSource(bLayer.GetProjectSummary(cmbProjectName.SelectedValue.ToString().ConvertToInt32()).Tables[0]);
-                Reports.frmReportViewer frmReport = new Reports.frmReportViewer();
-                frmReport.crptMasterReport.ReportSource = rptProjectSummary;
-                tssStatus.Text = Resources.strPreparingData;
-                frmReport.ShowDialog();
-                GC.Collect();
-                tssStatus.Text = Resources.strReadyStatus;
+                ResetForm(true);
+                txtProjectCode.Text = bLayer.GetNewProjectCode().ToString();
             }
-            catch (Exception ex) { tssStatus.Text = Resources.strReadyStatus; ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
+
 
         private void lstBuildingDetails_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -310,7 +333,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 txtCountOfFloor.Text = bLayer.CountOfFloors.ToString();
                 txtCountOfBasement.Enabled = txtCountOfFloor.Enabled = bLayer.CountOfFloors > 0 ? false : true;
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
 
@@ -331,12 +354,17 @@ namespace RealEstateManagementSystem.UserInterface.Projects
 
         private void btnResetSpec_Click(object sender, EventArgs e)
         {
-            bLayer.ProjectId = Convert.ToInt32(cmbProjectName.SelectedValue.ToString());
-            clsCommonFunctions.PopulateListViewFromDataTable(
-                             dataTable: bLayer.GetListOfProjectSpecifications(),
-                             lView: lstProjectSpecifications, hideFirstColumn: false);
-            bLayer.PopulateProjectSpecificationTypes(cmbProjectSpecificationType);
-            txtSpecDetails.Text = string.Empty;
+            try
+            {
+                bLayer.ProjectId = projectId;
+                clsCommonFunctions.PopulateListViewFromDataTable(
+                                 dataTable: bLayer.GetListOfProjectSpecifications(),
+                                 lView: lstProjectSpecifications, hideFirstColumn: false);
+                bLayer.PopulateProjectSpecificationTypes(cmbProjectSpecificationType);
+                txtSpecDetails.Text = string.Empty;
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+
         }
 
         private void btnManipulateSpecification_Click(object sender, EventArgs e)
@@ -344,7 +372,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
             try
             {
                 if (projectId == 0) { MessageBox.Show("Please select a Project from Top.", Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error); return; };
-                DialogResult dr = MessageBox.Show("Sure about manipulating Specification for " + cmbProjectName.Text.ToString() + " Project?", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Sure about manipulating Specification for Project <" + projectName + ">?", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No) throw new ApplicationException(Resources.strCancelledByUser);
                 bLayer.ProjectId = projectId;//cmbProjectName.SelectedValue.ToString().ConvertToInt32();
                 bLayer.SpecificationTypeId = Convert.ToInt32(cmbProjectSpecificationType.SelectedValue.ToString());
@@ -353,7 +381,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 btnResetSpec.PerformClick();
                 MessageBox.Show("Specification saved successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void lstProjectSpecifications_SelectedIndexChanged(object sender, EventArgs e)
@@ -361,13 +389,13 @@ namespace RealEstateManagementSystem.UserInterface.Projects
             try
             {
                 if (lstProjectSpecifications.SelectedItems.Count < 1) return;
-                bLayer.ProjectId = cmbProjectName.SelectedValue.ToString().ConvertToInt32();
+                bLayer.ProjectId = projectId;
                 bLayer.SpecificationType = lstProjectSpecifications.SelectedItems[0].Text.ToString();
                 bLayer.GetProjectSpecificationDetails();
                 cmbProjectSpecificationType.Text = bLayer.SpecificationType;
                 txtSpecDetails.Text = bLayer.SpecificationDetails;
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void btnPaymentPolicy_Click(object sender, EventArgs e)
@@ -375,7 +403,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
             try
             {
                 if (projectId == 0) { MessageBox.Show("Please select a Project from Top.", Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error); return; };
-                DialogResult dr = MessageBox.Show("Are you sure you want to update the payment policy for <" + cmbProjectName.Text.ToString() + ">?", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Are you sure you want to update the payment policy for <" + projectName + ">?", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No) throw new ApplicationException(Resources.strCancelledByUser);
                 bLayer.ProjectId = projectId;
                 bLayer.BookingMoney = txtBookingMoney.Text.ToString().ConvertToInt32();
@@ -384,7 +412,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 bLayer.ManipulateProjectPaymentPolicy();
                 MessageBox.Show(Resources.strSuccessMessage, Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex) { ex.Display(); }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void txtProjectCode_Enter(object sender, EventArgs e)
@@ -396,5 +424,111 @@ namespace RealEstateManagementSystem.UserInterface.Projects
         {
             txtUtilityConnectionFee.Text = txtUtilityConnectionFee.Text == "" ? "0" : txtUtilityConnectionFee.Text.ConvertToDecimal().FormatAsMoney();
         }
+
+        private void lstBuildingDetails_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (lstBuildingDetails.Items.Count < 1 || lstBuildingDetails.SelectedItems.Count < 1) { return; }
+            if (e.Button == MouseButtons.Right && bLayer.IsFloorInfoAvailable(lstBuildingDetails.SelectedItems[0].Text.ToString().ConvertToInt32()) == true)
+            {
+                ContextMenu cm = new ContextMenu();
+                MenuItem miBasement = new MenuItem("Add a new Basement Building # " + lstBuildingDetails.SelectedItems[0].SubItems[2].Text.ToString(), miBasement_OnClick);
+                MenuItem sep = new MenuItem("-");
+                MenuItem miFloor = new MenuItem("Add a new Floor to Building # " + lstBuildingDetails.SelectedItems[0].SubItems[2].Text.ToString(), miFloor_OnClick);
+
+                cm.MenuItems.Add(miBasement);
+                cm.MenuItems.Add(sep);
+                cm.MenuItems.Add(miFloor);
+
+                cm.Show((Control)sender, e.Location);
+            }
+        }
+
+        private void miBasement_OnClick(object sender, EventArgs e)
+        {
+            AddNewFloor(isBasement: true);
+        }
+
+        private void miFloor_OnClick(object sender, EventArgs e)
+        {
+            AddNewFloor(isBasement: false);
+        }
+
+        private void AddNewFloor(bool isBasement)
+        {
+            try
+            {
+                StringBuilder strMessage = new StringBuilder();
+                strMessage.Append(string.Format("Sure about adding a new {0} in this Building?\nTHIS ACTION CANNOT BE REVERTED!!!", isBasement == true ? "<BASEMENT>" : "<FLOOR>"));
+                DialogResult dr = MessageBox.Show(strMessage.ToString(), Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    int buildingId = lstBuildingDetails.SelectedItems[0].Text.ConvertToInt32(); ;
+                    bLayer.AddAFloorToBuilding(buildingId, isBasement);
+                    PopulateListOfBuildings();
+                    MessageBox.Show(string.Format("New {0} added successfully.", isBasement == true ? "Basement" : "Floor"), Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+                else { throw new ApplicationException(Resources.strCancelledByUser); }
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void btnListOfBlokedUnits_Click(object sender, EventArgs e)
+        {
+            frmListOfBlockedUnits bu = new frmListOfBlockedUnits();
+            bu.ShowDialog();
+        }
+
+
+        private void lstProjects_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstProjects.SelectedItems.Count < 1 || lstProjects.Items.Count < 1) return;
+            ResetForm(false);
+            projectId = lstProjects.SelectedItems[0].Text.ConvertToInt32();
+            projectName = lstProjects.SelectedItems[0].SubItems[1].Text;
+            LoadProjectDetailsInformation(projectId);
+        }
+
+        private void lstProjects_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (lstProjects.Items.Count < 1 || lstProjects.SelectedItems.Count < 1) { return; }
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu cm = new ContextMenu();
+                MenuItem projectSummary = new MenuItem("Project Summary", projectSummary_OnClick);
+                cm.MenuItems.Add(projectSummary);
+                MenuItem sep1 = new MenuItem("-");
+                cm.MenuItems.Add(sep1);
+                MenuItem unitList = new MenuItem("List of Unit(s)", unitList_Click);
+                cm.MenuItems.Add(unitList);
+                MenuItem sep2 = new MenuItem("-");
+                cm.MenuItems.Add(sep2);
+
+
+                MenuItem clientList = new MenuItem("List of Clients", clientList_OnClick);
+                cm.MenuItems.Add(clientList);
+                cm.Show((Control)sender, e.Location);
+            }
+
+        }
+
+        private void unitList_Click(object sender, EventArgs e)
+        {
+            try { clsReports.UnitDetailsOfProject(projectId, tssStatus); }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void clientList_OnClick(object sender, EventArgs e)
+        {
+            try { clsReports.ListOfClientsByProjectId(projectId, tssStatus); }
+            catch (Exception ex) { tssStatus.Text = Resources.strReadyStatus; ex.ProcessException(); }
+        }
+
+        private void projectSummary_OnClick(object sender, EventArgs e)
+        {
+            try { clsReports.ProjectSummary(projectId, tssStatus); }
+            catch (Exception ex) { tssStatus.Text = Resources.strReadyStatus; ex.ProcessException(); }
+        }
+
     }
 }

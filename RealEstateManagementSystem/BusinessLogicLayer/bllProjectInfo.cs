@@ -32,11 +32,16 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public bool IsProjectApproved { get; set; }
         public DateTime ConstructionStartedOn { get; set; }
         public bool IsConstructionStarted { get; set; }
+
+
         public DateTime SaleStartedOn { get; set; }
         public bool IsSaleStarted { get; set; }
         public DateTime ActualCompletion { get; set; }
         public bool IsActuallyCompleted { get; set; }
         public DateTime EstimatedHandoverDate { get; set; }
+
+
+
         public bool IsEstimatedHandoverDateSet { get; set; }
         public DateTime ActualHandoverDate { get; set; }
         public bool IsHandedOver { get; set; }
@@ -104,6 +109,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public int BookingMoney { get; set; }
         public int DownPayment { get; set; }
         public int UtilityConnectionFee { get; set; }
+
         #endregion
 
         #region UnitProperties
@@ -140,231 +146,167 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         #endregion
 
+        internal DataTable GetBlockedUnitOfProject(int projectId)
+        {
+            return dLayer.GetBlockedUnitOfProject(projectId);
+        }
+        internal DataTable GetListOfProjectsWithBlockedUnit()
+        {
+            return dLayer.GetListOfProjectsWithBlockedUnit();
+        }
+
         internal void PopulateProjectSpecificationTypes(ComboBox cmbProjectSpecificationType)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
-                  CommandType.Text,
-                  "SELECT SpecTypeId, SpecName FROM defProjectSpec ORDER BY [Sequence]",
-                  "SpecName",
-                  "SpecTypeId",
-                  cmbProjectSpecificationType);
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
+              CommandType.Text,
+              "SELECT SpecTypeId, SpecName FROM defProjectSpec ORDER BY [Sequence]",
+              "SpecName",
+              "SpecTypeId",
+              cmbProjectSpecificationType);
         }
 
         internal void GetAreaInfo()
         {
-            try { dLayer.GetAreaInfo(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.GetAreaInfo(this);
+
         }
 
         internal void GetLocationInfo()
         {
-            try { dLayer.GetLocationInfo(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.GetLocationInfo(this);
+
         }
 
         internal void PopulateListOfAreas(ComboBox cmbAreas, string districtName)
         {
-            try
-            {
-                clsCommonFunctions.ResetComboBox(cmbAreas);
-                cmbAreas.DataSource = dLayer.PopulateListOfAreas(districtName).Tables[0];
-                cmbAreas.DisplayMember = "AreaName";
-                cmbAreas.ValueMember = "AreaId";
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.ResetComboBox(cmbAreas);
+            cmbAreas.DataSource = dLayer.PopulateListOfAreas(districtName).Tables[0];
+            cmbAreas.DisplayMember = "AreaName";
+            cmbAreas.ValueMember = "AreaId";
+
         }
 
         internal void PopulateLocationDetails(ListView lstLocationDetails, string districtName)
         {
-            try { clsCommonFunctions.PopulateListViewFromDataTable(dataTable: dLayer.PopulateLocationDetails(districtName), lView: lstLocationDetails); }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateListViewFromDataTable(dataTable: dLayer.PopulateLocationDetails(districtName), lView: lstLocationDetails);
+
         }
 
         internal void PopulateProjectLocationCombo(ComboBox cmbLocation)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
-                  CommandType.Text,
-                  "SELECT LocationId, Location FROM LocationDetails ORDER BY Location",
-                  "Location",
-                  "LocationId",
-                  cmbLocation);
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT LocationId, Location FROM LocationDetails ORDER BY Location", "Location", "LocationId", cmbLocation);
         }
-
-
 
         internal DataTable GetListOfProjectSpecifications()
         {
-            try { return dLayer.GetListOfProjectSpecifications(this.ProjectId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetListOfProjectSpecifications(this.ProjectId);
         }
 
         internal DataTable GetListOfBuildingsInProject()
         {
-            try { return dLayer.GetListOfBuildingsInProject(this.ProjectId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetListOfBuildingsInProject(this.ProjectId);
         }
 
         internal void PopulateProjectTypeCombo(ComboBox cmbProjectType)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
-                    CommandType.Text,
-                    "SELECT * FROM defProjectType ORDER BY ProjectType",
-                    "ProjectType", "ProjectTypeId", cmbProjectType
-                    );
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT * FROM defProjectType ORDER BY ProjectType", "ProjectType", "ProjectTypeId", cmbProjectType);
         }
 
         internal void PopulateLandTypeCombo(ComboBox cmbLandType)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
-                    CommandType.Text,
-                    "SELECT * FROM defLandType",
-                    "LandType", "LandTypeId",
-                    cmbLandType
-                    );
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT * FROM defLandType", "LandType", "LandTypeId", cmbLandType);
         }
 
         internal void PopulateProjectInChargeCombo(ComboBox cmbInCharge)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
-                        CommandType.Text,
-                        "SELECT InChargeId, ICName FROM ProjectInCharge ORDER BY ICName",
-                        "ICName", "InChargeId", cmbInCharge
-                    );
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT InChargeId, ICName FROM ProjectInCharge ORDER BY ICName", "ICName", "InChargeId", cmbInCharge);
         }
 
         internal void PopulateProjectArchitectCombo(ComboBox cmbArchitect)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
-                        CommandType.Text,
-                        "SELECT ArchitectId, ArchName FROM ProjectArchitect ORDER BY ArchName",
-                        "ArchName", "ArchitectId", cmbArchitect
-                    );
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT ArchitectId, ArchName FROM ProjectArchitect ORDER BY ArchName", "ArchName", "ArchitectId", cmbArchitect);
         }
 
         internal void PopualateDesignEngineerCombo(ComboBox cmbDesignEngr)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
-                        CommandType.Text,
-                        "select StructuralDesignerId, SDName FROM StructuralDesigner ORDER BY SDName",
-                        "SDName", "StructuralDesignerId", cmbDesignEngr
-                    );
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "select StructuralDesignerId, SDName FROM StructuralDesigner ORDER BY SDName", "SDName", "StructuralDesignerId", cmbDesignEngr);
         }
 
         internal void ManipulateUnitInformation()
         {
-            try { dLayer.ManipulateUnitInformation(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateUnitInformation(this);
+
         }
 
         internal void ManipulateProjectInfo()
         {
-            try { dLayer.ManipulateProjectInfo(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateProjectInfo(this);
+
         }
 
         internal void PopulateSignatoryCombo(ComboBox cmbSignatory)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(
-                        CommandType.Text,
-                        "SELECT SignatoryId, Name FROM defSignatory",
-                        "Name", "SignatoryId", cmbSignatory
-                    );
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT SignatoryId, Name FROM defSignatory", "Name", "SignatoryId", cmbSignatory);
         }
 
         internal void GetProjectDetails()
         {
-            try { dLayer.GetProjectDetails(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.GetProjectDetails(this);
         }
 
         internal void ManipulateBuildingCount(int countOfBuilding)
         {
-            try { dLayer.ManipulateBuildingCount(this.ProjectId, countOfBuilding); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateBuildingCount(this.ProjectId, countOfBuilding);
         }
 
         internal void GetBuildingDetails()
         {
-            try { dLayer.GetBuildingDetails(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.GetBuildingDetails(this);
+
         }
 
         internal void ManipulateBuildingData()
         {
-            try { dLayer.ManipulateBuildingData(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateBuildingData(this);
         }
 
         internal void ManipulateProjectSpecification()
         {
-            try { dLayer.ManipulateProjectSpecification(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateProjectSpecification(this);
         }
 
         internal void GetProjectSpecificationDetails()
         {
-            try { dLayer.GetProjectSpecificationDetails(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.GetProjectSpecificationDetails(this);
+
         }
 
         internal DataSet GetProjectSummary(int projectId)
         {
-            try { return dLayer.GetProjectSummary(projectId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetProjectSummary(projectId);
+
         }
 
         internal DataTable GetListOfDistricts()
         {
-            try { return dLayer.GetListOfDistricts(); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetListOfDistricts();
+
         }
         internal DataTable GetListOfAreas(int districtId)
         {
-            try { return dLayer.GetListOfAreas(districtId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetListOfAreas(districtId);
+
         }
 
         internal DataTable GetListOfLocations(int areaId)
         {
-            try { return dLayer.GetListOfLocations(areaId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetListOfLocations(areaId);
+
         }
         internal void ManipulateDistrictInfo()
         {
-            try { dLayer.ManipulateDistrictInfo(this.DistrictId, this.DistrictName, this.DistrictName_Bangla); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateDistrictInfo(this.DistrictId, this.DistrictName, this.DistrictName_Bangla);
+
         }
 
         internal int GetNewProjectCode()
@@ -379,47 +321,35 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         internal void ManipulateAreaInfo()
         {
-            try { dLayer.ManipulateAreaInfo(this.DistrictId, this.AreaId, this.AreaName, this.AreaName_Bangla); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateAreaInfo(this.DistrictId, this.AreaId, this.AreaName, this.AreaName_Bangla);
+
         }
         internal void ManipulateLocationInfo()
         {
-            try { dLayer.ManipulateLocationInfo(this.AreaId, this.LocationId, this.LocationName, this.LocationName_Bangla); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateLocationInfo(this.AreaId, this.LocationId, this.LocationName, this.LocationName_Bangla);
         }
 
         internal void GetDistrictInfo()
         {
-            try { dLayer.GetDistrictInfo(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.GetDistrictInfo(this);
         }
         internal DataTable GetListOfUnitTypesInBuilding(int buildingId)
         {
-            try { return dLayer.GetListOfUnitTypesInBuilding(buildingId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetListOfUnitTypesInBuilding(buildingId);
         }
         internal DataTable GetListOfUnitsByUnitTypeAndBuildingId(string unitType, int buildingId)
         {
-            try { return dLayer.GetListOfUnitsByUnitTypeAndBuildingId(unitType, buildingId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetListOfUnitsByUnitTypeAndBuildingId(unitType, buildingId);
         }
 
         internal void ManipulateProjectPaymentPolicy()
         {
-            try { dLayer.ManipulateProjectPaymentPolicy(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.ManipulateProjectPaymentPolicy(this);
         }
 
         internal void PopulateBuildingsCombo(int projectId, ComboBox cmbBuilding)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember
-                                  (CommandType.Text,
-                                  "SELECT BNumber, BuildingId FROM BuildingNumber WHERE ProjectId = " + projectId,
-                                  "BNumber", "BuildingId", cmbBuilding, false);
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT BNumber, BuildingId FROM BuildingNumber WHERE ProjectId = " + projectId, "BNumber", "BuildingId", cmbBuilding, false);
         }
 
         internal void BlockUnit()
@@ -429,14 +359,10 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         internal void PopulateFloorsCombo(int buildingId, ComboBox cmbFloorNumber)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember
-                            (CommandType.Text,
-                             "SELECT FloorId, dbo.fnGetFormattedFloorNumber(FloorType, FloorNumber) [Floor], FloorNumber FROM FloorInfo where BuildingId = " + buildingId + " ORDER BY FloorType, FloorNumber ASC",
-                             "Floor", "FloorId", cmbFloorNumber, false);
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember
+                        (CommandType.Text,
+                         "SELECT FloorId, dbo.fnGetFormattedFloorNumber(FloorType, FloorNumber) [Floor], FloorNumber FROM FloorInfo where BuildingId = " + buildingId + " ORDER BY FloorType, FloorNumber ASC",
+                         "Floor", "FloorId", cmbFloorNumber, false);
         }
 
         internal DataTable GetUnitBlockingHistory(int unitId)
@@ -446,11 +372,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         internal void PopulateTypeOfUnitCombo(ComboBox cmbType)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT * FROM defFlatType ORDER BY FlatType", "FlatType", "FlatTypeId", cmbType, false);
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT * FROM defFlatType ORDER BY FlatType", "FlatType", "FlatTypeId", cmbType, false);
         }
 
         internal void UnBlockUnit(int unitId)
@@ -460,47 +382,32 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         internal void PopulateFacingCombo(ComboBox cmbFacing)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT FacingId, FacingDefinition FROM defFacing ORDER BY FacingDefinition", "FacingDefinition", "FacingId", cmbFacing, false);
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT FacingId, FacingDefinition FROM defFacing ORDER BY FacingDefinition", "FacingDefinition", "FacingId", cmbFacing, false);
         }
 
         internal void PopulateUnitTypeCombo(ComboBox cmbUnitType)
         {
-            try
-            {
-                clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember
-                                (CommandType.Text,
-                                 "SELECT ObjectTypeID, ObjectType FROM ObjectType ORDER BY ObjectType",
-                                 "ObjectType", "ObjectTypeId",
-                                 cmbUnitType, false);
-            }
-            catch (Exception ex) { throw ex; }
+            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember
+                            (CommandType.Text, "SELECT ObjectTypeID, ObjectType FROM ObjectType ORDER BY ObjectType", "ObjectType", "ObjectTypeId", cmbUnitType, false);
         }
 
         internal void GetUnitTypeProperties()
         {
-            try { dLayer.GetUnitTypeProperties(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.GetUnitTypeProperties(this);
         }
 
         internal string GenerateUnitNumber(int unitTypeId, int typeOfUnitId, int floorId)
         {
-            try { return dLayer.GenerateUnitNumber(unitTypeId, typeOfUnitId, floorId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GenerateUnitNumber(unitTypeId, typeOfUnitId, floorId);
         }
 
         internal DataTable GetListOfUnitsInProject()
         {
-            try { return dLayer.GetListOfUnitsInProject(this.ProjectId); }
-            catch (Exception ex) { throw ex; }
+            return dLayer.GetListOfUnitsInProject(this.ProjectId);
         }
         internal void GetUnitInformation()
         {
-            try { dLayer.GetUnitInformation(this); }
-            catch (Exception ex) { throw ex; }
+            dLayer.GetUnitInformation(this);
         }
 
         internal DataTable GetListOfHashParking(int projectId)
@@ -512,5 +419,24 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         {
             dLayer.UpdateHashParking(unitId, parkingNumber, projectId);
         }
+
+        internal void AddAFloorToBuilding(int buildingId, bool isBasement)
+        {
+            dLayer.AddFloorToBuilding(buildingId, isBasement);
+        }
+        internal DataTable GetLisOfProjects(clsGlobalClass.ProjectStatus projectStatus)
+        {
+            return dLayer.GetLisOfProjects(projectStatus);
+        }
+
+        internal bool IsFloorInfoAvailable(int buildingId)
+        {
+            return dLayer.IsFloorInfoAvailable(buildingId);
+        }
+        internal DataSet GetListOfClientsByProjectId(int projectId)
+        {
+            return dLayer.GetListOfClientsByProjectId(projectId);
+        }
+
     }
 }

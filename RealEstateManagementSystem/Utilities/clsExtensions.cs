@@ -71,7 +71,8 @@ namespace RealEstateManagementSystem.Utilities
 
         public static int ConvertToInt32(this string str)
         {
-            return Convert.ToInt32(str.RemoveCommas());
+            int i = 0;
+            return int.TryParse(str, out i) == true ? Convert.ToInt32(str.RemoveCommas()) : 0;
         }
 
         /// <summary>
@@ -80,26 +81,33 @@ namespace RealEstateManagementSystem.Utilities
         /// <param name="amount">Value</param>
         /// <param name="addCurrencyMark">Add Tk. in front and /- in end</param>
         /// <returns></returns>
-        public static string FormatAsMoney(this decimal amount, bool addCurrencyMark = false, bool useBracketForNegative = false)
+        public static string FormatAsMoney(this decimal amount, bool addCurrencyMark = false, bool useBracketForNegative = false, bool replaceZeroWithDash = false)
         {
-            if (useBracketForNegative == true)
+            if (replaceZeroWithDash == true && amount == 0)
             {
-                return amount < 0 ?
-                    addCurrencyMark == true ? "(Tk." + Spell.SpellAmount.comma(amount * -1) + "/-)" : "(" + Spell.SpellAmount.comma(amount * -1) + ")" :
-                    addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
+                return "-";
             }
             else
             {
-                return amount < 0 ?
-                    addCurrencyMark == true ? "Tk. -" + Spell.SpellAmount.comma(amount * -1) + "/-" : "-" + Spell.SpellAmount.comma(amount * -1) + "" :
-                    addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
+                if (useBracketForNegative == true)
+                {
+                    return amount < 0 ?
+                        addCurrencyMark == true ? "(Tk." + Spell.SpellAmount.comma(amount * -1) + "/-)" : "(" + Spell.SpellAmount.comma(amount * -1) + ")" :
+                        addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
+                }
+                else
+                {
+                    return amount < 0 ?
+                        addCurrencyMark == true ? "Tk. -" + Spell.SpellAmount.comma(amount * -1) + "/-" : "-" + Spell.SpellAmount.comma(amount * -1) + "" :
+                        addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
+                }
             }
+
 
         }
 
         public static string AmountInWords(this decimal amount)
         {
-
             return amount < 0 ? Spell.SpellAmount.InWrods(amount * -1) + " (Refund)" : Spell.SpellAmount.InWrods(amount);
         }
 
@@ -114,9 +122,30 @@ namespace RealEstateManagementSystem.Utilities
         public static DateTime ConvertToDateTime(this string str)
         {
             DateTime dt = DateTime.Now;
-            //string strFormat = showWithTime == true ? "dd-MMM-yyyy hh:mm:ss tt" : "dd-MMM-yyyy";
             return DateTime.TryParse(str, out dt) == true ? Convert.ToDateTime(str.ToString()) : DateTime.Now;
 
+        }
+
+        /// <summary>
+        /// Return Current date if supplied date is NULL or less than '1900-01-01'
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static DateTime ManageInvalidDate(this DateTime date)
+        {
+            DateTime dt = DateTime.Now;
+            return DateTime.TryParse(date.ToString(), out dt) == true ? DateTime.Compare(date, clsGlobalClass.considerAsNULLDate) < 0 ? DateTime.Now : date : date;
+        }
+
+        /// <summary>
+        /// Return false if supplied date is NULL or less than '1900-01-01'
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static bool IsValidDate(this DateTime date)
+        {
+            DateTime dt = DateTime.Now;
+            return DateTime.TryParse(date.ToString(), out dt) == true ? DateTime.Compare(date, clsGlobalClass.considerAsNULLDate) < 0 ? false : true : true;
         }
 
         public static string ReplaceEmptyStringWithNA(this string str)
@@ -126,7 +155,8 @@ namespace RealEstateManagementSystem.Utilities
 
         public static decimal ConvertToDecimal(this string str)
         {
-            return Convert.ToDecimal(str.RemoveCommas());
+            decimal d = 0;
+            return decimal.TryParse(str, out d) == true ? Convert.ToDecimal(str.RemoveCommas()) : 0;
         }
 
         public static int ConverBooleanToSmallInt(this bool bln)
@@ -140,27 +170,18 @@ namespace RealEstateManagementSystem.Utilities
             return ex;
         }
 
-        //public static Exception Display(this Exception ex, string msg = null, MessageBoxIcon img = MessageBoxIcon.Error)
-        //{
-        //    //new ApplicationException("Unable to calculate !", ex).Log().Display();
-        //    MessageBox.Show(msg ?? ex.Message, "", MessageBoxButtons.OK , img);
-        //    return ex;
-        //}
 
-        public static Exception Display(this Exception ex)
+        public static Exception ProcessException(this Exception ex, ToolStripStatusLabel tssStatus = null)
         {
-            //File.AppendAllText("CaughtExceptions" + DateTime.Now.ToString("yyyy-MM-dd") + ".log", DateTime.Now.ToString("HH:mm:ss") + ": " + ex.Message + "\n" + ex.ToString() + "\n");
             string errMsgInitial = string.Empty;
-            if (!ex.GetType().IsAssignableFrom(typeof(ApplicationException)) && !ex.GetType().IsAssignableFrom(typeof(SqlException)))
+            if (!ex.GetType().IsAssignableFrom(typeof(ApplicationException)))
             {
                 clsCommonFunctions.LogError(ex);
-                errMsgInitial = Resources.strSystemErrorMessage;
+                errMsgInitial = !ex.GetType().IsAssignableFrom(typeof(SqlException)) ? Resources.strSystemErrorMessage : errMsgInitial = Resources.strFailedMessage;
             }
-            else
-            {
-                errMsgInitial = Resources.strFailedMessage;
-            }
+            else { errMsgInitial = Resources.strFailedMessage; }
             MessageBox.Show(errMsgInitial + ex.Message.ToString(), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (tssStatus != null) { tssStatus.Text = Resources.strReadyStatus; }
             return ex;
         }
 

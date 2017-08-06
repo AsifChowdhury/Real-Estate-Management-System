@@ -11,7 +11,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
 {
     class dalGlobal
     {
-        internal DataTable GetListOfClients(bllGlobal b)
+        internal DataTable GetListOfClients(bllGlobal b, bool includeCancelledClients = false)
         {
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter da = new SqlDataAdapter();
@@ -24,6 +24,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@projectId", b.ProjectId);
                 cmd.Parameters.AddWithValue("@clientName", b.ClientName);
                 cmd.Parameters.AddWithValue("@unitNumber", b.UnitNumber);
+                cmd.Parameters.AddWithValue("@includeCancelledClients", includeCancelledClients);
                 da.SelectCommand = cmd;
                 da.Fill(dt);
             }
@@ -47,6 +48,24 @@ namespace RealEstateManagementSystem.DataAccessLayer
             }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
             return dt;
+        }
+
+        internal DataTable GetCollectionDetails(DateTime startDate)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_Root_TransactionList";
+                cmd.Parameters.AddWithValue("@startDate", startDate);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
         internal DataTable GetRootCancelledList(DateTime startDate)
@@ -83,7 +102,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 return dt;
             }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
-            
+
         }
 
         internal void GetSummaryDataForMainScreen(bllGlobal b)

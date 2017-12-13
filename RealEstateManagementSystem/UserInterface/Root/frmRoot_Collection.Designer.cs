@@ -45,7 +45,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.btnReload = new System.Windows.Forms.Button();
-            this.lblRecordCount = new System.Windows.Forms.Label();
+            this.tssCollection = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,7 +69,7 @@
             this.lstTransactionList.GridLines = true;
             this.lstTransactionList.Location = new System.Drawing.Point(0, 32);
             this.lstTransactionList.Name = "lstTransactionList";
-            this.lstTransactionList.Size = new System.Drawing.Size(1180, 634);
+            this.lstTransactionList.Size = new System.Drawing.Size(1180, 655);
             this.lstTransactionList.TabIndex = 0;
             this.lstTransactionList.UseCompatibleStateImageBehavior = false;
             this.lstTransactionList.View = System.Windows.Forms.View.Details;
@@ -132,7 +132,8 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tssStatus});
+            this.tssStatus,
+            this.tssCollection});
             this.statusStrip1.Location = new System.Drawing.Point(0, 690);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -142,8 +143,9 @@
             // 
             // tssStatus
             // 
+            this.tssStatus.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tssStatus.Name = "tssStatus";
-            this.tssStatus.Size = new System.Drawing.Size(1165, 17);
+            this.tssStatus.Size = new System.Drawing.Size(582, 17);
             this.tssStatus.Spring = true;
             this.tssStatus.Text = "Ready";
             this.tssStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -180,14 +182,15 @@
             this.btnReload.UseVisualStyleBackColor = false;
             this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
-            // lblRecordCount
+            // tssCollection
             // 
-            this.lblRecordCount.AutoSize = true;
-            this.lblRecordCount.Location = new System.Drawing.Point(3, 671);
-            this.lblRecordCount.Name = "lblRecordCount";
-            this.lblRecordCount.Size = new System.Drawing.Size(157, 13);
-            this.lblRecordCount.TabIndex = 5;
-            this.lblRecordCount.Text = "Total Collection: Tk. 0/-";
+            this.tssCollection.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tssCollection.ForeColor = System.Drawing.Color.Maroon;
+            this.tssCollection.Name = "tssCollection";
+            this.tssCollection.Size = new System.Drawing.Size(582, 17);
+            this.tssCollection.Spring = true;
+            this.tssCollection.Text = "Total Collection: Tk. 0/-";
+            this.tssCollection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // frmRoot_Collection
             // 
@@ -195,7 +198,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1180, 712);
-            this.Controls.Add(this.lblRecordCount);
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.dtpStartDate);
             this.Controls.Add(this.label1);
@@ -232,6 +234,6 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.DateTimePicker dtpStartDate;
         private System.Windows.Forms.Button btnReload;
-        private System.Windows.Forms.Label lblRecordCount;
+        private System.Windows.Forms.ToolStripStatusLabel tssCollection;
     }
 }

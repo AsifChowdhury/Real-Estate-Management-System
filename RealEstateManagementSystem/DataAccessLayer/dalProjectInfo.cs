@@ -8,8 +8,7 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using RealEstateManagementSystem.Utilities;
 using RealEstateManagementSystem.BusinessLogicLayer;
-
-
+using System.Windows.Forms;
 
 namespace RealEstateManagementSystem.DataAccessLayer
 {
@@ -160,6 +159,8 @@ namespace RealEstateManagementSystem.DataAccessLayer
             }
             finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
+
+
 
         internal DataTable GetBlockedUnitOfProject(int projectId)
         {
@@ -370,6 +371,334 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.ExecuteNonQuery();
             }
             finally { cmd.Dispose(); }
+        }
+        internal DataTable GetCommonPriceList(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetCommonPriceList";
+                cmd.Parameters.AddWithValue("@filterBy", Convert.ToInt32(filterBy));
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+
+        }
+
+        internal DataTable GetFinancialSummaryOfProjects(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetFinancialSummaryOfProjects";
+                cmd.Parameters.AddWithValue("@filterBy", Convert.ToInt32(filterBy));
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+
+        }
+
+        internal DataTable GetProjectSummaryByStatus()
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetSummarizedDataOfProject";
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetConsolidatedProjectSummary(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetConsolidatedProjectSummary";
+                cmd.Parameters.AddWithValue("@filterBy", Convert.ToInt32(filterBy));
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetCommonClientList(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetCommonClientList";
+                cmd.Parameters.AddWithValue("@filterBy", Convert.ToInt32(filterBy));
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetListOfLandOwners(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfLandOwners";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetPriceList(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetPriceList";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetBookingPosition(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetBookingPosition";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable PaymentDetailsOfClientsByProject(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfClientsOfProjectWithPayment";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetListOfClientsByProjectId_WithPhotoAndSignature(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfClientsOfProjectWithPhotoSignature";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetListOfClientsByProjectId_WithPayment(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfClientsOfProjectWithPayment";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetListOfClientsByProjectId_WithUnitValue(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfClientsOfProjectWithUnitValue";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetOralBookingOfProject(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetOralBookingOfProject";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetDeductionAmountByProject(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetDeductedAmountOfProject";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetDueListOfProject(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetDueListByProject";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataTable GetGeneralStatusOfClient(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetGeneralStatusOfClientByProject";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal DataSet GetDeedOfAgreementsOfProject(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetDeedOfAgreemetsOfProject";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal DataSet GetRegistrationStatusOfProject(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetRegistrationStatusOfProject";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds;
+            }
+            finally { da.Dispose(); cmd.Dispose(); ds.Dispose(); }
         }
 
         internal DataSet GetListOfClientsByProjectId(int projectId)

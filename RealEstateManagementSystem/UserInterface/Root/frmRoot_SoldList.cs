@@ -29,7 +29,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
         {
             try
             {
-                this.Text = "List of unit(s) sold since " + dtpStartDate.Value.ToString("dddd dd-MMM-yyyy");
+                this.Text = "List of unit(s) sold since " + dtpStartDate.Value.ToString("dddd, MMM dd, yyyy");
                 bllGlobal b = new bllGlobal();
                 foreach (DataRow drItems in b.GetRootSoldList(dtpStartDate.Value).Rows)
                 {

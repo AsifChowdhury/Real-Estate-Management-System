@@ -27,7 +27,7 @@
     <PublisherName>The Structural Engineers Ltd.</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -113,25 +113,28 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.TemplateEngine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+    <Reference Include="CrystalDecisions.Enterprise.Viewing.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="DocumentFormat.OpenXml, Version=0.0.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.1\lib\net45\DocumentFormat.OpenXml.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.VSDesigner, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304">
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -144,6 +147,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
@@ -161,6 +165,7 @@
     <Compile Include="BusinessLogicLayer\bllGlobal.cs" />
     <Compile Include="BusinessLogicLayer\bllProjectInfo.cs" />
     <Compile Include="BusinessLogicLayer\bllRecovery.cs" />
+    <Compile Include="BusinessLogicLayer\bllSales.cs" />
     <Compile Include="BusinessLogicLayer\bllUserControl.cs" />
     <Compile Include="DataAccessLayer\dalClientInfo.cs" />
     <Compile Include="DataAccessLayer\dalGlobal.cs" />
@@ -177,6 +182,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsAllotmentLetter.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ReportDataSet\dsBookingPosition.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsBookingPosition.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ReportDataSet\dsClientProfile.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,6 +196,61 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsCollectionSummary.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsCommonClientList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsCommonClientList.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsCommonPriceList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsCommonPriceList.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsDeedOfAgreements.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsDeedOfAgreements.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsFinancialSummaryOfProject.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFinancialSummaryOfProject.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsGeneralStatusOfClientByProject.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsGeneralStatusOfClientByProject.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsGetConsolidatedProjectList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsGetConsolidatedProjectList.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsGetDeductionAmountOfProject.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsGetDeductionAmountOfProject.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsGetDueListByProject.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsGetDueListByProject.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsGetListOfClientsOfProjectWithPhotoSignature.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsGetListOfClientsOfProjectWithPhotoSignature.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsGetListOfClientsOfProjectWithUnitValue.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsGetListOfClientsOfProjectWithUnitValue.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsGetRegistrationStatusOfProject.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsGetRegistrationStatusOfProject.xsd</DependentUpon>
     </Compile>
     <Compile Include="ReportDataSet\dsHandoverCertificate.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -202,6 +267,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsListOfClientsByProjectId.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ReportDataSet\dsListofClientsByProjectIdWithPayment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsListofClientsByProjectIdWithPayment.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsListOfLandOwners.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsListOfLandOwners.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ReportDataSet\dsLoanDisbursementHistory.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -211,6 +286,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsMoneyReceipt.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsOralBookingOfProjects.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsOralBookingOfProjects.xsd</DependentUpon>
     </Compile>
     <Compile Include="ReportDataSet\dsPartnerInformation.cs">
       <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
@@ -234,6 +314,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsPaymentSchedule.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDataSet\dsPriceListOfProject.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPriceListOfProject.xsd</DependentUpon>
     </Compile>
     <Compile Include="ReportDataSet\dsProjectSummary.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -262,11 +347,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ds_PaymentComparison.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ReportDataSet\ds_sr_ProjectSummary.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ds_sr_ProjectSummary.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Clients\crptAllotmentLetter.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptAllotmentLetter.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\Clients\crptClientProfile.cs">
       <AutoGen>True</AutoGen>
@@ -278,27 +369,30 @@
     <Compile Include="Reports\Clients\crptPaymentScheduleStatus.cs">
       <DependentUpon>crptPaymentScheduleStatus.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\Clients\crptPaymentSchedule.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptPaymentSchedule.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\Clients\crptRegistrationAcknowledgementReceipt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptRegistrationAcknowledgementReceipt.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\Clients\crpt_sr_PartnerInformation.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crpt_sr_PartnerInformation.rpt</DependentUpon>
-      <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Clients\crpt_sr_PaymentSchedule.cs">
       <AutoGen>True</AutoGen>
@@ -314,18 +408,134 @@
     <Compile Include="Reports\frmReportViewer.Designer.cs">
       <DependentUpon>frmReportViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Projects\crptBookingPosition.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptBookingPosition.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptCommonClientList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptCommonClientList.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptCommonPriceList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptCommonPriceList.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptConsolidatedProjectSummary.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptConsolidatedProjectSummary.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptDeedOfAgreements.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptDeedOfAgreements.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptDueListByProject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptDueListByProject.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptGeneralStatusOfClientByProject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptGeneralStatusOfClientByProject.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptGetDeductionAmountByProject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptGetDeductionAmountByProject.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptGetListOfClientsByProjectWithPayment.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptGetListOfClientsByProjectWithPayment.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptGetListOfClientsOfProjectWithPhotoSignature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptGetListOfClientsOfProjectWithPhotoSignature.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptGetListOfClientsOfProjectWithUnitValue.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptGetListOfClientsOfProjectWithUnitValue.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Projects\crptListOfClientsByProjectId.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptListOfClientsByProjectId.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Projects\crptListOfClientsByProjectWithPaymentDetails.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptListOfClientsByProjectWithPaymentDetails.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptListOfLandOwners.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptListOfLandOwners.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptOralBookingOfProject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptOralBookingOfProject.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptPriceListOfProject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptPriceListOfProject.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptRegistrationInformationOfProject_WithPayment.cs">
+      <DependentUpon>crptRegistrationInformationOfProject_WithPayment.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crptRegistrationInformationOfProject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crptRegistrationInformationOfProject.rpt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Projects\crptUnitInformation.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptUnitInformation.rpt</DependentUpon>
-      <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crpt_FinancialSummaryOfProject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crpt_FinancialSummaryOfProject.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Projects\crpt_sr_SummarizedDataOfProject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crpt_sr_SummarizedDataOfProject.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Recovery\crptAcknowledgementReceipt.cs">
       <AutoGen>True</AutoGen>
@@ -372,8 +582,8 @@
     <Compile Include="Reports\Recovery\crpt_PaymentClearanceCertificate.cs">
       <DependentUpon>crpt_PaymentClearanceCertificate.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Recovery\crpt_PaymentComparison.cs">
       <AutoGen>True</AutoGen>
@@ -433,15 +643,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptReportHeading.rpt</DependentUpon>
-      <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Projects\crptProjectInfo.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>crptProjectInfo.rpt</DependentUpon>
-      <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserInterface\Projects\frmUnitInformation.cs">
       <SubType>Form</SubType>
@@ -484,6 +694,18 @@
     </Compile>
     <Compile Include="UserInterface\Reports\frmHandoverProcess.Designer.cs">
       <DependentUpon>frmHandoverProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmProjectReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmProjectReports.Designer.cs">
+      <DependentUpon>frmProjectReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmSummarizedSalesReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmSummarizedSalesReport.Designer.cs">
+      <DependentUpon>frmSummarizedSalesReport.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Root\frmAbout.cs">
       <SubType>Form</SubType>
@@ -569,6 +791,7 @@
     <EmbeddedResource Include="Reports\Clients\crptAllotmentLetter.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptAllotmentLetter.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Clients\crptClientProfile.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -578,14 +801,17 @@
     <EmbeddedResource Include="Reports\Clients\crptPaymentScheduleStatus.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptPaymentScheduleStatus.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Clients\crptPaymentSchedule.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptPaymentSchedule.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Clients\crptRegistrationAcknowledgementReceipt.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptRegistrationAcknowledgementReceipt.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Clients\crpt_sr_PartnerInformation.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -600,14 +826,92 @@
     <EmbeddedResource Include="Reports\frmReportViewer.resx">
       <DependentUpon>frmReportViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptBookingPosition.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptBookingPosition.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptCommonClientList.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptCommonClientList.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptCommonPriceList.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptCommonPriceList.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptConsolidatedProjectSummary.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptConsolidatedProjectSummary.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptDeedOfAgreements.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptDeedOfAgreements.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptDueListByProject.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptDueListByProject.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptGeneralStatusOfClientByProject.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptGeneralStatusOfClientByProject.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptGetDeductionAmountByProject.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptGetDeductionAmountByProject.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptGetListOfClientsByProjectWithPayment.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptGetListOfClientsByProjectWithPayment.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptGetListOfClientsOfProjectWithPhotoSignature.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptGetListOfClientsOfProjectWithPhotoSignature.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptGetListOfClientsOfProjectWithUnitValue.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptGetListOfClientsOfProjectWithUnitValue.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Projects\crptListOfClientsByProjectId.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptListOfClientsByProjectId.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptListOfClientsByProjectWithPaymentDetails.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptListOfClientsByProjectWithPaymentDetails.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptListOfLandOwners.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptListOfLandOwners.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptOralBookingOfProject.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptOralBookingOfProject.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptPriceListOfProject.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptPriceListOfProject.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptRegistrationInformationOfProject_WithPayment.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptRegistrationInformationOfProject_WithPayment.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crptRegistrationInformationOfProject.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crptRegistrationInformationOfProject.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Projects\crptUnitInformation.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>crptUnitInformation.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crpt_FinancialSummaryOfProject.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crpt_FinancialSummaryOfProject.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\crpt_sr_SummarizedDataOfProject.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crpt_sr_SummarizedDataOfProject.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Recovery\crptAcknowledgementReceipt.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -700,6 +1004,17 @@
     <None Include="ReportDataSet\dsAllotmentLetter.xss">
       <DependentUpon>dsAllotmentLetter.xsd</DependentUpon>
     </None>
+    <None Include="ReportDataSet\dsBookingPosition.xsc">
+      <DependentUpon>dsBookingPosition.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsBookingPosition.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsBookingPosition.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsBookingPosition.xss">
+      <DependentUpon>dsBookingPosition.xsd</DependentUpon>
+    </None>
     <None Include="ReportDataSet\dsClientProfile.xsc">
       <DependentUpon>dsClientProfile.xsd</DependentUpon>
     </None>
@@ -721,6 +1036,127 @@
     </None>
     <None Include="ReportDataSet\dsCollectionSummary.xss">
       <DependentUpon>dsCollectionSummary.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsCommonClientList.xsc">
+      <DependentUpon>dsCommonClientList.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsCommonClientList.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsCommonClientList.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsCommonClientList.xss">
+      <DependentUpon>dsCommonClientList.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsCommonPriceList.xsc">
+      <DependentUpon>dsCommonPriceList.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsCommonPriceList.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsCommonPriceList.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsCommonPriceList.xss">
+      <DependentUpon>dsCommonPriceList.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsDeedOfAgreements.xsc">
+      <DependentUpon>dsDeedOfAgreements.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsDeedOfAgreements.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsDeedOfAgreements.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsDeedOfAgreements.xss">
+      <DependentUpon>dsDeedOfAgreements.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsFinancialSummaryOfProject.xsc">
+      <DependentUpon>dsFinancialSummaryOfProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsFinancialSummaryOfProject.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFinancialSummaryOfProject.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsFinancialSummaryOfProject.xss">
+      <DependentUpon>dsFinancialSummaryOfProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGeneralStatusOfClientByProject.xsc">
+      <DependentUpon>dsGeneralStatusOfClientByProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGeneralStatusOfClientByProject.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsGeneralStatusOfClientByProject.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsGeneralStatusOfClientByProject.xss">
+      <DependentUpon>dsGeneralStatusOfClientByProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetConsolidatedProjectList.xsc">
+      <DependentUpon>dsGetConsolidatedProjectList.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetConsolidatedProjectList.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsGetConsolidatedProjectList.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsGetConsolidatedProjectList.xss">
+      <DependentUpon>dsGetConsolidatedProjectList.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetDeductionAmountOfProject.xsc">
+      <DependentUpon>dsGetDeductionAmountOfProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetDeductionAmountOfProject.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsGetDeductionAmountOfProject.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsGetDeductionAmountOfProject.xss">
+      <DependentUpon>dsGetDeductionAmountOfProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetDueListByProject.xsc">
+      <DependentUpon>dsGetDueListByProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetDueListByProject.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsGetDueListByProject.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsGetDueListByProject.xss">
+      <DependentUpon>dsGetDueListByProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetListOfClientsOfProjectWithPhotoSignature.xsc">
+      <DependentUpon>dsGetListOfClientsOfProjectWithPhotoSignature.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetListOfClientsOfProjectWithPhotoSignature.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsGetListOfClientsOfProjectWithPhotoSignature.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsGetListOfClientsOfProjectWithPhotoSignature.xss">
+      <DependentUpon>dsGetListOfClientsOfProjectWithPhotoSignature.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetListOfClientsOfProjectWithUnitValue.xsc">
+      <DependentUpon>dsGetListOfClientsOfProjectWithUnitValue.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetListOfClientsOfProjectWithUnitValue.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsGetListOfClientsOfProjectWithUnitValue.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsGetListOfClientsOfProjectWithUnitValue.xss">
+      <DependentUpon>dsGetListOfClientsOfProjectWithUnitValue.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetRegistrationStatusOfProject.xsc">
+      <DependentUpon>dsGetRegistrationStatusOfProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsGetRegistrationStatusOfProject.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsGetRegistrationStatusOfProject.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsGetRegistrationStatusOfProject.xss">
+      <DependentUpon>dsGetRegistrationStatusOfProject.xsd</DependentUpon>
     </None>
     <None Include="ReportDataSet\dsHandoverCertificate.xsc">
       <DependentUpon>dsHandoverCertificate.xsd</DependentUpon>
@@ -755,6 +1191,28 @@
     <None Include="ReportDataSet\dsListOfClientsByProjectId.xss">
       <DependentUpon>dsListOfClientsByProjectId.xsd</DependentUpon>
     </None>
+    <None Include="ReportDataSet\dsListofClientsByProjectIdWithPayment.xsc">
+      <DependentUpon>dsListofClientsByProjectIdWithPayment.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsListofClientsByProjectIdWithPayment.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsListofClientsByProjectIdWithPayment.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsListofClientsByProjectIdWithPayment.xss">
+      <DependentUpon>dsListofClientsByProjectIdWithPayment.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsListOfLandOwners.xsc">
+      <DependentUpon>dsListOfLandOwners.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsListOfLandOwners.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsListOfLandOwners.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsListOfLandOwners.xss">
+      <DependentUpon>dsListOfLandOwners.xsd</DependentUpon>
+    </None>
     <None Include="ReportDataSet\dsLoanDisbursementHistory.xsc">
       <DependentUpon>dsLoanDisbursementHistory.xsd</DependentUpon>
     </None>
@@ -776,6 +1234,17 @@
     </None>
     <None Include="ReportDataSet\dsMoneyReceipt.xss">
       <DependentUpon>dsMoneyReceipt.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsOralBookingOfProjects.xsc">
+      <DependentUpon>dsOralBookingOfProjects.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsOralBookingOfProjects.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsOralBookingOfProjects.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsOralBookingOfProjects.xss">
+      <DependentUpon>dsOralBookingOfProjects.xsd</DependentUpon>
     </None>
     <None Include="ReportDataSet\dsPartnerInformation.xsc">
       <DependentUpon>dsPartnerInformation.xsd</DependentUpon>
@@ -820,6 +1289,17 @@
     </None>
     <None Include="ReportDataSet\dsPaymentSchedule.xss">
       <DependentUpon>dsPaymentSchedule.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPriceListOfProject.xsc">
+      <DependentUpon>dsPriceListOfProject.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\dsPriceListOfProject.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPriceListOfProject.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\dsPriceListOfProject.xss">
+      <DependentUpon>dsPriceListOfProject.xsd</DependentUpon>
     </None>
     <None Include="ReportDataSet\dsProjectSummary.xsc">
       <DependentUpon>dsProjectSummary.xsd</DependentUpon>
@@ -877,6 +1357,17 @@
     <None Include="ReportDataSet\ds_PaymentComparison.xss">
       <DependentUpon>ds_PaymentComparison.xsd</DependentUpon>
     </None>
+    <None Include="ReportDataSet\ds_sr_ProjectSummary.xsc">
+      <DependentUpon>ds_sr_ProjectSummary.xsd</DependentUpon>
+    </None>
+    <None Include="ReportDataSet\ds_sr_ProjectSummary.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ds_sr_ProjectSummary.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ReportDataSet\ds_sr_ProjectSummary.xss">
+      <DependentUpon>ds_sr_ProjectSummary.xsd</DependentUpon>
+    </None>
     <None Include="Resources\userauthentication.ico" />
     <None Include="Resources\userauthentication.png" />
     <None Include="Resources\server-check.ico" />
@@ -908,6 +1399,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Reports\frmHandoverProcess.resx">
       <DependentUpon>frmHandoverProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Reports\frmProjectReports.resx">
+      <DependentUpon>frmProjectReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Reports\frmSummarizedSalesReport.resx">
+      <DependentUpon>frmSummarizedSalesReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Root\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
@@ -1025,182 +1522,142 @@
   <ItemGroup>
     <PublishFile Include="CrystalDecisions.ReportAppServer.ClientDoc">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.CommLayer">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.CommonControls">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.CommonObjectModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.Controllers">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.CubeDefModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.DataDefModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.DataSetConversion">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.ObjectFactory">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.Prompting">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="CrystalDecisions.ReportAppServer.ReportDefModel">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="CrystalDecisions.ReportAppServer.XmlSerialize">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="CrystalDecisions.ReportSource">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="CrystalDecisions.Shared">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="CrystalDecisions.Windows.Forms">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="FlashControlV71">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="log4net">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="stdole">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>
@@ -1364,21 +1821,12 @@
     <None Include="Resources\HandoverProcess.ico" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="Microsoft.Office.Core">
-      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>8</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Interop.Excel">
-      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+    <COMReference Include="CRUFL_ExDll">
+      <Guid>{37D93E5F-8237-4B4C-9D1F-42319B31B98D}</Guid>
       <VersionMajor>1</VersionMajor>
-      <VersionMinor>9</VersionMinor>
+      <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
+      <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
@@ -1391,6 +1839,21 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\staging.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\demo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Booked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SalesReport.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rating.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

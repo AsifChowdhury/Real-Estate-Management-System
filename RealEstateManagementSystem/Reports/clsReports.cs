@@ -3,6 +3,7 @@ using RealEstateManagementSystem.Properties;
 using RealEstateManagementSystem.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -13,27 +14,304 @@ namespace RealEstateManagementSystem.Reports
 {
     class clsReports
     {
-        public static void ClientProfile(string strClientId, ToolStripStatusLabel tssStatus)
+        private static string strCollectingData = ConfigurationManager.AppSettings["strCollectingData"].ToString();
+
+        #region Project Reports
+        internal static void GetRegistrationStatusOfProject(int projectId, bool withPaymentInfo, ToolStripStatusLabel tssStatus)
         {
-            bllClientInfo b = new bllClientInfo();
-            tssStatus.Text = "Generating Client Profile.....";
-            int clientId = clsCommonFunctions.GetNumericPartOfFullClientId(strClientId);
-            Clients.crptClientProfile crptProfile = new Reports.Clients.crptClientProfile();
-            crptProfile.SetDataSource(b.GetClientProfile(clientId: clientId).Tables[0]);
-            crptProfile.Subreports[1].SetDataSource(b.GetListOfPartners(clientId: clientId));
-            crptProfile.Subreports[2].SetDataSource(b.GetPaymentSchedule(clientIds: clientId.ToString()).Tables[0]);
-            clsCommonFunctions.ShowReport(crptProfile, tssStatus, true, true);
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = strCollectingData;
+            DataTable dt = p.GetRegistrationStatusOfProject(projectId).Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                if (withPaymentInfo == true)
+                {
+                    Projects.crptRegistrationInformationOfProject_WithPayment rpt = new Projects.crptRegistrationInformationOfProject_WithPayment();
+                    rpt.SetDataSource(dt);
+                    clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Registration Status (With Payment Data) of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+                }
+                else
+                {
+                    Projects.crptRegistrationInformationOfProject rpt = new Projects.crptRegistrationInformationOfProject();
+                    rpt.SetDataSource(dt);
+                    clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Registration Status of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+                }
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
         }
 
-        public static void MoneyReceipt(int transactionId, bool isDuplicate, ToolStripStatusLabel tssStatus)
+        internal static void GetOralBookingOfProject(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetOralBookingOfProject(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptOralBookingOfProject rpt = new Projects.crptOralBookingOfProject();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Oral booking position of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void ListOfLandOwners(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetListOfLandOwners(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptListOfLandOwners rpt = new Projects.crptListOfLandOwners();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "List of Land Owners of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId) + "", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void ListOfClientsByProjectId_WithPayment(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetListOfClientsByProjectId_WithPayment(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptGetListOfClientsByProjectWithPayment rpt = new Projects.crptGetListOfClientsByProjectWithPayment();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Client list with payment information of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void PriceList(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetPriceList(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptPriceListOfProject rpt = new Projects.crptPriceListOfProject();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Price list of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void GetConsolidatedProjectSummary(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetConsolidatedProjectSummary(filterBy, filterCriteria);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptConsolidatedProjectSummary rpt = new Projects.crptConsolidatedProjectSummary();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Consolidate Project Summary", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void GetFinancialSummaryOfProjects(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetFinancialSummaryOfProjects(filterBy, filterCriteria);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crpt_FinancialSummaryOfProject rpt = new Projects.crpt_FinancialSummaryOfProject();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Financial Summary", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void GetCommonPriceList(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria, ToolStripStatusLabel tssStatus)
         {
 
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetCommonPriceList(filterBy, filterCriteria);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptCommonPriceList rpt = new Projects.crptCommonPriceList();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, false, true, "Common Price List", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+
+        }
+
+        internal static void GetCommonClientList(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetCommonClientList(filterBy, filterCriteria);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptCommonClientList rpt = new Projects.crptCommonClientList();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Common Client List", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void BookingPosition(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetBookingPosition(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptBookingPosition rpt = new Projects.crptBookingPosition();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Booking Position of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void PaymentDetailsOfClientsByProject(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.PaymentDetailsOfClientsByProject(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptListOfClientsByProjectWithPaymentDetails rpt = new Projects.crptListOfClientsByProjectWithPaymentDetails();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Overall Status of Clients (" + clsCommonFunctions.GetProjectNameFromProjectId(projectId) + ")", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        //internal static void SummaryCountsOfProject(ToolStripStatusLabel tssStatus)
+        //{
+        //    bllProjectInfo p = new bllProjectInfo();
+        //    Projects.crpt_sr_SummarizedDataOfProject rpt = new Projects.crpt_sr_SummarizedDataOfProject();
+        //    rpt.SetDataSource(p.GetProjectSummaryByStatus());
+        //    clsCommonFunctions.ShowReport(rpt, tssStatus, false, false, "", false);
+
+        //}
+
+
+        internal static void ListOfClientsByProjectId_WithPhotoSignature(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetListOfClientsByProjectId_WithPhotoAndSignature(projectId, tssStatus);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptGetListOfClientsOfProjectWithPhotoSignature rpt = new Projects.crptGetListOfClientsOfProjectWithPhotoSignature();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Client list with Photo and Signature (" + clsCommonFunctions.GetProjectNameFromProjectId(projectId) + ")", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void ListOfClientsByProjectId_WithUnitValue(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetListOfClientsByProjectId_WithUnitValue(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptGetListOfClientsOfProjectWithUnitValue rpt = new Projects.crptGetListOfClientsOfProjectWithUnitValue();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "List of Clients with Unit Value of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void GetDeductionAmount(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetDeductionAmountByProject(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptGetDeductionAmountByProject rpt = new Projects.crptGetDeductionAmountByProject();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Deduction amount of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+
+        }
+
+        internal static void GetDueListOfProject(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetDueListOfProject(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptDueListByProject rpt = new Projects.crptDueListByProject();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Due List of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void GetGeneralStatusOfClient(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetGeneralStatusOfClient(projectId);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptGeneralStatusOfClientByProject rpt = new Projects.crptGeneralStatusOfClientByProject();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "General Status of Client(s) <" + clsCommonFunctions.GetProjectNameFromProjectId(projectId) + ">", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void GetDeedOfAgreementsOfProject(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo p = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = p.GetDeedOfAgreementsOfProject(projectId, tssStatus).Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptDeedOfAgreements rpt = new Projects.crptDeedOfAgreements();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Deed of Agreement Status of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+
+        }
+
+        internal static void ProjectSummary(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo bLayer = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            Projects.crptProjectInfo rptProjectSummary = new Projects.crptProjectInfo();
+            rptProjectSummary.SetDataSource(bLayer.GetProjectSummary(projectId).Tables[0]);
+            clsCommonFunctions.ShowReport(rptProjectSummary, tssStatus, true, true, "Summary of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId) + " Project");
+            tssStatus.Text = Resources.strReadyStatus;
+        }
+
+        internal static void ListOfClientsByProjectId(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo b = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = b.GetListOfClientsByProjectId(projectId).Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptListOfClientsByProjectId rptListOfClients = new Projects.crptListOfClientsByProjectId();
+                rptListOfClients.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rptListOfClients, tssStatus, true, true, "List of Clients. Project: " + clsCommonFunctions.GetProjectNameFromProjectId(projectId), true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+        #endregion
+        
+        #region Transactional Reports
+        public static void MoneyReceipt(int transactionId, bool isDuplicate, ToolStripStatusLabel tssStatus)
+        {
             bllPayment moneyReceipt = new bllPayment();
             tssStatus.Text = "Loading Money Receipt";
             Recovery.crptMoneyReceipt rptMoneyReceipt = new Recovery.crptMoneyReceipt();
             rptMoneyReceipt.SetDataSource(moneyReceipt.GetMoneyReceipt(transactionId, isDuplicate).Tables[0]);
-            clsCommonFunctions.ShowReport(rptMoneyReceipt, tssStatus, false, true);
-            tssStatus.Text = Resources.strReadyStatus;
+            clsCommonFunctions.ShowReport(rptMoneyReceipt, tssStatus, false, true, "Money Receipt: Invoice # " + transactionId.ToString());
         }
 
         internal static void PaymentHistoryOfClient(string clientIds, ToolStripStatusLabel tssStatus)
@@ -41,8 +319,10 @@ namespace RealEstateManagementSystem.Reports
             bllPayment paymentHistory = new bllPayment();
             tssStatus.Text = "Loading Payment History";
             Recovery.crptPaymentHistoryOfClient rptPaymentHistory = new Recovery.crptPaymentHistoryOfClient();
-            rptPaymentHistory.SetDataSource(paymentHistory.GetPaymentHistoryOfClient(clientIds).Tables[0]);
-            clsCommonFunctions.ShowReport(rptPaymentHistory, tssStatus, true, true);
+            DataTable dt = new DataTable();
+            dt = paymentHistory.GetPaymentHistoryOfClient(clientIds).Tables[0];
+            rptPaymentHistory.SetDataSource(dt);
+            clsCommonFunctions.ShowReport(rptPaymentHistory, tssStatus, true, true, "Payment History");
             tssStatus.Text = Resources.strReadyStatus;
         }
 
@@ -50,28 +330,64 @@ namespace RealEstateManagementSystem.Reports
         {
             bllPayment paymentHistory = new bllPayment();
             tssStatus.Text = Resources.strCollectingData;
-            Recovery.crptPaymentHistoryOfClient_WithAccountNumber pHistory = new Recovery.crptPaymentHistoryOfClient_WithAccountNumber();
-            pHistory.SetDataSource(paymentHistory.GetPaymentHistoryOfClient_WithBankAccount(clientIds).Tables[0]);
-            clsCommonFunctions.ShowReport(pHistory, tssStatus, false, false);
+            DataTable dt = paymentHistory.GetPaymentHistoryOfClient_WithBankAccount(clientIds).Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                Recovery.crptPaymentHistoryOfClient_WithAccountNumber pHistory = new Recovery.crptPaymentHistoryOfClient_WithAccountNumber();
+                pHistory.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(pHistory, tssStatus, false, false, "Payment History (With Bank Account #");
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+
+        }
+
+        internal static void PaymentComparison(string clientId, ToolStripStatusLabel tssStatus)
+        {
+            if (clsCommonFunctions.isContainCancelledClient(clientId) == true) { throw new ApplicationException("Payment Comparison report cannot be generated for Cancelled Clients."); }
+            bllPayment paymentComparison = new bllPayment();
+            tssStatus.Text = Resources.strCollectingData;
+            Recovery.crpt_PaymentComparison rptPaymentComparison = new Recovery.crpt_PaymentComparison();
+            rptPaymentComparison.SetDataSource(paymentComparison.GetPaymentComparison(clientId).Tables[0]);
+            clsCommonFunctions.ShowReport(rptPaymentComparison, tssStatus, true, true, "Payment Comparision");
+            tssStatus.Text = Resources.strReadyStatus;
+        }
+        #endregion
+
+        #region General Reports
+        public static void ClientProfile(string strClientId, ToolStripStatusLabel tssStatus)
+        {
+            bllClientInfo b = new bllClientInfo();
+            tssStatus.Text = "Generating Client Profile.....";
+            int clientId = clsCommonFunctions.GetNumericPartOfFullClientId(strClientId);
+            Clients.crptClientProfile crptProfile = new Clients.crptClientProfile();
+            crptProfile.SetDataSource(b.GetClientProfile(clientId: clientId).Tables[0]);
+            crptProfile.Subreports[1].SetDataSource(b.GetListOfPartners(clientId: clientId));
+            crptProfile.Subreports[2].SetDataSource(b.GetPaymentSchedule(clientIds: clientId.ToString()).Tables[0]);
+            clsCommonFunctions.ShowReport(crptProfile, tssStatus, true, true, "Profile of " + strClientId);
         }
 
         internal static void UnitDetailsOfProject(int projectId, ToolStripStatusLabel tssStatus)
         {
             bllProjectInfo bLayer = new bllProjectInfo();
             tssStatus.Text = Resources.strCollectingData;
-            Projects.crptUnitInformation rptUnitInformation = new Projects.crptUnitInformation();
-            rptUnitInformation.SetDataSource(bLayer.GetUnitDetailsOfProject(projectId).Tables[0]);
-            clsCommonFunctions.ShowReport(rptUnitInformation, tssStatus, true);
-            tssStatus.Text = Resources.strReadyStatus;
+            DataTable dt = bLayer.GetUnitDetailsOfProject(projectId).Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptUnitInformation rptUnitInformation = new Projects.crptUnitInformation();
+                rptUnitInformation.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rptUnitInformation, tssStatus, true, false, "Unit Details of " + clsCommonFunctions.GetProjectNameFromProjectId(projectId));
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+
         }
 
-        internal static void AcknoledgementReceipt(int transactionId, ToolStripStatusLabel tssStatus)
+        internal static void AcknowledgementReceipt(int transactionId, ToolStripStatusLabel tssStatus)
         {
             bllPayment ackReceipt = new bllPayment();
             tssStatus.Text = Resources.strCollectingData;
             Recovery.crptAcknowledgementReceipt rptAckReceipt = new Recovery.crptAcknowledgementReceipt();
             rptAckReceipt.SetDataSource(ackReceipt.AcknowledgementReceipt(transactionId).Tables[0]);
-            clsCommonFunctions.ShowReport(rptAckReceipt, tssStatus, false, true);
+            clsCommonFunctions.ShowReport(rptAckReceipt, tssStatus, false, true, "Acknowledgement Receipt. Invoice # " + transactionId.ToString());
             tssStatus.Text = Resources.strReadyStatus;
         }
 
@@ -88,13 +404,13 @@ namespace RealEstateManagementSystem.Reports
             {
                 Clients.crptPaymentScheduleStatus rptPaymentScheduleStatus = new Clients.crptPaymentScheduleStatus();
                 rptPaymentScheduleStatus.SetDataSource(dt);
-                clsCommonFunctions.ShowReport(rptPaymentScheduleStatus, tssStatus, true, true);
+                clsCommonFunctions.ShowReport(rptPaymentScheduleStatus, tssStatus, true, true, "Payment Schedule");
             }
             else
             {
                 Clients.crptPaymentSchedule rptPaymentSchedule = new Clients.crptPaymentSchedule();
                 rptPaymentSchedule.SetDataSource(dt);
-                clsCommonFunctions.ShowReport(rptPaymentSchedule, tssStatus, true, true);
+                clsCommonFunctions.ShowReport(rptPaymentSchedule, tssStatus, true, true, "Payment Schedule (Without Payment Status)");
             }
             tssStatus.Text = Resources.strReadyStatus;
         }
@@ -105,7 +421,7 @@ namespace RealEstateManagementSystem.Reports
             tssStatus.Text = Resources.strCollectingData;
             Recovery.crptHandoverCertificate rptHandover = new Recovery.crptHandoverCertificate();
             rptHandover.SetDataSource(handoverCertificate.GetHandoverCertificate(clientId, handoverDate, handoverBy, forwardedBy, recommendedBy).Tables[0]);
-            clsCommonFunctions.ShowReport(rptHandover, tssStatus, false, false);
+            clsCommonFunctions.ShowReport(rptHandover, tssStatus, false, false, "Handover Certificate. Client # " + clsCommonFunctions.GetFullClientId(clientId.ToString()));
             tssStatus.Text = Resources.strReadyStatus;
         }
 
@@ -115,7 +431,7 @@ namespace RealEstateManagementSystem.Reports
             tssStatus.Text = Resources.strCollectingData;
             Recovery.crptKeyList rptKeyList = new Recovery.crptKeyList();
             rptKeyList.SetDataSource(keyList.GetKeyList(clientId, projectEngineer).Tables[0]);
-            clsCommonFunctions.ShowReport(rptKeyList, tssStatus, true, false);
+            clsCommonFunctions.ShowReport(rptKeyList, tssStatus, true, false, "List of Keys. Client # " + clsCommonFunctions.GetFullClientId(clientId.ToString()));
             tssStatus.Text = Resources.strReadyStatus;
         }
 
@@ -125,27 +441,7 @@ namespace RealEstateManagementSystem.Reports
             tssStatus.Text = Resources.strCollectingData;
             Recovery.crpt_PaymentClearanceCertificate crptPaymentClearance = new Recovery.crpt_PaymentClearanceCertificate();
             crptPaymentClearance.SetDataSource(paymentClearance.GetPaymentClearanceCertificate(clientId, verifiedBy, checkedBy, recommnededBy).Tables[0]);
-            clsCommonFunctions.ShowReport(crptPaymentClearance, tssStatus, true, true);
-            tssStatus.Text = Resources.strReadyStatus;
-        }
-        
-        internal static void ProjectSummary(int projectId, ToolStripStatusLabel tssStatus)
-        {
-            bllProjectInfo bLayer = new bllProjectInfo();
-            tssStatus.Text = Resources.strCollectingData;
-            Projects.crptProjectInfo rptProjectSummary = new Projects.crptProjectInfo();
-            rptProjectSummary.SetDataSource(bLayer.GetProjectSummary(projectId).Tables[0]);
-            clsCommonFunctions.ShowReport(rptProjectSummary, tssStatus, true, true);
-            tssStatus.Text = Resources.strReadyStatus;
-        }
-
-        internal static void ListOfClientsByProjectId(int projectId, ToolStripStatusLabel tssStatus)
-        {
-            bllProjectInfo b = new bllProjectInfo();
-            tssStatus.Text = Resources.strCollectingData;
-            Projects.crptListOfClientsByProjectId rptListOfClients = new Projects.crptListOfClientsByProjectId();
-            rptListOfClients.SetDataSource(b.GetListOfClientsByProjectId(projectId).Tables[0]);
-            clsCommonFunctions.ShowReport(rptListOfClients, tssStatus, true, true);
+            clsCommonFunctions.ShowReport(crptPaymentClearance, tssStatus, true, true, "Payment Clearance Certificate. Client # " + clsCommonFunctions.GetFullClientId(clientId.ToString()));
             tssStatus.Text = Resources.strReadyStatus;
         }
 
@@ -153,24 +449,35 @@ namespace RealEstateManagementSystem.Reports
         {
             bllPayment loan = new bllPayment();
             tssStatus.Text = Resources.strCollectingData;
-            Recovery.crptLoanDisbursementHistory rptLoan = new Recovery.crptLoanDisbursementHistory();
-            rptLoan.SetDataSource(loan.GetLoanDisbursementHistory(clientIds).Tables[0]);
-            clsCommonFunctions.ShowReport(rptLoan, tssStatus, true, true);
-            tssStatus.Text = Resources.strReadyStatus;
+            DataTable dt = loan.GetLoanDisbursementHistory(clientIds).Tables[0];
+            if (dt.Rows.Count != 0)
+            {
+                Recovery.crptLoanDisbursementHistory rptLoan = new Recovery.crptLoanDisbursementHistory();
+                rptLoan.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rptLoan, tssStatus, true, true, "Loan Disbursement History");
+                tssStatus.Text = Resources.strReadyStatus;
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
 
         }
 
         internal static void RegistrationAcknowledgementReceipt(string clientIds, ToolStripStatusLabel tssStatus)
         {
-            
+
             if (clsCommonFunctions.isContainCancelledClient(clientIds) == true) { throw new ApplicationException("Registration Acknowledgement Report cannot be generated for Cancelled Clients."); }
             bllClientInfo ackReceipt = new bllClientInfo();
             tssStatus.Text = Resources.strCollectingData;
-            Clients.crptRegistrationAcknowledgementReceipt rptAckReceipt = new Clients.crptRegistrationAcknowledgementReceipt();
-            rptAckReceipt.SetDataSource(ackReceipt.RegistrationAcknowledgementReceipt(clientIds).Tables[0]);
-            rptAckReceipt.DataDefinition.FormulaFields["Designation"].Text = "'" + clsGlobalClass.userDesignation + "'";
-            clsCommonFunctions.ShowReport(rptAckReceipt, tssStatus, true, true);
-            tssStatus.Text = Resources.strReadyStatus;
+            DataTable dt = ackReceipt.RegistrationAcknowledgementReceipt(clientIds).Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                Clients.crptRegistrationAcknowledgementReceipt rptAckReceipt = new Clients.crptRegistrationAcknowledgementReceipt();
+                rptAckReceipt.SetDataSource(dt);
+                rptAckReceipt.DataDefinition.FormulaFields["Designation"].Text = "'" + clsGlobalClass.userDesignation + "'";
+                clsCommonFunctions.ShowReport(rptAckReceipt, tssStatus, true, true, "Registration Acknowledgement Receipt");
+                tssStatus.Text = Resources.strReadyStatus;
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+
         }
 
         internal static void AllotmentLetter(string clientIds, decimal monthlyRent, ToolStripStatusLabel tssStatus)
@@ -179,21 +486,23 @@ namespace RealEstateManagementSystem.Reports
             if (clsCommonFunctions.IsActiveClient(clientIds.ConvertToInt32()) == false) { throw new ApplicationException("Allotment letter cannot be generated for Cancelled Clients."); }
             bllClientInfo allotmentLetter = new bllClientInfo();
             tssStatus.Text = Resources.strCollectingData;
-            Clients.crptAllotmentLetter rptAllotmentLetter = new Clients.crptAllotmentLetter();
-            rptAllotmentLetter.SetDataSource(allotmentLetter.GetAllotmentLetter(clientIds, monthlyRent).Tables[0]);
-            clsCommonFunctions.ShowReport(rptAllotmentLetter, tssStatus, false, false);
-            tssStatus.Text = Resources.strReadyStatus;
+            DataTable dt = allotmentLetter.GetAllotmentLetter(clientIds, monthlyRent).Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                Clients.crptAllotmentLetter rptAllotmentLetter = new Clients.crptAllotmentLetter();
+                rptAllotmentLetter.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rptAllotmentLetter, tssStatus, false, false, "Allotment Letter");
+                tssStatus.Text = Resources.strReadyStatus;
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
         }
+        #endregion
 
-        internal static void PaymentComparison(string clientId, ToolStripStatusLabel tssStatus)
+        #region Summarized Sales Report
+        internal static void PictorialDepictionOfSalesStatus(DateTime value1, DateTime value2, ToolStripStatusLabel tssStatus)
         {
-            if (clsCommonFunctions.isContainCancelledClient(clientId) == true) { throw new ApplicationException("Payment Comparison report cannot be generated for Cancelled Clients."); }
-            bllPayment paymentComparison = new bllPayment();
-            tssStatus.Text = Resources.strCollectingData;
-            Recovery.crpt_PaymentComparison rptPaymentComparison = new Recovery.crpt_PaymentComparison();
-            rptPaymentComparison.SetDataSource(paymentComparison.GetPaymentComparison(clientId).Tables[0]);
-            clsCommonFunctions.ShowReport(rptPaymentComparison, tssStatus, true, true);
-            tssStatus.Text = Resources.strReadyStatus;
+
         }
+        #endregion
     }
 }

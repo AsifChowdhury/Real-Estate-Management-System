@@ -38,6 +38,7 @@
             this.SalesSection = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiClientInformation = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiClientReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSummarizedSalesReport = new System.Windows.Forms.ToolStripMenuItem();
             this.RecoverySection = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPayment = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRecoveryReports = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,10 +62,12 @@
             this.dtpDataDate = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.ttMainScreen = new System.Windows.Forms.ToolTip(this.components);
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblDeveloperEMail = new System.Windows.Forms.Label();
+            this.pbStaging = new System.Windows.Forms.PictureBox();
             this.msMainForm.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbStaging)).BeginInit();
             this.SuspendLayout();
             // 
             // msMainForm
@@ -78,11 +81,11 @@
             this.AccountsSection,
             this.AdminControls,
             this.AboutUs});
-            this.msMainForm.Location = new System.Drawing.Point(0, 542);
+            this.msMainForm.Location = new System.Drawing.Point(0, 613);
             this.msMainForm.MdiWindowListItem = this.MarketingSection;
             this.msMainForm.Name = "msMainForm";
             this.msMainForm.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.msMainForm.Size = new System.Drawing.Size(992, 38);
+            this.msMainForm.Size = new System.Drawing.Size(1035, 38);
             this.msMainForm.TabIndex = 5;
             this.msMainForm.Text = "menuStrip1";
             // 
@@ -117,16 +120,19 @@
             // 
             // tsmiProjectReports
             // 
+            this.tsmiProjectReports.Image = global::RealEstateManagementSystem.Properties.Resources.ResidentialUnit;
             this.tsmiProjectReports.Name = "tsmiProjectReports";
+            this.tsmiProjectReports.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.tsmiProjectReports.Size = new System.Drawing.Size(207, 22);
             this.tsmiProjectReports.Text = "Reports";
-            this.tsmiProjectReports.Visible = false;
+            this.tsmiProjectReports.Click += new System.EventHandler(this.tsmiProjectReports_Click);
             // 
             // SalesSection
             // 
             this.SalesSection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiClientInformation,
-            this.tsmiClientReports});
+            this.tsmiClientReports,
+            this.tsmiSummarizedSalesReport});
             this.SalesSection.ForeColor = System.Drawing.Color.Navy;
             this.SalesSection.Image = global::RealEstateManagementSystem.Properties.Resources.Sales;
             this.SalesSection.Name = "SalesSection";
@@ -138,7 +144,7 @@
             // 
             this.tsmiClientInformation.Image = global::RealEstateManagementSystem.Properties.Resources.family_64;
             this.tsmiClientInformation.Name = "tsmiClientInformation";
-            this.tsmiClientInformation.Size = new System.Drawing.Size(200, 22);
+            this.tsmiClientInformation.Size = new System.Drawing.Size(235, 22);
             this.tsmiClientInformation.Text = "Client Information";
             this.tsmiClientInformation.Click += new System.EventHandler(this.tsmiClientInformation_Click);
             // 
@@ -147,9 +153,18 @@
             this.tsmiClientReports.Image = global::RealEstateManagementSystem.Properties.Resources.ClientReport1;
             this.tsmiClientReports.Name = "tsmiClientReports";
             this.tsmiClientReports.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmiClientReports.Size = new System.Drawing.Size(200, 22);
-            this.tsmiClientReports.Text = "Reports";
+            this.tsmiClientReports.Size = new System.Drawing.Size(235, 22);
+            this.tsmiClientReports.Text = "General Reports";
             this.tsmiClientReports.Click += new System.EventHandler(this.tsmiClientReports_Click);
+            // 
+            // tsmiSummarizedSalesReport
+            // 
+            this.tsmiSummarizedSalesReport.Image = global::RealEstateManagementSystem.Properties.Resources.rating;
+            this.tsmiSummarizedSalesReport.Name = "tsmiSummarizedSalesReport";
+            this.tsmiSummarizedSalesReport.Size = new System.Drawing.Size(235, 22);
+            this.tsmiSummarizedSalesReport.Text = "Summarized Sales Report";
+            this.tsmiSummarizedSalesReport.Visible = false;
+            this.tsmiSummarizedSalesReport.Click += new System.EventHandler(this.tsmiSummarizedSalesReport_Click);
             // 
             // RecoverySection
             // 
@@ -167,14 +182,14 @@
             // 
             this.tsmiPayment.Image = global::RealEstateManagementSystem.Properties.Resources.payment;
             this.tsmiPayment.Name = "tsmiPayment";
-            this.tsmiPayment.Size = new System.Drawing.Size(123, 22);
+            this.tsmiPayment.Size = new System.Drawing.Size(152, 22);
             this.tsmiPayment.Text = "Payment";
             this.tsmiPayment.Click += new System.EventHandler(this.tsmiPayment_Click);
             // 
             // tsmiRecoveryReports
             // 
             this.tsmiRecoveryReports.Name = "tsmiRecoveryReports";
-            this.tsmiRecoveryReports.Size = new System.Drawing.Size(123, 22);
+            this.tsmiRecoveryReports.Size = new System.Drawing.Size(152, 22);
             this.tsmiRecoveryReports.Text = "Reports";
             this.tsmiRecoveryReports.Visible = false;
             // 
@@ -237,7 +252,7 @@
             this.panel1.Controls.Add(this.lblCurrentVersion);
             this.panel1.Controls.Add(this.label3);
             this.panel1.ForeColor = System.Drawing.Color.Aqua;
-            this.panel1.Location = new System.Drawing.Point(485, 0);
+            this.panel1.Location = new System.Drawing.Point(528, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(507, 66);
             this.panel1.TabIndex = 6;
@@ -307,9 +322,9 @@
             this.panel2.Controls.Add(this.label2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.ForeColor = System.Drawing.Color.Aqua;
-            this.panel2.Location = new System.Drawing.Point(0, 437);
+            this.panel2.Location = new System.Drawing.Point(0, 508);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(992, 105);
+            this.panel2.Size = new System.Drawing.Size(1035, 105);
             this.panel2.TabIndex = 7;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
@@ -394,22 +409,31 @@
             // 
             this.ttMainScreen.IsBalloon = true;
             // 
-            // label4
+            // lblDeveloperEMail
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(567, 420);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(418, 12);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Please feel free to contact me at asifchowdhury@outlook.com";
+            this.lblDeveloperEMail.Location = new System.Drawing.Point(373, 481);
+            this.lblDeveloperEMail.Name = "lblDeveloperEMail";
+            this.lblDeveloperEMail.Size = new System.Drawing.Size(654, 22);
+            this.lblDeveloperEMail.TabIndex = 8;
+            this.lblDeveloperEMail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // pbStaging
+            // 
+            this.pbStaging.Image = global::RealEstateManagementSystem.Properties.Resources.demo;
+            this.pbStaging.Location = new System.Drawing.Point(725, 72);
+            this.pbStaging.Name = "pbStaging";
+            this.pbStaging.Size = new System.Drawing.Size(307, 308);
+            this.pbStaging.TabIndex = 9;
+            this.pbStaging.TabStop = false;
             // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
-            this.ClientSize = new System.Drawing.Size(992, 580);
-            this.Controls.Add(this.label4);
+            this.ClientSize = new System.Drawing.Size(1035, 651);
+            this.Controls.Add(this.pbStaging);
+            this.Controls.Add(this.lblDeveloperEMail);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.msMainForm);
@@ -428,6 +452,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbStaging)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,7 +489,9 @@
         private System.Windows.Forms.Button btnUnitCancelled;
         private System.Windows.Forms.Button btnUnitSold;
         private System.Windows.Forms.Button btnTotalCollection;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblDeveloperEMail;
         private System.Windows.Forms.ToolStripMenuItem tsmiChequeManagement;
+        private System.Windows.Forms.PictureBox pbStaging;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSummarizedSalesReport;
     }
 }

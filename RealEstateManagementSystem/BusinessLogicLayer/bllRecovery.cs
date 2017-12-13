@@ -9,6 +9,8 @@ using RealEstateManagementSystem.Utilities;
 
 namespace RealEstateManagementSystem.BusinessLogicLayer
 {
+    #region PropertyClasses
+
     public class CommonProperties_Recovery
     {
         public int ClientId { get; set; }
@@ -47,15 +49,12 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public string LoanChequeInfo { get; set; }
 
     }
-
-
     public class BankInfo
     {
         public int BankId { get; set; }
         public string BankName { get; set; }
         public EntryAndUpdateInfo EntryAndUPdate { get; set; }
     }
-
     public class BranchInfo
     {
 
@@ -63,13 +62,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public string BranchName { get; set; }
         public EntryAndUpdateInfo EntryAndUpdate { get; set; }
     }
-
     public class DistrictInfo
     {
         public int DistrictId { get; set; }
         public string DistrictName { get; set; }
     }
-
     public class CountryInfo
     {
 
@@ -77,7 +74,6 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public string CountryName { get; set; }
 
     }
-
     public class PaymentModeInfo
     {
         public int PaymentModeId { get; set; }
@@ -98,7 +94,6 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public float InstallmentAmount { get; set; }
 
     }
-
     public class Payment
     {
         public int TransactionId { get; set; }
@@ -126,6 +121,10 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public EntryAndUpdateInfo EntryAndUpdate { get; set; }
     }
 
+    #endregion
+
+
+    #region Business Logics
     public class bllCommonProperties_Recovery
     {
         dalCommonProperties_Recovery d = new dalCommonProperties_Recovery();
@@ -323,6 +322,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return payment.IsKeyListDelivered(clientId);
         }
     }
+    #endregion
 
 
 }

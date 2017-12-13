@@ -26,8 +26,8 @@ namespace RealEstateManagementSystem.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=ASIF-CHOWDHURY\\SQLEXPRESS;Initial Catalog=CentralDB;User ID=sa;Passwo" +
-            "rd=Bangladesh!^!@")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SA-LAPTOP-1\\SQLEXPRESS;Initial Catalog=CentralDB;User ID=sa;Password=" +
+            "Bangladesh!^!@")]
         public string CentralDBConnectionString {
             get {
                 return ((string)(this["CentralDBConnectionString"]));

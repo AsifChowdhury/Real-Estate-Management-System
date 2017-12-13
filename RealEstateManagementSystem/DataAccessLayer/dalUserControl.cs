@@ -8,6 +8,7 @@ using System.Data;
 using RealEstateManagementSystem.BusinessLogicLayer;
 using RealEstateManagementSystem.Properties;
 using RealEstateManagementSystem.Utilities;
+using System.Configuration;
 
 namespace RealEstateManagementSystem.DataAccessLayer
 {
@@ -23,7 +24,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@userId", b.UserId);
                 cmd.Parameters.AddWithValue("@password", b.Password);
-                cmd.Parameters.AddWithValue("@applicationId", clsGlobalClass.applicationId);
+                cmd.Parameters.AddWithValue("@applicationId", ConfigurationManager.AppSettings["ApplicationId"].ToString());
                 cmd.Parameters.AddWithValue("@version", clsGlobalClass.currentVersion);
                 cmd.Parameters.AddWithValue("@terminal", clsGlobalClass.workStationIP);
                 SqlParameter isValid = new SqlParameter("@isValid", SqlDbType.Bit);
@@ -47,7 +48,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "sp_GetListOfAuthenticatedUsers_ByApp";
-                cmd.Parameters.AddWithValue("@applicationId", Resources.ApplicationId);
+                cmd.Parameters.AddWithValue("@applicationId", ConfigurationManager.AppSettings["ApplicationId"].ToString());
                 cmd.Parameters.AddWithValue("@returnAuthorizedOnly", authorizedOnly);
                 da.SelectCommand = cmd;
                 da.Fill(dt);
@@ -64,9 +65,10 @@ namespace RealEstateManagementSystem.DataAccessLayer
             try
             {
                 cmd.Connection = Program.cnConn;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM ApplicationMenuPermissionDetails WHERE EmpId=@empId AND IsAllowed=1 AND ApplicationId=@applicationId";
-                cmd.Parameters.AddWithValue("@applicationId", Resources.ApplicationId);
+                cmd.CommandType = CommandType.StoredProcedure;
+                //cmd.CommandText = "SELECT * FROM ApplicationMenuPermissionDetails WHERE EmpId=@empId AND IsAllowed=1 AND ApplicationId=@applicationId";
+                cmd.CommandText = "sp_GetActiveMenuList";
+                cmd.Parameters.AddWithValue("@applicationId", ConfigurationManager.AppSettings["ApplicationId"].ToString());
                 cmd.Parameters.AddWithValue("@empId", clsGlobalClass.userId);
                 da.SelectCommand = cmd;
                 da.Fill(ds);
@@ -84,7 +86,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "prcSetAppAuthentication";
 
-                cmd.Parameters.AddWithValue("@applicationId", Resources.ApplicationId);
+                cmd.Parameters.AddWithValue("@applicationId", ConfigurationManager.AppSettings["ApplicationId"].ToString());
                 cmd.Parameters.AddWithValue("@userId", userId);
                 cmd.Parameters.AddWithValue("@isAllowed", isAllowed == true ? 1 : 0);
                 cmd.ExecuteNonQuery();
@@ -102,7 +104,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "prcManipulateApplicationMenu";
-                cmd.Parameters.AddWithValue("@applicationId", Resources.ApplicationId);
+                cmd.Parameters.AddWithValue("@applicationId", ConfigurationManager.AppSettings["ApplicationId"].ToString());
                 cmd.Parameters.AddWithValue("@menuKey", menuKey);
                 cmd.ExecuteNonQuery();
             }
@@ -119,7 +121,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "sp_GetListOfAuthenticatedUsers_ByMenuKey";
-                cmd.Parameters.AddWithValue("@applicationId", Resources.ApplicationId);
+                cmd.Parameters.AddWithValue("@applicationId", ConfigurationManager.AppSettings["ApplicationId"].ToString());
                 cmd.Parameters.AddWithValue("@menuKey", menuKey);
                 da.SelectCommand = cmd;
                 da.Fill(dt);
@@ -137,7 +139,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Connection = Program.cnConn;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "prcSetAppMenuAuthentication";
-                cmd.Parameters.AddWithValue("@applicationId", Resources.ApplicationId);
+                cmd.Parameters.AddWithValue("@applicationId", ConfigurationManager.AppSettings["ApplicationId"].ToString());
                 cmd.Parameters.AddWithValue("@menuKey", menuKey);
                 cmd.Parameters.AddWithValue("@userId", userId);
                 cmd.Parameters.AddWithValue("@isAllowed", isAllowed == true ? 1 : 0);

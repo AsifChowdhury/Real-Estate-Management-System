@@ -29,7 +29,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
         {
             try
             {
-                this.Text = "List of Cancelled Client since " + dtpStartDate.Value.ToString("dddd dd-MMM-yyyy");
+                this.Text = "List of Cancelled Client since " + dtpStartDate.Value.ToString("dddd, MMM dd, yyyy");
                 bllGlobal b = new bllGlobal();
                 foreach (DataRow drItems in b.GetRootCancelledList(dtpStartDate.Value).Rows)
                 {

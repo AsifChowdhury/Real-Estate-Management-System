@@ -10,9 +10,11 @@ using RealEstateManagementSystem.Utilities;
 
 namespace RealEstateManagementSystem.BusinessLogicLayer
 {
+    #region PropertyClasses
     [Serializable]
     public class PersonInformation
     {
+        #region ClassProperties
         public int ClientId { get; set; }
         public string FullClientId { get; set; }
         public int ClientTypeId { get; set; }
@@ -56,6 +58,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public bool IsReferredByClient { get; set; }
         public string Referrer { get; set; }
         public string SoldBy { get; set; }
+        #endregion
 
         #region ClassReference
         public FinancialInstitute LoanProvider { get; set; }
@@ -142,8 +145,10 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public decimal UnitArea { get; set; }
         public bool AreaEnabled { get; set; }
     }
+    #endregion
 
-
+    #region Business Logics
+        
     public class bllFinancialInstitute
     {
         dalFinancialInstitute dLayer = new dalFinancialInstitute();
@@ -241,8 +246,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             dLayer.RemovePartner(partnerId);
         }
     }
-
-
+    
     public class bllAllocationAndInstallment
     {
         dalAllocationAndInstallment dLayer = new dalAllocationAndInstallment();
@@ -328,8 +332,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             dLayer.SaveOtherTypeInstallment(clientId, lstBP);
         }
     }
-
-
+    
     public class bllClientInfo
     {
 
@@ -424,4 +427,5 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return dLayer.GetAllotmentLetter(clientIds, monthlyRent);
         }
     }
+    #endregion
 }

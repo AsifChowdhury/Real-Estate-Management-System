@@ -31,6 +31,16 @@ namespace RealEstateManagementSystem.Utilities
         public static readonly DateTime considerAsNULLDate = Convert.ToDateTime("02/02/1900");
         public static readonly DateTime defaultDate = Convert.ToDateTime("1900-01-01");
 
+        public enum ProjectCommonReport_FilterBy
+        {
+            ProjectStatus = 1,
+            District = 2,
+            Area = 3,
+            Location = 4,
+            ProjectType = 5
+        }
+
+
         public enum ProjectStatus
         {
             Cancelled = 1,

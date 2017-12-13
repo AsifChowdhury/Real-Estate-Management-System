@@ -146,11 +146,11 @@
             // 
             this.colBookingDate.Text = "Booking Date";
             // 
-            // label1
+            // lblRecordCount
             // 
             this.lblRecordCount.AutoSize = true;
-            this.lblRecordCount.Location = new System.Drawing.Point(4, 526);
-            this.lblRecordCount.Name = "label1";
+            this.lblRecordCount.Location = new System.Drawing.Point(892, 527);
+            this.lblRecordCount.Name = "lblRecordCount";
             this.lblRecordCount.Size = new System.Drawing.Size(127, 13);
             this.lblRecordCount.TabIndex = 2;
             this.lblRecordCount.Text = "# of Unit(s) Sold: 0";

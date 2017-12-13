@@ -1,29 +1,25 @@
-﻿using RealEstateManagementSystem.BusinessLogicLayer;
+﻿using System;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
+using RealEstateManagementSystem.BusinessLogicLayer;
 using RealEstateManagementSystem.Properties;
 using RealEstateManagementSystem.Reports;
 using RealEstateManagementSystem.UserInterface.Projects;
 using RealEstateManagementSystem.Utilities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace RealEstateManagementSystem.UserInterface.Recovery
 {
     public partial class frmPayment : Form
     {
-        int clientId = 0, transactionId = 0, transactionId_returned = 0, projectId = 0;
+        int clientId, transactionId, transactionId_returned, projectId;
         bllPayment payment = new bllPayment();
-        bool isRefundTransaction = false;
+        bool isRefundTransaction;
         public frmPayment()
         {
             InitializeComponent();
-            this.CenterToScreen();
+            CenterToScreen();
         }
 
         private void frmPayment_Load(object sender, EventArgs e)
@@ -37,8 +33,8 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
             clsCommonFunctions.PopulateListOfDistricts(cmbDistrictName);
             clsCommonFunctions.PopulateListOfCountries(cmbCountryName);
             dtpPaymentDate.Value = dtpParticularDate.Value = SetTransactionDateTime();
-            btnSave.Enabled = clsCommonFunctions.CheckButtonPermission(this.Name.ToString(), btnSave.Name.ToString());
-            btnDelete.Enabled = clsCommonFunctions.CheckButtonPermission(this.Name.ToString(), btnDelete.Name.ToString());
+            btnSave.Enabled = clsCommonFunctions.CheckButtonPermission(Name, btnSave.Name);
+            btnDelete.Enabled = clsCommonFunctions.CheckButtonPermission(Name, btnDelete.Name);
         }
 
         private void btnDefAddNewBank_Click(object sender, EventArgs e)
@@ -92,6 +88,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
         {
             DataTable dt = new DataTable();
             dt = payment.InstallmentListOfClient(clientId, installmentTypeId);
+            btnNewInstallment.Enabled = installmentTypeId != 1 ? true : false;
             if (dt.Rows.Count > 0)
             {
                 cmbInstallment.DataSource = dt;
@@ -101,6 +98,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
             else
             {
                 clsCommonFunctions.ResetComboBox(cmbInstallment);
+
             }
         }
 
@@ -196,7 +194,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                     lvItems.SubItems.Add(Convert.ToString(drItems["Remarks"]));
                     lvItems.SubItems.Add(Convert.ToString(drItems["BankInfo"]));
                     lvItems.SubItems.Add(Convert.ToString(drItems["EntryInfo"]));
-                    lvItems.ForeColor = Convert.ToString(drItems["PaymentAllowed"]).ConvertToBoolean() == true ? Color.Black : Color.Red;
+                    lvItems.ForeColor = Convert.ToString(drItems["PaymentAllowed"]).ConvertToBoolean() ? Color.Black : Color.Red;
                     lstPayments.Items.Add(lvItems);
                 }
                 cmbReturnInvoice.DataSource = dt;
@@ -216,7 +214,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 bllCommonProperties_Recovery b = new bllCommonProperties_Recovery();
 
                 b.GetPaymentSummaryOfClient(cpr);
-                gbClientSummary.BackColor = cpr.IsActiveClient == true ? Color.White : Color.DarkSalmon;
+                gbClientSummary.BackColor = cpr.IsActiveClient ? Color.White : Color.DarkSalmon;
                 lblClientId.Text = cpr.FullClientId;
                 lblClientName.Text = cpr.ClientName;
                 lblBookingDate.Text = cpr.BookingDate.ToString().ShowAsStandardDateFormat();
@@ -335,15 +333,14 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
             try
             {
                 if (clientId == 0) { throw new ApplicationException("Please select Client Information from list."); }
-                if (txtPayingAmount.Text.ToString().ConvertToDecimal() > payment.GetMaximumAmountPayable(clientId, cmbInstallType.SelectedValue.ToString().ConvertToInt32(), cmbInstallment.SelectedValue.ToString().ConvertToInt32()))
+                if (txtPayingAmount.Text != null && txtPayingAmount.Text.ConvertToDecimal() > payment.GetMaximumAmountPayable(clientId, cmbInstallType.SelectedValue.ToString().ConvertToInt32(), cmbInstallment.SelectedValue.ToString().ConvertToInt32()))
                 {
                     string install = cmbInstallType.SelectedValue.ToString() == "1" ? cmbInstallType.Text : cmbInstallment.Text;
-                    MessageBox.Show("Paying more than Maximum Possible Due of " + install + ".", "Warning!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(@"Paying more than Maximum Possible Due of " + install + ".", @"Warning!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 //if (transactionId == 0)
                 //{
-                int lastInstallmentId = 0;
-                string installInWord = "";
+                int lastInstallmentId = 0; string installInWord = "";
                 payment.InstallmentAlgorithm(clientId, txtPayingAmount.Text.ConvertToDecimal(), cmbInstallment.SelectedValue.ToString().ConvertToInt32(), transactionId, out lastInstallmentId, out installInWord);
                 if (cmbInstallType.SelectedValue.ToString().ConvertToInt32() == 1) cmbInstallment.SelectedValue = lastInstallmentId;
                 txtRemarks.Text = installInWord;
@@ -360,9 +357,9 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
             {
                 if (lstPayments.SelectedItems.Count < 1 || lstPayments.Items.Count < 1) { return; }
                 ResetTransactionInfoPanel();
+
                 transactionId = lstPayments.SelectedItems[0].SubItems[1].Text.ConvertToInt32();
-                Payment trInfo = new Payment();
-                trInfo.TransactionId = transactionId;
+                Payment trInfo = new Payment { TransactionId = transactionId };
                 payment.GetTransactionDetails(trInfo);
                 cmbInstallType.Text = trInfo.InstallType.InstallTypeName;
                 cmbInstallment.Text = trInfo.Installment.InstallmentName;
@@ -391,8 +388,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
         {
             PopulateInstallmentList(clientId: clientId, installmentTypeId: 1);
             transactionId = 0;
-            int lastInstallmentId = 0;
-            string installInWord = "";
+            int lastInstallmentId = 0; string installInWord = "";
             payment.InstallmentAlgorithm(clientId, 0, 1, 0, out lastInstallmentId, out installInWord);
             cmbInstallment.SelectedValue = lastInstallmentId;
             PopulateBankAccountNumbers(clientId);
@@ -425,50 +421,45 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 pi.PaymentModeId = cmbPaymentMode.SelectedValue.ToString().ConvertToInt32();
                 payment.GetPaymentModeDetails(pi);
                 string strMessage = string.Empty;
-                strMessage = transactionId == 0 ? "NEW TRANSACTION" : "Transaction #:" + transactionId.ToString();
+                strMessage = transactionId == 0 ? "NEW TRANSACTION" : "Transaction #:" + transactionId;
                 strMessage = strMessage + "\nTransaction Date: " + dtpPaymentDate.Value.ToString("ddd, dd-MMM-yyyy hh:mm:ss tt");
-                strMessage = strMessage + "\nPayment Mode: " + cmbPaymentMode.Text.ToString();
-                strMessage = strMessage + "\nAmount: Tk." + txtPayingAmount.Text.ToString().ConvertToDecimal().FormatAsMoney() + "/- [" + txtPayingAmount.Text.ToString().ConvertToDecimal().AmountInWords() + "]";
-                strMessage = strMessage + "\nPaticulars: " + txtParticulars.Text.ToString();
-                if (pi.IsBankInfoNeeded == true)
+                strMessage = strMessage + "\nPayment Mode: " + cmbPaymentMode.Text;
+                strMessage = strMessage + "\nAmount: Tk." + txtPayingAmount.Text.ConvertToDecimal().FormatAsMoney() + "/- [" + txtPayingAmount.Text.ConvertToDecimal().AmountInWords() + "]";
+                strMessage = strMessage + "\nPaticulars: " + txtParticulars.Text;
+                if (pi.IsBankInfoNeeded)
                 {
                     strMessage = strMessage + "\n" + pi.PaymentModeName + " Date: " + dtpParticularDate.Value.ToString("ddd, dd-MMM-yyyy");
-                    strMessage = strMessage + "," + cmbBankName.Text + ", " + cmbBranchName.Text.ToString() + ", " + cmbDistrictName.Text + ", " + cmbCountryName.Text;
-                    strMessage = strMessage + "\nAccount #: " + cmbAccountNumber.Text.ToString();
+                    strMessage = strMessage + "," + cmbBankName.Text + ", " + cmbBranchName.Text + ", " + cmbDistrictName.Text + ", " + cmbCountryName.Text;
+                    strMessage = strMessage + "\nAccount #: " + cmbAccountNumber.Text;
                 }
-                strMessage = strMessage + "\nRemarks: " + txtRemarks.Text.ToString();
-                strMessage = strMessage + (transactionId == 0 ? "\n\nSure about commit Transaction?" : "\n\nSure about UPDATE the Transaction # " + transactionId.ToString() + "?");
+                strMessage = strMessage + "\nRemarks: " + txtRemarks.Text;
+                strMessage = strMessage + (transactionId == 0 ? "\n\nSure about commit Transaction?" : "\n\nSure about UPDATE the Transaction # " + transactionId + "?");
                 DialogResult dr = MessageBox.Show(strMessage, Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No) { throw new ApplicationException(Resources.strCancelledByUser); }
-                Payment p = new Payment();
-                p.TransactionId = transactionId;
-                p.CommonProperties = new CommonProperties_Recovery();
+                Payment p = new Payment
+                {
+                    TransactionId = transactionId,
+                    CommonProperties = new CommonProperties_Recovery()
+                };
                 p.CommonProperties.ClientId = clientId;
                 p.TransactionDate = dtpPaymentDate.Value;
                 p.TransactionAmount = txtPayingAmount.Text.ConvertToDecimal();
                 p.ParticularDate = dtpParticularDate.Value;
                 p.Particulars = txtParticulars.Text;
                 p.Remarks = txtRemarks.Text;
-                p.Installment = new InstallmentInfo();
-                p.Installment.InstallmentId = cmbInstallment.SelectedValue.ToString().ConvertToInt32();
-                p.PaymentMode = new PaymentModeInfo();
-                p.PaymentMode.PaymentModeId = cmbPaymentMode.SelectedValue.ToString().ConvertToInt32();
-                p.Bank = new BankInfo();
-                p.Bank.BankId = cmbBankName.SelectedValue.ToString().ConvertToInt32();
-                p.Branch = new BranchInfo();
-                p.Branch.BranchId = cmbBranchName.SelectedValue.ToString().ConvertToInt32();
-                p.District = new DistrictInfo();
-                p.District.DistrictId = cmbDistrictName.SelectedValue.ToString().ConvertToInt32();
-                p.Country = new CountryInfo();
-                p.Country.CountryId = cmbCountryName.SelectedValue.ToString().ConvertToInt32();
+                p.Installment = new InstallmentInfo { InstallmentId = cmbInstallment.SelectedValue.ToString().ConvertToInt32() };
+                p.PaymentMode = new PaymentModeInfo { PaymentModeId = cmbPaymentMode.SelectedValue.ToString().ConvertToInt32() };
+                p.Bank = new BankInfo { BankId = cmbBankName.SelectedValue.ToString().ConvertToInt32() };
+                p.Branch = new BranchInfo { BranchId = cmbBranchName.SelectedValue.ToString().ConvertToInt32() };
+                p.District = new DistrictInfo { DistrictId = cmbDistrictName.SelectedValue.ToString().ConvertToInt32() };
+                p.Country = new CountryInfo { CountryId = cmbCountryName.SelectedValue.ToString().ConvertToInt32() };
                 p.BankAccountNumber = cmbAccountNumber.Text;
                 p.UpdateReason = transactionId > 0 ? cmbUpdateReason.Text : string.Empty;
-                p.ReturnText = chkReturnInvoice.Checked == true ? cmbReturnInvoice.Text.ToString() : "N/A";
+                p.ReturnText = chkReturnInvoice.Checked ? cmbReturnInvoice.Text : "N/A";
                 transactionId_returned = payment.CommitTransaction(p);
                 LoadListOfTransaction(clientId);
-                dr = MessageBox.Show("Payment Processed Successfully for Transaction # " + transactionId_returned.ToString() + ".\nDo you want to Print the Money Receipt Now?", Resources.strSuccessCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                dr = MessageBox.Show("Payment Processed Successfully for Transaction # " + transactionId_returned + ".\nDo you want to Print the Money Receipt Now?", Resources.strSuccessCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.Yes) clsReports.MoneyReceipt(transactionId_returned, false, tssStatus);
-
                 ResetTransactionInfoPanel();
             }
             catch (Exception ex) { ex.ProcessException(); }
@@ -483,7 +474,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                     decimal amountPayable = payment.AmountPayable(clientId, cmbInstallment.SelectedValue.ToString().ConvertToInt32());
                     txtPayingAmount.Text = amountPayable.FormatAsMoney();
                     txtAmountInWords.Text = amountPayable.AmountInWords();
-                    txtRemarks.Text = cmbInstallment.Text.ToString();
+                    txtRemarks.Text = cmbInstallment.Text;
                 }
                 else
                 {
@@ -525,7 +516,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
             {
                 string strMessage = string.Empty;
                 if (transactionId == 0) { throw new ApplicationException("Please select a transaction from list to Delete."); }
-                DialogResult dr = MessageBox.Show("Are you sure about DELETING Transaction # " + transactionId.ToString() + "?\nTHIS ACTION CANNOT BE REVERTED.", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Are you sure about DELETING Transaction # " + transactionId + "?\nTHIS ACTION CANNOT BE REVERTED.", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No) { throw new ApplicationException(Resources.strCancelledByUser); }
                 payment.DeleteTransaction(transactionId);
                 MessageBox.Show("Transaction # " + transactionId + " Deleted Successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -543,7 +534,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 {
                     ContextMenu cm = new ContextMenu();
                     MenuItem sep1 = new MenuItem("-");
-                    MenuItem transactionNumber = new MenuItem("Transaction # " + transactionId.ToString() + ".");
+                    MenuItem transactionNumber = new MenuItem("Transaction # " + transactionId + ".");
                     cm.MenuItems.Add(transactionNumber);
                     cm.MenuItems.Add(sep1);
 
@@ -556,14 +547,14 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                     moneyReceipt.MenuItems.Add(moneyReceipt_Duplicate);
 
                     MenuItem ackReceipt = new MenuItem("Print Acknowledgement Recipt", ackReceipt_OnClick);
-                    cm.MenuItems.Add(isRefundTransaction == true ? ackReceipt : moneyReceipt);
+                    cm.MenuItems.Add(isRefundTransaction ? ackReceipt : moneyReceipt);
                     int numberOfEdits = payment.IsTransactionEdited(transactionId);
                     if (numberOfEdits > 0)
                     {
                         MenuItem sep3 = new MenuItem("-");
                         cm.MenuItems.Add(sep3);
 
-                        MenuItem historyOfTransaction = new MenuItem("# of Edit(s) : " + numberOfEdits.ToString(), historyOfTransaction_OnClick);
+                        MenuItem historyOfTransaction = new MenuItem("# of Edit(s) : " + numberOfEdits, historyOfTransaction_OnClick);
                         cm.MenuItems.Add(historyOfTransaction);
                     }
                     cm.Show((Control)sender, e.Location);
@@ -581,7 +572,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
 
         private void ackReceipt_OnClick(object sender, EventArgs e)
         {
-            try { clsReports.AcknoledgementReceipt(transactionId, tssStatus); }
+            try { clsReports.AcknowledgementReceipt(transactionId, tssStatus); }
             catch (Exception ex) { ex.ProcessException(); }
 
         }

@@ -2,6 +2,7 @@
 using RealEstateManagementSystem.Properties;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -23,6 +24,8 @@ namespace RealEstateManagementSystem.Utilities
     {
         #region Common Variables
         private static bool blnValidEmail = false;
+
+        
         #endregion
 
         #region Common Use
@@ -91,6 +94,35 @@ namespace RealEstateManagementSystem.Utilities
             }
             finally { cmd.Dispose(); }
 
+        }
+
+        internal static void CheckIfProductionDB(PictureBox pbStaging)
+        {
+            pbStaging.Visible = ConfigurationManager.AppSettings["DBEnvironment"].ToString() == "0" ? false : true;
+        }
+
+        internal static string GetProjectNameFromProjectId(int projectId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            string strProjectName = string.Empty;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT ProjectName FROM ProjectInfo WHERE ProjectId = @projectId";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        strProjectName = Convert.ToString(dr["ProjectName"]);
+                    }
+                }
+                return strProjectName;
+            }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
         }
 
         internal static DataTable CompanyInformation()
@@ -362,6 +394,29 @@ namespace RealEstateManagementSystem.Utilities
 
         #region Populate/Format ComboBoxes
 
+        internal static void PopulateDistinctSalesYears(ComboBox cmbSalesYear)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetSalesYears";
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                cmbSalesYear.DataSource = null;
+                cmbSalesYear.Items.Clear();
+                cmbSalesYear.DataSource = ds.Tables[0];
+                cmbSalesYear.DisplayMember = "SalesYear";
+                cmbSalesYear.ValueMember = "SalesYear";
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+
         internal static Dictionary<string, string> GetDisplayAndValueMemberForComboBox(CommandType cmdType, string sqlQuery, string displayMember,
                 string valueMember, bool addAnEmptyLine = false)
         {
@@ -383,7 +438,6 @@ namespace RealEstateManagementSystem.Utilities
                 }
                 return retValue;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); if (dr != null) dr.Dispose(); }
         }
 
@@ -422,9 +476,9 @@ namespace RealEstateManagementSystem.Utilities
                 if (valueMember != string.Empty) comboBox.ValueMember = valueMember;
                 if (defaultValue != "" || defaultValue != string.Empty) comboBox.Text = defaultValue;
             }
-            catch (Exception ex) { throw ex; }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
+
 
 
 
@@ -467,6 +521,47 @@ namespace RealEstateManagementSystem.Utilities
             }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
+
+        internal static void PopulateComboboxWithDisplayAndValueMember
+                    (string sqlQuery,
+                    string displayMember, string valueMember,
+                    string addAStringOnTop = "", params ComboBox[] comboBox
+                    )
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = sqlQuery;
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                foreach (ComboBox cmb in comboBox)
+                {
+                    ResetComboBox(cmb);
+                    cmb.BindingContext = new BindingContext();
+                    cmb.DataSource = null;
+                    cmb.Items.Clear();
+                    cmb.DataSource = ds.Tables[0];
+                    if (!string.IsNullOrEmpty(addAStringOnTop))
+                    {
+                        DataRow emptyRow = ds.Tables[0].NewRow();
+                        emptyRow[displayMember] = addAStringOnTop;
+                        if (valueMember != string.Empty) emptyRow[valueMember] = 0;
+                        ds.Tables[0].Rows.Add(emptyRow);
+                        ds.Tables[0].DefaultView.Sort = displayMember;
+                    }
+                    cmb.DisplayMember = displayMember;
+                    if (valueMember != string.Empty) cmb.ValueMember = valueMember;
+                    SetComboBoxWidth(cmb);
+                }
+            }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
 
         internal static void PopulateListOfDistricts(ComboBox cmb)
         {
@@ -652,19 +747,26 @@ namespace RealEstateManagementSystem.Utilities
         /// <param name="reportDocumnent"></param>
         /// <param name="tssStatus"></param>
         /// <param name="includeCompanyBanner"></param>
-        /// <param name="passPrintedBy">Leave this parameter false if there is no "@PrintedBy" formula available in Report </param>
+        /// <param name="passPrintedBy">Leave this parameter false if there is no "@PrintedBy" formula available in Report</param>
+        ///<param name="viewerHeading">Report form heading</param>
+        /// <param name="showCGRBox">Leave this parameter false if there is no "@showCGRBox" formula available in Report </param>
         public static void ShowReport(
                             CrystalDecisions.CrystalReports.Engine.ReportDocument reportDocumnent,
                             ToolStripStatusLabel tssStatus,
                             bool includeCompanyBanner = false,
-                            bool passPrintedBy = false)
+                            bool passPrintedBy = false,
+                            string viewerHeading = "",
+                            bool showCGRBox = false)
         {
             Reports.frmReportViewer frmReport = new Reports.frmReportViewer();
             if (includeCompanyBanner == true) reportDocumnent.Subreports[0].SetDataSource(clsCommonFunctions.CompanyInformation());
             if (passPrintedBy == true) reportDocumnent.DataDefinition.FormulaFields["PrintedBy"].Text = "'" + clsGlobalClass.userFullName + "'";
+            if (showCGRBox == true) reportDocumnent.DataDefinition.FormulaFields["ShowCGRBox"].Text = "'" + Resources.strCGRBoxDialog + "'";
+            
             frmReport.crptMasterReport.ReportSource = reportDocumnent;
             frmReport.crptMasterReport.Zoom(100);
             tssStatus.Text = Resources.strPreparingData;
+            frmReport.Text = String.IsNullOrEmpty(viewerHeading) == true ? "Report Viewer" : viewerHeading;
             frmReport.crptMasterReport.Update();
             frmReport.Show();
             GC.Collect();
@@ -819,7 +921,7 @@ namespace RealEstateManagementSystem.Utilities
             if (e.KeyChar == Convert.ToChar(Keys.Enter)) { formName.SelectNextControl(formName.ActiveControl, true, true, true, true); e.Handled = false; }
         }
 
-        internal static void LogError(Exception ex)
+        internal static int LogError(Exception ex)
         {
             SqlCommand cmd = new SqlCommand();
             try
@@ -835,8 +937,12 @@ namespace RealEstateManagementSystem.Utilities
                 cmd.Parameters.AddWithValue("@targetSites", ex.TargetSite.ToString().Trim());
                 cmd.Parameters.AddWithValue("@userId", clsGlobalClass.userId);
                 cmd.Parameters.AddWithValue("@workstationIP", clsGlobalClass.workStationIP);
+                SqlParameter errorId = new SqlParameter("@errorId", SqlDbType.Int);
+                errorId.Direction = ParameterDirection.Output;
+                errorId.Value = 0;
+                cmd.Parameters.Add(errorId);
                 cmd.ExecuteNonQuery();
-
+                return errorId.Value.ToString().ConvertToInt32();
             }
             finally { cmd.Dispose(); }
         }
@@ -881,6 +987,18 @@ namespace RealEstateManagementSystem.Utilities
         //{
         //    return dateTime < clsGlobalClass.considerAsNULLDate ? false : true;
         //}
+
+        internal static int GetCurrentFiscalYear()
+        {
+            DateTime cDate = DateTime.Now;
+            return cDate.Month > 6 ? cDate.AddYears(1).Year : cDate.Year;
+        }
+
+        internal static string GetCurrentFiscalYear(DateTime dateTime, bool longFlag = false, int monthLimit = 3)
+        {
+            var format = longFlag ? "yyyy" : "yy";
+            return (dateTime.Month > monthLimit ? dateTime.AddYears(1).ToString(format) : dateTime.ToString(format));
+        }
 
 
         #endregion

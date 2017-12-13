@@ -27,7 +27,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
             try
             {
                 lstTransactionList.Items.Clear();
-                this.Text = "Collection details since " + dtpStartDate.Value.ToString("DDDD, dd MMM, yyyy");
+                this.Text = "Collection details since " + dtpStartDate.Value.ToString("dddd, MMM dd, yyyy");
                 bllGlobal b = new bllGlobal();
                 decimal totalCollection = 0;
                 foreach (DataRow drItems in b.GetCollectionDetails(dtpStartDate.Value).Rows)
@@ -48,7 +48,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
                         totalCollection = totalCollection + Convert.ToString(drItems["Amount"]).ConvertToDecimal();
                     }
                     lstTransactionList.Items.Add(lvItems);
-                    lblRecordCount.Text = "Total Collection: " + totalCollection.FormatAsMoney(true, true, true);
+                    tssCollection.Text = "Total Collection: " + totalCollection.FormatAsMoney(true, true, true);
                 }
             }
             catch (Exception ex) { ex.ProcessException(tssStatus); }

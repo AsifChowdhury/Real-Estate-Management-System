@@ -19,7 +19,7 @@ namespace RealEstateManagementSystem.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -154,6 +154,16 @@ namespace RealEstateManagementSystem.Properties {
             get {
                 object obj = ResourceManager.GetObject("block1", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Booked {
+            get {
+                object obj = ResourceManager.GetObject("Booked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -333,6 +343,16 @@ namespace RealEstateManagementSystem.Properties {
         internal static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap demo {
+            get {
+                object obj = ResourceManager.GetObject("demo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -579,6 +599,16 @@ namespace RealEstateManagementSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap rating {
+            get {
+                object obj = ResourceManager.GetObject("rating", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap recovery {
             get {
                 object obj = ResourceManager.GetObject("recovery", resourceCulture);
@@ -633,6 +663,15 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DeveloperServerIP.
+        /// </summary>
+        internal static string regDeveloperServerIP {
+            get {
+                return ResourceManager.GetString("regDeveloperServerIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key.
         /// </summary>
         internal static string regPassword {
@@ -647,6 +686,15 @@ namespace RealEstateManagementSystem.Properties {
         internal static string regRoot {
             get {
                 return ResourceManager.GetString("regRoot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to StagingServerIP.
+        /// </summary>
+        internal static string regStagingServerIP {
+            get {
+                return ResourceManager.GetString("regStagingServerIP", resourceCulture);
             }
         }
         
@@ -735,6 +783,16 @@ namespace RealEstateManagementSystem.Properties {
             get {
                 object obj = ResourceManager.GetObject("Sales", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon SalesReport {
+            get {
+                object obj = ResourceManager.GetObject("SalesReport", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -848,6 +906,15 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to *****THIS IS A COMPUTER GENERATED REPORT*****.
+        /// </summary>
+        internal static string strCGRBoxDialog {
+            get {
+                return ResourceManager.GetString("strCGRBoxDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collecting Data....
         /// </summary>
         internal static string strCollectingData {
@@ -899,6 +966,15 @@ namespace RealEstateManagementSystem.Properties {
         internal static string strInsertConfirmation {
             get {
                 return ResourceManager.GetString("strInsertConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Data Found....
+        /// </summary>
+        internal static string strNoData {
+            get {
+                return ResourceManager.GetString("strNoData", resourceCulture);
             }
         }
         
@@ -963,6 +1039,15 @@ namespace RealEstateManagementSystem.Properties {
         internal static string strSystemErrorMessage {
             get {
                 return ResourceManager.GetString("strSystemErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This module is still Under Construction. \nSorry for the inconveniences..
+        /// </summary>
+        internal static string strUnderConstruction {
+            get {
+                return ResourceManager.GetString("strUnderConstruction", resourceCulture);
             }
         }
         

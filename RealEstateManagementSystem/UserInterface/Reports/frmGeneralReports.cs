@@ -236,8 +236,10 @@ namespace RealEstateManagementSystem.UserInterface.Reports
                 {
                     if (clsCommonFunctions.IsActiveClient(clientIds.ConvertToInt32()) == false)
                         throw new ApplicationException("Handover process cannot be activated for cancelled clients.");
-                    frmHandoverProcess hp = new frmHandoverProcess();
-                    hp.clientId = clientIds.ConvertToInt32();
+                    frmHandoverProcess hp = new frmHandoverProcess
+                    {
+                        clientId = clientIds.ConvertToInt32()
+                    };
                     hp.ShowDialog();
                 }
                 else if (rbRegistrationAcknowledgeReceipt.Checked == true)

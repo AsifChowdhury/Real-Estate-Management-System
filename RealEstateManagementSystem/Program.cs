@@ -47,18 +47,41 @@ namespace RealEstateManagementSystem
 
         private static string CreateConnectionString()
         {
+            string csDBConn = string.Empty;
             try
             {
                 clsEncryption crypt = new clsEncryption();
-                string dbCoreServerIP = crypt.Decrypt((string)Registry.GetValue(clsGlobalClass.regKey, Resources.regCoreServerIP, "NA"), "Pas5pr@se", "s@1tValue", "SHA1", 2, "@1B2c3D4e5F6g7H8", 256);
-                dataServerIP = dbCoreServerIP;
+                string dbCoreServerIP = string.Empty;
+
+                switch (ConfigurationManager.AppSettings["DBEnvironment"].ToString())
+                {
+                    case "0":
+                        dbCoreServerIP = @ConfigurationManager.AppSettings["ProductionServerIP"].ToString();
+                        break;
+                    case "1":
+                        dbCoreServerIP = @ConfigurationManager.AppSettings["StagingServerIP"].ToString();
+                        break;
+                    case "2":
+                        dbCoreServerIP = @ConfigurationManager.AppSettings["DeveloperServerIP"].ToString();
+                        break;
+                    default:
+                        break;
+                }
+
+
+
+                //dbCoreServerIP = ConfigurationManager.AppSettings["IsProductionEnvironment"].ToString().ConvertToBoolean() == true ?
+                //                 @ConfigurationManager.AppSettings["ProductionServerIP"].ToString() :
+                //                 @ConfigurationManager.AppSettings["StagingServerIP"].ToString();
+                //dbCoreServerIP = @Registry.GetValue(clsGlobalClass.regKey, Resources.regCoreServerIP, "NA").ToString();//crypt.Decrypt((string)Registry.GetValue(clsGlobalClass.regKey, Resources.regCoreServerIP, "NA"), "Pas5pr@se", "s@1tValue", "SHA1", 2, "@1B2c3D4e5F6g7H8", 256);
+                dataServerIP = @dbCoreServerIP;
                 string dbName = crypt.Decrypt((string)Registry.GetValue(clsGlobalClass.regKey, Resources.regDBName, "NA"), "Pas5pr@se", "s@1tValue", "SHA1", 2, "@1B2c3D4e5F6g7H8", 256);
                 string dbUserName = crypt.Decrypt((string)Registry.GetValue(clsGlobalClass.regKey, Resources.regDBUser, "NA"), "Pas5pr@se", "s@1tValue", "SHA1", 2, "@1B2c3D4e5F6g7H8", 256);
                 string dbPassword = crypt.Decrypt((string)Registry.GetValue(clsGlobalClass.regKey, Resources.regDBPass, "NA"), "Pas5pr@se", "s@1tValue", "SHA1", 2, "@1B2c3D4e5F6g7H8", 256);
-                string csDBConn = "Server=" + dbCoreServerIP + ";Database=" + dbName + ";User Id=" + dbUserName + ";Password=" + dbPassword + ";";
-                return csDBConn;
+                csDBConn = "Server=" + @dataServerIP + ";Database=" + dbName + ";User Id=" + dbUserName + ";Password=" + dbPassword + ";";
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { MessageBox.Show("Database Connection Error: \n" + ex.Message.ToString() + "\n" + ex.StackTrace.ToString()); }
+            return csDBConn;
         }
 
 
@@ -85,6 +108,7 @@ namespace RealEstateManagementSystem
             catch (Exception ex)
             {
                 string strEx = ex.Message.ToString();
+                MessageBox.Show(Resources.strFailedMessage + strEx, Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             finally { cnTestConnection.Dispose(); }

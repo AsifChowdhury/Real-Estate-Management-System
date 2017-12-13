@@ -177,6 +177,7 @@
             this.Name = "frmDBLogIn";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Core LogIn";
+            this.Load += new System.EventHandler(this.frmDBLogIn_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

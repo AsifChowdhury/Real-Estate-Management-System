@@ -17,7 +17,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyProduct);
             this.labelProductName.Text = String.Format("Product Name: {0}", AssemblyProduct);
-            this.labelVersion.Text = String.Format("Version: {0}", AssemblyVersion);
+            this.labelVersion.Text = String.Format("Version: {0}", clsGlobalClass.currentVersion);
             this.labelCopyright.Text = String.Format("Copyright: {0} - {1}", AssemblyCopyright.ToString(), DateTime.Now.Year.ToString());
             this.labelCompanyName.Text = String.Format("Sole Author: {0}", AssemblyCompany);
             this.textBoxDescription.Text = AssemblyDescription;

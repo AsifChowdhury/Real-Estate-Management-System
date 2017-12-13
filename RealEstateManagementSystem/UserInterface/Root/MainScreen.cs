@@ -1,12 +1,12 @@
 ﻿using RealEstateManagementSystem.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using System.ComponentModel;
+//using System.Data;
+//using System.Drawing;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 using RealEstateManagementSystem.Utilities;
 using RealEstateManagementSystem.UserInterface.Projects;
@@ -16,6 +16,7 @@ using RealEstateManagementSystem.UserInterface.Clients;
 using RealEstateManagementSystem.UserInterface.Recovery;
 using RealEstateManagementSystem.UserInterface.Accounts;
 using RealEstateManagementSystem.UserInterface.Reports;
+using System.Configuration;
 
 namespace RealEstateManagementSystem.UserInterface.Root
 {
@@ -31,6 +32,8 @@ namespace RealEstateManagementSystem.UserInterface.Root
         private frmPayment payment = null;
         private frmChequeManagement chequeManagement = null;
         private frmGeneralReports generalReport = null;
+        private frmProjectReports projectReport = null;
+        private frmSummarizedSalesReport summarizedSalesReport = null;
         public MainScreen()
         {
             InitializeComponent();
@@ -50,10 +53,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
                     form = (Form)Activator.CreateInstance(t);
                     form.Show();
                 }
-                else
-                {
-                    form.Activate();
-                }
+                else { form.Activate(); }
             }
             return form;
         }
@@ -63,11 +63,13 @@ namespace RealEstateManagementSystem.UserInterface.Root
             try
             {
                 SetMenuAuthentication();
-                this.Text = Properties.Resources.ApplicationName.ToString();
+                this.Text = ConfigurationManager.AppSettings["ApplicationName"].ToString();
                 lblUserLoggedIn.Text = clsGlobalClass.userFullName + " (" + clsGlobalClass.userDesignation + ")";
                 lblWorkStation.Text = clsGlobalClass.workStationIP.ToString() + " => " + Program.dataServerIP;
                 lblCurrentVersion.Text = clsGlobalClass.currentVersion.ToString();
+                lblDeveloperEMail.Text = "Please feel free to contact me at " + ConfigurationManager.AppSettings["developerEMail"].ToString();
                 dtpDataDate.Value = DateTime.Now.AddDays(-30);
+                clsCommonFunctions.CheckIfProductionDB(pbStaging);
                 PopulateChartData();
             }
             catch (Exception ex) { ex.ProcessException(); }
@@ -76,8 +78,10 @@ namespace RealEstateManagementSystem.UserInterface.Root
 
         private void PopulateChartData()
         {
-            bllGlobal b = new bllGlobal();
-            b.StartDate = dtpDataDate.Value;
+            bllGlobal b = new bllGlobal
+            {
+                StartDate = dtpDataDate.Value
+            };
             b.GetSummaryDataForMainScreen();
             btnTotalCollection.Text = "Total Collection\n" + b.Collection.FormatAsMoney(true);
             btnUnitSold.Text = "Unit(s) Sold\n" + b.UnitSold.FormatAsMoney();
@@ -215,6 +219,18 @@ namespace RealEstateManagementSystem.UserInterface.Root
         private void tsmiClientReports_Click(object sender, EventArgs e)
         {
             try { generalReport = ShowOrActiveForm(generalReport, typeof(frmGeneralReports)) as frmGeneralReports; }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void tsmiProjectReports_Click(object sender, EventArgs e)
+        {
+            try { projectReport = ShowOrActiveForm(projectReport, typeof(frmProjectReports)) as frmProjectReports; }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void tsmiSummarizedSalesReport_Click(object sender, EventArgs e)
+        {
+            try { summarizedSalesReport = ShowOrActiveForm(summarizedSalesReport, typeof(frmSummarizedSalesReport)) as frmSummarizedSalesReport; }
             catch (Exception ex) { ex.ProcessException(); }
         }
     }

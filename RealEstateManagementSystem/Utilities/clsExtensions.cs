@@ -174,13 +174,16 @@ namespace RealEstateManagementSystem.Utilities
         public static Exception ProcessException(this Exception ex, ToolStripStatusLabel tssStatus = null)
         {
             string errMsgInitial = string.Empty;
+            int errorId = 0;
             if (!ex.GetType().IsAssignableFrom(typeof(ApplicationException)))
             {
-                clsCommonFunctions.LogError(ex);
-                errMsgInitial = !ex.GetType().IsAssignableFrom(typeof(SqlException)) ? Resources.strSystemErrorMessage : errMsgInitial = Resources.strFailedMessage;
+                errorId = clsCommonFunctions.LogError(ex);
+                errMsgInitial = !ex.GetType().IsAssignableFrom(typeof(SqlException))
+                                ? Resources.strSystemErrorMessage
+                                : errMsgInitial = Resources.strFailedMessage;
             }
             else { errMsgInitial = Resources.strFailedMessage; }
-            MessageBox.Show(errMsgInitial + ex.Message.ToString(), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(errMsgInitial + ex.Message.ToString() + (errorId > 0 ? " [ErrorId: " + errorId.ToString() + "]" : ""), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             if (tssStatus != null) { tssStatus.Text = Resources.strReadyStatus; }
             return ex;
         }

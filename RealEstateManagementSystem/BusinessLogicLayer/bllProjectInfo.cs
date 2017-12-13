@@ -70,6 +70,8 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         public string AvailableInDB { get; set; }
         public bool IsPilingNeeded { get; set; }
+
+
         public bool IsVisibleInWeb { get; set; }
         public bool IsCancelledProject { get; set; }
         #endregion
@@ -89,8 +91,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
 
         #region Building Specification
         public int SpecificationTypeId { get; set; }
+
+
         public string SpecificationType { get; set; }
         public string SpecificationDetails { get; set; }
+
         #endregion
 
         #region District/Area/Location
@@ -110,11 +115,16 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public int DownPayment { get; set; }
         public int UtilityConnectionFee { get; set; }
 
+
+
+
         #endregion
 
         #region UnitProperties
         public bool IsEditable { get; set; }
         public int UnitId { get; set; }
+
+
         public string UnitNumber { get; set; }
         public int UnitTypeId { get; set; }
         public string UnitType { get; set; }
@@ -125,6 +135,9 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public int FacingId { get; set; }
         public string Facing { get; set; }
         public int TypeOfUnitId { get; set; }
+
+
+
         public string TypeOfUnit { get; set; }
         public bool IsNumberEnabled { get; set; }
         public bool IsTypeEnabled { get; set; }
@@ -150,10 +163,18 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         {
             return dLayer.GetBlockedUnitOfProject(projectId);
         }
+
+        internal DataTable GetCommonPriceList(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            return dLayer.GetCommonPriceList(filterBy, filterCriteria);
+        }
+
         internal DataTable GetListOfProjectsWithBlockedUnit()
         {
             return dLayer.GetListOfProjectsWithBlockedUnit();
         }
+
+
 
         internal void PopulateProjectSpecificationTypes(ComboBox cmbProjectSpecificationType)
         {
@@ -165,11 +186,15 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
               cmbProjectSpecificationType);
         }
 
+        
+
         internal void GetAreaInfo()
         {
             dLayer.GetAreaInfo(this);
 
         }
+
+        
 
         internal void GetLocationInfo()
         {
@@ -248,6 +273,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         {
             clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT SignatoryId, Name FROM defSignatory", "Name", "SignatoryId", cmbSignatory);
         }
+
 
         internal void GetProjectDetails()
         {
@@ -437,6 +463,81 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         {
             return dLayer.GetListOfClientsByProjectId(projectId);
         }
+        internal DataSet GetRegistrationStatusOfProject(int projectId)
+        {
+            return dLayer.GetRegistrationStatusOfProject(projectId);
+        }
+        internal DataSet GetDeedOfAgreementsOfProject(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            return dLayer.GetDeedOfAgreementsOfProject(projectId, tssStatus);
+        }
+        internal DataTable GetGeneralStatusOfClient(int projectId)
+        {
+            return dLayer.GetGeneralStatusOfClient(projectId);
+        }
+        internal DataTable GetDueListOfProject(int projectId)
+        {
+            return dLayer.GetDueListOfProject(projectId);
+        }
+        internal DataTable GetDeductionAmountByProject(int projectId)
+        {
+            return dLayer.GetDeductionAmountByProject(projectId);
+        }
 
+        internal DataTable GetOralBookingOfProject(int projectId)
+        {
+            return dLayer.GetOralBookingOfProject(projectId);
+        }
+
+        internal DataTable GetListOfClientsByProjectId_WithUnitValue(int projectId)
+        {
+            return dLayer.GetListOfClientsByProjectId_WithUnitValue(projectId);
+        }
+        internal DataTable GetListOfClientsByProjectId_WithPayment(int projectId)
+        {
+            return dLayer.GetListOfClientsByProjectId_WithPayment(projectId);
+        }
+        internal DataTable GetListOfClientsByProjectId_WithPhotoAndSignature(int projectId, ToolStripStatusLabel tssStatus)
+        {
+            return dLayer.GetListOfClientsByProjectId_WithPhotoAndSignature(projectId);
+        }
+        internal DataTable PaymentDetailsOfClientsByProject(int projectId)
+        {
+            return dLayer.PaymentDetailsOfClientsByProject(projectId);
+        }
+        internal DataTable GetBookingPosition(int projectId)
+        {
+            return dLayer.GetBookingPosition(projectId);
+        }
+        internal DataTable GetPriceList(int projectId)
+        {
+            return dLayer.GetPriceList(projectId);
+        }
+        internal DataTable GetListOfLandOwners(int projectId)
+        {
+            return dLayer.GetListOfLandOwners(projectId);
+        }
+        internal DataTable GetCommonClientList(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            return dLayer.GetCommonClientList(filterBy, filterCriteria);
+        }
+        internal DataTable GetConsolidatedProjectSummary(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            return dLayer.GetConsolidatedProjectSummary(filterBy, filterCriteria);
+        }
+
+        internal DataTable GetProjectSummaryByStatus()
+        {
+            return dLayer.GetProjectSummaryByStatus();
+        }
+
+        internal DataTable SummaryCountByProject()
+        {
+            return dLayer.GetProjectSummaryByStatus();
+        }
+        internal DataTable GetFinancialSummaryOfProjects(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            return dLayer.GetFinancialSummaryOfProjects(filterBy, filterCriteria);
+        }
     }
 }

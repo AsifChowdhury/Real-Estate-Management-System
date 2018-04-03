@@ -1068,7 +1068,7 @@ namespace RealEstateManagementSystem.UserInterface.Clients
             cmbSaleOffer.Text = "N/A";
             cmbLoanProvider.Text = "N/A";
             cmbReferrer.Text = cmbSoldBy.Text = clsCommonFunctions.GetEmployeeNameFromLogInId();
-            clsCommonFunctions.PopulateListOfProjects(cmbProjectName);
+            clsCommonFunctions.PopulateListOfProjects(cmbProjectName, false);
 
         }
         #endregion

@@ -144,7 +144,7 @@
             // 
             this.tsmiClientInformation.Image = global::RealEstateManagementSystem.Properties.Resources.family_64;
             this.tsmiClientInformation.Name = "tsmiClientInformation";
-            this.tsmiClientInformation.Size = new System.Drawing.Size(235, 22);
+            this.tsmiClientInformation.Size = new System.Drawing.Size(256, 22);
             this.tsmiClientInformation.Text = "Client Information";
             this.tsmiClientInformation.Click += new System.EventHandler(this.tsmiClientInformation_Click);
             // 
@@ -153,7 +153,7 @@
             this.tsmiClientReports.Image = global::RealEstateManagementSystem.Properties.Resources.ClientReport1;
             this.tsmiClientReports.Name = "tsmiClientReports";
             this.tsmiClientReports.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmiClientReports.Size = new System.Drawing.Size(235, 22);
+            this.tsmiClientReports.Size = new System.Drawing.Size(256, 22);
             this.tsmiClientReports.Text = "General Reports";
             this.tsmiClientReports.Click += new System.EventHandler(this.tsmiClientReports_Click);
             // 
@@ -161,9 +161,9 @@
             // 
             this.tsmiSummarizedSalesReport.Image = global::RealEstateManagementSystem.Properties.Resources.rating;
             this.tsmiSummarizedSalesReport.Name = "tsmiSummarizedSalesReport";
-            this.tsmiSummarizedSalesReport.Size = new System.Drawing.Size(235, 22);
+            this.tsmiSummarizedSalesReport.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.tsmiSummarizedSalesReport.Size = new System.Drawing.Size(256, 22);
             this.tsmiSummarizedSalesReport.Text = "Summarized Sales Report";
-            this.tsmiSummarizedSalesReport.Visible = false;
             this.tsmiSummarizedSalesReport.Click += new System.EventHandler(this.tsmiSummarizedSalesReport_Click);
             // 
             // RecoverySection
@@ -182,16 +182,17 @@
             // 
             this.tsmiPayment.Image = global::RealEstateManagementSystem.Properties.Resources.payment;
             this.tsmiPayment.Name = "tsmiPayment";
-            this.tsmiPayment.Size = new System.Drawing.Size(152, 22);
+            this.tsmiPayment.Size = new System.Drawing.Size(123, 22);
             this.tsmiPayment.Text = "Payment";
             this.tsmiPayment.Click += new System.EventHandler(this.tsmiPayment_Click);
             // 
             // tsmiRecoveryReports
             // 
             this.tsmiRecoveryReports.Name = "tsmiRecoveryReports";
-            this.tsmiRecoveryReports.Size = new System.Drawing.Size(152, 22);
+            this.tsmiRecoveryReports.Size = new System.Drawing.Size(123, 22);
             this.tsmiRecoveryReports.Text = "Reports";
             this.tsmiRecoveryReports.Visible = false;
+            this.tsmiRecoveryReports.Click += new System.EventHandler(this.tsmiRecoveryReports_Click);
             // 
             // AccountsSection
             // 

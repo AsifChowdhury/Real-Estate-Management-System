@@ -10,5 +10,21 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=SA-LAPTOP-1\SQLEXPRESS;Initial Catalog=CentralDB;User ID=sa;Password=Bangladesh!^!@</Value>
     </Setting>
+    <Setting Name="CentralDBConnectionString1" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=SA-LAPTOP-01\SQLEXPRESS;Initial Catalog=CentralDB;Persist Security Info=True;User ID=sa;Password=Bangladesh!(&amp;amp;!&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=SA-LAPTOP-01\SQLEXPRESS;Initial Catalog=CentralDB;Persist Security Info=True;User ID=sa;Password=Bangladesh!(&amp;!</Value>
+    </Setting>
+    <Setting Name="CentralDBConnectionString2" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=SA-LAPTOP-2\SQLEXPRESS;Initial Catalog=CentralDB;Persist Security Info=True;User ID=sa;Password=Bangladesh!^!@&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=SA-LAPTOP-2\SQLEXPRESS;Initial Catalog=CentralDB;Persist Security Info=True;User ID=sa;Password=Bangladesh!^!@</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

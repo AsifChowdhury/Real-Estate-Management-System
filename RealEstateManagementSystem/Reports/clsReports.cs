@@ -40,6 +40,8 @@ namespace RealEstateManagementSystem.Reports
             else { throw new ApplicationException(Resources.strNoData); }
         }
 
+
+
         internal static void GetOralBookingOfProject(int projectId, ToolStripStatusLabel tssStatus)
         {
             bllProjectInfo p = new bllProjectInfo();
@@ -54,6 +56,8 @@ namespace RealEstateManagementSystem.Reports
             }
             else { throw new ApplicationException(Resources.strNoData); }
         }
+
+
 
         internal static void ListOfLandOwners(int projectId, ToolStripStatusLabel tssStatus)
         {
@@ -82,6 +86,8 @@ namespace RealEstateManagementSystem.Reports
             }
             else { throw new ApplicationException(Resources.strNoData); }
         }
+
+
 
         internal static void PriceList(int projectId, ToolStripStatusLabel tssStatus)
         {
@@ -139,6 +145,20 @@ namespace RealEstateManagementSystem.Reports
             }
             else { throw new ApplicationException(Resources.strNoData); }
 
+        }
+
+        internal static void GetListOfBlockedUnits(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, ToolStripStatusLabel tssStatus)
+        {
+            bllProjectInfo blockedUnits = new bllProjectInfo();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = blockedUnits.GetListOfBlockedUnits(searchBy, filterBy, filterCriteria);
+            if (dt.Rows.Count > 0)
+            {
+                Projects.crptListOfBlockedUnits rpt = new Projects.crptListOfBlockedUnits();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Blocked Units", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
         }
 
         internal static void GetCommonClientList(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria, ToolStripStatusLabel tssStatus)
@@ -303,7 +323,7 @@ namespace RealEstateManagementSystem.Reports
             else { throw new ApplicationException(Resources.strNoData); }
         }
         #endregion
-        
+
         #region Transactional Reports
         public static void MoneyReceipt(int transactionId, bool isDuplicate, ToolStripStatusLabel tssStatus)
         {
@@ -398,7 +418,6 @@ namespace RealEstateManagementSystem.Reports
             bllClientInfo paymentSchedule = new bllClientInfo();
             tssStatus.Text = Resources.strCollectingData;
             DataTable dt = new DataTable();
-
             dt = paymentSchedule.GetPaymentSchedule(clientIds).Tables[0];
             if (withPaymentStatus == true)
             {
@@ -474,7 +493,6 @@ namespace RealEstateManagementSystem.Reports
                 rptAckReceipt.SetDataSource(dt);
                 rptAckReceipt.DataDefinition.FormulaFields["Designation"].Text = "'" + clsGlobalClass.userDesignation + "'";
                 clsCommonFunctions.ShowReport(rptAckReceipt, tssStatus, true, true, "Registration Acknowledgement Receipt");
-                tssStatus.Text = Resources.strReadyStatus;
             }
             else { throw new ApplicationException(Resources.strNoData); }
 
@@ -492,16 +510,144 @@ namespace RealEstateManagementSystem.Reports
                 Clients.crptAllotmentLetter rptAllotmentLetter = new Clients.crptAllotmentLetter();
                 rptAllotmentLetter.SetDataSource(dt);
                 clsCommonFunctions.ShowReport(rptAllotmentLetter, tssStatus, false, false, "Allotment Letter");
-                tssStatus.Text = Resources.strReadyStatus;
             }
             else { throw new ApplicationException(Resources.strNoData); }
         }
         #endregion
 
         #region Summarized Sales Report
-        internal static void PictorialDepictionOfSalesStatus(DateTime value1, DateTime value2, ToolStripStatusLabel tssStatus)
+        internal static void PictorialDepictionOfSalesStatus(DateTime startDate, DateTime endDate, ToolStripStatusLabel tssStatus)
         {
+            if (startDate > endDate) throw new ApplicationException("Report End Date (" + endDate.ToString().ShowAsStandardDateFormat() + ") MUST be greater than the Start Date (" + startDate.ToString().ShowAsStandardDateFormat() + ")");
+            tssStatus.Text = Resources.strCollectingData;
+            bllSummarizedSalesReport sales = new bllSummarizedSalesReport();
+            DataTable dt = sales.GetPictorialDepictionOfSalesStatus(startDate, endDate);
+            if (dt.Rows.Count > 0)
+            {
+                SummarizedSales.crptPictorialDepictionOfSalesStatus rpt = new SummarizedSales.crptPictorialDepictionOfSalesStatus();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Sales and Collection Status", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
 
+        internal static void SalesPosition(DateTime startDate, DateTime endDate, ToolStripStatusLabel tssStatus, bool IsISOFormat)
+        {
+            if (startDate > endDate) throw new ApplicationException("Report End Date (" + endDate.ToString().ShowAsStandardDateFormat() + ") MUST be greater than the Start Date (" + startDate.ToString().ShowAsStandardDateFormat() + ")");
+            tssStatus.Text = Resources.strCollectingData;
+            bllSummarizedSalesReport sales = new bllSummarizedSalesReport();
+            DataTable dt = sales.GetSalesPosition_Details(startDate, endDate);
+            CrystalDecisions.CrystalReports.Engine.ReportDocument rpt = new CrystalDecisions.CrystalReports.Engine.ReportDocument();
+            if (dt.Rows.Count > 0)
+            {
+                if (IsISOFormat == true) { rpt = new SummarizedSales.crptSalesPosition_ISOFormat(); }
+                else { rpt = new SummarizedSales.crptSalesPositionDetails(); }
+                rpt.DataDefinition.FormulaFields["StartDate"].Text = "'" + startDate.ToString().ShowAsStandardDateFormat() + "'";
+                rpt.DataDefinition.FormulaFields["EndDate"].Text = "'" + endDate.ToString().ShowAsStandardDateFormat() + "'";
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Sales position details between " + startDate.ToString().ShowAsStandardDateFormat() + " & " + endDate.ToString().ShowAsStandardDateFormat() + ".", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+
+        }
+
+        internal static void GetSummarizedSalesReport(DateTime startDate, DateTime endDate, ToolStripStatusLabel tssStatus)
+        {
+            if (startDate > endDate) { throw new ApplicationException("Report End Date (" + endDate.ToString().ShowAsStandardDateFormat() + ") MUST be greater than the Start Date (" + startDate.ToString().ShowAsStandardDateFormat() + ")"); }
+            tssStatus.Text = Resources.strCollectingData;
+            bllSummarizedSalesReport summary = new bllSummarizedSalesReport();
+            DataTable dt = summary.GetSummarizedSalesReport(startDate, endDate);
+            if (dt.Rows.Count > 0)
+            {
+                SummarizedSales.crptSummarizedSalesReport rpt = new SummarizedSales.crptSummarizedSalesReport();
+                rpt.DataDefinition.FormulaFields["StartDate"].Text = "'" + startDate.ToString().ShowAsStandardDateFormat() + "'";
+                rpt.DataDefinition.FormulaFields["EndDate"].Text = "'" + endDate.ToString().ShowAsStandardDateFormat() + "'";
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Summarized Sales Report between " + startDate.ToString().ShowAsStandardDateFormat() + " & " + endDate.ToString().ShowAsStandardDateFormat() + ".", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void GetAnnualSalesPosition(int salesYear, ToolStripStatusLabel tssStatus)
+        {
+            bllSummarizedSalesReport annualStatus = new bllSummarizedSalesReport();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = annualStatus.GetAnnualSalesPosition(salesYear);
+            if (dt.Rows.Count > 0)
+            {
+                SummarizedSales.crptAnnualSalesSummary rpt = new SummarizedSales.crptAnnualSalesSummary();
+                rpt.DataDefinition.FormulaFields["SaleYear"].Text = "'" + salesYear.ToString() + "'";
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Annual Sales Position for the Year of " + salesYear.ToString(), true);
+            }
+            else { throw new Exception(Resources.strNoData); }
+        }
+
+        internal static void GetSummaryOfSales(int salesYear, ToolStripStatusLabel tssStatus)
+        {
+            bllSummarizedSalesReport summaryOfSales = new bllSummarizedSalesReport();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = summaryOfSales.GetSummaryOfSales(salesYear);
+            if (dt.Rows.Count > 0)
+            {
+                SummarizedSales.crptSummaryOfSales rpt = new SummarizedSales.crptSummaryOfSales();
+                //rpt.DataDefinition.FormulaFields["SaleYear"].Text = "'" + salesYear.ToString() + "'";
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Summary of Sales for the Year of " + salesYear.ToString(), true);
+            }
+            else { throw new Exception(Resources.strNoData); }
+        }
+
+        internal static void GetListOfCanceledClients(bool isBookingDate, DateTime startDate, DateTime endDate, ToolStripStatusLabel tssStatus)
+        {
+            bllSummarizedSalesReport cancelClients = new bllSummarizedSalesReport();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = cancelClients.GetListOfCanceledClients(isBookingDate, startDate, endDate);
+            if (dt.Rows.Count > 0)
+            {
+                SummarizedSales.crptListOfCanceledClients rpt = new SummarizedSales.crptListOfCanceledClients();
+                rpt.SetDataSource(dt);
+                string dateBase = isBookingDate == true ? "Booking date" : "Cancel Date";
+                string strCaption = "List of Canceled Clients (" + dateBase + " between " + startDate.ToString().ShowAsStandardDateFormat() + " and " + endDate.ToString().ShowAsStandardDateFormat();
+                rpt.SummaryInfo.ReportTitle = strCaption;
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, strCaption, true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        /// <summary>
+        /// Get collection summary of project
+        /// </summary>
+        /// <param name="searchBy">Summary or Project</param>
+        /// <param name="filterCriteria">Selected items from a listbox (use clsCommonFunctions.convertToCommaSeperatedValue function)</param>
+        /// <param name="filterBy">0-Selected Projects, 1- ProjectStats, 2-District, 3-Area, 4-Location, 5-ProjectType</param>
+        /// <param name="tssStatus"></param>
+        internal static void GetCollectionsOfProject(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, ToolStripStatusLabel tssStatus)
+        {
+            bllSummarizedSalesReport projectCollection = new bllSummarizedSalesReport();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = projectCollection.GetCollectionsOfProject(searchBy, filterCriteria, filterBy);
+            if (dt.Rows.Count > 0)
+            {
+                SummarizedSales.crptCollectionOfProjects rpt = new SummarizedSales.crptCollectionOfProjects();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Project Collection", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
+        }
+
+        internal static void GetSummarizedSalesStatus(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, ToolStripStatusLabel tssStatus)
+        {
+            bllSummarizedSalesReport status = new bllSummarizedSalesReport();
+            tssStatus.Text = Resources.strCollectingData;
+            DataTable dt = status.GetSummarizedSalesStatus(searchBy, filterCriteria, filterBy);
+            if (dt.Rows.Count > 0)
+            {
+                SummarizedSales.crptSummarizedSalesStatus rpt = new SummarizedSales.crptSummarizedSalesStatus();
+                rpt.SetDataSource(dt);
+                clsCommonFunctions.ShowReport(rpt, tssStatus, true, true, "Summarized Sales Status", true);
+            }
+            else { throw new ApplicationException(Resources.strNoData); }
         }
         #endregion
     }

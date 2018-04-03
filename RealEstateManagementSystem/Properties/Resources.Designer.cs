@@ -19,7 +19,7 @@ namespace RealEstateManagementSystem.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -906,15 +906,6 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to *****THIS IS A COMPUTER GENERATED REPORT*****.
-        /// </summary>
-        internal static string strCGRBoxDialog {
-            get {
-                return ResourceManager.GetString("strCGRBoxDialog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Collecting Data....
         /// </summary>
         internal static string strCollectingData {
@@ -1057,6 +1048,15 @@ namespace RealEstateManagementSystem.Properties {
         internal static string strUpdateConfirmation {
             get {
                 return ResourceManager.GetString("strUpdateConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0 Record(s) Found.
+        /// </summary>
+        internal static string strZeroRecordsFound {
+            get {
+                return ResourceManager.GetString("strZeroRecordsFound", resourceCulture);
             }
         }
         

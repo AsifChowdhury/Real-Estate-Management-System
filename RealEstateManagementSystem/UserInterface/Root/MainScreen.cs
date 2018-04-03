@@ -233,5 +233,10 @@ namespace RealEstateManagementSystem.UserInterface.Root
             try { summarizedSalesReport = ShowOrActiveForm(summarizedSalesReport, typeof(frmSummarizedSalesReport)) as frmSummarizedSalesReport; }
             catch (Exception ex) { ex.ProcessException(); }
         }
+
+        private void tsmiRecoveryReports_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

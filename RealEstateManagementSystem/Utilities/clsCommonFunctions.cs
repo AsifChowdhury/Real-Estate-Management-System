@@ -25,10 +25,34 @@ namespace RealEstateManagementSystem.Utilities
         #region Common Variables
         private static bool blnValidEmail = false;
 
-        
+
         #endregion
 
         #region Common Use
+
+        internal static string convertToCommaSeperatedValue(ListView lvControl, int columnIndex = 0)
+        {
+            StringBuilder strReturnValue = new StringBuilder();
+            if (columnIndex > 0)
+            {
+                for (int i = 0; i < lvControl.Items.Count; i++)
+                {
+                    if (lvControl.Items[i].Checked == true)
+                        strReturnValue.Append(lvControl.Items[i].SubItems[columnIndex].Text.ToString() + ',');
+                }
+            }
+            else
+            {
+                for (int i = 0; i < lvControl.Items.Count; i++)
+                {
+                    if (lvControl.Items[i].Checked == true)
+                        strReturnValue.Append(lvControl.Items[i].Text.ToString().ToString() + ',');
+                }
+            }
+
+            return strReturnValue.ToString().TrimEnd(',');
+        }
+
         internal static int GetNumericPartOfFullClientId(string fullClientId)
         {
             int clientId = 0;
@@ -143,6 +167,23 @@ namespace RealEstateManagementSystem.Utilities
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
+        internal static DataTable GetListOfProjectsByStatus(string strProjectStatuses)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfProjectsByStatus";
+                cmd.Parameters.AddWithValue("@status", strProjectStatuses);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
 
         internal static string GetEmployeeNameFromLogInId()
         {
@@ -217,6 +258,16 @@ namespace RealEstateManagementSystem.Utilities
             catch (Exception) { throw; }
         }
 
+
+        internal static void ResetRadioButtons(Control root, bool isChecked = false, params RadioButton[] except)
+        {
+            try
+            {
+                var source = GetAllChildren(root).OfType<RadioButton>().Where(ctrl => !except.Contains(ctrl));
+                foreach (RadioButton rb in source) rb.Checked = isChecked;
+            }
+            catch (Exception) { throw; }
+        }
 
         internal static void ResetTextBoxes(Control root, string resetWith = "", params TextBox[] except)
         {
@@ -552,8 +603,9 @@ namespace RealEstateManagementSystem.Utilities
                         emptyRow[displayMember] = addAStringOnTop;
                         if (valueMember != string.Empty) emptyRow[valueMember] = 0;
                         ds.Tables[0].Rows.Add(emptyRow);
-                        ds.Tables[0].DefaultView.Sort = displayMember;
+
                     }
+                    ds.Tables[0].DefaultView.Sort = displayMember;
                     cmb.DisplayMember = displayMember;
                     if (valueMember != string.Empty) cmb.ValueMember = valueMember;
                     SetComboBoxWidth(cmb);
@@ -761,8 +813,8 @@ namespace RealEstateManagementSystem.Utilities
             Reports.frmReportViewer frmReport = new Reports.frmReportViewer();
             if (includeCompanyBanner == true) reportDocumnent.Subreports[0].SetDataSource(clsCommonFunctions.CompanyInformation());
             if (passPrintedBy == true) reportDocumnent.DataDefinition.FormulaFields["PrintedBy"].Text = "'" + clsGlobalClass.userFullName + "'";
-            if (showCGRBox == true) reportDocumnent.DataDefinition.FormulaFields["ShowCGRBox"].Text = "'" + Resources.strCGRBoxDialog + "'";
-            
+            if (showCGRBox == true) reportDocumnent.DataDefinition.FormulaFields["ShowCGRBox"].Text = "'" + ConfigurationManager.AppSettings["strCGRBoxDialog"].ToString() + "'";
+
             frmReport.crptMasterReport.ReportSource = reportDocumnent;
             frmReport.crptMasterReport.Zoom(100);
             tssStatus.Text = Resources.strPreparingData;
@@ -823,6 +875,15 @@ namespace RealEstateManagementSystem.Utilities
             cmbProjectName.AutoCompleteSource = AutoCompleteSource.ListItems;
             PopulateComboboxWithDisplayAndValueMember("SELECT ProjectId, ProjectName FROM ProjectInfo ORDER BY ProjectName", "ProjectName", "ProjectId", true, cmbProjectName);
         }
+
+        internal static void PopulateListOfProjects(ComboBox cmbProjectName, string addAllAsString = "All")
+        {
+            DataAccessLayer.dalProjectInfo d = new DataAccessLayer.dalProjectInfo();
+            cmbProjectName.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cmbProjectName.AutoCompleteSource = AutoCompleteSource.ListItems;
+            PopulateComboboxWithDisplayAndValueMember("SELECT ProjectId, ProjectName FROM ProjectInfo ORDER BY ProjectName", "ProjectName", "ProjectId", addAllAsString, cmbProjectName);
+        }
+
 
         internal static void PopulateListOfProjects(ComboBox cmbProjectName, clsGlobalClass.ProjectStatus projectStatus, bool addAnEmptyLine = false)
         {

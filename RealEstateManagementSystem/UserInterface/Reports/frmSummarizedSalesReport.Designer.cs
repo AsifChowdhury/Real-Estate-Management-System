@@ -38,7 +38,7 @@
             this.rbSalesPosition_Details = new System.Windows.Forms.RadioButton();
             this.rbSalesPosition_ISO = new System.Windows.Forms.RadioButton();
             this.rbSummarizedSalesReport = new System.Windows.Forms.RadioButton();
-            this.rbSummarizedSalesReport_ByYear = new System.Windows.Forms.RadioButton();
+            this.rbAnnualSalesPosition = new System.Windows.Forms.RadioButton();
             this.rbTargetAchievement_ByYear = new System.Windows.Forms.RadioButton();
             this.rbSummaryOfSales_ByYear = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
@@ -50,16 +50,23 @@
             this.dtpCU_EndDate = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
             this.dtpCU_StartDate = new System.Windows.Forms.DateTimePicker();
-            this.rbDetailsOfCancelledUnits = new System.Windows.Forms.RadioButton();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cmbProjectName = new System.Windows.Forms.ComboBox();
-            this.rbCollectionOfProject = new System.Windows.Forms.RadioButton();
-            this.rbSummarizedSalesStatus_ByProject = new System.Windows.Forms.RadioButton();
+            this.rbCanceledClientList = new System.Windows.Forms.RadioButton();
             this.label11 = new System.Windows.Forms.Label();
             this.btnShowReport = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.rectangleShape3 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rbSummarizedSalesStatus_ByProject = new System.Windows.Forms.RadioButton();
+            this.rbCollectionOfProject = new System.Windows.Forms.RadioButton();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lvProjectStatus = new System.Windows.Forms.ListView();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lvProjects = new System.Windows.Forms.ListView();
+            this.lblProjectCount = new System.Windows.Forms.Label();
+            this.rbBlockedUnits = new System.Windows.Forms.RadioButton();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -152,20 +159,20 @@
             this.rbSummarizedSalesReport.Text = "(QF-SAL-07) Summarized Sales Report";
             this.rbSummarizedSalesReport.UseVisualStyleBackColor = true;
             // 
-            // rbSummarizedSalesReport_ByYear
+            // rbAnnualSalesPosition
             // 
-            this.rbSummarizedSalesReport_ByYear.AutoSize = true;
-            this.rbSummarizedSalesReport_ByYear.Location = new System.Drawing.Point(28, 176);
-            this.rbSummarizedSalesReport_ByYear.Name = "rbSummarizedSalesReport_ByYear";
-            this.rbSummarizedSalesReport_ByYear.Size = new System.Drawing.Size(235, 17);
-            this.rbSummarizedSalesReport_ByYear.TabIndex = 3;
-            this.rbSummarizedSalesReport_ByYear.Text = "(QF-SAL-05) Summarized Sales Report";
-            this.rbSummarizedSalesReport_ByYear.UseVisualStyleBackColor = true;
+            this.rbAnnualSalesPosition.AutoSize = true;
+            this.rbAnnualSalesPosition.Location = new System.Drawing.Point(28, 162);
+            this.rbAnnualSalesPosition.Name = "rbAnnualSalesPosition";
+            this.rbAnnualSalesPosition.Size = new System.Drawing.Size(223, 17);
+            this.rbAnnualSalesPosition.TabIndex = 3;
+            this.rbAnnualSalesPosition.Text = "(QF-SAL-05) Annual Sales Position";
+            this.rbAnnualSalesPosition.UseVisualStyleBackColor = true;
             // 
             // rbTargetAchievement_ByYear
             // 
             this.rbTargetAchievement_ByYear.AutoSize = true;
-            this.rbTargetAchievement_ByYear.Location = new System.Drawing.Point(28, 199);
+            this.rbTargetAchievement_ByYear.Location = new System.Drawing.Point(28, 185);
             this.rbTargetAchievement_ByYear.Name = "rbTargetAchievement_ByYear";
             this.rbTargetAchievement_ByYear.Size = new System.Drawing.Size(253, 17);
             this.rbTargetAchievement_ByYear.TabIndex = 3;
@@ -175,7 +182,7 @@
             // rbSummaryOfSales_ByYear
             // 
             this.rbSummaryOfSales_ByYear.AutoSize = true;
-            this.rbSummaryOfSales_ByYear.Location = new System.Drawing.Point(28, 222);
+            this.rbSummaryOfSales_ByYear.Location = new System.Drawing.Point(28, 208);
             this.rbSummaryOfSales_ByYear.Name = "rbSummaryOfSales_ByYear";
             this.rbSummaryOfSales_ByYear.Size = new System.Drawing.Size(121, 17);
             this.rbSummaryOfSales_ByYear.TabIndex = 3;
@@ -187,7 +194,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label4.Location = new System.Drawing.Point(15, 160);
+            this.label4.Location = new System.Drawing.Point(17, 146);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(121, 13);
             this.label4.TabIndex = 1;
@@ -196,7 +203,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(286, 188);
+            this.label5.Location = new System.Drawing.Point(286, 174);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(97, 13);
             this.label5.TabIndex = 1;
@@ -204,8 +211,9 @@
             // 
             // cmbSalesYear
             // 
+            this.cmbSalesYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSalesYear.FormattingEnabled = true;
-            this.cmbSalesYear.Location = new System.Drawing.Point(289, 204);
+            this.cmbSalesYear.Location = new System.Drawing.Point(289, 190);
             this.cmbSalesYear.Name = "cmbSalesYear";
             this.cmbSalesYear.Size = new System.Drawing.Size(87, 21);
             this.cmbSalesYear.TabIndex = 5;
@@ -215,7 +223,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label6.Location = new System.Drawing.Point(15, 258);
+            this.label6.Location = new System.Drawing.Point(17, 232);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(193, 13);
             this.label6.TabIndex = 1;
@@ -223,8 +231,12 @@
             // 
             // cmbDateBy
             // 
+            this.cmbDateBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDateBy.FormattingEnabled = true;
-            this.cmbDateBy.Location = new System.Drawing.Point(47, 296);
+            this.cmbDateBy.Items.AddRange(new object[] {
+            "Booking Date",
+            "Cancel Date"});
+            this.cmbDateBy.Location = new System.Drawing.Point(51, 270);
             this.cmbDateBy.Name = "cmbDateBy";
             this.cmbDateBy.Size = new System.Drawing.Size(121, 21);
             this.cmbDateBy.TabIndex = 6;
@@ -232,7 +244,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(170, 301);
+            this.label7.Location = new System.Drawing.Point(174, 275);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 1;
@@ -242,7 +254,7 @@
             // 
             this.dtpCU_EndDate.CustomFormat = "dd-MMM-yyyy";
             this.dtpCU_EndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCU_EndDate.Location = new System.Drawing.Point(238, 325);
+            this.dtpCU_EndDate.Location = new System.Drawing.Point(242, 299);
             this.dtpCU_EndDate.Name = "dtpCU_EndDate";
             this.dtpCU_EndDate.Size = new System.Drawing.Size(107, 20);
             this.dtpCU_EndDate.TabIndex = 2;
@@ -250,7 +262,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(219, 329);
+            this.label8.Location = new System.Drawing.Point(223, 303);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(13, 13);
             this.label8.TabIndex = 1;
@@ -260,75 +272,27 @@
             // 
             this.dtpCU_StartDate.CustomFormat = "dd-MMM-yyyy";
             this.dtpCU_StartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCU_StartDate.Location = new System.Drawing.Point(106, 325);
+            this.dtpCU_StartDate.Location = new System.Drawing.Point(110, 299);
             this.dtpCU_StartDate.Name = "dtpCU_StartDate";
             this.dtpCU_StartDate.Size = new System.Drawing.Size(107, 20);
             this.dtpCU_StartDate.TabIndex = 1;
             // 
-            // rbDetailsOfCancelledUnits
+            // rbCanceledClientList
             // 
-            this.rbDetailsOfCancelledUnits.AutoSize = true;
-            this.rbDetailsOfCancelledUnits.Location = new System.Drawing.Point(28, 277);
-            this.rbDetailsOfCancelledUnits.Name = "rbDetailsOfCancelledUnits";
-            this.rbDetailsOfCancelledUnits.Size = new System.Drawing.Size(163, 17);
-            this.rbDetailsOfCancelledUnits.TabIndex = 3;
-            this.rbDetailsOfCancelledUnits.Text = "Details list of unit(s)";
-            this.rbDetailsOfCancelledUnits.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label9.Location = new System.Drawing.Point(15, 367);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(79, 13);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Project Data";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(27, 386);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(85, 13);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "Project Name:";
-            // 
-            // cmbProjectName
-            // 
-            this.cmbProjectName.FormattingEnabled = true;
-            this.cmbProjectName.Location = new System.Drawing.Point(117, 383);
-            this.cmbProjectName.Name = "cmbProjectName";
-            this.cmbProjectName.Size = new System.Drawing.Size(234, 21);
-            this.cmbProjectName.TabIndex = 6;
-            // 
-            // rbCollectionOfProject
-            // 
-            this.rbCollectionOfProject.AutoSize = true;
-            this.rbCollectionOfProject.Location = new System.Drawing.Point(28, 410);
-            this.rbCollectionOfProject.Name = "rbCollectionOfProject";
-            this.rbCollectionOfProject.Size = new System.Drawing.Size(151, 17);
-            this.rbCollectionOfProject.TabIndex = 3;
-            this.rbCollectionOfProject.Text = "Collection of Project";
-            this.rbCollectionOfProject.UseVisualStyleBackColor = true;
-            // 
-            // rbSummarizedSalesStatus_ByProject
-            // 
-            this.rbSummarizedSalesStatus_ByProject.AutoSize = true;
-            this.rbSummarizedSalesStatus_ByProject.Location = new System.Drawing.Point(28, 433);
-            this.rbSummarizedSalesStatus_ByProject.Name = "rbSummarizedSalesStatus_ByProject";
-            this.rbSummarizedSalesStatus_ByProject.Size = new System.Drawing.Size(235, 17);
-            this.rbSummarizedSalesStatus_ByProject.TabIndex = 3;
-            this.rbSummarizedSalesStatus_ByProject.Text = "(QF-SAL-06) Summarized Sales Status";
-            this.rbSummarizedSalesStatus_ByProject.UseVisualStyleBackColor = true;
+            this.rbCanceledClientList.AutoSize = true;
+            this.rbCanceledClientList.Location = new System.Drawing.Point(32, 251);
+            this.rbCanceledClientList.Name = "rbCanceledClientList";
+            this.rbCanceledClientList.Size = new System.Drawing.Size(163, 17);
+            this.rbCanceledClientList.TabIndex = 3;
+            this.rbCanceledClientList.Text = "Details list of unit(s)";
+            this.rbCanceledClientList.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label11.Location = new System.Drawing.Point(15, 12);
+            this.label11.Location = new System.Drawing.Point(17, 12);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(79, 13);
             this.label11.TabIndex = 1;
@@ -336,9 +300,10 @@
             // 
             // btnShowReport
             // 
+            this.btnShowReport.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnShowReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnShowReport.Image = global::RealEstateManagementSystem.Properties.Resources.rating;
-            this.btnShowReport.Location = new System.Drawing.Point(285, 447);
+            this.btnShowReport.Location = new System.Drawing.Point(854, 312);
             this.btnShowReport.Name = "btnShowReport";
             this.btnShowReport.Size = new System.Drawing.Size(98, 58);
             this.btnShowReport.TabIndex = 7;
@@ -352,10 +317,10 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 526);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 378);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip1.Size = new System.Drawing.Size(401, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(958, 22);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -363,10 +328,129 @@
             // 
             this.tssStatus.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.tssStatus.Name = "tssStatus";
-            this.tssStatus.Size = new System.Drawing.Size(386, 17);
+            this.tssStatus.Size = new System.Drawing.Size(943, 17);
             this.tssStatus.Spring = true;
             this.tssStatus.Text = "Ready";
             this.tssStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // shapeContainer1
+            // 
+            this.shapeContainer1.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer1.Name = "shapeContainer1";
+            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.rectangleShape3,
+            this.rectangleShape2,
+            this.rectangleShape1});
+            this.shapeContainer1.Size = new System.Drawing.Size(958, 400);
+            this.shapeContainer1.TabIndex = 9;
+            this.shapeContainer1.TabStop = false;
+            // 
+            // rectangleShape3
+            // 
+            this.rectangleShape3.Location = new System.Drawing.Point(11, 240);
+            this.rectangleShape3.Name = "rectangleShape3";
+            this.rectangleShape3.Size = new System.Drawing.Size(373, 88);
+            // 
+            // rectangleShape2
+            // 
+            this.rectangleShape2.Location = new System.Drawing.Point(11, 153);
+            this.rectangleShape2.Name = "rectangleShape2";
+            this.rectangleShape2.Size = new System.Drawing.Size(373, 75);
+            // 
+            // rectangleShape1
+            // 
+            this.rectangleShape1.Location = new System.Drawing.Point(11, 19);
+            this.rectangleShape1.Name = "rectangleShape1";
+            this.rectangleShape1.Size = new System.Drawing.Size(373, 115);
+            // 
+            // rbSummarizedSalesStatus_ByProject
+            // 
+            this.rbSummarizedSalesStatus_ByProject.AutoSize = true;
+            this.rbSummarizedSalesStatus_ByProject.Location = new System.Drawing.Point(392, 297);
+            this.rbSummarizedSalesStatus_ByProject.Name = "rbSummarizedSalesStatus_ByProject";
+            this.rbSummarizedSalesStatus_ByProject.Size = new System.Drawing.Size(235, 17);
+            this.rbSummarizedSalesStatus_ByProject.TabIndex = 3;
+            this.rbSummarizedSalesStatus_ByProject.Text = "(QF-SAL-06) Summarized Sales Status";
+            this.rbSummarizedSalesStatus_ByProject.UseVisualStyleBackColor = true;
+            // 
+            // rbCollectionOfProject
+            // 
+            this.rbCollectionOfProject.AutoSize = true;
+            this.rbCollectionOfProject.Location = new System.Drawing.Point(392, 274);
+            this.rbCollectionOfProject.Name = "rbCollectionOfProject";
+            this.rbCollectionOfProject.Size = new System.Drawing.Size(151, 17);
+            this.rbCollectionOfProject.TabIndex = 3;
+            this.rbCollectionOfProject.Text = "Collection of Project";
+            this.rbCollectionOfProject.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(392, 3);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(97, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Project Status:";
+            // 
+            // lvProjectStatus
+            // 
+            this.lvProjectStatus.BackColor = System.Drawing.Color.SteelBlue;
+            this.lvProjectStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvProjectStatus.CheckBoxes = true;
+            this.lvProjectStatus.ForeColor = System.Drawing.Color.LightCyan;
+            this.lvProjectStatus.FullRowSelect = true;
+            this.lvProjectStatus.GridLines = true;
+            this.lvProjectStatus.Location = new System.Drawing.Point(392, 19);
+            this.lvProjectStatus.Name = "lvProjectStatus";
+            this.lvProjectStatus.Size = new System.Drawing.Size(178, 249);
+            this.lvProjectStatus.TabIndex = 1;
+            this.lvProjectStatus.UseCompatibleStateImageBehavior = false;
+            this.lvProjectStatus.View = System.Windows.Forms.View.List;
+            this.lvProjectStatus.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvProjectStatus_ItemChecked);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(576, 4);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(121, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "List of Project(s):";
+            // 
+            // lvProjects
+            // 
+            this.lvProjects.BackColor = System.Drawing.Color.SteelBlue;
+            this.lvProjects.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvProjects.CheckBoxes = true;
+            this.lvProjects.ForeColor = System.Drawing.Color.LightCyan;
+            this.lvProjects.FullRowSelect = true;
+            this.lvProjects.GridLines = true;
+            this.lvProjects.Location = new System.Drawing.Point(576, 19);
+            this.lvProjects.Name = "lvProjects";
+            this.lvProjects.Size = new System.Drawing.Size(376, 272);
+            this.lvProjects.TabIndex = 1;
+            this.lvProjects.UseCompatibleStateImageBehavior = false;
+            this.lvProjects.View = System.Windows.Forms.View.List;
+            // 
+            // lblProjectCount
+            // 
+            this.lblProjectCount.AutoSize = true;
+            this.lblProjectCount.Location = new System.Drawing.Point(837, 294);
+            this.lblProjectCount.Name = "lblProjectCount";
+            this.lblProjectCount.Size = new System.Drawing.Size(115, 13);
+            this.lblProjectCount.TabIndex = 2;
+            this.lblProjectCount.Text = "0 Project(s) Found";
+            // 
+            // rbBlockedUnits
+            // 
+            this.rbBlockedUnits.AutoSize = true;
+            this.rbBlockedUnits.Location = new System.Drawing.Point(392, 320);
+            this.rbBlockedUnits.Name = "rbBlockedUnits";
+            this.rbBlockedUnits.Size = new System.Drawing.Size(163, 17);
+            this.rbBlockedUnits.TabIndex = 10;
+            this.rbBlockedUnits.Text = "List of Blocked Unit(s)";
+            this.rbBlockedUnits.UseVisualStyleBackColor = true;
             // 
             // frmSummarizedSalesReport
             // 
@@ -374,18 +458,23 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
-            this.ClientSize = new System.Drawing.Size(401, 548);
-            this.Controls.Add(this.statusStrip1);
+            this.ClientSize = new System.Drawing.Size(958, 400);
+            this.Controls.Add(this.rbBlockedUnits);
+            this.Controls.Add(this.lblProjectCount);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.lvProjects);
+            this.Controls.Add(this.rbSummarizedSalesStatus_ByProject);
+            this.Controls.Add(this.rbCollectionOfProject);
+            this.Controls.Add(this.lvProjectStatus);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.btnShowReport);
-            this.Controls.Add(this.cmbProjectName);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.cmbDateBy);
             this.Controls.Add(this.cmbSalesYear);
-            this.Controls.Add(this.rbCollectionOfProject);
-            this.Controls.Add(this.rbSummarizedSalesStatus_ByProject);
-            this.Controls.Add(this.rbDetailsOfCancelledUnits);
+            this.Controls.Add(this.rbCanceledClientList);
             this.Controls.Add(this.rbSummaryOfSales_ByYear);
             this.Controls.Add(this.rbTargetAchievement_ByYear);
-            this.Controls.Add(this.rbSummarizedSalesReport_ByYear);
+            this.Controls.Add(this.rbAnnualSalesPosition);
             this.Controls.Add(this.rbSummarizedSalesReport);
             this.Controls.Add(this.rbSalesPosition_ISO);
             this.Controls.Add(this.dtpCU_StartDate);
@@ -399,12 +488,11 @@
             this.Controls.Add(this.dtpSR_EndDate);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.shapeContainer1);
             this.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.LightCyan;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -432,7 +520,7 @@
         private System.Windows.Forms.RadioButton rbSalesPosition_Details;
         private System.Windows.Forms.RadioButton rbSalesPosition_ISO;
         private System.Windows.Forms.RadioButton rbSummarizedSalesReport;
-        private System.Windows.Forms.RadioButton rbSummarizedSalesReport_ByYear;
+        private System.Windows.Forms.RadioButton rbAnnualSalesPosition;
         private System.Windows.Forms.RadioButton rbTargetAchievement_ByYear;
         private System.Windows.Forms.RadioButton rbSummaryOfSales_ByYear;
         private System.Windows.Forms.Label label4;
@@ -444,15 +532,22 @@
         private System.Windows.Forms.DateTimePicker dtpCU_EndDate;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DateTimePicker dtpCU_StartDate;
-        private System.Windows.Forms.RadioButton rbDetailsOfCancelledUnits;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox cmbProjectName;
-        private System.Windows.Forms.RadioButton rbCollectionOfProject;
-        private System.Windows.Forms.RadioButton rbSummarizedSalesStatus_ByProject;
+        private System.Windows.Forms.RadioButton rbCanceledClientList;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnShowReport;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tssStatus;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape3;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
+        private System.Windows.Forms.RadioButton rbSummarizedSalesStatus_ByProject;
+        private System.Windows.Forms.RadioButton rbCollectionOfProject;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ListView lvProjectStatus;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ListView lvProjects;
+        private System.Windows.Forms.Label lblProjectCount;
+        private System.Windows.Forms.RadioButton rbBlockedUnits;
     }
 }

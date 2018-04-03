@@ -138,7 +138,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                     intUnitId = e.Node.Tag.ToString().ConvertToInt32();
                     bLayer.UnitId = intUnitId;
                     bLayer.GetUnitInformation();
-                    btnSave.Enabled = bLayer.IsEditable;
+                    btnSave.Enabled = btnDelete.Enabled = bLayer.IsEditable;
                     cmbBuilding.Text = bLayer.BuildingName;
                     cmbUnitType.Text = bLayer.UnitType;
                     cmbFloorNumber.Text = bLayer.FormattedFloorNumber;
@@ -519,6 +519,18 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                     PopulateUnitTree();
                     PopulateHashParkingList();
                 }
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("Are you extremely sure you want to delete " + tvUnitDetails.SelectedNode.Text + "? \nDELETED RECORD CANNOT BE RETRIEVED.", Resources.strConfirmationCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No && intUnitId > 0) { throw new ApplicationException(Resources.strCancelledByUser); }
+                bLayer.DeleteUnitData(intUnitId);
+                PopulateUnitTree();
+                MessageBox.Show("Unit Information Deleted Successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex) { ex.ProcessException(); }
         }

@@ -501,6 +501,7 @@
             // 
             // lblDue_TillDate_RegularPayment
             // 
+            this.lblDue_TillDate_RegularPayment.ForeColor = System.Drawing.Color.Cyan;
             this.lblDue_TillDate_RegularPayment.Location = new System.Drawing.Point(550, 62);
             this.lblDue_TillDate_RegularPayment.Name = "lblDue_TillDate_RegularPayment";
             this.lblDue_TillDate_RegularPayment.Size = new System.Drawing.Size(140, 13);

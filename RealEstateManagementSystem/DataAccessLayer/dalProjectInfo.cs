@@ -180,6 +180,26 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
+        internal DataTable GetListOfBlockedUnits(string searchBy, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetListOfBlockedUnits";
+                cmd.Parameters.AddWithValue("@searchBy", searchBy);
+                cmd.Parameters.AddWithValue("@filterBy", Convert.ToInt32(filterBy));
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
         internal DataTable GetListOfProjectsWithBlockedUnit()
         {
             SqlCommand cmd = new SqlCommand();
@@ -410,6 +430,20 @@ namespace RealEstateManagementSystem.DataAccessLayer
             }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
 
+        }
+
+        internal void DeleteUnitData(int intUnitId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_DeleteUnitData";
+                cmd.Parameters.AddWithValue("@unitId", intUnitId);
+                cmd.ExecuteNonQuery();
+            }
+            finally { cmd.Dispose(); }
         }
 
         internal DataTable GetProjectSummaryByStatus()

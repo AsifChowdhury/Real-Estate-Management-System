@@ -102,6 +102,7 @@
             this.colParkingNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chkAutoExpand = new System.Windows.Forms.CheckBox();
             this.btnListOfBlokedUnits = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tcUnitData.SuspendLayout();
@@ -481,6 +482,7 @@
             // 
             this.tpUnit.BackColor = System.Drawing.Color.LightSteelBlue;
             this.tpUnit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tpUnit.Controls.Add(this.btnDelete);
             this.tpUnit.Controls.Add(this.btnRefresh);
             this.tpUnit.Controls.Add(this.lblCPHashWarning);
             this.tpUnit.Controls.Add(this.label12);
@@ -865,6 +867,20 @@
             this.btnListOfBlokedUnits.UseVisualStyleBackColor = true;
             this.btnListOfBlokedUnits.Click += new System.EventHandler(this.btnListOfBlokedUnits_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDelete.FlatAppearance.BorderSize = 0;
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.Image = global::RealEstateManagementSystem.Properties.Resources.delete;
+            this.btnDelete.Location = new System.Drawing.Point(299, 273);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(34, 28);
+            this.btnDelete.TabIndex = 7;
+            this.ttUnitInformation.SetToolTip(this.btnDelete, "Delete");
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // frmUnitInformation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -978,5 +994,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox chkAutoExpand;
         private System.Windows.Forms.Button btnListOfBlokedUnits;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

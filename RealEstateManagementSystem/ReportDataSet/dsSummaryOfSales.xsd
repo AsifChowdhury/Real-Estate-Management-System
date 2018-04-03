@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsSummaryOfSales" targetNamespace="http://tempuri.org/dsSummaryOfSales.xsd" xmlns:mstns="http://tempuri.org/dsSummaryOfSales.xsd" xmlns="http://tempuri.org/dsSummaryOfSales.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="CentralDBConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CentralDBConnectionString1 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.RealEstateManagementSystem.Properties.Settings.GlobalReference.Default.CentralDBConnectionString1" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="YearlySalesSummary_UnitCountAndTotalAreaTableAdapter" GeneratorDataComponentClassName="YearlySalesSummary_UnitCountAndTotalAreaTableAdapter" Name="YearlySalesSummary_UnitCountAndTotalArea" UserDataComponentName="YearlySalesSummary_UnitCountAndTotalAreaTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="CentralDBConnectionString1 (Settings)" DbObjectName="CentralDB.dbo.YearlySalesSummary_UnitCountAndTotalArea" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT SaleYear, SaleMonth, SaleMonthName, UnitCount, TotalArea, ObjectType FROM dbo.YearlySalesSummary_UnitCountAndTotalArea</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SaleYear" DataSetColumn="SaleYear" />
+              <Mapping SourceColumn="SaleMonth" DataSetColumn="SaleMonth" />
+              <Mapping SourceColumn="SaleMonthName" DataSetColumn="SaleMonthName" />
+              <Mapping SourceColumn="UnitCount" DataSetColumn="UnitCount" />
+              <Mapping SourceColumn="TotalArea" DataSetColumn="TotalArea" />
+              <Mapping SourceColumn="ObjectType" DataSetColumn="ObjectType" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsSummaryOfSales" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsSummaryOfSales" msprop:Generator_UserDSName="dsSummaryOfSales">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="YearlySalesSummary_UnitCountAndTotalArea" msprop:Generator_TableClassName="YearlySalesSummary_UnitCountAndTotalAreaDataTable" msprop:Generator_TableVarName="tableYearlySalesSummary_UnitCountAndTotalArea" msprop:Generator_TablePropName="YearlySalesSummary_UnitCountAndTotalArea" msprop:Generator_RowDeletingName="YearlySalesSummary_UnitCountAndTotalAreaRowDeleting" msprop:Generator_RowChangingName="YearlySalesSummary_UnitCountAndTotalAreaRowChanging" msprop:Generator_RowEvHandlerName="YearlySalesSummary_UnitCountAndTotalAreaRowChangeEventHandler" msprop:Generator_RowDeletedName="YearlySalesSummary_UnitCountAndTotalAreaRowDeleted" msprop:Generator_UserTableName="YearlySalesSummary_UnitCountAndTotalArea" msprop:Generator_RowChangedName="YearlySalesSummary_UnitCountAndTotalAreaRowChanged" msprop:Generator_RowEvArgName="YearlySalesSummary_UnitCountAndTotalAreaRowChangeEvent" msprop:Generator_RowClassName="YearlySalesSummary_UnitCountAndTotalAreaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SaleYear" msprop:Generator_ColumnVarNameInTable="columnSaleYear" msprop:Generator_ColumnPropNameInRow="SaleYear" msprop:Generator_ColumnPropNameInTable="SaleYearColumn" msprop:Generator_UserColumnName="SaleYear" type="xs:int" minOccurs="0" />
+              <xs:element name="SaleMonth" msprop:Generator_ColumnVarNameInTable="columnSaleMonth" msprop:Generator_ColumnPropNameInRow="SaleMonth" msprop:Generator_ColumnPropNameInTable="SaleMonthColumn" msprop:Generator_UserColumnName="SaleMonth" type="xs:int" minOccurs="0" />
+              <xs:element name="SaleMonthName" msprop:Generator_ColumnVarNameInTable="columnSaleMonthName" msprop:Generator_ColumnPropNameInRow="SaleMonthName" msprop:Generator_ColumnPropNameInTable="SaleMonthNameColumn" msprop:Generator_UserColumnName="SaleMonthName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="UnitCount" msprop:Generator_ColumnVarNameInTable="columnUnitCount" msprop:Generator_ColumnPropNameInRow="UnitCount" msprop:Generator_ColumnPropNameInTable="UnitCountColumn" msprop:Generator_UserColumnName="UnitCount" type="xs:int" minOccurs="0" />
+              <xs:element name="TotalArea" msprop:Generator_ColumnVarNameInTable="columnTotalArea" msprop:Generator_ColumnPropNameInRow="TotalArea" msprop:Generator_ColumnPropNameInTable="TotalAreaColumn" msprop:Generator_UserColumnName="TotalArea" type="xs:double" minOccurs="0" />
+              <xs:element name="ObjectType" msprop:Generator_ColumnVarNameInTable="columnObjectType" msprop:Generator_ColumnPropNameInRow="ObjectType" msprop:Generator_ColumnPropNameInTable="ObjectTypeColumn" msprop:Generator_UserColumnName="ObjectType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

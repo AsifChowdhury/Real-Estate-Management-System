@@ -35,7 +35,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbProjectType = new System.Windows.Forms.RadioButton();
             this.btnShowReport = new System.Windows.Forms.Button();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.pnlSummaryReportType = new System.Windows.Forms.Panel();
+            this.rbSummarizedSalesStatus = new System.Windows.Forms.RadioButton();
+            this.rbBlockedUnits_Summary = new System.Windows.Forms.RadioButton();
             this.rbFinancialSummary = new System.Windows.Forms.RadioButton();
             this.rbCommonClientList = new System.Windows.Forms.RadioButton();
             this.rbCommonPriceList = new System.Windows.Forms.RadioButton();
@@ -76,7 +78,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.pnlSummaryReportType.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,7 +104,7 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.rbProjectType);
             this.panel1.Controls.Add(this.btnShowReport);
-            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.pnlSummaryReportType);
             this.panel1.Controls.Add(this.rbProjectStatus);
             this.panel1.Controls.Add(this.cmbSummaryCriteria);
             this.panel1.Controls.Add(this.rbDistrict);
@@ -163,16 +165,40 @@
             this.btnShowReport.Click += new System.EventHandler(this.btnShowReport_Click);
             this.btnShowReport.MouseHover += new System.EventHandler(this.btnShowReport_MouseHover);
             // 
-            // panel3
+            // pnlSummaryReportType
             // 
-            this.panel3.Controls.Add(this.rbFinancialSummary);
-            this.panel3.Controls.Add(this.rbCommonClientList);
-            this.panel3.Controls.Add(this.rbCommonPriceList);
-            this.panel3.Controls.Add(this.rbProjectConsolidation);
-            this.panel3.Location = new System.Drawing.Point(433, 80);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(206, 104);
-            this.panel3.TabIndex = 24;
+            this.pnlSummaryReportType.Controls.Add(this.rbSummarizedSalesStatus);
+            this.pnlSummaryReportType.Controls.Add(this.rbBlockedUnits_Summary);
+            this.pnlSummaryReportType.Controls.Add(this.rbFinancialSummary);
+            this.pnlSummaryReportType.Controls.Add(this.rbCommonClientList);
+            this.pnlSummaryReportType.Controls.Add(this.rbCommonPriceList);
+            this.pnlSummaryReportType.Controls.Add(this.rbProjectConsolidation);
+            this.pnlSummaryReportType.Location = new System.Drawing.Point(433, 80);
+            this.pnlSummaryReportType.Name = "pnlSummaryReportType";
+            this.pnlSummaryReportType.Size = new System.Drawing.Size(206, 152);
+            this.pnlSummaryReportType.TabIndex = 24;
+            // 
+            // rbSummarizedSalesStatus
+            // 
+            this.rbSummarizedSalesStatus.AutoSize = true;
+            this.rbSummarizedSalesStatus.Location = new System.Drawing.Point(12, 124);
+            this.rbSummarizedSalesStatus.Name = "rbSummarizedSalesStatus";
+            this.rbSummarizedSalesStatus.Size = new System.Drawing.Size(163, 17);
+            this.rbSummarizedSalesStatus.TabIndex = 5;
+            this.rbSummarizedSalesStatus.TabStop = true;
+            this.rbSummarizedSalesStatus.Text = "Summarized Sales Status";
+            this.rbSummarizedSalesStatus.UseVisualStyleBackColor = true;
+            // 
+            // rbBlockedUnits_Summary
+            // 
+            this.rbBlockedUnits_Summary.AutoSize = true;
+            this.rbBlockedUnits_Summary.Location = new System.Drawing.Point(12, 101);
+            this.rbBlockedUnits_Summary.Name = "rbBlockedUnits_Summary";
+            this.rbBlockedUnits_Summary.Size = new System.Drawing.Size(163, 17);
+            this.rbBlockedUnits_Summary.TabIndex = 4;
+            this.rbBlockedUnits_Summary.TabStop = true;
+            this.rbBlockedUnits_Summary.Text = "List of Blocked Unit(s)";
+            this.rbBlockedUnits_Summary.UseVisualStyleBackColor = true;
             // 
             // rbFinancialSummary
             // 
@@ -284,6 +310,7 @@
             this.rbPriceList.TabIndex = 18;
             this.rbPriceList.Text = "(QF-MKT-11) Price List";
             this.rbPriceList.UseVisualStyleBackColor = true;
+            this.rbPriceList.CheckedChanged += new System.EventHandler(this.rbPriceList_CheckedChanged);
             // 
             // rbBookingPosition
             // 
@@ -294,6 +321,7 @@
             this.rbBookingPosition.TabIndex = 17;
             this.rbBookingPosition.Text = "(QF-MKT-09) Booking Position";
             this.rbBookingPosition.UseVisualStyleBackColor = true;
+            this.rbBookingPosition.CheckedChanged += new System.EventHandler(this.rbBookingPosition_CheckedChanged);
             // 
             // chkLOC_withPhotoAndSignature
             // 
@@ -348,6 +376,7 @@
             this.rbPayementDetailsOfAllClient.TabIndex = 16;
             this.rbPayementDetailsOfAllClient.Text = "Payment details of All Client";
             this.rbPayementDetailsOfAllClient.UseVisualStyleBackColor = true;
+            this.rbPayementDetailsOfAllClient.CheckedChanged += new System.EventHandler(this.rbPayementDetailsOfAllClient_CheckedChanged);
             // 
             // rbListOfClients
             // 
@@ -369,6 +398,7 @@
             this.rbListOfLandOwners.TabIndex = 11;
             this.rbListOfLandOwners.Text = "List of Land Owner(s)";
             this.rbListOfLandOwners.UseVisualStyleBackColor = true;
+            this.rbListOfLandOwners.CheckedChanged += new System.EventHandler(this.rbListOfLandOwners_CheckedChanged);
             // 
             // rbListOfUnits
             // 
@@ -379,6 +409,7 @@
             this.rbListOfUnits.TabIndex = 10;
             this.rbListOfUnits.Text = "List of Unit(s)";
             this.rbListOfUnits.UseVisualStyleBackColor = true;
+            this.rbListOfUnits.CheckedChanged += new System.EventHandler(this.rbListOfUnits_CheckedChanged);
             // 
             // rbBlockedUnits
             // 
@@ -389,6 +420,7 @@
             this.rbBlockedUnits.TabIndex = 9;
             this.rbBlockedUnits.Text = "Blocked Unit(s)";
             this.rbBlockedUnits.UseVisualStyleBackColor = true;
+            this.rbBlockedUnits.CheckedChanged += new System.EventHandler(this.rbBlockedUnits_CheckedChanged);
             // 
             // rbOralBooking
             // 
@@ -399,6 +431,7 @@
             this.rbOralBooking.TabIndex = 8;
             this.rbOralBooking.Text = "Oral Booking";
             this.rbOralBooking.UseVisualStyleBackColor = true;
+            this.rbOralBooking.CheckedChanged += new System.EventHandler(this.rbOralBooking_CheckedChanged);
             // 
             // rbDeductedAmount
             // 
@@ -409,6 +442,7 @@
             this.rbDeductedAmount.TabIndex = 7;
             this.rbDeductedAmount.Text = "Deducted Amount";
             this.rbDeductedAmount.UseVisualStyleBackColor = true;
+            this.rbDeductedAmount.CheckedChanged += new System.EventHandler(this.rbDeductedAmount_CheckedChanged);
             // 
             // rbDueList
             // 
@@ -419,6 +453,7 @@
             this.rbDueList.TabIndex = 6;
             this.rbDueList.Text = "Due List";
             this.rbDueList.UseVisualStyleBackColor = true;
+            this.rbDueList.CheckedChanged += new System.EventHandler(this.rbDueList_CheckedChanged);
             // 
             // rbGeneralStatusOfClient
             // 
@@ -429,6 +464,7 @@
             this.rbGeneralStatusOfClient.TabIndex = 5;
             this.rbGeneralStatusOfClient.Text = "General Status of Client";
             this.rbGeneralStatusOfClient.UseVisualStyleBackColor = true;
+            this.rbGeneralStatusOfClient.CheckedChanged += new System.EventHandler(this.rbGeneralStatusOfClient_CheckedChanged);
             // 
             // rbDeedOfAgreementStatus
             // 
@@ -439,6 +475,7 @@
             this.rbDeedOfAgreementStatus.TabIndex = 4;
             this.rbDeedOfAgreementStatus.Text = "Deed of Agreement Status";
             this.rbDeedOfAgreementStatus.UseVisualStyleBackColor = true;
+            this.rbDeedOfAgreementStatus.CheckedChanged += new System.EventHandler(this.rbDeedOfAgreementStatus_CheckedChanged);
             // 
             // rbRegistrationStatus
             // 
@@ -449,6 +486,7 @@
             this.rbRegistrationStatus.TabIndex = 2;
             this.rbRegistrationStatus.Text = "Registration Status";
             this.rbRegistrationStatus.UseVisualStyleBackColor = true;
+            this.rbRegistrationStatus.CheckedChanged += new System.EventHandler(this.rbRegistrationStatus_CheckedChanged);
             // 
             // rbProjectSummary
             // 
@@ -461,6 +499,7 @@
             this.rbProjectSummary.TabStop = true;
             this.rbProjectSummary.Text = "Project Summary";
             this.rbProjectSummary.UseVisualStyleBackColor = true;
+            this.rbProjectSummary.CheckedChanged += new System.EventHandler(this.rbProjectSummary_CheckedChanged);
             // 
             // shapeContainer1
             // 
@@ -595,8 +634,8 @@
             this.Load += new System.EventHandler(this.frmProjectReports_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.pnlSummaryReportType.ResumeLayout(false);
+            this.pnlSummaryReportType.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -639,7 +678,7 @@
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel pnlSummaryReportType;
         private System.Windows.Forms.RadioButton rbCommonClientList;
         private System.Windows.Forms.RadioButton rbCommonPriceList;
         private System.Windows.Forms.RadioButton rbProjectConsolidation;
@@ -651,5 +690,7 @@
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape6;
         private System.Windows.Forms.RadioButton rbProjectType;
         private System.Windows.Forms.RadioButton rbFinancialSummary;
+        private System.Windows.Forms.RadioButton rbBlockedUnits_Summary;
+        private System.Windows.Forms.RadioButton rbSummarizedSalesStatus;
     }
 }

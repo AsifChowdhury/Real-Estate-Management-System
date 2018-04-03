@@ -53,6 +53,7 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 if (lstBlockedUnits.Items.Count < 1 || lstBlockedUnits.SelectedItems.Count < 1) { return; }
                 lstBlockingHistory.Items.Clear();
                 foreach (DataRow drItems in bLayer.GetUnitBlockingHistory(lstBlockedUnits.SelectedItems[0].Text.ToString().ConvertToInt32()).Rows)
+                //foreach (DataRow drItems in bLayer.GetListOfBlockedUnits('Project', clsGlobalClass.ProjectCommonReport_FilterBy.Area, lstBlockedUnits.SelectedItems[0].Text.ToString()).Rows)
                 {
                     ListViewItem lvItems = new ListViewItem(Convert.ToString(drItems["BlockedBy"]));
                     lvItems.SubItems.Add(Convert.ToString(drItems["StartDate"]).ShowAsStandardDateFormat(true));
@@ -72,10 +73,11 @@ namespace RealEstateManagementSystem.UserInterface.Projects
                 lstBlockedUnits.Items.Clear();
                 lstBlockingHistory.Items.Clear();
                 int projectId = lstProjects.SelectedItems[0].Text.ToString().ConvertToInt32();
-                foreach (DataRow drItems in bLayer.GetBlockedUnitOfProject(projectId).Rows)
+                DataTable dt = bLayer.GetListOfBlockedUnits("Project", clsGlobalClass.ProjectCommonReport_FilterBy.Area, projectId.ToString());
+                foreach (DataRow drItems in dt.Rows)
                 {
-                    ListViewItem lvItems = new ListViewItem(Convert.ToString(drItems["FlatId"]));
-                    lvItems.SubItems.Add(Convert.ToString(drItems["FlatNumber"]));
+                    ListViewItem lvItems = new ListViewItem(Convert.ToString(drItems["UnitId"]));
+                    lvItems.SubItems.Add(Convert.ToString(drItems["UnitNumber"]));
                     lvItems.SubItems.Add(Convert.ToString(drItems["UnitType"]));
                     lvItems.SubItems.Add(Convert.ToDecimal(drItems["UnitArea"]).FormatAsMoney(replaceZeroWithDash: true));
                     lvItems.SubItems.Add(Convert.ToDecimal(drItems["Rate"]).FormatAsMoney(replaceZeroWithDash: true));

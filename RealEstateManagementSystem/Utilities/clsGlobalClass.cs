@@ -33,6 +33,7 @@ namespace RealEstateManagementSystem.Utilities
 
         public enum ProjectCommonReport_FilterBy
         {
+            SelectedProjects = 0,
             ProjectStatus = 1,
             District = 2,
             Area = 3,

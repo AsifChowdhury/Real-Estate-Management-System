@@ -72,7 +72,7 @@ namespace RealEstateManagementSystem.Utilities
         public static int ConvertToInt32(this string str)
         {
             int i = 0;
-            return int.TryParse(str, out i) == true ? Convert.ToInt32(str.RemoveCommas()) : 0;
+            return int.TryParse(str.RemoveCommas(), out i) == true ? Convert.ToInt32(str.RemoveCommas()) : 0;
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace RealEstateManagementSystem.Utilities
         public static decimal ConvertToDecimal(this string str)
         {
             decimal d = 0;
-            return decimal.TryParse(str, out d) == true ? Convert.ToDecimal(str.RemoveCommas()) : 0;
+            return decimal.TryParse(str.RemoveCommas(), out d) == true ? Convert.ToDecimal(str.RemoveCommas()) : 0;
         }
 
         public static int ConverBooleanToSmallInt(this bool bln)

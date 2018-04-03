@@ -232,6 +232,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return dLayer.GetListOfBuildingsInProject(this.ProjectId);
         }
 
+        internal DataTable GetListOfBlockedUnits(string searchBy, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
+        {
+            return dLayer.GetListOfBlockedUnits(searchBy, filterBy, filterCriteria);
+        }
+
         internal void PopulateProjectTypeCombo(ComboBox cmbProjectType)
         {
             clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember(CommandType.Text, "SELECT * FROM defProjectType ORDER BY ProjectType", "ProjectType", "ProjectTypeId", cmbProjectType);
@@ -538,6 +543,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         internal DataTable GetFinancialSummaryOfProjects(clsGlobalClass.ProjectCommonReport_FilterBy filterBy, string filterCriteria)
         {
             return dLayer.GetFinancialSummaryOfProjects(filterBy, filterCriteria);
+        }
+
+        internal void DeleteUnitData(int intUnitId)
+        {
+            dLayer.DeleteUnitData(intUnitId);
         }
     }
 }

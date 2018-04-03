@@ -807,6 +807,12 @@
     <Compile Include="UserInterface\Reports\frmProjectReports.Designer.cs">
       <DependentUpon>frmProjectReports.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Reports\frmRecoveryReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Reports\frmRecoveryReports.Designer.cs">
+      <DependentUpon>frmRecoveryReports.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Reports\frmSummarizedSalesReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1647,6 +1653,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Reports\frmProjectReports.resx">
       <DependentUpon>frmProjectReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Reports\frmRecoveryReports.resx">
+      <DependentUpon>frmRecoveryReports.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Reports\frmSummarizedSalesReport.resx">
       <DependentUpon>frmSummarizedSalesReport.cs</DependentUpon>

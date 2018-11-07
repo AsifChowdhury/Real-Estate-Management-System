@@ -34,6 +34,8 @@ namespace RealEstateManagementSystem.UserInterface.Root
         private frmGeneralReports generalReport = null;
         private frmProjectReports projectReport = null;
         private frmSummarizedSalesReport summarizedSalesReport = null;
+        private frmRecoveryReports recoveryReport = null;
+        private frmUnitRegistration unitRegistration = null;
         public MainScreen()
         {
             InitializeComponent();
@@ -236,7 +238,14 @@ namespace RealEstateManagementSystem.UserInterface.Root
 
         private void tsmiRecoveryReports_Click(object sender, EventArgs e)
         {
+            try { recoveryReport = ShowOrActiveForm(recoveryReport, typeof(frmRecoveryReports)) as frmRecoveryReports; }
+            catch (Exception ex) { ex.ProcessException(); throw; }
+        }
 
+        private void tsmiRegistrationProcess_Click(object sender, EventArgs e)
+        {
+            try { unitRegistration = ShowOrActiveForm(unitRegistration, typeof(frmUnitRegistration)) as frmUnitRegistration; }
+            catch (Exception ex) { ex.ProcessException(); throw; }
         }
     }
 }

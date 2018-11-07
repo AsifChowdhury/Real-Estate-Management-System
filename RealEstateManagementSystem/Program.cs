@@ -80,7 +80,7 @@ namespace RealEstateManagementSystem
                 string dbPassword = crypt.Decrypt((string)Registry.GetValue(clsGlobalClass.regKey, Resources.regDBPass, "NA"), "Pas5pr@se", "s@1tValue", "SHA1", 2, "@1B2c3D4e5F6g7H8", 256);
                 csDBConn = "Server=" + @dataServerIP + ";Database=" + dbName + ";User Id=" + dbUserName + ";Password=" + dbPassword + ";";
             }
-            catch (Exception ex) { MessageBox.Show("Database Connection Error: \n" + ex.Message.ToString() + "\n" + ex.StackTrace.ToString()); }
+            catch (Exception ex) { MessageBox.Show(Resources.strDBConnError + ex.Message.ToString() + "\n" + ex.StackTrace.ToString()); }
             return csDBConn;
         }
 

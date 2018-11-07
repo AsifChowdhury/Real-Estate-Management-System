@@ -26,8 +26,8 @@ namespace RealEstateManagementSystem.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SA-LAPTOP-1\\SQLEXPRESS;Initial Catalog=CentralDB;User ID=sa;Password=" +
-            "Bangladesh!^!@")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SA-IT-LAPTOP\\SQLEXPRESS;Initial Catalog=CentralDB;User ID=sa;Password" +
+            "=Bangladesh!^!@")]
         public string CentralDBConnectionString {
             get {
                 return ((string)(this["CentralDBConnectionString"]));
@@ -37,7 +37,7 @@ namespace RealEstateManagementSystem.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SA-LAPTOP-01\\SQLEXPRESS;Initial Catalog=CentralDB;Persist Security In" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SA-IT-LAPTOP\\SQLEXPRESS;Initial Catalog=CentralDB;Persist Security In" +
             "fo=True;User ID=sa;Password=Bangladesh!(&!")]
         public string CentralDBConnectionString1 {
             get {
@@ -48,8 +48,8 @@ namespace RealEstateManagementSystem.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SA-LAPTOP-2\\SQLEXPRESS;Initial Catalog=CentralDB;Persist Security Inf" +
-            "o=True;User ID=sa;Password=Bangladesh!^!@")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SA-IT-LAPTOP\\SQLEXPRESS;Initial Catalog=CentralDB;Persist Security In" +
+            "fo=True;User ID=sa;Password=Bangladesh!^!@")]
         public string CentralDBConnectionString2 {
             get {
                 return ((string)(this["CentralDBConnectionString2"]));

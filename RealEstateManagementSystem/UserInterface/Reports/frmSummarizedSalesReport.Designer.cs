@@ -67,6 +67,7 @@
             this.lvProjects = new System.Windows.Forms.ListView();
             this.lblProjectCount = new System.Windows.Forms.Label();
             this.rbBlockedUnits = new System.Windows.Forms.RadioButton();
+            this.rbSalesSummaryByRep = new System.Windows.Forms.RadioButton();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -162,7 +163,7 @@
             // rbAnnualSalesPosition
             // 
             this.rbAnnualSalesPosition.AutoSize = true;
-            this.rbAnnualSalesPosition.Location = new System.Drawing.Point(28, 162);
+            this.rbAnnualSalesPosition.Location = new System.Drawing.Point(28, 159);
             this.rbAnnualSalesPosition.Name = "rbAnnualSalesPosition";
             this.rbAnnualSalesPosition.Size = new System.Drawing.Size(223, 17);
             this.rbAnnualSalesPosition.TabIndex = 3;
@@ -172,7 +173,7 @@
             // rbTargetAchievement_ByYear
             // 
             this.rbTargetAchievement_ByYear.AutoSize = true;
-            this.rbTargetAchievement_ByYear.Location = new System.Drawing.Point(28, 185);
+            this.rbTargetAchievement_ByYear.Location = new System.Drawing.Point(28, 182);
             this.rbTargetAchievement_ByYear.Name = "rbTargetAchievement_ByYear";
             this.rbTargetAchievement_ByYear.Size = new System.Drawing.Size(253, 17);
             this.rbTargetAchievement_ByYear.TabIndex = 3;
@@ -182,7 +183,7 @@
             // rbSummaryOfSales_ByYear
             // 
             this.rbSummaryOfSales_ByYear.AutoSize = true;
-            this.rbSummaryOfSales_ByYear.Location = new System.Drawing.Point(28, 208);
+            this.rbSummaryOfSales_ByYear.Location = new System.Drawing.Point(28, 205);
             this.rbSummaryOfSales_ByYear.Name = "rbSummaryOfSales_ByYear";
             this.rbSummaryOfSales_ByYear.Size = new System.Drawing.Size(121, 17);
             this.rbSummaryOfSales_ByYear.TabIndex = 3;
@@ -194,7 +195,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label4.Location = new System.Drawing.Point(17, 146);
+            this.label4.Location = new System.Drawing.Point(17, 143);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(121, 13);
             this.label4.TabIndex = 1;
@@ -203,7 +204,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(286, 174);
+            this.label5.Location = new System.Drawing.Point(286, 171);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(97, 13);
             this.label5.TabIndex = 1;
@@ -213,7 +214,7 @@
             // 
             this.cmbSalesYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSalesYear.FormattingEnabled = true;
-            this.cmbSalesYear.Location = new System.Drawing.Point(289, 190);
+            this.cmbSalesYear.Location = new System.Drawing.Point(289, 187);
             this.cmbSalesYear.Name = "cmbSalesYear";
             this.cmbSalesYear.Size = new System.Drawing.Size(87, 21);
             this.cmbSalesYear.TabIndex = 5;
@@ -223,7 +224,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label6.Location = new System.Drawing.Point(17, 232);
+            this.label6.Location = new System.Drawing.Point(18, 238);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(193, 13);
             this.label6.TabIndex = 1;
@@ -236,7 +237,7 @@
             this.cmbDateBy.Items.AddRange(new object[] {
             "Booking Date",
             "Cancel Date"});
-            this.cmbDateBy.Location = new System.Drawing.Point(51, 270);
+            this.cmbDateBy.Location = new System.Drawing.Point(52, 276);
             this.cmbDateBy.Name = "cmbDateBy";
             this.cmbDateBy.Size = new System.Drawing.Size(121, 21);
             this.cmbDateBy.TabIndex = 6;
@@ -244,7 +245,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(174, 275);
+            this.label7.Location = new System.Drawing.Point(175, 281);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 1;
@@ -254,7 +255,7 @@
             // 
             this.dtpCU_EndDate.CustomFormat = "dd-MMM-yyyy";
             this.dtpCU_EndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCU_EndDate.Location = new System.Drawing.Point(242, 299);
+            this.dtpCU_EndDate.Location = new System.Drawing.Point(243, 305);
             this.dtpCU_EndDate.Name = "dtpCU_EndDate";
             this.dtpCU_EndDate.Size = new System.Drawing.Size(107, 20);
             this.dtpCU_EndDate.TabIndex = 2;
@@ -262,7 +263,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(223, 303);
+            this.label8.Location = new System.Drawing.Point(224, 309);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(13, 13);
             this.label8.TabIndex = 1;
@@ -272,7 +273,7 @@
             // 
             this.dtpCU_StartDate.CustomFormat = "dd-MMM-yyyy";
             this.dtpCU_StartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCU_StartDate.Location = new System.Drawing.Point(110, 299);
+            this.dtpCU_StartDate.Location = new System.Drawing.Point(111, 305);
             this.dtpCU_StartDate.Name = "dtpCU_StartDate";
             this.dtpCU_StartDate.Size = new System.Drawing.Size(107, 20);
             this.dtpCU_StartDate.TabIndex = 1;
@@ -280,7 +281,7 @@
             // rbCanceledClientList
             // 
             this.rbCanceledClientList.AutoSize = true;
-            this.rbCanceledClientList.Location = new System.Drawing.Point(32, 251);
+            this.rbCanceledClientList.Location = new System.Drawing.Point(33, 257);
             this.rbCanceledClientList.Name = "rbCanceledClientList";
             this.rbCanceledClientList.Size = new System.Drawing.Size(163, 17);
             this.rbCanceledClientList.TabIndex = 3;
@@ -348,13 +349,13 @@
             // 
             // rectangleShape3
             // 
-            this.rectangleShape3.Location = new System.Drawing.Point(11, 240);
+            this.rectangleShape3.Location = new System.Drawing.Point(11, 243);
             this.rectangleShape3.Name = "rectangleShape3";
             this.rectangleShape3.Size = new System.Drawing.Size(373, 88);
             // 
             // rectangleShape2
             // 
-            this.rectangleShape2.Location = new System.Drawing.Point(11, 153);
+            this.rectangleShape2.Location = new System.Drawing.Point(11, 151);
             this.rectangleShape2.Name = "rectangleShape2";
             this.rectangleShape2.Size = new System.Drawing.Size(373, 75);
             // 
@@ -362,7 +363,7 @@
             // 
             this.rectangleShape1.Location = new System.Drawing.Point(11, 19);
             this.rectangleShape1.Name = "rectangleShape1";
-            this.rectangleShape1.Size = new System.Drawing.Size(373, 115);
+            this.rectangleShape1.Size = new System.Drawing.Size(373, 117);
             // 
             // rbSummarizedSalesStatus_ByProject
             // 
@@ -452,6 +453,16 @@
             this.rbBlockedUnits.Text = "List of Blocked Unit(s)";
             this.rbBlockedUnits.UseVisualStyleBackColor = true;
             // 
+            // rbSalesSummaryByRep
+            // 
+            this.rbSalesSummaryByRep.AutoSize = true;
+            this.rbSalesSummaryByRep.Location = new System.Drawing.Point(20, 340);
+            this.rbSalesSummaryByRep.Name = "rbSalesSummaryByRep";
+            this.rbSalesSummaryByRep.Size = new System.Drawing.Size(145, 17);
+            this.rbSalesSummaryByRep.TabIndex = 11;
+            this.rbSalesSummaryByRep.Text = "Sales Summary by Rep";
+            this.rbSalesSummaryByRep.UseVisualStyleBackColor = true;
+            // 
             // frmSummarizedSalesReport
             // 
             this.AcceptButton = this.btnShowReport;
@@ -459,6 +470,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(958, 400);
+            this.Controls.Add(this.rbSalesSummaryByRep);
             this.Controls.Add(this.rbBlockedUnits);
             this.Controls.Add(this.lblProjectCount);
             this.Controls.Add(this.label13);
@@ -549,5 +561,6 @@
         private System.Windows.Forms.ListView lvProjects;
         private System.Windows.Forms.Label lblProjectCount;
         private System.Windows.Forms.RadioButton rbBlockedUnits;
+        private System.Windows.Forms.RadioButton rbSalesSummaryByRep;
     }
 }

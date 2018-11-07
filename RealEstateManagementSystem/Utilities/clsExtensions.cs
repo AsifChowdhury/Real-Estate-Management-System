@@ -1,6 +1,7 @@
 ﻿using RealEstateManagementSystem.Properties;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace RealEstateManagementSystem.Utilities
 {
-    public static partial class clsExtensions
+    public static class clsExtensions
     {
 
         //this.Controls.ClearControls();
@@ -46,12 +47,56 @@ namespace RealEstateManagementSystem.Utilities
 
             foreach (Control control in controls)
             {
-                if (control.GetType().Equals(typeof(T)))
+                if (control.GetType() == typeof(T))
                 {
                     FindAndInvoke(typeof(T), control);
                 }
             }
         }
+        #region Handling NULL values from DB
+
+        public static bool HandleNULLBoolean(this SqlDataReader dr, string columnName)
+        {
+            return !DBNull.Value.Equals(dr[columnName]) ? Convert.ToBoolean(dr[columnName]) : false;
+        }
+
+        public static int HandleNULLInteger(this SqlDataReader dr, string columnName)
+        {
+            return !DBNull.Value.Equals(dr[columnName]) ? Convert.ToInt32(dr[columnName]) : 0;
+        }
+
+        public static double HandleNULLFloat(this SqlDataReader dr, string columnName)
+        {
+            return !DBNull.Value.Equals(dr[columnName]) ? Convert.ToDouble(dr[columnName]) : 0;
+        }
+
+        public static decimal HandleNULLDecimal(this SqlDataReader dr, string columnName)
+        {
+            return !DBNull.Value.Equals(dr[columnName]) ? Convert.ToDecimal(dr[columnName]) : 0;
+        }
+
+        public static string HandleNULLString(this SqlDataReader dr, string columnName)
+        {
+            return !DBNull.Value.Equals(dr[columnName]) ? Convert.ToString(dr[columnName]) : string.Empty;
+        }
+
+        public static DateTime HandleNULLDateTime(this SqlDataReader dr, string columnName)
+        {
+            return !DBNull.Value.Equals(dr[columnName]) ? Convert.ToDateTime(dr[columnName]) : clsGlobalClass.considerAsNULLDate;
+        }
+
+        public static byte HandleNULLByte(this SqlDataReader dr, string columnName)
+        {
+            return !DBNull.Value.Equals(dr[columnName]) ? Convert.ToByte(dr[columnName]) : (byte)0;
+        }
+
+        public static bool returnFalseIfNullDate(this DateTime date)
+        {
+            int i = DateTime.Compare(date, clsGlobalClass.considerAsNULLDate);
+            return DateTime.Compare(date, clsGlobalClass.considerAsNULLDate) == 0 ? false : true;
+        }
+
+        #endregion
         public static string RemoveCommas(this string String)
         {
             return String.Replace(",", "");
@@ -66,7 +111,7 @@ namespace RealEstateManagementSystem.Utilities
 
         public static bool ConvertToBoolean(this string str)
         {
-            return str == "0" || str.ToUpper() == "FALSE" ? false : true;
+            return str != "0" && str.ToUpper() != "FALSE";
         }
 
         public static int ConvertToInt32(this string str)
@@ -80,6 +125,8 @@ namespace RealEstateManagementSystem.Utilities
         /// </summary>
         /// <param name="amount">Value</param>
         /// <param name="addCurrencyMark">Add Tk. in front and /- in end</param>
+        /// <param name="useBracketForNegative"></param>
+        /// <param name="replaceZeroWithDash"></param>
         /// <returns></returns>
         public static string FormatAsMoney(this decimal amount, bool addCurrencyMark = false, bool useBracketForNegative = false, bool replaceZeroWithDash = false)
         {
@@ -87,21 +134,17 @@ namespace RealEstateManagementSystem.Utilities
             {
                 return "-";
             }
-            else
+
+            if (useBracketForNegative == true)
             {
-                if (useBracketForNegative == true)
-                {
-                    return amount < 0 ?
-                        addCurrencyMark == true ? "(Tk." + Spell.SpellAmount.comma(amount * -1) + "/-)" : "(" + Spell.SpellAmount.comma(amount * -1) + ")" :
-                        addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
-                }
-                else
-                {
-                    return amount < 0 ?
-                        addCurrencyMark == true ? "Tk. -" + Spell.SpellAmount.comma(amount * -1) + "/-" : "-" + Spell.SpellAmount.comma(amount * -1) + "" :
-                        addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
-                }
+                return amount < 0 ?
+                    addCurrencyMark == true ? "(Tk." + Spell.SpellAmount.comma(amount * -1) + "/-)" : "(" + Spell.SpellAmount.comma(amount * -1) + ")" :
+                    addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
             }
+
+            return amount < 0 ?
+                addCurrencyMark == true ? "Tk. -" + Spell.SpellAmount.comma(amount * -1) + "/-" : "-" + Spell.SpellAmount.comma(amount * -1) + "" :
+                addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
 
 
         }
@@ -126,6 +169,9 @@ namespace RealEstateManagementSystem.Utilities
 
         }
 
+
+
+
         /// <summary>
         /// Return Current date if supplied date is NULL or less than '1900-01-01'
         /// </summary>
@@ -137,6 +183,22 @@ namespace RealEstateManagementSystem.Utilities
             return DateTime.TryParse(date.ToString(), out dt) == true ? DateTime.Compare(date, clsGlobalClass.considerAsNULLDate) < 0 ? DateTime.Now : date : date;
         }
 
+
+
+
+
+        public static DateTime ProcessNullDate(this DateTime date)
+        {
+            if (!DBNull.Value.Equals(date))
+            {
+                return date;
+            }
+            else
+            {
+                return clsGlobalClass.defaultDate;
+            }
+        }
+
         /// <summary>
         /// Return false if supplied date is NULL or less than '1900-01-01'
         /// </summary>
@@ -145,7 +207,7 @@ namespace RealEstateManagementSystem.Utilities
         public static bool IsValidDate(this DateTime date)
         {
             DateTime dt = DateTime.Now;
-            return DateTime.TryParse(date.ToString(), out dt) == true ? DateTime.Compare(date, clsGlobalClass.considerAsNULLDate) < 0 ? false : true : true;
+            return DateTime.TryParse(date.ToString(), out dt) != true || DateTime.Compare(date, clsGlobalClass.considerAsNULLDate) >= 0;
         }
 
         public static string ReplaceEmptyStringWithNA(this string str)
@@ -188,6 +250,62 @@ namespace RealEstateManagementSystem.Utilities
             return ex;
         }
 
+        public static bool IsBeforeStartOfCurrentMonth(this DateTime date)
+        {
+            DateTime now = DateTime.Now;
+            DateTime startOfCurrentMonth = new DateTime(now.Year, now.Month, 1);
+            return date < startOfCurrentMonth;
+        }
+
+        public static string MonthName(this int monthNumber, bool fullMonth = false, bool allCaps = false)
+        {
+            string monthName;
+            switch (monthNumber)
+            {
+                case 1:
+                    monthName = "January";
+                    break;
+                case 2:
+                    monthName = "February";
+                    break;
+                case 3:
+                    monthName = "March";
+                    break;
+                case 4:
+                    monthName = "April";
+                    break;
+                case 5:
+                    monthName = "May";
+                    break;
+                case 6:
+                    monthName = "June";
+                    break;
+                case 7:
+                    monthName = "July";
+                    break;
+                case 8:
+                    monthName = "August";
+                    break;
+                case 9:
+                    monthName = "September";
+                    break;
+                case 10:
+                    monthName = "October";
+                    break;
+                case 11:
+                    monthName = "November";
+                    break;
+                case 12:
+                    monthName = "December";
+                    break;
+                default:
+                    monthName = "Invalid";
+                    break;
+            }
+            monthName = fullMonth ? monthName.Substring(0, 3) : monthName;
+            return allCaps == true ? monthName.ToUpper() : monthName;
+
+        }
 
     }
 }

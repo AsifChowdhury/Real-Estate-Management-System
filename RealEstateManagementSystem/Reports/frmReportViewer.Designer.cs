@@ -44,7 +44,6 @@
             this.crptMasterReport.Location = new System.Drawing.Point(0, 0);
             this.crptMasterReport.Name = "crptMasterReport";
             this.crptMasterReport.ShowCopyButton = false;
-            this.crptMasterReport.ShowGroupTreeButton = false;
             this.crptMasterReport.ShowLogo = false;
             this.crptMasterReport.ShowParameterPanelButton = false;
             this.crptMasterReport.Size = new System.Drawing.Size(484, 377);

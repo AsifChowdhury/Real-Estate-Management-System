@@ -25,7 +25,8 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
         private void frmPayment_Load(object sender, EventArgs e)
         {
             clsCommonFunctions.PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.All, true);
-            clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT InstallTypeId, InstallType FROM defInstallType WHERE InstallTypeId IN (1,2,5) ORDER BY InstallTypeId", "InstallType", "InstallTypeId", false, cmbInstallType);
+            clsCommonFunctions.PopulateInstallmentTypes(cmbInstallType);
+            //clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT InstallTypeId, InstallType FROM defInstallType WHERE InstallTypeId IN (1,2,5) ORDER BY InstallTypeId", "InstallType", "InstallTypeId", false, cmbInstallType);
             clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT PaymentModeId, PaymentMode FROM defPaymentMode ORDER BY PaymentModeId", "PaymentMode", "PaymentModeId", false, cmbPaymentMode);
             clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT BankId, BankName FROM defBank ORDER BY BankName", "BankName", "BankId", false, cmbBankName);
             clsCommonFunctions.PopulateComboboxWithDisplayAndValueMember("SELECT BranchID, BranchName FROM defBranch ORDER BY BranchName", "BranchName", "BranchId", false, cmbBranchName);

@@ -25,6 +25,12 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return sales.GetPictorialDepictionOfSalesStatus(startDate, endDate);
         }
 
+        internal DataTable GetSalesReportByRep(DateTime startDate, DateTime endDate, bool showDetails, string repId)
+        {
+            dalSummarizedSalesReport d = new dalSummarizedSalesReport();
+            return d.GetSalesReportByRep(startDate, endDate, showDetails, repId);
+        }
+
         internal DataTable GetSalesPosition_Details(DateTime startDate, DateTime endDate)
         {
             dalSummarizedSalesReport sales = new dalSummarizedSalesReport();
@@ -61,6 +67,12 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             dalSummarizedSalesReport collection = new dalSummarizedSalesReport();
             return collection.GetCollectionsOfProject(searchBy, filterCriteria, filterBy);
         }
+
+        //internal DataTable GetSummarizedSalesStatus(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy)
+        //{
+        //    dalSummarizedSalesReport status = new dalSummarizedSalesReport();
+        //    return status.GetSummarizedSalesStatus(searchBy, filterCriteria, filterBy);
+        //}
 
         internal DataTable GetSummarizedSalesStatus(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy)
         {

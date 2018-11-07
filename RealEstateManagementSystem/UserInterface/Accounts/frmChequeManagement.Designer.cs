@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmChequeManagement));
             this.ssChequeManagement = new System.Windows.Forms.StatusStrip();
             this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -35,19 +36,25 @@
             this.txtInvoice = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.colInvoiceNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colTransactionStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colClientName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colUnitNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colPaymentMode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colTransactionDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colAmountPaid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colParticulars = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colParticularsDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colBankInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblRecordCount = new System.Windows.Forms.Label();
+            this.lvResultSet = new System.Windows.Forms.ListView();
+            this.colStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.chkExcludeCashTransactions = new System.Windows.Forms.CheckBox();
+            this.chkExcludeReceived = new System.Windows.Forms.CheckBox();
             this.rbDateRange = new System.Windows.Forms.RadioButton();
             this.rbBank = new System.Windows.Forms.RadioButton();
             this.rbClient = new System.Windows.Forms.RadioButton();
@@ -66,9 +73,24 @@
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
-            this.chkExcludeReceived = new System.Windows.Forms.CheckBox();
-            this.chkExcludeCashTransactions = new System.Windows.Forms.CheckBox();
-            this.colClientId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnChangeStatus = new System.Windows.Forms.Button();
+            this.btnModifyAlterReason = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.btnModifyCompanyBankAccount = new System.Windows.Forms.Button();
+            this.cmbCompanyAccounts = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.dtpStatusDate = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cmbAlterReason = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cmbInvoiceStatus = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtInvoiceNumber = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.ttChequeManagement = new System.Windows.Forms.ToolTip(this.components);
+            this.btnRealodSearch = new System.Windows.Forms.Button();
+            this.btnPrintReport = new System.Windows.Forms.Button();
             this.ssChequeManagement.SuspendLayout();
             this.pnlInvoice.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -76,16 +98,18 @@
             this.pnlClientId.SuspendLayout();
             this.pnlBank.SuspendLayout();
             this.pnlDateRange.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // ssChequeManagement
             // 
             this.ssChequeManagement.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssStatus});
-            this.ssChequeManagement.Location = new System.Drawing.Point(0, 553);
+            this.ssChequeManagement.Location = new System.Drawing.Point(0, 526);
             this.ssChequeManagement.Name = "ssChequeManagement";
             this.ssChequeManagement.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.ssChequeManagement.Size = new System.Drawing.Size(1140, 22);
+            this.ssChequeManagement.Size = new System.Drawing.Size(1047, 22);
             this.ssChequeManagement.SizingGrip = false;
             this.ssChequeManagement.TabIndex = 0;
             this.ssChequeManagement.Text = "statusStrip1";
@@ -93,7 +117,7 @@
             // tssStatus
             // 
             this.tssStatus.Name = "tssStatus";
-            this.tssStatus.Size = new System.Drawing.Size(1125, 17);
+            this.tssStatus.Size = new System.Drawing.Size(1032, 17);
             this.tssStatus.Spring = true;
             this.tssStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -102,16 +126,16 @@
             this.pnlInvoice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlInvoice.Controls.Add(this.txtInvoice);
             this.pnlInvoice.Controls.Add(this.label1);
-            this.pnlInvoice.Location = new System.Drawing.Point(478, 21);
+            this.pnlInvoice.Location = new System.Drawing.Point(505, 21);
             this.pnlInvoice.Name = "pnlInvoice";
-            this.pnlInvoice.Size = new System.Drawing.Size(216, 35);
+            this.pnlInvoice.Size = new System.Drawing.Size(169, 35);
             this.pnlInvoice.TabIndex = 1;
             // 
             // txtInvoice
             // 
             this.txtInvoice.Location = new System.Drawing.Point(74, 6);
             this.txtInvoice.Name = "txtInvoice";
-            this.txtInvoice.Size = new System.Drawing.Size(130, 20);
+            this.txtInvoice.Size = new System.Drawing.Size(89, 20);
             this.txtInvoice.TabIndex = 1;
             this.txtInvoice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtInvoice_KeyPress);
             // 
@@ -127,89 +151,120 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.listView1);
+            this.panel2.Controls.Add(this.btnPrintReport);
+            this.panel2.Controls.Add(this.lblRecordCount);
+            this.panel2.Controls.Add(this.lvResultSet);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(12, 75);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1116, 292);
+            this.panel2.Size = new System.Drawing.Size(1028, 292);
             this.panel2.TabIndex = 2;
             // 
-            // listView1
+            // lblRecordCount
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colInvoiceNumber,
-            this.colTransactionStatus,
-            this.colClientId,
-            this.colClientName,
-            this.colUnitNumber,
-            this.colPaymentMode,
-            this.colTransactionDate,
-            this.colAmountPaid,
-            this.colParticulars,
-            this.colParticularsDate,
-            this.colBankInfo});
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(8, 21);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1103, 266);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.lblRecordCount.AutoSize = true;
+            this.lblRecordCount.Location = new System.Drawing.Point(3, 272);
+            this.lblRecordCount.Name = "lblRecordCount";
+            this.lblRecordCount.Size = new System.Drawing.Size(109, 13);
+            this.lblRecordCount.TabIndex = 2;
+            this.lblRecordCount.Text = "0 Record(s) Found";
             // 
-            // colInvoiceNumber
+            // lvResultSet
             // 
-            this.colInvoiceNumber.Text = "Invoice #";
-            this.colInvoiceNumber.Width = 83;
+            this.lvResultSet.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colStatus,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13});
+            this.lvResultSet.FullRowSelect = true;
+            this.lvResultSet.GridLines = true;
+            this.lvResultSet.HideSelection = false;
+            this.lvResultSet.Location = new System.Drawing.Point(8, 21);
+            this.lvResultSet.Name = "lvResultSet";
+            this.lvResultSet.Size = new System.Drawing.Size(1008, 245);
+            this.lvResultSet.TabIndex = 1;
+            this.lvResultSet.UseCompatibleStateImageBehavior = false;
+            this.lvResultSet.View = System.Windows.Forms.View.Details;
+            this.lvResultSet.SelectedIndexChanged += new System.EventHandler(this.lvResultSet_SelectedIndexChanged);
             // 
-            // colTransactionStatus
+            // colStatus
             // 
-            this.colTransactionStatus.Text = "Status";
-            this.colTransactionStatus.Width = 104;
+            this.colStatus.Text = "Status";
+            this.colStatus.Width = 77;
             // 
-            // colClientName
+            // columnHeader2
             // 
-            this.colClientName.Text = "Name";
-            this.colClientName.Width = 116;
+            this.columnHeader2.Text = "Payment Mode";
+            this.columnHeader2.Width = 108;
             // 
-            // colUnitNumber
+            // columnHeader3
             // 
-            this.colUnitNumber.Text = "Unit #";
-            this.colUnitNumber.Width = 108;
+            this.columnHeader3.Text = "Reason";
+            this.columnHeader3.Width = 89;
             // 
-            // colPaymentMode
+            // columnHeader4
             // 
-            this.colPaymentMode.Text = "Mode";
-            this.colPaymentMode.Width = 86;
+            this.columnHeader4.Text = "Cleared?";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 59;
             // 
-            // colTransactionDate
+            // columnHeader5
             // 
-            this.colTransactionDate.Text = "Transaction Date";
-            this.colTransactionDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.colTransactionDate.Width = 121;
+            this.columnHeader5.Text = "Invoice#";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader5.Width = 76;
             // 
-            // colAmountPaid
+            // columnHeader6
             // 
-            this.colAmountPaid.Text = "Amount Paid";
-            this.colAmountPaid.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.colAmountPaid.Width = 100;
+            this.columnHeader6.Text = "Amount";
+            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader6.Width = 81;
             // 
-            // colParticulars
+            // columnHeader7
             // 
-            this.colParticulars.Text = "Particulars";
-            this.colParticulars.Width = 116;
+            this.columnHeader7.Text = "Tr. Date";
+            this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader7.Width = 82;
             // 
-            // colParticularsDate
+            // columnHeader8
             // 
-            this.colParticularsDate.Text = "CQ Date";
-            this.colParticularsDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.colParticularsDate.Width = 114;
+            this.columnHeader8.Text = "C/D/P #";
+            this.columnHeader8.Width = 83;
             // 
-            // colBankInfo
+            // columnHeader9
             // 
-            this.colBankInfo.Text = "Bank Info";
-            this.colBankInfo.Width = 132;
+            this.columnHeader9.Text = "CQ. Date";
+            this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader9.Width = 80;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Bank";
+            this.columnHeader10.Width = 76;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Remarks";
+            this.columnHeader11.Width = 100;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "Deposited To";
+            this.columnHeader12.Width = 93;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Deposited On";
+            this.columnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
@@ -223,6 +278,7 @@
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.btnRealodSearch);
             this.panel3.Controls.Add(this.chkExcludeCashTransactions);
             this.panel3.Controls.Add(this.chkExcludeReceived);
             this.panel3.Controls.Add(this.rbDateRange);
@@ -232,8 +288,32 @@
             this.panel3.Controls.Add(this.label3);
             this.panel3.Location = new System.Drawing.Point(12, 12);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(457, 52);
+            this.panel3.Size = new System.Drawing.Size(487, 52);
             this.panel3.TabIndex = 3;
+            // 
+            // chkExcludeCashTransactions
+            // 
+            this.chkExcludeCashTransactions.AutoSize = true;
+            this.chkExcludeCashTransactions.Checked = true;
+            this.chkExcludeCashTransactions.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkExcludeCashTransactions.Location = new System.Drawing.Point(270, 28);
+            this.chkExcludeCashTransactions.Name = "chkExcludeCashTransactions";
+            this.chkExcludeCashTransactions.Size = new System.Drawing.Size(170, 17);
+            this.chkExcludeCashTransactions.TabIndex = 2;
+            this.chkExcludeCashTransactions.Text = "Exclude Cash Transaction";
+            this.chkExcludeCashTransactions.UseVisualStyleBackColor = true;
+            // 
+            // chkExcludeReceived
+            // 
+            this.chkExcludeReceived.AutoSize = true;
+            this.chkExcludeReceived.Checked = true;
+            this.chkExcludeReceived.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkExcludeReceived.Location = new System.Drawing.Point(94, 28);
+            this.chkExcludeReceived.Name = "chkExcludeReceived";
+            this.chkExcludeReceived.Size = new System.Drawing.Size(170, 17);
+            this.chkExcludeReceived.TabIndex = 2;
+            this.chkExcludeReceived.Text = "Exclude Received Cheques";
+            this.chkExcludeReceived.UseVisualStyleBackColor = true;
             // 
             // rbDateRange
             // 
@@ -296,10 +376,11 @@
             this.pnlClientId.Controls.Add(this.btnSearchClient);
             this.pnlClientId.Controls.Add(this.txtClientId);
             this.pnlClientId.Controls.Add(this.label4);
-            this.pnlClientId.Location = new System.Drawing.Point(478, 21);
+            this.pnlClientId.Location = new System.Drawing.Point(505, 21);
             this.pnlClientId.Name = "pnlClientId";
             this.pnlClientId.Size = new System.Drawing.Size(219, 35);
             this.pnlClientId.TabIndex = 4;
+            this.pnlClientId.Visible = false;
             // 
             // btnSearchClient
             // 
@@ -312,6 +393,7 @@
             this.btnSearchClient.Size = new System.Drawing.Size(26, 21);
             this.btnSearchClient.TabIndex = 2;
             this.btnSearchClient.UseVisualStyleBackColor = true;
+            this.btnSearchClient.Click += new System.EventHandler(this.btnSearchClient_Click);
             // 
             // txtClientId
             // 
@@ -319,6 +401,8 @@
             this.txtClientId.Name = "txtClientId";
             this.txtClientId.Size = new System.Drawing.Size(109, 20);
             this.txtClientId.TabIndex = 1;
+            this.txtClientId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtClientId.Leave += new System.EventHandler(this.txtClientId_Leave);
             // 
             // label4
             // 
@@ -334,7 +418,7 @@
             this.pnlBank.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlBank.Controls.Add(this.cmbBank);
             this.pnlBank.Controls.Add(this.label5);
-            this.pnlBank.Location = new System.Drawing.Point(478, 21);
+            this.pnlBank.Location = new System.Drawing.Point(505, 21);
             this.pnlBank.Name = "pnlBank";
             this.pnlBank.Size = new System.Drawing.Size(321, 35);
             this.pnlBank.TabIndex = 5;
@@ -342,6 +426,8 @@
             // 
             // cmbBank
             // 
+            this.cmbBank.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbBank.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbBank.FormattingEnabled = true;
             this.cmbBank.Location = new System.Drawing.Point(48, 6);
             this.cmbBank.Name = "cmbBank";
@@ -366,7 +452,7 @@
             this.pnlDateRange.Controls.Add(this.dtpEndDate);
             this.pnlDateRange.Controls.Add(this.dtpStartDate);
             this.pnlDateRange.Controls.Add(this.label6);
-            this.pnlDateRange.Location = new System.Drawing.Point(478, 21);
+            this.pnlDateRange.Location = new System.Drawing.Point(505, 21);
             this.pnlDateRange.Name = "pnlDateRange";
             this.pnlDateRange.Size = new System.Drawing.Size(350, 35);
             this.pnlDateRange.TabIndex = 6;
@@ -384,6 +470,7 @@
             this.btnSearch_DateRange.Size = new System.Drawing.Size(29, 23);
             this.btnSearch_DateRange.TabIndex = 8;
             this.btnSearch_DateRange.UseVisualStyleBackColor = true;
+            this.btnSearch_DateRange.Click += new System.EventHandler(this.btnSearch_DateRange_Click);
             // 
             // label7
             // 
@@ -421,44 +508,204 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Date Range:";
             // 
-            // chkExcludeReceived
+            // panel1
             // 
-            this.chkExcludeReceived.AutoSize = true;
-            this.chkExcludeReceived.Location = new System.Drawing.Point(94, 28);
-            this.chkExcludeReceived.Name = "chkExcludeReceived";
-            this.chkExcludeReceived.Size = new System.Drawing.Size(170, 17);
-            this.chkExcludeReceived.TabIndex = 2;
-            this.chkExcludeReceived.Text = "Exclude Received Cheques";
-            this.chkExcludeReceived.UseVisualStyleBackColor = true;
+            this.panel1.Controls.Add(this.btnChangeStatus);
+            this.panel1.Controls.Add(this.btnModifyAlterReason);
+            this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.cmbAlterReason);
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Controls.Add(this.cmbInvoiceStatus);
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.txtInvoiceNumber);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Location = new System.Drawing.Point(12, 372);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1027, 144);
+            this.panel1.TabIndex = 7;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // chkExcludeCashTransactions
+            // btnChangeStatus
             // 
-            this.chkExcludeCashTransactions.AutoSize = true;
-            this.chkExcludeCashTransactions.Location = new System.Drawing.Point(270, 28);
-            this.chkExcludeCashTransactions.Name = "chkExcludeCashTransactions";
-            this.chkExcludeCashTransactions.Size = new System.Drawing.Size(170, 17);
-            this.chkExcludeCashTransactions.TabIndex = 2;
-            this.chkExcludeCashTransactions.Text = "Exclude Cash Transaction";
-            this.chkExcludeCashTransactions.UseVisualStyleBackColor = true;
+            this.btnChangeStatus.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnChangeStatus.Location = new System.Drawing.Point(894, 88);
+            this.btnChangeStatus.Name = "btnChangeStatus";
+            this.btnChangeStatus.Size = new System.Drawing.Size(122, 49);
+            this.btnChangeStatus.TabIndex = 6;
+            this.btnChangeStatus.Text = "Change Status";
+            this.btnChangeStatus.UseVisualStyleBackColor = true;
+            this.btnChangeStatus.Click += new System.EventHandler(this.btnChangeStatus_Click);
             // 
-            // colClientId
+            // btnModifyAlterReason
             // 
-            this.colClientId.Text = "ClinetId";
-            this.colClientId.Width = 81;
+            this.btnModifyAlterReason.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnModifyAlterReason.Location = new System.Drawing.Point(983, 10);
+            this.btnModifyAlterReason.Name = "btnModifyAlterReason";
+            this.btnModifyAlterReason.Size = new System.Drawing.Size(33, 21);
+            this.btnModifyAlterReason.TabIndex = 5;
+            this.btnModifyAlterReason.Text = "...";
+            this.btnModifyAlterReason.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.btnModifyCompanyBankAccount);
+            this.panel4.Controls.Add(this.cmbCompanyAccounts);
+            this.panel4.Controls.Add(this.label12);
+            this.panel4.Controls.Add(this.dtpStatusDate);
+            this.panel4.Controls.Add(this.label11);
+            this.panel4.Location = new System.Drawing.Point(113, 47);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(903, 36);
+            this.panel4.TabIndex = 4;
+            // 
+            // btnModifyCompanyBankAccount
+            // 
+            this.btnModifyCompanyBankAccount.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnModifyCompanyBankAccount.Location = new System.Drawing.Point(863, 6);
+            this.btnModifyCompanyBankAccount.Name = "btnModifyCompanyBankAccount";
+            this.btnModifyCompanyBankAccount.Size = new System.Drawing.Size(33, 21);
+            this.btnModifyCompanyBankAccount.TabIndex = 6;
+            this.btnModifyCompanyBankAccount.Text = "...";
+            this.btnModifyCompanyBankAccount.UseVisualStyleBackColor = true;
+            // 
+            // cmbCompanyAccounts
+            // 
+            this.cmbCompanyAccounts.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbCompanyAccounts.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbCompanyAccounts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCompanyAccounts.FormattingEnabled = true;
+            this.cmbCompanyAccounts.Location = new System.Drawing.Point(327, 6);
+            this.cmbCompanyAccounts.Name = "cmbCompanyAccounts";
+            this.cmbCompanyAccounts.Size = new System.Drawing.Size(530, 21);
+            this.cmbCompanyAccounts.TabIndex = 5;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(206, 10);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(115, 13);
+            this.label12.TabIndex = 4;
+            this.label12.Text = "Company Account #:";
+            // 
+            // dtpStatusDate
+            // 
+            this.dtpStatusDate.CustomFormat = "dd-MMM-yyyy";
+            this.dtpStatusDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpStatusDate.Location = new System.Drawing.Point(87, 6);
+            this.dtpStatusDate.Name = "dtpStatusDate";
+            this.dtpStatusDate.Size = new System.Drawing.Size(115, 20);
+            this.dtpStatusDate.TabIndex = 1;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(8, 10);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(79, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Status Date:";
+            // 
+            // cmbAlterReason
+            // 
+            this.cmbAlterReason.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbAlterReason.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbAlterReason.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAlterReason.FormattingEnabled = true;
+            this.cmbAlterReason.Location = new System.Drawing.Point(570, 10);
+            this.cmbAlterReason.Name = "cmbAlterReason";
+            this.cmbAlterReason.Size = new System.Drawing.Size(407, 21);
+            this.cmbAlterReason.TabIndex = 3;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(479, 14);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(85, 13);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Alter Reason:";
+            // 
+            // cmbInvoiceStatus
+            // 
+            this.cmbInvoiceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbInvoiceStatus.FormattingEnabled = true;
+            this.cmbInvoiceStatus.Location = new System.Drawing.Point(322, 10);
+            this.cmbInvoiceStatus.Name = "cmbInvoiceStatus";
+            this.cmbInvoiceStatus.Size = new System.Drawing.Size(147, 21);
+            this.cmbInvoiceStatus.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(222, 14);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(97, 13);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Invoice Status:";
+            // 
+            // txtInvoiceNumber
+            // 
+            this.txtInvoiceNumber.Location = new System.Drawing.Point(86, 10);
+            this.txtInvoiceNumber.Name = "txtInvoiceNumber";
+            this.txtInvoiceNumber.ReadOnly = true;
+            this.txtInvoiceNumber.Size = new System.Drawing.Size(124, 20);
+            this.txtInvoiceNumber.TabIndex = 1;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(19, 14);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(61, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Invoice #";
+            // 
+            // btnRealodSearch
+            // 
+            this.btnRealodSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRealodSearch.FlatAppearance.BorderSize = 0;
+            this.btnRealodSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRealodSearch.ForeColor = System.Drawing.Color.MediumAquamarine;
+            this.btnRealodSearch.Image = global::RealEstateManagementSystem.Properties.Resources.refresh;
+            this.btnRealodSearch.Location = new System.Drawing.Point(446, 13);
+            this.btnRealodSearch.Name = "btnRealodSearch";
+            this.btnRealodSearch.Size = new System.Drawing.Size(29, 23);
+            this.btnRealodSearch.TabIndex = 9;
+            this.ttChequeManagement.SetToolTip(this.btnRealodSearch, "Reload");
+            this.btnRealodSearch.UseVisualStyleBackColor = true;
+            this.btnRealodSearch.Click += new System.EventHandler(this.btnRealodSearch_Click);
+            // 
+            // btnPrintReport
+            // 
+            this.btnPrintReport.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPrintReport.FlatAppearance.BorderSize = 0;
+            this.btnPrintReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrintReport.ForeColor = System.Drawing.Color.MediumAquamarine;
+            this.btnPrintReport.Image = global::RealEstateManagementSystem.Properties.Resources.printer;
+            this.btnPrintReport.Location = new System.Drawing.Point(987, 267);
+            this.btnPrintReport.Name = "btnPrintReport";
+            this.btnPrintReport.Size = new System.Drawing.Size(29, 23);
+            this.btnPrintReport.TabIndex = 9;
+            this.ttChequeManagement.SetToolTip(this.btnPrintReport, "Print this list");
+            this.btnPrintReport.UseVisualStyleBackColor = true;
+            this.btnPrintReport.Click += new System.EventHandler(this.btnPrintReport_Click);
             // 
             // frmChequeManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1140, 575);
+            this.ClientSize = new System.Drawing.Size(1047, 548);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ssChequeManagement);
             this.Controls.Add(this.pnlInvoice);
-            this.Controls.Add(this.pnlBank);
             this.Controls.Add(this.pnlDateRange);
             this.Controls.Add(this.pnlClientId);
+            this.Controls.Add(this.pnlBank);
             this.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Maroon;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -481,6 +728,10 @@
             this.pnlBank.PerformLayout();
             this.pnlDateRange.ResumeLayout(false);
             this.pnlDateRange.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -494,17 +745,7 @@
         private System.Windows.Forms.TextBox txtInvoice;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader colInvoiceNumber;
-        private System.Windows.Forms.ColumnHeader colTransactionStatus;
-        private System.Windows.Forms.ColumnHeader colClientName;
-        private System.Windows.Forms.ColumnHeader colUnitNumber;
-        private System.Windows.Forms.ColumnHeader colPaymentMode;
-        private System.Windows.Forms.ColumnHeader colTransactionDate;
-        private System.Windows.Forms.ColumnHeader colAmountPaid;
-        private System.Windows.Forms.ColumnHeader colParticulars;
-        private System.Windows.Forms.ColumnHeader colParticularsDate;
-        private System.Windows.Forms.ColumnHeader colBankInfo;
+        private System.Windows.Forms.ListView lvResultSet;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label3;
@@ -527,6 +768,37 @@
         private System.Windows.Forms.Button btnSearch_DateRange;
         private System.Windows.Forms.CheckBox chkExcludeCashTransactions;
         private System.Windows.Forms.CheckBox chkExcludeReceived;
-        private System.Windows.Forms.ColumnHeader colClientId;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox txtInvoiceNumber;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cmbAlterReason;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cmbInvoiceStatus;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnModifyAlterReason;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.DateTimePicker dtpStatusDate;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ToolTip ttChequeManagement;
+        private System.Windows.Forms.Button btnChangeStatus;
+        private System.Windows.Forms.Button btnModifyCompanyBankAccount;
+        private System.Windows.Forms.ComboBox cmbCompanyAccounts;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblRecordCount;
+        private System.Windows.Forms.ColumnHeader colStatus;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.Button btnRealodSearch;
+        private System.Windows.Forms.Button btnPrintReport;
     }
 }

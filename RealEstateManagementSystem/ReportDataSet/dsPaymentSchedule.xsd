@@ -2,14 +2,15 @@
 <xs:schema id="dsPaymentSchedule" targetNamespace="http://tempuri.org/dsPaymentSchedule.xsd" xmlns:mstns="http://tempuri.org/dsPaymentSchedule.xsd" xmlns="http://tempuri.org/dsPaymentSchedule.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="CentralDBConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CentralDBConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.RealEstateManagementSystem.Properties.Settings.GlobalReference.Default.CentralDBConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="CentralDBConnectionString2" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CentralDBConnectionString2 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.RealEstateManagementSystem.Properties.Settings.GlobalReference.Default.CentralDBConnectionString2" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="sp_CalculatePaymentScheduleTableAdapter" GeneratorDataComponentClassName="sp_CalculatePaymentScheduleTableAdapter" Name="sp_CalculatePaymentSchedule" UserDataComponentName="sp_CalculatePaymentScheduleTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="CentralDBConnectionString (Settings)" DbObjectName="CentralDB.dbo.sp_CalculatePaymentSchedule" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="CentralDBConnectionString2 (Settings)" DbObjectName="CentralDB.dbo.sp_CalculatePaymentSchedule" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.sp_CalculatePaymentSchedule</CommandText>
@@ -22,24 +23,28 @@
               </DbSource>
             </MainSource>
             <Mappings>
+              <Mapping SourceColumn="RowId" DataSetColumn="RowId" />
               <Mapping SourceColumn="ClientId" DataSetColumn="ClientId" />
+              <Mapping SourceColumn="FullClientId" DataSetColumn="FullClientId" />
               <Mapping SourceColumn="ClientName" DataSetColumn="ClientName" />
+              <Mapping SourceColumn="ContactInfo" DataSetColumn="ContactInfo" />
+              <Mapping SourceColumn="MasterUnitType" DataSetColumn="MasterUnitType" />
               <Mapping SourceColumn="AllocationInfo" DataSetColumn="AllocationInfo" />
               <Mapping SourceColumn="Amount" DataSetColumn="Amount" />
               <Mapping SourceColumn="DueDate" DataSetColumn="DueDate" />
               <Mapping SourceColumn="InstallmentName" DataSetColumn="InstallmentName" />
+              <Mapping SourceColumn="InstallTypeId" DataSetColumn="InstallTypeId" />
               <Mapping SourceColumn="InstallType" DataSetColumn="InstallType" />
               <Mapping SourceColumn="AmountPaid" DataSetColumn="AmountPaid" />
               <Mapping SourceColumn="Dues" DataSetColumn="Dues" />
               <Mapping SourceColumn="IsDueDate" DataSetColumn="IsDueDate" />
-              <Mapping SourceColumn="ContactInfo" DataSetColumn="ContactInfo" />
-              <Mapping SourceColumn="InstallTypeId" DataSetColumn="InstallTypeId" />
-              <Mapping SourceColumn="FullClientId" DataSetColumn="FullClientId" />
               <Mapping SourceColumn="PreparedBy" DataSetColumn="PreparedBy" />
               <Mapping SourceColumn="CheckedBy" DataSetColumn="CheckedBy" />
               <Mapping SourceColumn="RecommendedBy" DataSetColumn="RecommendedBy" />
-              <Mapping SourceColumn="MasterUnitType" DataSetColumn="MasterUnitType" />
-              <Mapping SourceColumn="RowId" DataSetColumn="RowId" />
+              <Mapping SourceColumn="LoanChequeInfo" DataSetColumn="LoanChequeInfo" />
+              <Mapping SourceColumn="AreaChangeInfo" DataSetColumn="AreaChangeInfo" />
+              <Mapping SourceColumn="ProjectNameWithCode" DataSetColumn="ProjectNameWithCode" />
+              <Mapping SourceColumn="ContactNumber" DataSetColumn="ContactNumber" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -54,11 +59,33 @@
         <xs:element name="sp_CalculatePaymentSchedule" msprop:Generator_TableClassName="sp_CalculatePaymentScheduleDataTable" msprop:Generator_TableVarName="tablesp_CalculatePaymentSchedule" msprop:Generator_TablePropName="sp_CalculatePaymentSchedule" msprop:Generator_RowDeletingName="sp_CalculatePaymentScheduleRowDeleting" msprop:Generator_RowChangingName="sp_CalculatePaymentScheduleRowChanging" msprop:Generator_RowEvHandlerName="sp_CalculatePaymentScheduleRowChangeEventHandler" msprop:Generator_RowDeletedName="sp_CalculatePaymentScheduleRowDeleted" msprop:Generator_UserTableName="sp_CalculatePaymentSchedule" msprop:Generator_RowChangedName="sp_CalculatePaymentScheduleRowChanged" msprop:Generator_RowEvArgName="sp_CalculatePaymentScheduleRowChangeEvent" msprop:Generator_RowClassName="sp_CalculatePaymentScheduleRow">
           <xs:complexType>
             <xs:sequence>
+              <xs:element name="RowId" msprop:Generator_ColumnVarNameInTable="columnRowId" msprop:Generator_ColumnPropNameInRow="RowId" msprop:Generator_ColumnPropNameInTable="RowIdColumn" msprop:Generator_UserColumnName="RowId" type="xs:int" minOccurs="0" />
               <xs:element name="ClientId" msprop:Generator_ColumnVarNameInTable="columnClientId" msprop:Generator_ColumnPropNameInRow="ClientId" msprop:Generator_ColumnPropNameInTable="ClientIdColumn" msprop:Generator_UserColumnName="ClientId" type="xs:double" minOccurs="0" />
+              <xs:element name="FullClientId" msprop:Generator_ColumnVarNameInTable="columnFullClientId" msprop:Generator_ColumnPropNameInRow="FullClientId" msprop:Generator_ColumnPropNameInTable="FullClientIdColumn" msprop:Generator_UserColumnName="FullClientId" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
               <xs:element name="ClientName" msprop:Generator_ColumnVarNameInTable="columnClientName" msprop:Generator_ColumnPropNameInRow="ClientName" msprop:Generator_ColumnPropNameInTable="ClientNameColumn" msprop:Generator_UserColumnName="ClientName" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ContactInfo" msprop:Generator_ColumnVarNameInTable="columnContactInfo" msprop:Generator_ColumnPropNameInRow="ContactInfo" msprop:Generator_ColumnPropNameInTable="ContactInfoColumn" msprop:Generator_UserColumnName="ContactInfo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MasterUnitType" msprop:Generator_ColumnVarNameInTable="columnMasterUnitType" msprop:Generator_ColumnPropNameInRow="MasterUnitType" msprop:Generator_ColumnPropNameInTable="MasterUnitTypeColumn" msprop:Generator_UserColumnName="MasterUnitType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -78,6 +105,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="InstallTypeId" msprop:Generator_ColumnVarNameInTable="columnInstallTypeId" msprop:Generator_ColumnPropNameInRow="InstallTypeId" msprop:Generator_ColumnPropNameInTable="InstallTypeIdColumn" msprop:Generator_UserColumnName="InstallTypeId" type="xs:int" minOccurs="0" />
               <xs:element name="InstallType" msprop:Generator_ColumnVarNameInTable="columnInstallType" msprop:Generator_ColumnPropNameInRow="InstallType" msprop:Generator_ColumnPropNameInTable="InstallTypeColumn" msprop:Generator_UserColumnName="InstallType" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -88,21 +116,6 @@
               <xs:element name="AmountPaid" msprop:Generator_ColumnVarNameInTable="columnAmountPaid" msprop:Generator_ColumnPropNameInRow="AmountPaid" msprop:Generator_ColumnPropNameInTable="AmountPaidColumn" msprop:Generator_UserColumnName="AmountPaid" type="xs:double" minOccurs="0" />
               <xs:element name="Dues" msprop:Generator_ColumnVarNameInTable="columnDues" msprop:Generator_ColumnPropNameInRow="Dues" msprop:Generator_ColumnPropNameInTable="DuesColumn" msprop:Generator_UserColumnName="Dues" type="xs:double" minOccurs="0" />
               <xs:element name="IsDueDate" msprop:Generator_ColumnVarNameInTable="columnIsDueDate" msprop:Generator_ColumnPropNameInRow="IsDueDate" msprop:Generator_ColumnPropNameInTable="IsDueDateColumn" msprop:Generator_UserColumnName="IsDueDate" type="xs:double" minOccurs="0" />
-              <xs:element name="ContactInfo" msprop:Generator_ColumnVarNameInTable="columnContactInfo" msprop:Generator_ColumnPropNameInRow="ContactInfo" msprop:Generator_ColumnPropNameInTable="ContactInfoColumn" msprop:Generator_UserColumnName="ContactInfo" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="2147483647" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="InstallTypeId" msprop:Generator_ColumnVarNameInTable="columnInstallTypeId" msprop:Generator_ColumnPropNameInRow="InstallTypeId" msprop:Generator_ColumnPropNameInTable="InstallTypeIdColumn" msprop:Generator_UserColumnName="InstallTypeId" type="xs:int" minOccurs="0" />
-              <xs:element name="FullClientId" msprop:Generator_ColumnVarNameInTable="columnFullClientId" msprop:Generator_ColumnPropNameInRow="FullClientId" msprop:Generator_ColumnPropNameInTable="FullClientIdColumn" msprop:Generator_UserColumnName="FullClientId" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
               <xs:element name="PreparedBy" msprop:Generator_ColumnVarNameInTable="columnPreparedBy" msprop:Generator_ColumnPropNameInRow="PreparedBy" msprop:Generator_ColumnPropNameInTable="PreparedByColumn" msprop:Generator_UserColumnName="PreparedBy" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -124,14 +137,34 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="MasterUnitType" msprop:Generator_ColumnVarNameInTable="columnMasterUnitType" msprop:Generator_ColumnPropNameInRow="MasterUnitType" msprop:Generator_ColumnPropNameInTable="MasterUnitTypeColumn" msprop:Generator_UserColumnName="MasterUnitType" minOccurs="0">
+              <xs:element name="LoanChequeInfo" msprop:Generator_ColumnVarNameInTable="columnLoanChequeInfo" msprop:Generator_ColumnPropNameInRow="LoanChequeInfo" msprop:Generator_ColumnPropNameInTable="LoanChequeInfoColumn" msprop:Generator_UserColumnName="LoanChequeInfo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="20" />
+                    <xs:maxLength value="2147483647" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="RowId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnRowId" msprop:Generator_ColumnPropNameInRow="RowId" msprop:Generator_ColumnPropNameInTable="RowIdColumn" msprop:Generator_UserColumnName="RowId" type="xs:int" />
+              <xs:element name="AreaChangeInfo" msprop:Generator_ColumnVarNameInTable="columnAreaChangeInfo" msprop:Generator_ColumnPropNameInRow="AreaChangeInfo" msprop:Generator_ColumnPropNameInTable="AreaChangeInfoColumn" msprop:Generator_UserColumnName="AreaChangeInfo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ProjectNameWithCode" msprop:Generator_ColumnVarNameInTable="columnProjectNameWithCode" msprop:Generator_ColumnPropNameInRow="ProjectNameWithCode" msprop:Generator_ColumnPropNameInTable="ProjectNameWithCodeColumn" msprop:Generator_UserColumnName="ProjectNameWithCode" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ContactNumber" msprop:Generator_ColumnVarNameInTable="columnContactNumber" msprop:Generator_ColumnPropNameInRow="ContactNumber" msprop:Generator_ColumnPropNameInTable="ContactNumberColumn" msprop:Generator_UserColumnName="ContactNumber" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

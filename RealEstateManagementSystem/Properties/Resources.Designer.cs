@@ -140,6 +140,26 @@ namespace RealEstateManagementSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bangladeshi_taka {
+            get {
+                object obj = ResourceManager.GetObject("bangladeshi_taka", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon bangladeshi_taka1 {
+            get {
+                object obj = ResourceManager.GetObject("bangladeshi_taka1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap block {
             get {
                 object obj = ResourceManager.GetObject("block", resourceCulture);
@@ -599,6 +619,16 @@ namespace RealEstateManagementSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap printer_bright {
+            get {
+                object obj = ResourceManager.GetObject("printer_bright", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rating {
             get {
                 object obj = ResourceManager.GetObject("rating", resourceCulture);
@@ -668,6 +698,26 @@ namespace RealEstateManagementSystem.Properties {
         internal static string regDeveloperServerIP {
             get {
                 return ResourceManager.GetString("regDeveloperServerIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap registrationprocess {
+            get {
+                object obj = ResourceManager.GetObject("registrationprocess", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon registrationprocess_icon {
+            get {
+                object obj = ResourceManager.GetObject("registrationprocess_icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -817,6 +867,16 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap search_color {
+            get {
+                object obj = ResourceManager.GetObject("search_color", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon search1 {
@@ -933,6 +993,16 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database Connection Error: 
+        ///.
+        /// </summary>
+        internal static string strDBConnError {
+            get {
+                return ResourceManager.GetString("strDBConnError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed!!.
         /// </summary>
         internal static string strFailedCaption {
@@ -1006,6 +1076,15 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start date cannot be greater than end date..
+        /// </summary>
+        internal static string strStartDateGreaterThanEndDateError {
+            get {
+                return ResourceManager.GetString("strStartDateGreaterThanEndDateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Success!!.
         /// </summary>
         internal static string strSuccessCaption {
@@ -1057,6 +1136,26 @@ namespace RealEstateManagementSystem.Properties {
         internal static string strZeroRecordsFound {
             get {
                 return ResourceManager.GetString("strZeroRecordsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon taka {
+            get {
+                object obj = ResourceManager.GetObject("taka", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap taka1 {
+            get {
+                object obj = ResourceManager.GetObject("taka1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -444,4 +444,35 @@ Exception Message: </value>
   <data name="strZeroRecordsFound" xml:space="preserve">
     <value>0 Record(s) Found</value>
   </data>
+  <data name="taka" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\taka.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="taka1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\taka.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bangladeshi_taka" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bangladeshi-taka.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bangladeshi_taka1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bangladeshi-taka.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="strStartDateGreaterThanEndDateError" xml:space="preserve">
+    <value>Start date cannot be greater than end date.</value>
+  </data>
+  <data name="strDBConnError" xml:space="preserve">
+    <value>Database Connection Error: 
+</value>
+  </data>
+  <data name="search_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\search_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printer_bright" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printer_bright.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="registrationprocess" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\registrationprocess.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="registrationprocess_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\registrationprocess-icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

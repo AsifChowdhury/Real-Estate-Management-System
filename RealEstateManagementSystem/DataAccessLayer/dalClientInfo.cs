@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RealEstateManagementSystem.BusinessLogicLayer;
+using RealEstateManagementSystem.Properties;
 
 namespace RealEstateManagementSystem.DataAccessLayer
 {
@@ -661,8 +662,6 @@ namespace RealEstateManagementSystem.DataAccessLayer
         }
     }
 
-
-
     public class dalClientInfo
     {
         internal DataTable GetListOfPartners(int clientId)
@@ -700,14 +699,14 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     {
                         pi.ClientPhoto = dr["Photo"] != DBNull.Value ? clsCommonFunctions.ImageFromByte(dr["Photo"]) : Properties.Resources.NoPhoto;
                         pi.ClientSignature = dr["Signature"] != DBNull.Value ? clsCommonFunctions.ImageFromByte(dr["Signature"]) : Properties.Resources.NoSign;
-                        pi.NeedBankLoan = dr["BankLoan"].ToString().ToUpper() == "YES" ? true : false;
+                        pi.NeedBankLoan = dr.HandleNULLString("BankLoan").ToUpper() == "YES" ? true : false;
                         pi.LoanProvider = new FinancialInstitute();
-                        pi.LoanProvider.LoanProviderName = Convert.ToString(dr["ProviderName"].ToString() + "");
-                        pi.Referrer = Convert.ToString(dr["Referrer"]);
-                        pi.IsReferredByClient = Convert.ToString(dr["Referredby"]).ToUpper() == "SEL" ? false : true;
-                        pi.SoldBy = Convert.ToString(dr["SoldBy"]);
+                        pi.LoanProvider.LoanProviderName = dr.HandleNULLString("ProviderName");
+                        pi.Referrer = dr.HandleNULLString("Referrer");
+                        pi.IsReferredByClient = dr.HandleNULLString("Referredby").ToUpper() == "SEL" ? false : true;
+                        pi.SoldBy = dr.HandleNULLString("SoldBy");
                         pi.SaleOffer = new SaleOffer();
-                        pi.SaleOffer.OfferName = Convert.ToString(dr["OfferName"]);
+                        pi.SaleOffer.OfferName = dr.HandleNULLString("OfferName");
                     }
                 }
                 return dr.HasRows;
@@ -821,42 +820,42 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 {
                     while (dr.Read())
                     {
-                        pi.UseSalutation = dr["Salutation"].ToString().ConvertToBoolean();
-                        pi.ClientType = Convert.ToString(dr["ClientType"]);
-                        pi.ClientName_English = Convert.ToString(dr["EngName"]).Trim();
-                        pi.ClientName_Bangla = Convert.ToString(dr["BangName"]).Trim();
-                        pi.Gender = Convert.ToString(dr["Gender"]);
-                        pi.GuardianType = Convert.ToString(dr["GuardianType"]);
-                        pi.CareOf = Convert.ToString(dr["CareOf"]);
-                        pi.GuardianName_English = Convert.ToString(dr["EngGName"]).Trim();
-                        pi.GuardianName_Bangla = Convert.ToString(dr["BangGName"]).Trim();
-                        pi.FatherName_English = Convert.ToString(dr["EngFName"]).Trim();
-                        pi.FatherName_Bangla = Convert.ToString(dr["BangFName"]).Trim();
-                        pi.MotherName_English = Convert.ToString(dr["EngMName"]).Trim();
-                        pi.MotherName_Bangla = Convert.ToString(dr["BangMName"]).Trim();
+                        pi.UseSalutation = dr.HandleNULLBoolean("Salutation");
+                        pi.ClientType = dr.HandleNULLString("ClientType");
+                        pi.ClientName_English = dr.HandleNULLString("EngName").Trim();
+                        pi.ClientName_Bangla = dr.HandleNULLString("BangName").Trim();
+                        pi.Gender = dr.HandleNULLString("Gender");
+                        pi.GuardianType = dr.HandleNULLString("GuardianType");
+                        pi.CareOf = dr.HandleNULLString("CareOf");
+                        pi.GuardianName_English = dr.HandleNULLString("EngGName").Trim();
+                        pi.GuardianName_Bangla = dr.HandleNULLString("BangGName").Trim();
+                        pi.FatherName_English = dr.HandleNULLString("EngFName").Trim();
+                        pi.FatherName_Bangla = dr.HandleNULLString("BangFName").Trim();
+                        pi.MotherName_English = dr.HandleNULLString("EngMName").Trim();
+                        pi.MotherName_Bangla = dr.HandleNULLString("BangMName").Trim();
                         pi.NationalityReligionOccupation = new NationalityReligionOccupation();
-                        pi.NationalityReligionOccupation.Nationality = Convert.ToString(dr["Nationality"]);
-                        pi.NationalityReligionOccupation.Religion = Convert.ToString(dr["Religion"]);
-                        pi.NationalityReligionOccupation.Occupation = Convert.ToString(dr["Occupation"]);
-                        pi.IsValidDateOfBirth = Convert.ToDateTime(dr["DOB"]).IsValidDate();
-                        pi.DateOfBirth = Convert.ToDateTime(dr["DOB"]).ManageInvalidDate();
-                        pi.MaritalStatus = Convert.ToString(dr["MStatus"]);
-                        pi.IsValidMarriageDate = Convert.ToDateTime(dr["MarriageDate"]).IsValidDate();
-                        pi.MarriageDate = Convert.ToDateTime(dr["MarriageDate"]).ManageInvalidDate();
-                        pi.NationalIdNumber = Convert.ToString(dr["NationalIdNum"]).Trim();
-                        pi.PassportNumber = Convert.ToString(dr["PassportNumber"]).Trim();
-                        pi.TINNumber = Convert.ToString(dr["TINNumber"]).Trim();
-                        pi.CurrentAddress = Convert.ToString(dr["CurrentAddres"]).Trim();
-                        pi.CurrentCountry = Convert.ToString(dr["CurrentCountry"]).Trim();
-                        pi.PostalAddress = Convert.ToString(dr["PostalContact"]).Trim();
-                        pi.PostalCountry = Convert.ToString(dr["PostalCountry"]).Trim();
-                        pi.PermanentAddress_Bangla = Convert.ToString(dr["BangPmtAddress"]).Trim();
-                        pi.ContactNumber = Convert.ToString(dr["ContactNumber"]).Trim();
-                        pi.EMailAddress = Convert.ToString(dr["EMail"]).Trim();
+                        pi.NationalityReligionOccupation.Nationality = dr.HandleNULLString("Nationality");
+                        pi.NationalityReligionOccupation.Religion = dr.HandleNULLString("Religion");
+                        pi.NationalityReligionOccupation.Occupation = dr.HandleNULLString("Occupation");
+                        pi.IsValidDateOfBirth = dr.HandleNULLDateTime("DOB").returnFalseIfNullDate();
+                        pi.DateOfBirth = dr.HandleNULLDateTime("DOB");
+                        pi.MaritalStatus = dr.HandleNULLString("MStatus");
+                        pi.IsValidMarriageDate = dr.HandleNULLDateTime("MarriageDate").returnFalseIfNullDate();
+                        pi.MarriageDate = dr.HandleNULLDateTime("MarriageDate");
+                        pi.NationalIdNumber = dr.HandleNULLString("NationalIdNum").Trim();
+                        pi.PassportNumber = dr.HandleNULLString("PassportNumber").Trim();
+                        pi.TINNumber = dr.HandleNULLString("TINNumber").Trim();
+                        pi.CurrentAddress = dr.HandleNULLString("CurrentAddres").Trim();
+                        pi.CurrentCountry = dr.HandleNULLString("CurrentCountry").Trim();
+                        pi.PostalAddress = dr.HandleNULLString("PostalContact").Trim();
+                        pi.PostalCountry = dr.HandleNULLString("PostalCountry").Trim();
+                        pi.PermanentAddress_Bangla = dr.HandleNULLString("BangPmtAddress").Trim();
+                        pi.ContactNumber = dr.HandleNULLString("ContactNumber").Trim();
+                        pi.EMailAddress = dr.HandleNULLString("EMail").Trim();
                         pi.SMSContact = dr["SMSContact"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SMSContact"]).Substring(4);
                         pi.EntryAndUpdateInfo = new EntryAndUpdateInfo();
-                        pi.EntryAndUpdateInfo.EntryMadeBy = Convert.ToString(dr["EntryMadeBy"]) + " on " + Convert.ToString(dr["EntryMadeOn"]).ShowAsStandardDateFormat(true) + " from " + Convert.ToString(dr["EntryMadeFrom"]);
-                        pi.EntryAndUpdateInfo.LastUpdatedBy = Convert.ToString(dr["LastUpdatedBy"]) == "N/A" ? "--" : Convert.ToString(dr["LastUpdatedBy"]) + " on " + Convert.ToString(dr["LastUpdatedOn"]).ShowAsStandardDateFormat(true) + " from " + Convert.ToString(dr["LastUpdatedFrom"]);
+                        pi.EntryAndUpdateInfo.EntryMadeBy = $"{dr.HandleNULLString("EntryMadeBy")} on {dr.HandleNULLDateTime("EntryMadeOn").ToString().ShowAsStandardDateFormat(true)} from {dr.HandleNULLString("EntryMadeFrom")}";
+                        pi.EntryAndUpdateInfo.LastUpdatedBy = dr.HandleNULLString("LastUpdatedBy") == "N/A" ? "--" : dr.HandleNULLString("LastUpdatedBy") + " on " + dr.HandleNULLDateTime("LastUpdatedOn").ToString().ShowAsStandardDateFormat(true) + " from " + dr.HandleNULLString("LastUpdatedFrom");
                     }
                 }
                 return dr.HasRows;
@@ -1137,6 +1136,92 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 return ds;
             }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        
+    }
+
+    public class dalUnitRegistrationInfo
+    {
+        internal void GetClientRegistrationInfo(UnitRegistrationInfo ur)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetRegistiontationDataOfClient";
+                cmd.Parameters.AddWithValue("@clientId", ur.ClientId);
+
+                dr = cmd.ExecuteReader();
+
+                if (!dr.HasRows) { throw new Exception(Resources.strNoData); }
+
+                while (dr.Read())
+                {
+                    ur.FullClientId = dr.HandleNULLString("ClientId");
+                    ur.ClientName_English = dr.HandleNULLString("Name");
+                    ur.UnitSummary = dr.HandleNULLString("UnitSummary");
+                    ur.RegistratrionDate = dr.HandleNULLDateTime("RegistrationDate");
+                    ur.IsRegistered = ur.RegistratrionDate.returnFalseIfNullDate();
+                    ur.LandArea = dr.HandleNULLDecimal("LandArea");
+                    ur.Loan = dr.HandleNULLBoolean("Loan");
+                    ur.DeedDeliveryDate = dr.HandleNULLDateTime("DeedDeliveryDate");
+                    ur.IsDeedDelivered = ur.DeedDeliveryDate.returnFalseIfNullDate();
+                    ur.DeedNumber = dr.HandleNULLInteger("DeedNumber");
+                    ur.DeedValue = dr.HandleNULLDecimal("DeedValue");
+                    ur.ITFee = dr.HandleNULLDecimal("ITFee");
+                    ur.RegistrationFee = dr.HandleNULLDecimal("RegistrationFee");
+                    ur.VAT = dr.HandleNULLDecimal("VAT");
+
+                }
+            }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
+        }
+
+        internal void SaveRegistrationData(UnitRegistrationInfo ur)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_SaveClientRegistrationInfo";
+                cmd.Parameters.AddWithValue("@clientId", ur.ClientId);
+                cmd.Parameters.AddWithValue("@isRegistered", ur.IsRegistered);
+                cmd.Parameters.AddWithValue("@registrationDate", ur.RegistratrionDate);
+                cmd.Parameters.AddWithValue("@landArea", ur.LandArea);
+                cmd.Parameters.AddWithValue("@loan", ur.Loan);
+                cmd.Parameters.AddWithValue("@deedNumber", ur.DeedNumber);
+                cmd.Parameters.AddWithValue("@isDeedDelivered", ur.IsDeedDelivered);
+                cmd.Parameters.AddWithValue("@deedDeliveryDate", ur.DeedDeliveryDate);
+                cmd.Parameters.AddWithValue("@deedValue", ur.DeedValue);
+                cmd.Parameters.AddWithValue("@ITFee", ur.ITFee);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workstation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal static DataTable GetUnitRegistrationList(int projectId, string clientIds = null)
+        {
+            SqlCommand cmd = new SqlCommand();
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetUnitRegistrationList";
+                cmd.Parameters.AddWithValue("@projectId", projectId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
     }
 }

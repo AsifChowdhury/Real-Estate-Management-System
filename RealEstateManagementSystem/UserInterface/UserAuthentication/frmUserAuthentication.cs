@@ -96,6 +96,7 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
                     bLayer.SetAppAuthentication();
                 }
                 MessageBox.Show("User authenticated successfully.", Resources.strSuccessCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                PopulateAuthenticationList();
             }
             catch (Exception ex) { ex.ProcessException(); }
 

@@ -1175,6 +1175,8 @@
             this.txtClientId.Size = new System.Drawing.Size(160, 20);
             this.txtClientId.TabIndex = 1;
             this.txtClientId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtClientId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtClientId_KeyDown);
+            this.txtClientId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtClientId_KeyPress);
             this.txtClientId.Leave += new System.EventHandler(this.txtClientId_Leave);
             // 
             // label6

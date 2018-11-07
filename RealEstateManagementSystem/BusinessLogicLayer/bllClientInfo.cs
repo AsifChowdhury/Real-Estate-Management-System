@@ -1,12 +1,10 @@
 ﻿using RealEstateManagementSystem.DataAccessLayer;
+using RealEstateManagementSystem.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Drawing;
-using RealEstateManagementSystem.Utilities;
+using System.Windows.Forms;
 
 namespace RealEstateManagementSystem.BusinessLogicLayer
 {
@@ -17,6 +15,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         #region ClassProperties
         public int ClientId { get; set; }
         public string FullClientId { get; set; }
+        public string UnitSummary { get; set; }
         public int ClientTypeId { get; set; }
         public string ClientType { get; set; }
         public bool UseSalutation { get; set; }
@@ -145,10 +144,28 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public decimal UnitArea { get; set; }
         public bool AreaEnabled { get; set; }
     }
+
+    public class UnitRegistrationInfo : PersonInformation
+    {
+        public int UnitRegistrationId { get; set; }
+        public DateTime RegistratrionDate { get; set; }
+        public bool IsRegistered { get; set; }
+        public decimal RegistrationFee { get; set; }
+        public decimal VAT { get; set; }
+        public decimal LandArea { get; set; }
+        public bool Loan { get; set; }
+        public int DeedNumber { get; set; }
+        public decimal DeedValue { get; set; }
+        public decimal ITFee { get; set; }
+        public DateTime DeedDeliveryDate { get; set; }
+        public bool IsDeedDelivered { get; set; }
+
+
+    }
     #endregion
 
     #region Business Logics
-        
+
     public class bllFinancialInstitute
     {
         dalFinancialInstitute dLayer = new dalFinancialInstitute();
@@ -246,7 +263,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             dLayer.RemovePartner(partnerId);
         }
     }
-    
+
     public class bllAllocationAndInstallment
     {
         dalAllocationAndInstallment dLayer = new dalAllocationAndInstallment();
@@ -332,7 +349,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             dLayer.SaveOtherTypeInstallment(clientId, lstBP);
         }
     }
-    
+
     public class bllClientInfo
     {
 
@@ -426,6 +443,29 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         {
             return dLayer.GetAllotmentLetter(clientIds, monthlyRent);
         }
+
     }
+
+    public class bllUnitRegistrationInfo
+    {
+        dalUnitRegistrationInfo dLayer = new dalUnitRegistrationInfo();
+        internal void GetClientRegistrationData(UnitRegistrationInfo ur)
+        {
+            dLayer.GetClientRegistrationInfo(ur);
+        }
+
+        internal void SaveRegistrationData(UnitRegistrationInfo ur)
+        {
+            dLayer.SaveRegistrationData(ur);
+        }
+
+        internal static DataTable GetUnitRegistrationList(int projectId, string clientIds = null)
+        {
+            return dalUnitRegistrationInfo.GetUnitRegistrationList(projectId, clientIds);
+        }
+
+        
+    }
+
     #endregion
 }

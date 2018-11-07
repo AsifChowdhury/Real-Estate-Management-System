@@ -77,6 +77,7 @@
             this.ttProjectReport = new System.Windows.Forms.ToolTip(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.rbRecoveryPosition = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.pnlSummaryReportType.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -167,6 +168,7 @@
             // 
             // pnlSummaryReportType
             // 
+            this.pnlSummaryReportType.Controls.Add(this.rbRecoveryPosition);
             this.pnlSummaryReportType.Controls.Add(this.rbSummarizedSalesStatus);
             this.pnlSummaryReportType.Controls.Add(this.rbBlockedUnits_Summary);
             this.pnlSummaryReportType.Controls.Add(this.rbFinancialSummary);
@@ -175,7 +177,7 @@
             this.pnlSummaryReportType.Controls.Add(this.rbProjectConsolidation);
             this.pnlSummaryReportType.Location = new System.Drawing.Point(433, 80);
             this.pnlSummaryReportType.Name = "pnlSummaryReportType";
-            this.pnlSummaryReportType.Size = new System.Drawing.Size(206, 152);
+            this.pnlSummaryReportType.Size = new System.Drawing.Size(206, 173);
             this.pnlSummaryReportType.TabIndex = 24;
             // 
             // rbSummarizedSalesStatus
@@ -310,7 +312,7 @@
             this.rbPriceList.TabIndex = 18;
             this.rbPriceList.Text = "(QF-MKT-11) Price List";
             this.rbPriceList.UseVisualStyleBackColor = true;
-            this.rbPriceList.CheckedChanged += new System.EventHandler(this.rbPriceList_CheckedChanged);
+            this.rbPriceList.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbBookingPosition
             // 
@@ -321,7 +323,7 @@
             this.rbBookingPosition.TabIndex = 17;
             this.rbBookingPosition.Text = "(QF-MKT-09) Booking Position";
             this.rbBookingPosition.UseVisualStyleBackColor = true;
-            this.rbBookingPosition.CheckedChanged += new System.EventHandler(this.rbBookingPosition_CheckedChanged);
+            this.rbBookingPosition.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // chkLOC_withPhotoAndSignature
             // 
@@ -376,7 +378,7 @@
             this.rbPayementDetailsOfAllClient.TabIndex = 16;
             this.rbPayementDetailsOfAllClient.Text = "Payment details of All Client";
             this.rbPayementDetailsOfAllClient.UseVisualStyleBackColor = true;
-            this.rbPayementDetailsOfAllClient.CheckedChanged += new System.EventHandler(this.rbPayementDetailsOfAllClient_CheckedChanged);
+            this.rbPayementDetailsOfAllClient.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbListOfClients
             // 
@@ -398,7 +400,7 @@
             this.rbListOfLandOwners.TabIndex = 11;
             this.rbListOfLandOwners.Text = "List of Land Owner(s)";
             this.rbListOfLandOwners.UseVisualStyleBackColor = true;
-            this.rbListOfLandOwners.CheckedChanged += new System.EventHandler(this.rbListOfLandOwners_CheckedChanged);
+            this.rbListOfLandOwners.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbListOfUnits
             // 
@@ -409,7 +411,7 @@
             this.rbListOfUnits.TabIndex = 10;
             this.rbListOfUnits.Text = "List of Unit(s)";
             this.rbListOfUnits.UseVisualStyleBackColor = true;
-            this.rbListOfUnits.CheckedChanged += new System.EventHandler(this.rbListOfUnits_CheckedChanged);
+            this.rbListOfUnits.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbBlockedUnits
             // 
@@ -420,7 +422,7 @@
             this.rbBlockedUnits.TabIndex = 9;
             this.rbBlockedUnits.Text = "Blocked Unit(s)";
             this.rbBlockedUnits.UseVisualStyleBackColor = true;
-            this.rbBlockedUnits.CheckedChanged += new System.EventHandler(this.rbBlockedUnits_CheckedChanged);
+            this.rbBlockedUnits.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbOralBooking
             // 
@@ -431,7 +433,7 @@
             this.rbOralBooking.TabIndex = 8;
             this.rbOralBooking.Text = "Oral Booking";
             this.rbOralBooking.UseVisualStyleBackColor = true;
-            this.rbOralBooking.CheckedChanged += new System.EventHandler(this.rbOralBooking_CheckedChanged);
+            this.rbOralBooking.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbDeductedAmount
             // 
@@ -442,7 +444,7 @@
             this.rbDeductedAmount.TabIndex = 7;
             this.rbDeductedAmount.Text = "Deducted Amount";
             this.rbDeductedAmount.UseVisualStyleBackColor = true;
-            this.rbDeductedAmount.CheckedChanged += new System.EventHandler(this.rbDeductedAmount_CheckedChanged);
+            this.rbDeductedAmount.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbDueList
             // 
@@ -453,7 +455,7 @@
             this.rbDueList.TabIndex = 6;
             this.rbDueList.Text = "Due List";
             this.rbDueList.UseVisualStyleBackColor = true;
-            this.rbDueList.CheckedChanged += new System.EventHandler(this.rbDueList_CheckedChanged);
+            this.rbDueList.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbGeneralStatusOfClient
             // 
@@ -464,7 +466,7 @@
             this.rbGeneralStatusOfClient.TabIndex = 5;
             this.rbGeneralStatusOfClient.Text = "General Status of Client";
             this.rbGeneralStatusOfClient.UseVisualStyleBackColor = true;
-            this.rbGeneralStatusOfClient.CheckedChanged += new System.EventHandler(this.rbGeneralStatusOfClient_CheckedChanged);
+            this.rbGeneralStatusOfClient.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbDeedOfAgreementStatus
             // 
@@ -475,7 +477,7 @@
             this.rbDeedOfAgreementStatus.TabIndex = 4;
             this.rbDeedOfAgreementStatus.Text = "Deed of Agreement Status";
             this.rbDeedOfAgreementStatus.UseVisualStyleBackColor = true;
-            this.rbDeedOfAgreementStatus.CheckedChanged += new System.EventHandler(this.rbDeedOfAgreementStatus_CheckedChanged);
+            this.rbDeedOfAgreementStatus.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbRegistrationStatus
             // 
@@ -486,7 +488,7 @@
             this.rbRegistrationStatus.TabIndex = 2;
             this.rbRegistrationStatus.Text = "Registration Status";
             this.rbRegistrationStatus.UseVisualStyleBackColor = true;
-            this.rbRegistrationStatus.CheckedChanged += new System.EventHandler(this.rbRegistrationStatus_CheckedChanged);
+            this.rbRegistrationStatus.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // rbProjectSummary
             // 
@@ -499,7 +501,7 @@
             this.rbProjectSummary.TabStop = true;
             this.rbProjectSummary.Text = "Project Summary";
             this.rbProjectSummary.UseVisualStyleBackColor = true;
-            this.rbProjectSummary.CheckedChanged += new System.EventHandler(this.rbProjectSummary_CheckedChanged);
+            this.rbProjectSummary.CheckedChanged += new System.EventHandler(this._checkedChanged);
             // 
             // shapeContainer1
             // 
@@ -611,6 +613,17 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Summarized Reports:";
             // 
+            // rbRecoveryPosition
+            // 
+            this.rbRecoveryPosition.AutoSize = true;
+            this.rbRecoveryPosition.Location = new System.Drawing.Point(12, 147);
+            this.rbRecoveryPosition.Name = "rbRecoveryPosition";
+            this.rbRecoveryPosition.Size = new System.Drawing.Size(127, 17);
+            this.rbRecoveryPosition.TabIndex = 6;
+            this.rbRecoveryPosition.TabStop = true;
+            this.rbRecoveryPosition.Text = "Recovery Position";
+            this.rbRecoveryPosition.UseVisualStyleBackColor = true;
+            // 
             // frmProjectReports
             // 
             this.AcceptButton = this.btnShowReport;
@@ -692,5 +705,6 @@
         private System.Windows.Forms.RadioButton rbFinancialSummary;
         private System.Windows.Forms.RadioButton rbBlockedUnits_Summary;
         private System.Windows.Forms.RadioButton rbSummarizedSalesStatus;
+        private System.Windows.Forms.RadioButton rbRecoveryPosition;
     }
 }

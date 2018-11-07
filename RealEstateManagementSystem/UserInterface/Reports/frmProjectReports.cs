@@ -158,6 +158,10 @@ namespace RealEstateManagementSystem.UserInterface.Reports
                     {
                         clsReports.GetSummarizedSalesStatus("Summary", filterCriteria, filterBy, tssStatus);
                     }
+                    else if (rbRecoveryPosition.Checked==true)
+                    {
+                        clsReports.GetRecoveryPosition("Summary", filterCriteria, filterBy, tssStatus);
+                    }
                     else
                     {
                         throw new ApplicationException("Please select a summary report type.");
@@ -240,69 +244,15 @@ namespace RealEstateManagementSystem.UserInterface.Reports
 
         }
 
-        private void rbProjectSummary_CheckedChanged(object sender, EventArgs e)
+
+        private void _checkedChanged(object radioButton, EventArgs e)
         {
-            if (rbProjectSummary.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
+            if (((RadioButton)radioButton).Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
         }
 
-        private void rbRegistrationStatus_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbRegistrationStatus.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
+       
+        
 
-        private void rbDeedOfAgreementStatus_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbDeedOfAgreementStatus.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbGeneralStatusOfClient_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbGeneralStatusOfClient.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbDueList_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbDueList.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbDeductedAmount_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbDeductedAmount.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbOralBooking_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbOralBooking.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbBlockedUnits_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbBlockedUnits.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbListOfUnits_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbListOfUnits.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbListOfLandOwners_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbListOfLandOwners.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbPayementDetailsOfAllClient_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbPayementDetailsOfAllClient.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbBookingPosition_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbBookingPosition.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
-
-        private void rbPriceList_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbPriceList.Checked == true) clsCommonFunctions.ResetRadioButtons(pnlSummaryReportType);
-        }
+        
     }
 }

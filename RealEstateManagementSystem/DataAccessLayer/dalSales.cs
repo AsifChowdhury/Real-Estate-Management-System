@@ -35,6 +35,37 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
+        internal DataTable GetSalesReportByRep(DateTime startDate, DateTime endDate, bool showDetails, string empId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                if (showDetails == true)
+                {
+                    cmd.CommandText = "sp_GetSalesDetailsByRep";
+                    cmd.Parameters.AddWithValue("@startDate", startDate);
+                    cmd.Parameters.AddWithValue("@endDate", endDate);
+                    cmd.Parameters.AddWithValue("@showDetails", showDetails);
+                    cmd.Parameters.AddWithValue("@empId", empId);
+                }
+                else
+                {
+                    cmd.CommandText = "sp_GetSalesSummaryByRep";
+                    cmd.Parameters.AddWithValue("@startDate", startDate);
+                    cmd.Parameters.AddWithValue("@endDate", endDate);
+                }
+
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
         internal DataTable GetSummarizedSalesReport(DateTime startDate, DateTime endDate)
         {
             SqlCommand cmd = new SqlCommand();
@@ -74,7 +105,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
-        
+
 
         internal DataTable GetSummaryOfSales(int salesYear)
         {
@@ -152,12 +183,13 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
         }
 
-
         internal DataTable GetSummarizedSalesStatus(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy)
         {
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter da = new SqlDataAdapter();
-            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            DataTable dtClientInfo = new DataTable();
+            DataTable dtProjectSummary = new DataTable();
             try
             {
                 cmd.Connection = Program.cnConn;
@@ -167,10 +199,30 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
                 cmd.Parameters.AddWithValue("@filterBy", Convert.ToInt32(filterBy));
                 da.SelectCommand = cmd;
-                da.Fill(dt);
-                return dt;
+                da.Fill(dtClientInfo);
+                return dtClientInfo;
             }
-            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+            finally { cmd.Dispose(); da.Dispose(); dtClientInfo.Dispose(); dtProjectSummary.Dispose(); ds.Dispose(); }
         }
+
+        //internal DataTable GetSummarizedSalesStatus(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy)
+        //{
+        //    SqlCommand cmd = new SqlCommand();
+        //    SqlDataAdapter da = new SqlDataAdapter();
+        //    DataTable dt = new DataTable();
+        //    try
+        //    {
+        //        cmd.Connection = Program.cnConn;
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        cmd.CommandText = "sp_SummarizedSalesStatus";
+        //        cmd.Parameters.AddWithValue("@searchBy", searchBy);
+        //        cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+        //        cmd.Parameters.AddWithValue("@filterBy", Convert.ToInt32(filterBy));
+        //        da.SelectCommand = cmd;
+        //        da.Fill(dt);
+        //        return dt;
+        //    }
+        //    finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        //}
     }
 }

@@ -20,7 +20,7 @@ namespace RealEstateManagementSystem.UserInterface.Reports
         {
             try
             {
-                clsCommonFunctions.PopulateListViewsFromSingleLineQuery("SELECT DISTINCT dbo.ProjectStatus(ProjectID) AS ProjectStatus FROM ProjectInfo ORDER BY ProjectStatus", lvProjectStatus, null, false);
+                clsCommonFunctions.PopulateListViewsFromSingleLineQuery("EXEC sp_GetProjectStatuses", lvProjectStatus, null, false);
                 clsCommonFunctions.PopulateDistinctSalesYears(cmbSalesYear);
                 dtpSR_StartDate.Value = dtpCU_StartDate.Value = DateTime.Now.AddMonths(-6);
             }
@@ -81,6 +81,11 @@ namespace RealEstateManagementSystem.UserInterface.Reports
                     else if (lvProjects.CheckedItems.Count > 0) clsReports.GetListOfBlockedUnits("Project", clsCommonFunctions.convertToCommaSeperatedValue(lvProjects, 1), clsGlobalClass.ProjectCommonReport_FilterBy.SelectedProjects, tssStatus);
                     else clsReports.GetListOfBlockedUnits("Summary", clsCommonFunctions.convertToCommaSeperatedValue(lvProjectStatus, 0), clsGlobalClass.ProjectCommonReport_FilterBy.ProjectStatus, tssStatus);
                 }
+                else if (rbSalesSummaryByRep.Checked == true)
+                {
+                    frmSaleSummaryByRep f = new frmSaleSummaryByRep();
+                    f.ShowDialog();
+                }
             }
             catch (Exception ex) { ex.ProcessException(); }
 
@@ -89,16 +94,7 @@ namespace RealEstateManagementSystem.UserInterface.Reports
 
         private void lvProjectStatus_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            try
-            {
-                if (lvProjectStatus.CheckedItems.Count > 0)
-                {
-                    DataTable dt = clsCommonFunctions.GetListOfProjectsByStatus(clsCommonFunctions.convertToCommaSeperatedValue(lvProjectStatus));
-                    clsCommonFunctions.PopulateListViewFromDataTable(dt, lvProjects, lblProjectCount, false, tssStatus);
-                    lvProjects.Columns[1].Width = 0;
-                }
-                else { lvProjects.Items.Clear(); lblProjectCount.Text = Resources.strZeroRecordsFound; }
-            }
+            try { clsCommonFunctions.PopulateProjectListByProjectStatus(lvProjectStatus, lvProjects, lblProjectCount, tssStatus); }
             catch (Exception ex) { ex.ProcessException(); }
         }
     }

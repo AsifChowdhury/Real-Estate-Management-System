@@ -47,6 +47,7 @@
               <Mapping SourceColumn="RegistrationDate" DataSetColumn="RegistrationDate" />
               <Mapping SourceColumn="ProjectCode" DataSetColumn="ProjectCode" />
               <Mapping SourceColumn="ContactNumber" DataSetColumn="ContactNumber" />
+              <Mapping SourceColumn="ProjectId" DataSetColumn="ProjectId" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -58,7 +59,7 @@
   <xs:element name="dsGetSummarizedSalesStatus" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsGetSummarizedSalesStatus" msprop:Generator_UserDSName="dsGetSummarizedSalesStatus">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="sp_SummarizedSalesStatus" msprop:Generator_TableClassName="sp_SummarizedSalesStatusDataTable" msprop:Generator_TableVarName="tablesp_SummarizedSalesStatus" msprop:Generator_RowChangedName="sp_SummarizedSalesStatusRowChanged" msprop:Generator_TablePropName="sp_SummarizedSalesStatus" msprop:Generator_RowDeletingName="sp_SummarizedSalesStatusRowDeleting" msprop:Generator_RowChangingName="sp_SummarizedSalesStatusRowChanging" msprop:Generator_RowEvHandlerName="sp_SummarizedSalesStatusRowChangeEventHandler" msprop:Generator_RowDeletedName="sp_SummarizedSalesStatusRowDeleted" msprop:Generator_RowClassName="sp_SummarizedSalesStatusRow" msprop:Generator_UserTableName="sp_SummarizedSalesStatus" msprop:Generator_RowEvArgName="sp_SummarizedSalesStatusRowChangeEvent">
+        <xs:element name="sp_SummarizedSalesStatus" msprop:Generator_TableClassName="sp_SummarizedSalesStatusDataTable" msprop:Generator_TableVarName="tablesp_SummarizedSalesStatus" msprop:Generator_TablePropName="sp_SummarizedSalesStatus" msprop:Generator_RowDeletingName="sp_SummarizedSalesStatusRowDeleting" msprop:Generator_RowChangingName="sp_SummarizedSalesStatusRowChanging" msprop:Generator_RowEvHandlerName="sp_SummarizedSalesStatusRowChangeEventHandler" msprop:Generator_RowDeletedName="sp_SummarizedSalesStatusRowDeleted" msprop:Generator_UserTableName="sp_SummarizedSalesStatus" msprop:Generator_RowChangedName="sp_SummarizedSalesStatusRowChanged" msprop:Generator_RowEvArgName="sp_SummarizedSalesStatusRowChangeEvent" msprop:Generator_RowClassName="sp_SummarizedSalesStatusRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ProjectName" msprop:Generator_ColumnVarNameInTable="columnProjectName" msprop:Generator_ColumnPropNameInRow="ProjectName" msprop:Generator_ColumnPropNameInTable="ProjectNameColumn" msprop:Generator_UserColumnName="ProjectName" minOccurs="0">
@@ -156,10 +157,33 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="ProjectId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnProjectId" msprop:Generator_ColumnPropNameInRow="ProjectId" msprop:Generator_ColumnPropNameInTable="ProjectIdColumn" msprop:Generator_UserColumnName="ProjectId" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ProjectSummary" msprop:Generator_TableClassName="ProjectSummaryDataTable" msprop:Generator_TableVarName="tableProjectSummary" msprop:Generator_TablePropName="ProjectSummary" msprop:Generator_RowDeletingName="ProjectSummaryRowDeleting" msprop:Generator_RowChangingName="ProjectSummaryRowChanging" msprop:Generator_RowEvHandlerName="ProjectSummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="ProjectSummaryRowDeleted" msprop:Generator_UserTableName="ProjectSummary" msprop:Generator_RowChangedName="ProjectSummaryRowChanged" msprop:Generator_RowEvArgName="ProjectSummaryRowChangeEvent" msprop:Generator_RowClassName="ProjectSummaryRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ProjectId" msprop:Generator_ColumnVarNameInTable="columnProjectId" msprop:Generator_ColumnPropNameInRow="ProjectId" msprop:Generator_ColumnPropNameInTable="ProjectIdColumn" msprop:Generator_UserColumnName="ProjectId" type="xs:int" minOccurs="0" />
+              <xs:element name="ProjectName" msprop:Generator_ColumnVarNameInTable="columnProjectName" msprop:Generator_ColumnPropNameInRow="ProjectName" msprop:Generator_ColumnPropNameInTable="ProjectNameColumn" msprop:Generator_UserColumnName="ProjectName" type="xs:string" minOccurs="0" />
+              <xs:element name="UnitType" msprop:Generator_ColumnVarNameInTable="columnUnitType" msprop:Generator_ColumnPropNameInRow="UnitType" msprop:Generator_ColumnPropNameInTable="UnitTypeColumn" msprop:Generator_UserColumnName="UnitType" type="xs:string" minOccurs="0" />
+              <xs:element name="SEL_Count" msprop:Generator_ColumnVarNameInTable="columnSEL_Count" msprop:Generator_ColumnPropNameInRow="SEL_Count" msprop:Generator_ColumnPropNameInTable="SEL_CountColumn" msprop:Generator_UserColumnName="SEL_Count" type="xs:string" minOccurs="0" />
+              <xs:element name="LO_Count" msprop:Generator_ColumnVarNameInTable="columnLO_Count" msprop:Generator_ColumnPropNameInRow="LO_Count" msprop:Generator_ColumnPropNameInTable="LO_CountColumn" msprop:Generator_UserColumnName="LO_Count" type="xs:string" minOccurs="0" />
+              <xs:element name="SEL_Sold" msprop:Generator_ColumnVarNameInTable="columnSEL_Sold" msprop:Generator_ColumnPropNameInRow="SEL_Sold" msprop:Generator_ColumnPropNameInTable="SEL_SoldColumn" msprop:Generator_UserColumnName="SEL_Sold" type="xs:string" minOccurs="0" />
+              <xs:element name="LO_Sold" msprop:Generator_ColumnVarNameInTable="columnLO_Sold" msprop:Generator_ColumnPropNameInRow="LO_Sold" msprop:Generator_ColumnPropNameInTable="LO_SoldColumn" msprop:Generator_UserColumnName="LO_Sold" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:choice>
     </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:sp_SummarizedSalesStatus" />
+      <xs:field xpath="mstns:ProjectId" />
+    </xs:unique>
   </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="ProjectSummary_sp_SummarizedSalesStatus" msdata:parent="ProjectSummary" msdata:child="sp_SummarizedSalesStatus" msdata:parentkey="ProjectId" msdata:childkey="ProjectId" msprop:Generator_UserChildTable="sp_SummarizedSalesStatus" msprop:Generator_ChildPropName="Getsp_SummarizedSalesStatusRows" msprop:Generator_UserRelationName="ProjectSummary_sp_SummarizedSalesStatus" msprop:Generator_RelationVarName="relationProjectSummary_sp_SummarizedSalesStatus" msprop:Generator_UserParentTable="ProjectSummary" msprop:Generator_ParentPropName="ProjectSummaryRow" />
+    </xs:appinfo>
+  </xs:annotation>
 </xs:schema>

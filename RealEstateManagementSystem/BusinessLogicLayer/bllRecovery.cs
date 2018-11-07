@@ -1,10 +1,6 @@
 ﻿using RealEstateManagementSystem.DataAccessLayer;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RealEstateManagementSystem.Utilities;
 
 namespace RealEstateManagementSystem.BusinessLogicLayer
@@ -69,10 +65,8 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
     }
     public class CountryInfo
     {
-
         public int CountryId { get; set; }
         public string CountryName { get; set; }
-
     }
     public class PaymentModeInfo
     {
@@ -105,9 +99,14 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public DateTime ParticularDate { get; set; }
         public string UpdateReason { get; set; }
         public string ReturnText { get; set; }
-
+        public object PaymentStatusId { get; internal set; }
+        public string PaymentStatus { get; set; }
+        public object AlterReasonId { get; internal set; }
+        public string AlterReason { get; internal set; }
+        public DateTime PaymentStatusChangeDate { get; internal set; }
+        public object CompnanyBankAccountId { get; internal set; }
+        public string CompnanyBankAccount { get; internal set; }
         public InstallTypeInfo InstallType { get; set; }
-
         public InstallmentInfo Installment { get; set; }
         public bool IsRefundTransaction { get; set; }
 
@@ -119,6 +118,7 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public CommonProperties_Recovery CommonProperties { get; set; }
 
         public EntryAndUpdateInfo EntryAndUpdate { get; set; }
+        
     }
 
     #endregion
@@ -197,6 +197,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return payment.GetPaymentClearanceCertificate(clientId, verifiedBy, checkedBy, recommnededBy);
         }
 
+        internal Payment GetChequeInformation(int transactionId)
+        {
+            return payment.GetChequeInformation(transactionId);
+        }
+
         internal void InstallmentAlgorithm(int clientId, decimal dblPAmount, int installmentId, int transactionId, out int lastInstallmentId, out string installInWord)
         {
             payment.InstallmentAlgorithm(clientId, dblPAmount, installmentId, transactionId, out lastInstallmentId, out installInWord);
@@ -215,6 +220,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         internal decimal GetMaximumAmountPayable(int clientId, int installTypeId, int installmentId)
         {
             return payment.GetMaximumAmountPayable(clientId, installTypeId, installmentId);
+        }
+
+        internal void UpdateChequeStatus(Payment p)
+        {
+            payment.UpdateChequeStatus(p);
         }
 
         internal decimal AmountPayable(int clientId, int installmentId)
@@ -282,9 +292,9 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return payment.GetTransactionUpdateHistory(transactionId);
         }
 
-        internal DataTable SearchClientCheckInformation(clsGlobalClass.ChequeSearchBy searchBy, int invoiceNumber, int clientId, int bankId, DateTime startDate, DateTime endDate, bool excludeReceived, bool excludeCashTransactions)
+        internal DataTable SearchChequeInformation(clsGlobalClass.ChequeSearchBy searchBy, int invoiceNumber, int clientId, int bankId, DateTime startDate, DateTime endDate, bool excludeReceived, bool excludeCashTransactions)
         {
-            return payment.SearchClientCheckInformation(searchBy, invoiceNumber, clientId, bankId, startDate, endDate, excludeReceived, excludeCashTransactions);
+            return payment.SearchChequeInformation(searchBy, invoiceNumber, clientId, bankId, startDate, endDate, excludeReceived, excludeCashTransactions);
         }
 
         internal DataSet GetPaymentComparison(string clientId)
@@ -322,6 +332,69 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return payment.IsKeyListDelivered(clientId);
         }
     }
+
+    public static class bllRecoveryReports
+    {
+        internal static DataTable GetProjectValuation(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, DateTime dateUpTo)
+        {
+            return dalRecoveryReports.GetProjectValuation(searchBy, filterCriteria, filterBy, dateUpTo);
+        }
+
+        internal static DataTable GetRefundAmount(string searchBy, string filterCriteria,
+            clsGlobalClass.ProjectCommonReport_FilterBy filterBy, int? installmentId = null, DateTime? startDate = null,
+            DateTime? endDate = null)
+        {
+            return dalRecoveryReports.GetRefundAmount(searchBy, filterCriteria, filterBy, installmentId, startDate, endDate);
+        }
+
+        internal static DataTable GetTransactionSummary(int month, int year)
+        {
+            return dalRecoveryReports.GetTransactionSummary(month, year);
+        }
+
+        internal static DataTable GetRecoveryPosition(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy)
+        {
+            return dalRecoveryReports.GetRecoveryPosition(searchBy, filterCriteria, filterBy);
+        }
+
+        internal static DataTable GetComparePaymentStatus(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, DateTime startDate, DateTime endDate)
+        {
+            return dalRecoveryReports.GetComparePaymentStatus(searchBy, filterCriteria, filterBy, startDate, endDate);
+        }
+
+        internal static DataTable GetRegistrationCompletionList(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, DateTime startDate, DateTime endDate)
+        {
+            return dalRecoveryReports.GetRegistrationCompletionList(searchBy, filterCriteria, filterBy, startDate, endDate);
+        }
+
+        internal static DataTable GetAnnualRecoveryPosition(string saleYears)
+        {
+            return dalRecoveryReports.GetAnnualRecoveryPosition(saleYears);
+        }
+
+        internal static DataTable GetListOfClientsByCurrentDue(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, decimal minimumDue, decimal maximumDue)
+        {
+            return dalRecoveryReports.GetListOfClientsByCurrentDue(searchBy, filterCriteria, filterBy, minimumDue,
+                maximumDue);
+        }
+
+        public static DataTable GetMonthlyRecoveryPosition(int month, int year, decimal targetAmount, decimal installmentDue, decimal bdPaymentDue, string analysis, bool isNewEntry)
+        {
+            return dalRecoveryReports.GetMonthlyRecoveryPosition(month, year, targetAmount, installmentDue, bdPaymentDue, analysis, isNewEntry);
+        }
+
+        public static bool IsMRPDataAvailable(int month, int year)
+        {
+
+            return dalRecoveryReports.IsMRPDataAvailable(month, year);
+        }
+
+        public static DataTable GetAnnualAgreementList(string reportYears)
+        {
+            return dalRecoveryReports.GetAnnualAgreementList(reportYears);
+        }
+    }
+
     #endregion
 
 

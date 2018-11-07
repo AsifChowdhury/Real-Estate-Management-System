@@ -39,6 +39,7 @@
             this.tsmiClientInformation = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiClientReports = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSummarizedSalesReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRegistrationProcess = new System.Windows.Forms.ToolStripMenuItem();
             this.RecoverySection = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPayment = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRecoveryReports = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,7 +133,8 @@
             this.SalesSection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiClientInformation,
             this.tsmiClientReports,
-            this.tsmiSummarizedSalesReport});
+            this.tsmiSummarizedSalesReport,
+            this.tsmiRegistrationProcess});
             this.SalesSection.ForeColor = System.Drawing.Color.Navy;
             this.SalesSection.Image = global::RealEstateManagementSystem.Properties.Resources.Sales;
             this.SalesSection.Name = "SalesSection";
@@ -166,6 +168,15 @@
             this.tsmiSummarizedSalesReport.Text = "Summarized Sales Report";
             this.tsmiSummarizedSalesReport.Click += new System.EventHandler(this.tsmiSummarizedSalesReport_Click);
             // 
+            // tsmiRegistrationProcess
+            // 
+            this.tsmiRegistrationProcess.Image = global::RealEstateManagementSystem.Properties.Resources.registrationprocess;
+            this.tsmiRegistrationProcess.Name = "tsmiRegistrationProcess";
+            this.tsmiRegistrationProcess.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.tsmiRegistrationProcess.Size = new System.Drawing.Size(256, 22);
+            this.tsmiRegistrationProcess.Text = "Unit Registration";
+            this.tsmiRegistrationProcess.Click += new System.EventHandler(this.tsmiRegistrationProcess_Click);
+            // 
             // RecoverySection
             // 
             this.RecoverySection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -182,16 +193,17 @@
             // 
             this.tsmiPayment.Image = global::RealEstateManagementSystem.Properties.Resources.payment;
             this.tsmiPayment.Name = "tsmiPayment";
-            this.tsmiPayment.Size = new System.Drawing.Size(123, 22);
+            this.tsmiPayment.Size = new System.Drawing.Size(207, 22);
             this.tsmiPayment.Text = "Payment";
             this.tsmiPayment.Click += new System.EventHandler(this.tsmiPayment_Click);
             // 
             // tsmiRecoveryReports
             // 
+            this.tsmiRecoveryReports.Image = global::RealEstateManagementSystem.Properties.Resources.bangladeshi_taka;
             this.tsmiRecoveryReports.Name = "tsmiRecoveryReports";
-            this.tsmiRecoveryReports.Size = new System.Drawing.Size(123, 22);
-            this.tsmiRecoveryReports.Text = "Reports";
-            this.tsmiRecoveryReports.Visible = false;
+            this.tsmiRecoveryReports.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.tsmiRecoveryReports.Size = new System.Drawing.Size(207, 22);
+            this.tsmiRecoveryReports.Text = "Recovery Reports";
             this.tsmiRecoveryReports.Click += new System.EventHandler(this.tsmiRecoveryReports_Click);
             // 
             // AccountsSection
@@ -204,7 +216,6 @@
             this.AccountsSection.Size = new System.Drawing.Size(131, 34);
             this.AccountsSection.Text = "Accounts Section";
             this.AccountsSection.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.AccountsSection.Visible = false;
             // 
             // tsmiChequeManagement
             // 
@@ -494,5 +505,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiChequeManagement;
         private System.Windows.Forms.PictureBox pbStaging;
         private System.Windows.Forms.ToolStripMenuItem tsmiSummarizedSalesReport;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRegistrationProcess;
     }
 }

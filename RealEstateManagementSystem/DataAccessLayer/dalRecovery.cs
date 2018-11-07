@@ -7,6 +7,7 @@ using RealEstateManagementSystem.BusinessLogicLayer;
 using System.Data.SqlClient;
 using System.Data;
 using RealEstateManagementSystem.Utilities;
+using System.Windows.Forms;
 
 namespace RealEstateManagementSystem.DataAccessLayer
 {
@@ -179,7 +180,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                         cpr.IsActiveClient = Convert.ToString(dr["IsAllowed"]).ConvertToBoolean();
                         cpr.ClientType = Convert.ToString(dr["ClientType"]);
 
-                        cpr.RegistrationDate = dr["RegistrationDate"] != DBNull.Value ? Convert.ToString(dr["RegistrationDate"]).ShowAsStandardDateFormat():string.Empty;
+                        cpr.RegistrationDate = dr["RegistrationDate"] != DBNull.Value ? Convert.ToString(dr["RegistrationDate"]).ShowAsStandardDateFormat() : string.Empty;
                         cpr.IsKeyLetterProcessed = Convert.ToString(dr["KeyLetter"]).ConvertToBoolean();
                         cpr.IsHandoverCertificateProcessed = Convert.ToString(dr["Handover"]).ConvertToBoolean();
                         cpr.LoanChequeInfo = Convert.ToString(dr["LoanCheckInfo"]);
@@ -345,7 +346,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); }
         }
 
-        internal DataTable SearchClientCheckInformation(clsGlobalClass.ChequeSearchBy searchBy, int invoiceNumber, int clientId, int bankId, DateTime startDate, DateTime endDate, bool excludeReceived, bool excludeCashTransactions)
+        internal DataTable SearchChequeInformation(clsGlobalClass.ChequeSearchBy searchBy, int invoiceNumber, int clientId, int bankId, DateTime startDate, DateTime endDate, bool excludeReceived, bool excludeCashTransactions)
         {
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter da = new SqlDataAdapter();
@@ -370,6 +371,8 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@bankId", bankId);
                 cmd.Parameters.AddWithValue("@startDate", startDate);
                 cmd.Parameters.AddWithValue("@endDate", endDate);
+                cmd.Parameters.AddWithValue("@excludeReceived", excludeReceived);
+                cmd.Parameters.AddWithValue("@excludeCashTransactions", excludeCashTransactions);
                 da.SelectCommand = cmd;
                 da.Fill(dt);
                 return dt;
@@ -826,7 +829,303 @@ namespace RealEstateManagementSystem.DataAccessLayer
             }
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
+
+        internal Payment GetChequeInformation(int transactionId)
+        {
+
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            Payment p = new Payment();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetChequeInformation";
+                cmd.Parameters.AddWithValue("@transactionId", transactionId);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    p.TransactionId = Convert.ToInt32(dt.Rows[0]["TransactionId"]);
+                    p.AlterReason = Convert.ToString(dt.Rows[0]["AlterReason"]);
+                    p.PaymentStatus = Convert.ToString(dt.Rows[0]["PaymentStatus"]);
+                    p.PaymentStatusChangeDate = Convert.ToDateTime(dt.Rows[0]["StatusDate"]);
+                    p.CompnanyBankAccount = Convert.ToString(dt.Rows[0]["CompanyAccount"]);
+                }
+                else
+                {
+                    p.TransactionId = transactionId;
+                    p.AlterReason = string.Empty;
+                    p.PaymentStatus = string.Empty;
+                    p.PaymentStatusChangeDate = DateTime.Now;
+                    p.CompnanyBankAccount = string.Empty;
+                }
+                return p;
+            }
+            finally { cmd.Dispose(); da.Dispose(); };
+        }
+
+        internal void UpdateChequeStatus(Payment p)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_UpdateChequeStatus";
+                cmd.Parameters.AddWithValue("@transactionId", p.TransactionId);
+                cmd.Parameters.AddWithValue("@statusId", p.PaymentStatusId);
+                cmd.Parameters.AddWithValue("@reasonId", p.AlterReasonId);
+                cmd.Parameters.AddWithValue("@statusDate", p.PaymentStatusChangeDate);
+                cmd.Parameters.AddWithValue("@companyAccountId", p.CompnanyBankAccountId);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workStation", clsGlobalClass.workStationIP);
+                cmd.ExecuteNonQuery();
+            }
+            finally { cmd.Dispose(); }
+        }
     }
+
+
+    public static class dalRecoveryReports
+    {
+        internal static DataTable GetProjectValuation(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, DateTime dateUpTo)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetProjectValuation";
+                cmd.Parameters.AddWithValue("@searchBy", searchBy);
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                cmd.Parameters.AddWithValue("@filterBy", (int)filterBy);
+                cmd.Parameters.AddWithValue("@dateUpTo", dateUpTo);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal static DataTable GetRecoveryPosition(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_RecoveryPosition";
+                cmd.Parameters.AddWithValue("@searchBy", searchBy);
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                cmd.Parameters.AddWithValue("@filterBy", (int)filterBy);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal static DataTable GetRefundAmount(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, int? installmentId = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetRefundTransactionHistory";
+                cmd.Parameters.AddWithValue("@searchBy", searchBy);
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                cmd.Parameters.AddWithValue("@filterBy", (int)filterBy);
+                cmd.Parameters.AddWithValue("@installmentId", installmentId);
+                cmd.Parameters.AddWithValue("@startDate", startDate);
+                cmd.Parameters.AddWithValue("@endDate", endDate);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal static DataTable GetTransactionSummary(int month, int year)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetTransactionSummary";
+                cmd.Parameters.AddWithValue("@month", month);
+                cmd.Parameters.AddWithValue("@year", year);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal static DataTable GetComparePaymentStatus(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, DateTime startDate, DateTime endDate)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ComparePayment";
+                cmd.Parameters.AddWithValue("@searchBy", searchBy);
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                cmd.Parameters.AddWithValue("@filterBy", (int)filterBy);
+                cmd.Parameters.AddWithValue("@startDate", startDate);
+                cmd.Parameters.AddWithValue("@endDate", endDate);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal static DataTable GetRegistrationCompletionList(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, DateTime startDate, DateTime endDate)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_RegistrationCompletionList";
+                cmd.Parameters.AddWithValue("@searchBy", searchBy);
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                cmd.Parameters.AddWithValue("@filterBy", (int)filterBy);
+                cmd.Parameters.AddWithValue("@startDate", startDate);
+                cmd.Parameters.AddWithValue("@endDate", endDate);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        public static DataTable GetAnnualRecoveryPosition(string saleYears)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_AnnualRecoveryPosition";
+                cmd.Parameters.AddWithValue("@years", saleYears);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal static DataTable GetListOfClientsByCurrentDue(string searchBy, string filterCriteria, clsGlobalClass.ProjectCommonReport_FilterBy filterBy, decimal minimumDue, decimal maximumDue)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_ClientListByCurrentDue";
+                cmd.Parameters.AddWithValue("@searchBy", searchBy);
+                cmd.Parameters.AddWithValue("@filterCriteria", filterCriteria);
+                cmd.Parameters.AddWithValue("@filterBy", (int)filterBy);
+                cmd.Parameters.AddWithValue("@minimumDue", minimumDue);
+                cmd.Parameters.AddWithValue("@maximumDue", maximumDue);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        public static DataTable GetMonthlyRecoveryPosition(int month, int year, decimal targetAmount, decimal installmentDue, decimal bdPaymentDue, string analysis, bool isNewEntry)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetMRPValues";
+                cmd.Parameters.AddWithValue("@month", month);
+                cmd.Parameters.AddWithValue("@year", year);
+                cmd.Parameters.AddWithValue("@targetAmount", targetAmount);
+                cmd.Parameters.AddWithValue("@installmentDue", installmentDue);
+                cmd.Parameters.AddWithValue("@bdPaymentDue", bdPaymentDue);
+                cmd.Parameters.AddWithValue("@analysis", analysis);
+                cmd.Parameters.AddWithValue("@preparedBy", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@entryMadeFrom", clsGlobalClass.workStationIP);
+                cmd.Parameters.AddWithValue("@isNewEntry", isNewEntry);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        public static bool IsMRPDataAvailable(int month, int year)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_IsMRPDataAvailable";
+                cmd.Parameters.AddWithValue("@month", month);
+                cmd.Parameters.AddWithValue("@year", year);
+                SqlParameter isAvailable = new SqlParameter
+                {
+                    ParameterName = "@isAvailable",
+                    Direction = ParameterDirection.Output,
+                    SqlDbType = SqlDbType.Bit
+                };
+                cmd.Parameters.Add(isAvailable);
+                cmd.ExecuteNonQuery();
+                return Convert.ToBoolean(isAvailable.Value);
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        public static DataTable GetAnnualAgreementList(string reportYears)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetAnnualAgreementStatus";
+                cmd.Parameters.AddWithValue("@years", reportYears);
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                return dt;
+            }
+            finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+    }
+
 
     class dalRecovery
     {

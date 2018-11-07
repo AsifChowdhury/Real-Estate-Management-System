@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static RealEstateManagementSystem.Utilities.clsCommonFunctions;
 
 namespace RealEstateManagementSystem.UserInterface.Reports
 {
@@ -25,13 +26,15 @@ namespace RealEstateManagementSystem.UserInterface.Reports
 
         private void txtClientId_Leave(object sender, EventArgs e)
         {
-            txtClientId.Text = clsCommonFunctions.GetFullClientId(txtClientId.Text);
-            LoadPaymentSummary(txtClientId.Text);
+            //txtClientId.Text = clsCommonFunctions.GetFullClientId(txtClientId.Text);
+            try { LoadPaymentSummary(txtClientId.Text); }
+            catch (Exception ex) { ex.ProcessException(); }
+
         }
 
         private void frmGeneralReports_Load(object sender, EventArgs e)
         {
-            clsCommonFunctions.PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.All, true);
+            PopulateListOfProjects(cmbProjectName, clsGlobalClass.ProjectStatus.All, true);
             lblPayable_TillDate.Text = lblDue_TillDate.Text = "Till\n" + DateTime.Now.ToString().ShowAsStandardDateFormat();
         }
 
@@ -43,7 +46,7 @@ namespace RealEstateManagementSystem.UserInterface.Reports
                 {
                     ResetPaymentSummaryPanel();
                     txtClientName.Text = txtUnitNumber.Text = string.Empty;
-                    projectId = clsCommonFunctions.GetProjectIdFromProjectName(cmbProjectName.Text);
+                    projectId = GetProjectIdFromProjectName(cmbProjectName.Text);
                     PopulateSearchResult();
                 }
             }
@@ -63,9 +66,9 @@ namespace RealEstateManagementSystem.UserInterface.Reports
                 ListViewItem lvItem = new ListViewItem(Convert.ToString(drItems["ClientId"]));
                 lvItem.SubItems.Add(Convert.ToString(drItems["UnitNumber"]));
                 lvItem.SubItems.Add(Convert.ToString(drItems["Name"]));
-                lvItem.ForeColor = Convert.ToString(drItems["IsCancelled"]).ConvertToBoolean() == false ? Convert.ToString(drItems["isRegistered"]).ConvertToBoolean() == true ? Color.Blue : Color.Black : Color.Red;
-                if (Convert.ToString(drItems["IsCancelled"]).ConvertToBoolean() == true) cancelledCount++;
-                if (Convert.ToString(drItems["isRegistered"]).ConvertToBoolean() == true) registeredCount++;
+                lvItem.ForeColor = Convert.ToString(drItems["IsCancelled"]).ConvertToBoolean() == false ? Convert.ToString(drItems["isRegistered"]).ConvertToBoolean() ? Color.Blue : Color.Black : Color.Red;
+                if (Convert.ToString(drItems["IsCancelled"]).ConvertToBoolean()) cancelledCount++;
+                if (Convert.ToString(drItems["isRegistered"]).ConvertToBoolean()) registeredCount++;
                 lstClients.Items.Add(lvItem);
             }
             rbAllClients.Checked = rbActiveClients.Checked = rbRegisteredClients.Checked = rbCancelledClients.Checked = false;
@@ -96,87 +99,84 @@ namespace RealEstateManagementSystem.UserInterface.Reports
 
         private void LoadPaymentSummary(string clientId)
         {
-
+            txtClientId.Text = GetFullClientId(txtClientId.Text);
             ResetPaymentSummaryPanel();
             if (string.IsNullOrEmpty(clientId)) { return; }
 
-            decimal gt_PayableTillDate, gt_PayableTotal, paid_GrandTotal, due_TillDate_GrandTotal, due_GrandTotal;
-            gt_PayableTillDate = gt_PayableTotal = paid_GrandTotal = due_TillDate_GrandTotal = due_GrandTotal = 0;
-            int intClientId = clsCommonFunctions.GetNumericPartOfFullClientId(clientId);
+            decimal payableTillDateGrandTotal, payableTotalGrandTotal, paidGrandTotal, dueTillDateGrandTotal, dueGrandTotal;
+            payableTillDateGrandTotal = payableTotalGrandTotal = paidGrandTotal = dueTillDateGrandTotal = dueGrandTotal = 0;
+            //int intClientId = GetNumericPartOfFullClientId(clientId);
             bllPayment summary = new bllPayment();
             DataTable dt = new DataTable();
             dt = summary.GetPaymentSummaryOfClient_ByInstallment(clientId);
             foreach (DataRow dr in dt.Rows)
             {
-                decimal payable_TillDate = Convert.ToDecimal(dr["Payable_TillDate"]);
-                decimal payable_Total = Convert.ToDecimal(dr["Payable_Total"]);
-                decimal paid_Total = Convert.ToDecimal(dr["Paid_Total"]);
-                decimal due_TillDate = Convert.ToDecimal(dr["Due_TillDate"]);
-                decimal due_Total = Convert.ToDecimal(dr["Due_Total"]);
+                decimal payableTillDate = Convert.ToDecimal(dr["Payable_TillDate"]);
+                decimal payableTotal = Convert.ToDecimal(dr["Payable_Total"]);
+                decimal paidTotal = Convert.ToDecimal(dr["Paid_Total"]);
+                decimal dueTillDate = Convert.ToDecimal(dr["Due_TillDate"]);
+                decimal dueTotal = Convert.ToDecimal(dr["Due_Total"]);
 
                 switch (dr["InstallTypeId"].ToString())
                 {
                     case "1":
-                        lblPayable_TillDate_RegularPayment.Text = payable_TillDate.FormatAsMoney(true, true, true);
-                        gt_PayableTillDate = gt_PayableTillDate + payable_TillDate;
-                        lblPayable_Total_RegularPayment.Text = payable_Total.FormatAsMoney(true, true, true);
-                        gt_PayableTotal = gt_PayableTotal + payable_Total;
-                        lblPaid_RegularPayment.Text = paid_Total.FormatAsMoney(true, true, true);
-                        paid_GrandTotal = paid_GrandTotal + paid_Total;
-                        lblDue_TillDate_RegularPayment.Text = due_TillDate.FormatAsMoney(true, true, true);
-                        lblDue_TillDate_RegularPayment.ForeColor = due_TillDate > 0 ? Color.OrangeRed : Color.Cyan;
+                        lblPayable_TillDate_RegularPayment.Text = payableTillDate.FormatAsMoney(true, true, true);
+                        payableTillDateGrandTotal = payableTillDateGrandTotal + payableTillDate;
+                        lblPayable_Total_RegularPayment.Text = payableTotal.FormatAsMoney(true, true, true);
+                        payableTotalGrandTotal = payableTotalGrandTotal + payableTotal;
+                        lblPaid_RegularPayment.Text = paidTotal.FormatAsMoney(true, true, true);
+                        paidGrandTotal = paidGrandTotal + paidTotal;
+                        lblDue_TillDate_RegularPayment.Text = dueTillDate.FormatAsMoney(true, true, true);
+                        lblDue_TillDate_RegularPayment.ForeColor = dueTillDate > 0 ? Color.OrangeRed : Color.Cyan;
 
-                        due_TillDate_GrandTotal = due_TillDate_GrandTotal + due_TillDate;
-                        lblDue_Total_RegularPayment.Text = due_Total.FormatAsMoney(true, true, true);
-                        lblDue_Total_RegularPayment.ForeColor = due_Total > 0 ? Color.OrangeRed : Color.Cyan;
-                        due_GrandTotal = due_GrandTotal + due_Total;
+                        dueTillDateGrandTotal = dueTillDateGrandTotal + dueTillDate;
+                        lblDue_Total_RegularPayment.Text = dueTotal.FormatAsMoney(true, true, true);
+                        lblDue_Total_RegularPayment.ForeColor = dueTotal > 0 ? Color.OrangeRed : Color.Cyan;
+                        dueGrandTotal = dueGrandTotal + dueTotal;
                         pbKeyList.Visible = Convert.ToString(dr["KeyList"]).ConvertToBoolean();
                         pbHandover.Visible = Convert.ToString(dr["HandOver"]).ConvertToBoolean();
                         pnlPaymentSummary.BackColor = Convert.ToString(dr["ClientStatus"]).ConvertToBoolean() == true ? Color.FromArgb(0, 0, 64) : Color.Black;
                         lblLoanChequeInfo.Text = Convert.ToString(dr["LoanCheque"]);
                         break;
                     case "2":
-                        lblPayable_TillDate_OtherExpenses.Text = payable_TillDate.FormatAsMoney(true, true, true);
-                        gt_PayableTillDate = gt_PayableTillDate + payable_TillDate;
-                        lblPayable_Total_OtherExpenses.Text = payable_Total.FormatAsMoney(true, true, true);
-                        gt_PayableTotal = gt_PayableTotal + payable_Total;
-                        lblPaid_OtherExpenses.Text = paid_Total.FormatAsMoney(true, true, true);
-                        paid_GrandTotal = paid_GrandTotal + paid_Total;
-                        lblDue_TillDate_OtherExpenses.Text = due_TillDate.FormatAsMoney(true, true, true);
-                        lblDue_TillDate_OtherExpenses.ForeColor = due_TillDate > 0 ? Color.OrangeRed : Color.Cyan;
-                        due_TillDate_GrandTotal = due_TillDate_GrandTotal + due_TillDate;
-                        lblDue_Total_OtherExpenses.Text = due_Total.FormatAsMoney(true, true, true);
-                        lblDue_Total_OtherExpenses.ForeColor = due_Total > 0 ? Color.OrangeRed : Color.Cyan;
-                        due_GrandTotal = due_GrandTotal + due_Total;
+                        lblPayable_TillDate_OtherExpenses.Text = payableTillDate.FormatAsMoney(true, true, true);
+                        payableTillDateGrandTotal = payableTillDateGrandTotal + payableTillDate;
+                        lblPayable_Total_OtherExpenses.Text = payableTotal.FormatAsMoney(true, true, true);
+                        payableTotalGrandTotal = payableTotalGrandTotal + payableTotal;
+                        lblPaid_OtherExpenses.Text = paidTotal.FormatAsMoney(true, true, true);
+                        paidGrandTotal = paidGrandTotal + paidTotal;
+                        lblDue_TillDate_OtherExpenses.Text = dueTillDate.FormatAsMoney(true, true, true);
+                        lblDue_TillDate_OtherExpenses.ForeColor = dueTillDate > 0 ? Color.OrangeRed : Color.Cyan;
+                        dueTillDateGrandTotal = dueTillDateGrandTotal + dueTillDate;
+                        lblDue_Total_OtherExpenses.Text = dueTotal.FormatAsMoney(true, true, true);
+                        lblDue_Total_OtherExpenses.ForeColor = dueTotal > 0 ? Color.OrangeRed : Color.Cyan;
+                        dueGrandTotal = dueGrandTotal + dueTotal;
                         break;
                     case "5":
-                        lblPayable_TillDate_AdjustableAmount.Text = payable_TillDate.FormatAsMoney(true, true, true);
-                        gt_PayableTillDate = gt_PayableTillDate + payable_TillDate;
-                        lblPayable_Total_AdjustableAmount.Text = payable_Total.FormatAsMoney(true, true, true);
-                        gt_PayableTotal = gt_PayableTotal + payable_Total;
-                        lblPaid_AdjustableAmount.Text = paid_Total.FormatAsMoney(true, true, true);
-                        paid_GrandTotal = paid_GrandTotal + paid_Total;
-                        lblDue_TillDate_AdjustableAmount.Text = due_TillDate.FormatAsMoney(true, true, true);
-                        lblDue_TillDate_AdjustableAmount.ForeColor = due_TillDate > 0 ? Color.OrangeRed : Color.Cyan;
-                        due_TillDate_GrandTotal = due_TillDate_GrandTotal + due_TillDate;
-                        lblDue_Total_AdjustableAmount.Text = due_Total.FormatAsMoney(true, true, true);
-                        lblDue_Total_AdjustableAmount.ForeColor = due_Total > 0 ? Color.OrangeRed : Color.Cyan;
-                        due_GrandTotal = due_GrandTotal + due_Total;
+                        lblPayable_TillDate_AdjustableAmount.Text = payableTillDate.FormatAsMoney(true, true, true);
+                        payableTillDateGrandTotal = payableTillDateGrandTotal + payableTillDate;
+                        lblPayable_Total_AdjustableAmount.Text = payableTotal.FormatAsMoney(true, true, true);
+                        payableTotalGrandTotal = payableTotalGrandTotal + payableTotal;
+                        lblPaid_AdjustableAmount.Text = paidTotal.FormatAsMoney(true, true, true);
+                        paidGrandTotal = paidGrandTotal + paidTotal;
+                        lblDue_TillDate_AdjustableAmount.Text = dueTillDate.FormatAsMoney(true, true, true);
+                        lblDue_TillDate_AdjustableAmount.ForeColor = dueTillDate > 0 ? Color.OrangeRed : Color.Cyan;
+                        dueTillDateGrandTotal = dueTillDateGrandTotal + dueTillDate;
+                        lblDue_Total_AdjustableAmount.Text = dueTotal.FormatAsMoney(true, true, true);
+                        lblDue_Total_AdjustableAmount.ForeColor = dueTotal > 0 ? Color.OrangeRed : Color.Cyan;
+                        dueGrandTotal = dueGrandTotal + dueTotal;
                         break;
                     default:
                         break;
                 }
             }
-            lblPayable_TillDate_GrandTotal.Text = gt_PayableTillDate.FormatAsMoney(true, true, true);
-            lblPayable_Total_GrandTotal.Text = gt_PayableTotal.FormatAsMoney(true, true, true);
-            lblPaid_GrandTotal.Text = paid_GrandTotal.FormatAsMoney(true, true, true);
-            lblDue_TillDate_GrandTotal.Text = due_TillDate_GrandTotal.FormatAsMoney(true, true, true);
-            lblDue_TillDate_GrandTotal.ForeColor = due_TillDate_GrandTotal > 0 ? Color.OrangeRed : Color.Cyan;
-            lblDue_Total_GrandTotal.Text = due_GrandTotal.FormatAsMoney(true, true, true);
-            lblDue_Total_GrandTotal.ForeColor = due_GrandTotal > 0 ? Color.OrangeRed : Color.Cyan;
-
-
-
+            lblPayable_TillDate_GrandTotal.Text = payableTillDateGrandTotal.FormatAsMoney(true, true, true);
+            lblPayable_Total_GrandTotal.Text = payableTotalGrandTotal.FormatAsMoney(true, true, true);
+            lblPaid_GrandTotal.Text = paidGrandTotal.FormatAsMoney(true, true, true);
+            lblDue_TillDate_GrandTotal.Text = dueTillDateGrandTotal.FormatAsMoney(true, true, true);
+            lblDue_TillDate_GrandTotal.ForeColor = dueTillDateGrandTotal > 0 ? Color.OrangeRed : Color.Cyan;
+            lblDue_Total_GrandTotal.Text = dueGrandTotal.FormatAsMoney(true, true, true);
+            lblDue_Total_GrandTotal.ForeColor = dueGrandTotal > 0 ? Color.OrangeRed : Color.Cyan;
         }
 
         private void ResetPaymentSummaryPanel()
@@ -200,7 +200,7 @@ namespace RealEstateManagementSystem.UserInterface.Reports
                 lblDue_Total_RegularPayment.Text =
                 lblDue_Total_OtherExpenses.Text =
                 lblDue_Total_AdjustableAmount.Text =
-                lblDue_Total_GrandTotal.Text = "/-";
+                lblDue_Total_GrandTotal.Text = @"/-";
             lblPayable_TillDate_RegularPayment.ForeColor =
                 lblPayable_TillDate_OtherExpenses.ForeColor =
                 lblPayable_TillDate_AdjustableAmount.ForeColor =
@@ -223,14 +223,27 @@ namespace RealEstateManagementSystem.UserInterface.Reports
                 lblDue_Total_GrandTotal.ForeColor = Color.Cyan;
             pbKeyList.Visible = pbHandover.Visible = false;
             pnlPaymentSummary.BackColor = Color.FromArgb(0, 0, 64);
-            
+
         }
 
         private void btnShowReport_Click(object sender, EventArgs e)
         {
             try
             {
-                string clientIds = lstClients.CheckBoxes == true && lstClients.CheckedItems.Count > 1 ? selectedClientIds(lstClients) : clsCommonFunctions.GetNumericPartOfFullClientId(txtClientId.Text).ToString();
+                string clientIds;
+                if (lstClients.CheckBoxes && lstClients.CheckedItems.Count > 0)
+                {
+                    clientIds = selectedClientIds(lstClients);
+                }
+                else
+                {
+                    int i;
+                    txtClientId.Text = int.TryParse(txtClientId.Text, out i)
+                        ? GetFullClientId(txtClientId.Text)
+                        : txtClientId.Text;
+                    clientIds = GetNumericPartOfFullClientId(txtClientId.Text).ToString();
+                }
+                //string clientIds = lstClients.CheckBoxes == true && lstClients.CheckedItems.Count > 1 ? selectedClientIds(lstClients) : clsCommonFunctions.GetNumericPartOfFullClientId(txtClientId.Text).ToString();
                 if (string.IsNullOrEmpty(clientIds) == true || clientIds == "0") { throw new ApplicationException("At least one ClientId needed to generate report."); }
                 if (rbProfile.Checked == true)
                 {
@@ -264,7 +277,7 @@ namespace RealEstateManagementSystem.UserInterface.Reports
                 }
                 else if (rbHandoverProcess.Checked == true)
                 {
-                    if (clsCommonFunctions.IsActiveClient(clientIds.ConvertToInt32()) == false)
+                    if (IsActiveClient(clientIds.ConvertToInt32()) == false)
                         throw new ApplicationException("Handover process cannot be activated for cancelled clients.");
                     frmHandoverProcess hp = new frmHandoverProcess
                     {
@@ -300,7 +313,7 @@ namespace RealEstateManagementSystem.UserInterface.Reports
             {
                 if (lvControl.Items[i].Checked == true)
                 {
-                    clientIds.Append(clsCommonFunctions.GetNumericPartOfFullClientId(lvControl.Items[i].Text.ToString()).ToString() + ',');
+                    clientIds.Append(GetNumericPartOfFullClientId(lvControl.Items[i].Text.ToString()).ToString() + ',');
                 }
             }
             return clientIds.ToString().TrimEnd(',');
@@ -378,7 +391,17 @@ namespace RealEstateManagementSystem.UserInterface.Reports
 
         private void btnClearSelection_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem lvItems in lstClients.Items)  lvItems.Checked = false; 
+            foreach (ListViewItem lvItems in lstClients.Items) lvItems.Checked = false;
+        }
+
+        private void txtClientId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void txtClientId_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter) LoadPaymentSummary(txtClientId.Text);
         }
     }
 }

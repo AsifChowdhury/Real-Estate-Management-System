@@ -2,13 +2,8 @@
 using RealEstateManagementSystem.Properties;
 using RealEstateManagementSystem.Utilities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RealEstateManagementSystem.UserInterface.UserAuthentication
@@ -36,24 +31,37 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
                 Root.MainScreen main = new Root.MainScreen();
                 foreach (ToolStripMenuItem level1 in main.msMainForm.Items)
                 {
-                    TreeNode tnLevel1 = new TreeNode(level1.Text.ToString().Replace("&&", "&"));
-                    tvMainMenu.Nodes.Add(tnLevel1);
-                    tnLevel1.Tag = level1.Name.ToString();
-                    foreach (ToolStripMenuItem level2 in level1.DropDownItems)
+                    if (level1 is ToolStripMenuItem)
                     {
-                        TreeNode tnLevel2 = new TreeNode(level2.Text.ToString().Replace("&&", "&"));
-                        tnLevel1.Nodes.Add(tnLevel2);
-                        tnLevel2.Tag = level2.Name.ToString();
-                        foreach (ToolStripMenuItem level3 in level2.DropDownItems)
+                        TreeNode tnLevel1 = new TreeNode(level1.Text.ToString().Replace("&&", "&"));
+                        tvMainMenu.Nodes.Add(tnLevel1);
+                        tnLevel1.Tag = level1.Name.ToString();
+                        foreach (ToolStripMenuItem level2 in level1.DropDownItems)
                         {
-                            TreeNode tnLevel3 = new TreeNode(level3.Text.ToString().Replace("&&", "&"));
-                            tnLevel2.Nodes.Add(tnLevel3);
-                            tnLevel3.Tag = level3.Name.ToString();
-                            foreach (ToolStripMenuItem level4 in level3.DropDownItems)
+                            if (level2 is ToolStripDropDownItem)
                             {
-                                TreeNode tnLevel4 = new TreeNode(level4.Text.ToString().Replace("&&", "&"));
-                                tnLevel3.Nodes.Add(tnLevel4);
-                                tnLevel4.Tag = level4.Name.ToString();
+                                TreeNode tnLevel2 = new TreeNode(level2.Text.ToString().Replace("&&", "&"));
+                                tnLevel1.Nodes.Add(tnLevel2);
+                                tnLevel2.Tag = level2.Name.ToString();
+                                foreach (ToolStripMenuItem level3 in level2.DropDownItems)
+                                {
+                                    if (level3 is ToolStripDropDownItem)
+                                    {
+                                        TreeNode tnLevel3 = new TreeNode(level3.Text.ToString().Replace("&&", "&"));
+                                        tnLevel2.Nodes.Add(tnLevel3);
+                                        tnLevel3.Tag = level3.Name.ToString();
+                                        foreach (ToolStripMenuItem level4 in level3.DropDownItems)
+                                        {
+                                            if (level4 is ToolStripDropDownItem)
+                                            {
+                                                TreeNode tnLevel4 = new TreeNode(level4.Text.ToString().Replace("&&", "&"));
+                                                tnLevel3.Nodes.Add(tnLevel4);
+                                                tnLevel4.Tag = level4.Name.ToString();
+                                            }
+                                        }
+
+                                    }
+                                }
                             }
                         }
                     }
@@ -200,4 +208,5 @@ namespace RealEstateManagementSystem.UserInterface.UserAuthentication
             catch (Exception ex) { throw ex; }
         }
     }
+
 }

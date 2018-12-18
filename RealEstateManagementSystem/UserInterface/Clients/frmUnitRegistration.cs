@@ -3,13 +3,7 @@ using RealEstateManagementSystem.Properties;
 using RealEstateManagementSystem.Reports;
 using RealEstateManagementSystem.Utilities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RealEstateManagementSystem.UserInterface.Clients
@@ -129,7 +123,6 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 txtDeedValue.Text = ur.DeedValue.FormatAsMoney();
                 txtRegistrationFee.Text = ur.RegistrationFee.FormatAsMoney();
                 txtVAT.Text = ur.VAT.FormatAsMoney();
-
             }
             catch (Exception ex) { ex.ProcessException(); }
         }
@@ -159,6 +152,23 @@ namespace RealEstateManagementSystem.UserInterface.Clients
                 clsReports.RegistrationList(projectId: cmbProjectName.SelectedValue.ToString().ConvertToInt32(), clientIds: clientIds, tssStatus: tssStatus);
             }
             catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void btnPrint_MouseHover(object sender, EventArgs e)
+        {
+            string toolTipMessage = lvClientData.Items.Count > 0 && lvClientData.CheckedItems.Count > 0 ? $"Selected {lvClientData.CheckedItems.Count.ToString()} Client(s) will be added to the report." : $"All {lvClientData.Items.Count.ToString()} client(s) will be added to the report.";
+            ToolTip tt = new ToolTip();
+            tt.SetToolTip((Button)sender, toolTipMessage);
+            tt.IsBalloon = true;
+            tt.UseFading = true;
+            tt.UseAnimation = true;
+            
+        }
+
+        private void ttRegistrationProcess_Popup(object sender, PopupEventArgs e)
+        {
+            
+            
         }
     }
 }

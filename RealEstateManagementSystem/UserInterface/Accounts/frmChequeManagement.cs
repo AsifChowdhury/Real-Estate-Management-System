@@ -75,7 +75,7 @@ namespace RealEstateManagementSystem.UserInterface.Accounts
             else if (rbDateRange.Checked == true) { searchBy = clsGlobalClass.ChequeSearchBy.DateRange; }
             else { searchBy = clsGlobalClass.ChequeSearchBy.Invoice; }
 
-            
+
             DataTable dt = new DataTable();
             int invoiceNumber = rbInvoice.Checked == true ? Convert.ToInt32(txtInvoice.Text) : 0;
             int clientId = rbClient.Checked == true ? string.IsNullOrEmpty(txtClientId.Text) ? 0 : clsCommonFunctions.GetNumericPartOfFullClientId(txtClientId.Text) : 0;
@@ -157,7 +157,7 @@ namespace RealEstateManagementSystem.UserInterface.Accounts
                     cmbAlterReason.Text = Convert.ToString(p.AlterReason);
                     cmbInvoiceStatus.Text = Convert.ToString(p.PaymentStatus);
                     dtpStatusDate.Value = Convert.ToDateTime(p.PaymentStatusChangeDate);
-                    cmbCompanyAccounts.Text = Convert.ToString(p.CompnanyBankAccount);
+                    cmbCompanyAccounts.Text = Convert.ToString(p.CompanyBankAccount.CompanyBankAccountNumber);
                 }
             }
             catch (Exception ex) { ex.ProcessException(tssStatus); }
@@ -176,7 +176,7 @@ namespace RealEstateManagementSystem.UserInterface.Accounts
                 p.PaymentStatusId = cmbInvoiceStatus.SelectedValue;
                 p.AlterReasonId = cmbAlterReason.SelectedValue;
                 p.PaymentStatusChangeDate = dtpStatusDate.Value;
-                p.CompnanyBankAccountId = cmbCompanyAccounts.SelectedValue;
+                p.CompanyBankAccount.CompanyBankAccountId = cmbCompanyAccounts.SelectedValue.ToString().ConvertToInt32();
 
                 bllPayment pmt = new bllPayment();
                 pmt.UpdateChequeStatus(p);

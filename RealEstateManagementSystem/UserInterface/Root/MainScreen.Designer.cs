@@ -43,6 +43,7 @@
             this.RecoverySection = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPayment = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRecoveryReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAmountTransfer = new System.Windows.Forms.ToolStripMenuItem();
             this.AccountsSection = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiChequeManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.AdminControls = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +66,18 @@
             this.ttMainScreen = new System.Windows.Forms.ToolTip(this.components);
             this.lblDeveloperEMail = new System.Windows.Forms.Label();
             this.pbStaging = new System.Windows.Forms.PictureBox();
+            this.agreementInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.msMainForm.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -94,8 +107,11 @@
             // 
             this.MarketingSection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiProjectInformation,
+            this.toolStripSeparator7,
             this.tsmiUnitInformation,
-            this.tsmiProjectReports});
+            this.toolStripSeparator6,
+            this.tsmiProjectReports,
+            this.toolStripSeparator5});
             this.MarketingSection.ForeColor = System.Drawing.Color.Navy;
             this.MarketingSection.Image = global::RealEstateManagementSystem.Properties.Resources.marketing;
             this.MarketingSection.Name = "MarketingSection";
@@ -132,9 +148,13 @@
             // 
             this.SalesSection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiClientInformation,
+            this.toolStripSeparator10,
             this.tsmiClientReports,
+            this.toolStripSeparator9,
             this.tsmiSummarizedSalesReport,
-            this.tsmiRegistrationProcess});
+            this.toolStripSeparator8,
+            this.tsmiRegistrationProcess,
+            this.toolStripSeparator11});
             this.SalesSection.ForeColor = System.Drawing.Color.Navy;
             this.SalesSection.Image = global::RealEstateManagementSystem.Properties.Resources.Sales;
             this.SalesSection.Name = "SalesSection";
@@ -172,7 +192,6 @@
             // 
             this.tsmiRegistrationProcess.Image = global::RealEstateManagementSystem.Properties.Resources.registrationprocess;
             this.tsmiRegistrationProcess.Name = "tsmiRegistrationProcess";
-            this.tsmiRegistrationProcess.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.tsmiRegistrationProcess.Size = new System.Drawing.Size(256, 22);
             this.tsmiRegistrationProcess.Text = "Unit Registration";
             this.tsmiRegistrationProcess.Click += new System.EventHandler(this.tsmiRegistrationProcess_Click);
@@ -181,7 +200,13 @@
             // 
             this.RecoverySection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiPayment,
-            this.tsmiRecoveryReports});
+            this.toolStripSeparator1,
+            this.tsmiRecoveryReports,
+            this.toolStripSeparator2,
+            this.tsmiAmountTransfer,
+            this.toolStripSeparator3,
+            this.agreementInformationToolStripMenuItem,
+            this.toolStripSeparator4});
             this.RecoverySection.ForeColor = System.Drawing.Color.Navy;
             this.RecoverySection.Image = global::RealEstateManagementSystem.Properties.Resources.recovery;
             this.RecoverySection.Name = "RecoverySection";
@@ -193,7 +218,7 @@
             // 
             this.tsmiPayment.Image = global::RealEstateManagementSystem.Properties.Resources.payment;
             this.tsmiPayment.Name = "tsmiPayment";
-            this.tsmiPayment.Size = new System.Drawing.Size(207, 22);
+            this.tsmiPayment.Size = new System.Drawing.Size(242, 22);
             this.tsmiPayment.Text = "Payment";
             this.tsmiPayment.Click += new System.EventHandler(this.tsmiPayment_Click);
             // 
@@ -202,9 +227,17 @@
             this.tsmiRecoveryReports.Image = global::RealEstateManagementSystem.Properties.Resources.bangladeshi_taka;
             this.tsmiRecoveryReports.Name = "tsmiRecoveryReports";
             this.tsmiRecoveryReports.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.tsmiRecoveryReports.Size = new System.Drawing.Size(207, 22);
+            this.tsmiRecoveryReports.Size = new System.Drawing.Size(242, 22);
             this.tsmiRecoveryReports.Text = "Recovery Reports";
             this.tsmiRecoveryReports.Click += new System.EventHandler(this.tsmiRecoveryReports_Click);
+            // 
+            // tsmiAmountTransfer
+            // 
+            this.tsmiAmountTransfer.Image = global::RealEstateManagementSystem.Properties.Resources.moneytransfer1;
+            this.tsmiAmountTransfer.Name = "tsmiAmountTransfer";
+            this.tsmiAmountTransfer.Size = new System.Drawing.Size(242, 22);
+            this.tsmiAmountTransfer.Text = "Amount Transfer";
+            this.tsmiAmountTransfer.Click += new System.EventHandler(this.tsmiAmountTransfer_Click);
             // 
             // AccountsSection
             // 
@@ -438,6 +471,68 @@
             this.pbStaging.TabIndex = 9;
             this.pbStaging.TabStop = false;
             // 
+            // agreementInformationToolStripMenuItem
+            // 
+            this.agreementInformationToolStripMenuItem.Name = "agreementInformationToolStripMenuItem";
+            this.agreementInformationToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.agreementInformationToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.agreementInformationToolStripMenuItem.Text = "Agreement Information";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(239, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(239, 6);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(239, 6);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(239, 6);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(204, 6);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(204, 6);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(204, 6);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(253, 6);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(253, 6);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(253, 6);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(253, 6);
+            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -506,5 +601,18 @@
         private System.Windows.Forms.PictureBox pbStaging;
         private System.Windows.Forms.ToolStripMenuItem tsmiSummarizedSalesReport;
         private System.Windows.Forms.ToolStripMenuItem tsmiRegistrationProcess;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAmountTransfer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem agreementInformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
     }
 }

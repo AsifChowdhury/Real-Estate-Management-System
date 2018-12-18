@@ -144,46 +144,37 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 {
                     while (dr.Read())
                     {
-                        cpr.FullClientId = Convert.ToString(dr["ClientId"]);
-                        cpr.ClientName = Convert.ToString(dr["ClientName"]);
-                        cpr.Allocation = Convert.ToString(dr["Allocation"]);
-                        cpr.BookingDate = Convert.ToDateTime(dr["BookingDate"]);
-                        cpr.ContactNumber = Convert.ToString(dr["ContactNumber"]);
-                        cpr.FaceValue = Convert.ToDecimal(dr["FaceValue"]);
-                        cpr.SaleValue = Convert.ToDecimal(dr["SaleValue"]);
-                        cpr.ReferredBy = Convert.ToString(dr["ReferredBy"]);
-                        cpr.SoldBy = Convert.ToString(dr["SoldBy"]);
 
-                        cpr.Payable_Installment = Convert.ToDecimal(dr["Installment_Payable"]);
-                        cpr.Paid_Installment = Convert.ToDecimal(dr["Installment_Paid"]);
-                        cpr.Due_Installment = cpr.Payable_Installment - cpr.Paid_Installment;
-
-
-                        cpr.Payable_OtherExpenses = Convert.ToDecimal(dr["OtherExpenses_Payable"]);
-                        cpr.Paid_OtherExpenses = Convert.ToDecimal(dr["OtherExpenses_Paid"]);
-                        cpr.Due_OtherExpenses = cpr.Payable_OtherExpenses - cpr.Paid_OtherExpenses;
-
-                        cpr.Payable_AdjustableAmount = Convert.ToDecimal(dr["AdjustableAmount_Payable"]);
-                        cpr.Paid_AdjustableAmount = Convert.ToDecimal(dr["AdjustableAmount_Paid"]);
-                        cpr.Due_AdjustableAmount = cpr.Payable_AdjustableAmount - cpr.Paid_AdjustableAmount;
-
-                        cpr.Payable_GrandTotal = cpr.Payable_Installment + cpr.Payable_OtherExpenses + cpr.Payable_AdjustableAmount;
-                        cpr.Paid_GrandTotal = cpr.Paid_Installment + cpr.Paid_OtherExpenses + cpr.Paid_AdjustableAmount;
-                        cpr.Due_GrandTotal = cpr.Due_Installment + cpr.Due_OtherExpenses + cpr.Due_AdjustableAmount;
-
-                        cpr.NumberOfInvoices = Convert.ToInt32(dr["NumberOfInvoices"]);
-                        cpr.LastInvoiceNumber = Convert.ToInt32(dr["LastInvoiceNumber"]);
-                        cpr.CurrentDue = Convert.ToDecimal(dr["CurrentDue"]);
-                        cpr.CountOfDueInstallment = Convert.ToInt32(dr["NumberOfDue"]);
-                        cpr.CountOfRegularInstallment = Convert.ToInt32(dr["CountOfInstallment"]);
-                        cpr.ClientStatus = Convert.ToString(dr["StatusName"]);
-                        cpr.IsActiveClient = Convert.ToString(dr["IsAllowed"]).ConvertToBoolean();
-                        cpr.ClientType = Convert.ToString(dr["ClientType"]);
-
-                        cpr.RegistrationDate = dr["RegistrationDate"] != DBNull.Value ? Convert.ToString(dr["RegistrationDate"]).ShowAsStandardDateFormat() : string.Empty;
-                        cpr.IsKeyLetterProcessed = Convert.ToString(dr["KeyLetter"]).ConvertToBoolean();
-                        cpr.IsHandoverCertificateProcessed = Convert.ToString(dr["Handover"]).ConvertToBoolean();
-                        cpr.LoanChequeInfo = Convert.ToString(dr["LoanCheckInfo"]);
+                        cpr.FullClientId = dr.HandleNULLString("ClientId");
+                        cpr.ClientName = dr.HandleNULLString("ClientName");
+                        cpr.Allocation = dr.HandleNULLString("Allocation");
+                        cpr.BookingDate = dr.HandleNULLDateTime("BookingDate");
+                        cpr.ContactNumber = dr.HandleNULLString("ContactNumber");
+                        cpr.FaceValue = dr.HandleNULLDecimal("FaceValue");
+                        cpr.SaleValue = dr.HandleNULLDecimal("SaleValue");
+                        cpr.ReferredBy = dr.HandleNULLString("ReferredBy");
+                        cpr.SoldBy = dr.HandleNULLString("SoldBy");
+                        cpr.Payable_Installment = dr.HandleNULLDecimal("Installment_Payable");
+                        cpr.Paid_Installment = dr.HandleNULLDecimal("Installment_Paid");
+                        cpr.Refund_Installment = dr.HandleNULLDecimal("Installment_Refund");
+                        cpr.Payable_OtherExpenses = dr.HandleNULLDecimal("OtherExpenses_Payable");
+                        cpr.Paid_OtherExpenses = dr.HandleNULLDecimal("OtherExpenses_Paid");
+                        cpr.Refund_OtherExpenses = dr.HandleNULLDecimal("OtherExpenses_Refund");
+                        cpr.Payable_AdjustableAmount = dr.HandleNULLDecimal("AdjustableAmount_Payable");
+                        cpr.Paid_AdjustableAmount = dr.HandleNULLDecimal("AdjustableAmount_Paid");
+                        cpr.Refund_AdjustableAmount = dr.HandleNULLDecimal("AdjustableAmount_Refund");
+                        cpr.NumberOfInvoices = dr.HandleNULLInteger("NumberOfInvoices");
+                        cpr.LastInvoiceNumber = dr.HandleNULLInteger("LastInvoiceNumber");
+                        cpr.CurrentDue = dr.HandleNULLDecimal("CurrentDue");
+                        cpr.CountOfDueInstallment = dr.HandleNULLInteger("NumberOfDue");
+                        cpr.CountOfRegularInstallment = dr.HandleNULLInteger("CountOfInstallment");
+                        cpr.ClientStatus = dr.HandleNULLString("StatusName");
+                        cpr.IsActiveClient = dr.HandleNULLBoolean("IsAllowed");
+                        cpr.ClientType = dr.HandleNULLString("ClientType");
+                        cpr.RegistrationDate = dr.HandleNULLString("RegistrationDate").ShowAsStandardDateFormat();
+                        cpr.IsKeyLetterProcessed = dr.HandleNULLBoolean("KeyLetter");
+                        cpr.IsHandoverCertificateProcessed = dr.HandleNULLBoolean("Handover");
+                        cpr.LoanChequeInfo = dr.HandleNULLString("LoanCheckInfo");
                     }
                 }
                 else { throw new ApplicationException("Data not found"); }
@@ -221,6 +212,8 @@ namespace RealEstateManagementSystem.DataAccessLayer
             finally { cmd.Dispose(); }
         }
 
+
+
         internal DataSet GetPaymentComparison(string clientId)
         {
             SqlCommand cmd = new SqlCommand();
@@ -255,6 +248,44 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 return dt;
             }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal string CommitTransferTransaction(int transferFromClientId, int transferToClientId, string transferFromInstallment, string transferToInstallment, string transferFromRemarks, string transferToRemarks, decimal amount, DateTime transferDate)
+        {
+            SqlCommand cmd = new SqlCommand();
+            string transactionIds = "";
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_CommitTransferTransaction";
+                cmd.Parameters.AddWithValue("@transferFromClientId", transferFromClientId);
+                cmd.Parameters.AddWithValue("@transferToClientId", transferToClientId);
+                cmd.Parameters.AddWithValue("@transferFromInstallment", transferFromInstallment);
+                cmd.Parameters.AddWithValue("@transferToInstallment", transferToInstallment);
+                cmd.Parameters.AddWithValue("@transferFromRemarks", transferFromRemarks);
+                cmd.Parameters.AddWithValue("@transferToRemarks", transferToRemarks);
+                cmd.Parameters.AddWithValue("@transferAmount", amount);
+                cmd.Parameters.AddWithValue("@transferDate", transferDate);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workStation", clsGlobalClass.workStationIP);
+                SqlParameter prmTransactionId_From = new SqlParameter();
+                prmTransactionId_From.ParameterName = "@transactionId_From";
+                prmTransactionId_From.Direction = ParameterDirection.Output;
+                prmTransactionId_From.DbType = DbType.Int64;
+                prmTransactionId_From.Value = 0;
+                cmd.Parameters.Add(prmTransactionId_From);
+                SqlParameter prmTransactionId_To = new SqlParameter();
+                prmTransactionId_To.ParameterName = "@transactionId_To";
+                prmTransactionId_To.Direction = ParameterDirection.Output;
+                prmTransactionId_To.DbType = DbType.Int64;
+                prmTransactionId_To.Value = 0;
+                cmd.Parameters.Add(prmTransactionId_To);
+                cmd.ExecuteNonQuery();
+                transactionIds = prmTransactionId_From.Value.ToString() + "," + prmTransactionId_To.Value.ToString();
+            }
+            finally { cmd.Dispose(); }
+            return transactionIds;
         }
 
         internal bool IsKeyListDelivered(int clientId)
@@ -305,6 +336,44 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 return dt;
             }
             finally { cmd.Dispose(); da.Dispose(); dt.Dispose(); }
+        }
+
+        internal decimal AmountPaidByInstallmentType(int clientId, int installTypeId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader dr = null;
+            decimal amountPaid = 0;
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT [AmountPaid] = dbo.fn_AmountPaidByClient(@clientId, 1)";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows) { while (dr.Read()) { amountPaid = Convert.ToDecimal(dr["AmountPaid"]); } }
+                return amountPaid;
+            }
+            finally { cmd.Dispose(); if (dr != null) dr.Close(); }
+        }
+
+        internal decimal AmountPaid(int clientId, int installmentId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetAmountPaidByInstallment";
+                cmd.Parameters.AddWithValue("@clientId", clientId);
+                cmd.Parameters.AddWithValue("@installmentId", installmentId);
+                SqlParameter paid = new SqlParameter("@amountPaid", SqlDbType.Float);
+                paid.Value = 0;
+                paid.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(paid);
+                cmd.ExecuteNonQuery();
+                return paid.Value.ToString().ConvertToDecimal();
+            }
+            finally { cmd.Dispose(); }
         }
 
         internal DataSet GetPaymentHistoryOfClient_WithBankAccount(string clientIds)
@@ -476,27 +545,28 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     while (dr.Read())
                     {
                         transactionInfo.InstallType = new InstallTypeInfo();
-                        transactionInfo.InstallType.InstallTypeName = Convert.ToString(dr["InstallType"]);
+                        transactionInfo.InstallType.InstallTypeName = dr.HandleNULLString("InstallType");
                         transactionInfo.Installment = new InstallmentInfo();
-                        transactionInfo.Installment.InstallmentName = Convert.ToString(dr["InstallmentName"]);
+                        transactionInfo.Installment.InstallmentName = dr.HandleNULLString("InstallmentName");
                         transactionInfo.PaymentMode = new PaymentModeInfo();
-                        transactionInfo.PaymentMode.PaymentModeName = Convert.ToString(dr["PaymentMode"]);
-                        transactionInfo.TransactionAmount = Convert.ToDecimal(dr["AmountPaid"]);
-                        transactionInfo.TransactionDate = Convert.ToDateTime(dr["TransactionDate"]);
-                        transactionInfo.Particulars = Convert.ToString(dr["Particulars"]);
-                        transactionInfo.ParticularDate = Convert.ToDateTime(dr["ChequeDate"]);
-                        transactionInfo.BankAccountNumber = Convert.ToString(dr["BankAccountNumber"]);
-                        transactionInfo.Remarks = Convert.ToString(dr["Remarks"]);
-                        transactionInfo.UpdateReason = Convert.ToString(dr["UpdateReason"]);
-                        transactionInfo.Bank = new BankInfo();
-                        transactionInfo.Bank.BankName = Convert.ToString(dr["BankName"]);
-                        transactionInfo.Branch = new BranchInfo();
-                        transactionInfo.Branch.BranchName = Convert.ToString(dr["BranchName"]);
-                        transactionInfo.District = new DistrictInfo();
-                        transactionInfo.District.DistrictName = Convert.ToString(dr["DistrictName"]);
-                        transactionInfo.Country = new CountryInfo();
-                        transactionInfo.Country.CountryName = Convert.ToString(dr["CountryName"]);
-                        transactionInfo.IsRefundTransaction = Convert.ToString(dr["IsRefund"]).ConvertToBoolean();
+                        transactionInfo.PaymentMode.PaymentModeName = dr.HandleNULLString("PaymentMode");
+                        transactionInfo.TransactionAmount = dr.HandleNULLDecimal("AmountPaid");
+                        transactionInfo.TransactionDate = dr.HandleNULLDateTime("TransactionDate");
+                        transactionInfo.Particulars = dr.HandleNULLString("Particulars");
+                        transactionInfo.ParticularDate = dr.HandleNULLDateTime("ChequeDate");
+                        transactionInfo.BankAccountNumber = dr.HandleNULLString("BankAccountNumber");
+                        transactionInfo.Remarks = dr.HandleNULLString("Remarks");
+                        transactionInfo.UpdateReason = dr.HandleNULLString("UpdateReason");
+                        transactionInfo.BankDetails = new BankDetails();
+                        transactionInfo.BankDetails.Bank = new BankInfo();
+                        transactionInfo.BankDetails.Bank.BankName = dr.HandleNULLString("BankName");
+                        transactionInfo.BankDetails.Branch = new BranchInfo();
+                        transactionInfo.BankDetails.Branch.BranchName = dr.HandleNULLString("BranchName");
+                        transactionInfo.BankDetails.District = new DistrictInfo();
+                        transactionInfo.BankDetails.District.DistrictName = dr.HandleNULLString("DistrictName");
+                        transactionInfo.BankDetails.Country = new CountryInfo();
+                        transactionInfo.BankDetails.Country.CountryName = dr.HandleNULLString("CountryName");
+                        transactionInfo.IsRefundTransaction = dr.HandleNULLBoolean("IsRefund");
                     }
                 }
             }
@@ -580,10 +650,10 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@remarks", p.Remarks);
                 cmd.Parameters.AddWithValue("@installmentId", p.Installment.InstallmentId);
                 cmd.Parameters.AddWithValue("@paymentModeId", p.PaymentMode.PaymentModeId);
-                cmd.Parameters.AddWithValue("@bankId", p.Bank.BankId);
-                cmd.Parameters.AddWithValue("@branchId", p.Branch.BranchId);
-                cmd.Parameters.AddWithValue("@districtId", p.District.DistrictId);
-                cmd.Parameters.AddWithValue("@countryId", p.Country.CountryId);
+                cmd.Parameters.AddWithValue("@bankId", p.BankDetails.Bank.BankId);
+                cmd.Parameters.AddWithValue("@branchId", p.BankDetails.Branch.BranchId);
+                cmd.Parameters.AddWithValue("@districtId", p.BankDetails.District.DistrictId);
+                cmd.Parameters.AddWithValue("@countryId", p.BankDetails.Country.CountryId);
                 cmd.Parameters.AddWithValue("@returnText", p.ReturnText);
                 cmd.Parameters.AddWithValue("@bankAccountNumber", p.BankAccountNumber);
                 cmd.Parameters.AddWithValue("@updateReason", p.UpdateReason);
@@ -591,6 +661,33 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@workStation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();
                 return transactionId.Value.ToString().ConvertToInt32();
+            }
+            finally { cmd.Dispose(); }
+        }
+
+        internal int CommitRefundTransaction(Payment p)
+        {
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_CommitRefundTransaction";
+                SqlParameter prmTranasactionId = new SqlParameter() { ParameterName = "@transactionId", Direction = ParameterDirection.Output, DbType = DbType.Int32 };
+                cmd.Parameters.AddWithValue("@clientId", p.CommonProperties.ClientId);
+                cmd.Parameters.AddWithValue("@refundAmount", p.TransactionAmount);
+                cmd.Parameters.AddWithValue("@paymentDate", p.TransactionDate);
+                cmd.Parameters.AddWithValue("@paymentModeId", p.PaymentMode.PaymentModeId);
+                cmd.Parameters.AddWithValue("@refundFrom", p.RefundFrom);
+                cmd.Parameters.AddWithValue("@companyAccountId", p.CompanyBankAccount.CompanyBankAccountId);
+                cmd.Parameters.AddWithValue("@chequeDate", p.ParticularDate);
+                cmd.Parameters.AddWithValue("@particulars", p.Particulars);
+                cmd.Parameters.AddWithValue("@remarks", p.Remarks);
+                cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
+                cmd.Parameters.AddWithValue("@workStation", clsGlobalClass.workStationIP);
+                cmd.Parameters.Add(prmTranasactionId);
+                cmd.ExecuteNonQuery();
+                return prmTranasactionId.Value.ToString().ConvertToInt32();
             }
             finally { cmd.Dispose(); }
         }
@@ -851,7 +948,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     p.AlterReason = Convert.ToString(dt.Rows[0]["AlterReason"]);
                     p.PaymentStatus = Convert.ToString(dt.Rows[0]["PaymentStatus"]);
                     p.PaymentStatusChangeDate = Convert.ToDateTime(dt.Rows[0]["StatusDate"]);
-                    p.CompnanyBankAccount = Convert.ToString(dt.Rows[0]["CompanyAccount"]);
+                    p.CompanyBankAccount.CompanyBankAccountNumber = Convert.ToString(dt.Rows[0]["CompanyAccount"]);
                 }
                 else
                 {
@@ -859,7 +956,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                     p.AlterReason = string.Empty;
                     p.PaymentStatus = string.Empty;
                     p.PaymentStatusChangeDate = DateTime.Now;
-                    p.CompnanyBankAccount = string.Empty;
+                    p.CompanyBankAccount.CompanyBankAccountNumber = string.Empty;
                 }
                 return p;
             }
@@ -878,7 +975,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.Parameters.AddWithValue("@statusId", p.PaymentStatusId);
                 cmd.Parameters.AddWithValue("@reasonId", p.AlterReasonId);
                 cmd.Parameters.AddWithValue("@statusDate", p.PaymentStatusChangeDate);
-                cmd.Parameters.AddWithValue("@companyAccountId", p.CompnanyBankAccountId);
+                cmd.Parameters.AddWithValue("@companyAccountId", p.CompanyBankAccount.CompanyBankAccountId);
                 cmd.Parameters.AddWithValue("@user", clsGlobalClass.userId);
                 cmd.Parameters.AddWithValue("@workStation", clsGlobalClass.workStationIP);
                 cmd.ExecuteNonQuery();

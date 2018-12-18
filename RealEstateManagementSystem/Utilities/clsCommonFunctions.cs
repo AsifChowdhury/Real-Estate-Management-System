@@ -31,24 +31,68 @@ namespace RealEstateManagementSystem.Utilities
 
         #endregion
 
-        #region Common Use
+        #region [Common Use]
 
-        internal static void PopulateComboboxFromDatatable(string spName, ComboBox cmb, string displayMember, string valueMember)
+        internal static void PopulateListOfDistricts(ComboBox cmb)
+        {
+            PopulateComboboxWithDisplayAndValueMember(
+                CommandType.Text, "SELECT DistrictId, DistrictName FROM defDistrict ORDER BY DistrictName",
+                "DistrictName", "DistrictId", cmb, true, "Dhaka");
+        }
+
+        internal static void PopulateListOfCountries(ComboBox cmb)
+        {
+            PopulateComboboxWithDisplayAndValueMember(
+                CommandType.Text, "SELECT CountryId, CountryName FROM defCountryList ORDER BY CountryName",
+                "CountryName", "CountryId", cmb, true, "Bangladesh");
+        }
+
+
+        internal static void PopulateDistinctSalesYears(ListView lvSalesYear)
         {
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter da = new SqlDataAdapter();
-            DataTable dt = new DataTable();
-            cmd.Connection = Program.cnConn;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = spName;
-            da.SelectCommand = cmd;
-            da.Fill(dt);
-            cmb.DataSource = null;
-            cmb.DataSource = dt;
-            cmb.DisplayMember = displayMember;
-            cmb.ValueMember = valueMember;
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetSalesYears";
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                PopulateListViewFromDataTable(ds.Tables[0], lvSalesYear);
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
 
+
+        internal static void PopulateDistinctSalesYears(ComboBox cmbSalesYear)
+        {
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            try
+            {
+                cmd.Connection = Program.cnConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_GetSalesYears";
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                cmbSalesYear.DataSource = null;
+                cmbSalesYear.Items.Clear();
+                cmbSalesYear.DataSource = ds.Tables[0];
+                cmbSalesYear.DisplayMember = "SalesYear";
+                cmbSalesYear.ValueMember = "SalesYear";
+            }
+            catch (Exception ex) { ex.ProcessException(); }
+            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
+        }
+
+        internal static void PopulateCompanyBankAccountList(ComboBox cmb)
+        {
+            PopulateComboboxWithDisplayAndValueMember(CommandType.StoredProcedure, "sp_GetCompanyBankAccountList", "Account", "AccountId", cmb, false);
+        }
 
         internal static void PopulateStatusesOfProjects(ComboBox cmbProjectStatus)
         {
@@ -72,7 +116,6 @@ namespace RealEstateManagementSystem.Utilities
             return strReturnValue.ToString().TrimEnd(',');
         }
 
-
         internal static string convertToCommaSeperatedValue(ListView lvControl, int columnIndex = 0)
         {
             StringBuilder strReturnValue = new StringBuilder();
@@ -94,7 +137,6 @@ namespace RealEstateManagementSystem.Utilities
             }
             return strReturnValue.ToString().TrimEnd(',');
         }
-
         internal static int GetNumericPartOfFullClientId(string fullClientId)
         {
             int clientId = 0;
@@ -126,6 +168,8 @@ namespace RealEstateManagementSystem.Utilities
             finally { cmd.Dispose(); dr?.Close(); }
             return isValid;
         }
+
+
 
         internal static bool CheckButtonPermission(string formName, string buttonName)
         {
@@ -456,48 +500,6 @@ namespace RealEstateManagementSystem.Utilities
 
         #region Populate/Format ComboBoxes
 
-        internal static void PopulateDistinctSalesYears(ListView lvSalesYear)
-        {
-            SqlCommand cmd = new SqlCommand();
-            SqlDataAdapter da = new SqlDataAdapter();
-            DataSet ds = new DataSet();
-            try
-            {
-                cmd.Connection = Program.cnConn;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "sp_GetSalesYears";
-                da.SelectCommand = cmd;
-                da.Fill(ds);
-                PopulateListViewFromDataTable(ds.Tables[0], lvSalesYear);
-            }
-            catch (Exception ex) { ex.ProcessException(); }
-            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
-        }
-
-
-        internal static void PopulateDistinctSalesYears(ComboBox cmbSalesYear)
-        {
-            SqlCommand cmd = new SqlCommand();
-            SqlDataAdapter da = new SqlDataAdapter();
-            DataSet ds = new DataSet();
-            try
-            {
-                cmd.Connection = Program.cnConn;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "sp_GetSalesYears";
-                da.SelectCommand = cmd;
-                da.Fill(ds);
-                cmbSalesYear.DataSource = null;
-                cmbSalesYear.Items.Clear();
-                cmbSalesYear.DataSource = ds.Tables[0];
-                cmbSalesYear.DisplayMember = "SalesYear";
-                cmbSalesYear.ValueMember = "SalesYear";
-            }
-            catch (Exception ex) { ex.ProcessException(); }
-            finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
-        }
-
-
         internal static Dictionary<string, string> GetDisplayAndValueMemberForComboBox(CommandType cmdType, string sqlQuery, string displayMember,
                 string valueMember, bool addAnEmptyLine = false)
         {
@@ -580,20 +582,23 @@ namespace RealEstateManagementSystem.Utilities
                 cmd.CommandText = sqlQuery;
                 da.SelectCommand = cmd;
                 da.Fill(ds);
+                bool emptyLineAdded = false;
                 foreach (ComboBox cmb in comboBox)
                 {
+
                     ResetComboBox(cmb);
                     cmb.BindingContext = new BindingContext();
                     cmb.DataSource = null;
                     cmb.Items.Clear();
                     cmb.DataSource = ds.Tables[0];
-                    if (addAnEmptyRow)
+                    if (addAnEmptyRow == true && emptyLineAdded == false)
                     {
                         DataRow emptyRow = ds.Tables[0].NewRow();
                         emptyRow[displayMember] = Empty;
                         if (valueMember != Empty) emptyRow[valueMember] = 0;
                         ds.Tables[0].Rows.Add(emptyRow);
                         ds.Tables[0].DefaultView.Sort = displayMember;
+                        emptyLineAdded = true;
                     }
                     cmb.DisplayMember = displayMember;
                     if (valueMember != Empty) cmb.ValueMember = valueMember;
@@ -644,20 +649,22 @@ namespace RealEstateManagementSystem.Utilities
             finally { cmd.Dispose(); da.Dispose(); ds.Dispose(); }
         }
 
-
-        internal static void PopulateListOfDistricts(ComboBox cmb)
+        internal static void PopulateComboboxFromDatatable(string spName, ComboBox cmb, string displayMember, string valueMember)
         {
-            PopulateComboboxWithDisplayAndValueMember(
-                CommandType.Text, "SELECT DistrictId, DistrictName FROM defDistrict ORDER BY DistrictName",
-                "DistrictName", "DistrictId", cmb, true, "Dhaka");
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataTable dt = new DataTable();
+            cmd.Connection = Program.cnConn;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = spName;
+            da.SelectCommand = cmd;
+            da.Fill(dt);
+            cmb.DataSource = null;
+            cmb.DataSource = dt;
+            cmb.DisplayMember = displayMember;
+            cmb.ValueMember = valueMember;
         }
 
-        internal static void PopulateListOfCountries(ComboBox cmb)
-        {
-            PopulateComboboxWithDisplayAndValueMember(
-                CommandType.Text, "SELECT CountryId, CountryName FROM defCountryList ORDER BY CountryName",
-                "CountryName", "CountryId", cmb, true, "Bangladesh");
-        }
 
 
         #endregion

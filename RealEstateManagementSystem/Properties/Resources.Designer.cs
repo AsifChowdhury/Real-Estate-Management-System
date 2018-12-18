@@ -111,6 +111,16 @@ namespace RealEstateManagementSystem.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap amounttransfer {
+            get {
+                object obj = ResourceManager.GetObject("amounttransfer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to REMS.
         /// </summary>
         internal static string ApplicationCode {
@@ -552,6 +562,26 @@ namespace RealEstateManagementSystem.Properties {
         internal static System.Drawing.Bitmap menuAuthentication {
             get {
                 object obj = ResourceManager.GetObject("menuAuthentication", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon moneytransfer {
+            get {
+                object obj = ResourceManager.GetObject("moneytransfer", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap moneytransfer1 {
+            get {
+                object obj = ResourceManager.GetObject("moneytransfer1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1036,6 +1066,15 @@ namespace RealEstateManagementSystem.Properties {
         internal static string strNoData {
             get {
                 return ResourceManager.GetString("strNoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Problem!.
+        /// </summary>
+        internal static string strNoProblem {
+            get {
+                return ResourceManager.GetString("strNoProblem", resourceCulture);
             }
         }
         

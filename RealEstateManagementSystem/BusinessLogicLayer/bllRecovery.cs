@@ -24,16 +24,20 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public decimal SaleValue { get; set; }
         public decimal Payable_Installment { get; set; }
         public decimal Paid_Installment { get; set; }
-        public decimal Due_Installment { get; set; }
+        public decimal Due_Installment { get { return Payable_Installment - Paid_Installment; } }
+        public decimal Refund_Installment { get; set; }
         public decimal Payable_OtherExpenses { get; set; }
         public decimal Paid_OtherExpenses { get; set; }
-        public decimal Due_OtherExpenses { get; set; }
+        public decimal Due_OtherExpenses { get { return Payable_OtherExpenses - Paid_OtherExpenses; } }
+        public decimal Refund_OtherExpenses { get; set; }
         public decimal Payable_AdjustableAmount { get; set; }
         public decimal Paid_AdjustableAmount { get; set; }
-        public decimal Due_AdjustableAmount { get; set; }
-        public decimal Payable_GrandTotal { get; set; }
-        public decimal Paid_GrandTotal { get; set; }
-        public decimal Due_GrandTotal { get; set; }
+        public decimal Due_AdjustableAmount { get { return Payable_AdjustableAmount - Paid_AdjustableAmount; } }
+        public decimal Refund_AdjustableAmount { get; set; }
+        public decimal Payable_GrandTotal { get { return Payable_Installment + Payable_OtherExpenses + Payable_AdjustableAmount; } }
+        public decimal Paid_GrandTotal { get { return Paid_Installment + Paid_OtherExpenses + Paid_AdjustableAmount; } }
+        public decimal Due_GrandTotal { get { return Due_Installment + Due_OtherExpenses + Due_AdjustableAmount; } }
+        public decimal Refund_GrandTotal { get { return Refund_Installment + Refund_OtherExpenses + Refund_AdjustableAmount; } }
         public int NumberOfInvoices { get; set; }
         public int LastInvoiceNumber { get; set; }
         public decimal CurrentDue { get; set; }
@@ -45,6 +49,15 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public string LoanChequeInfo { get; set; }
 
     }
+
+    public class BankDetails
+    {
+        public BankInfo Bank { get; set; }
+        public BranchInfo Branch { get; set; }
+        public DistrictInfo District { get; set; }
+        public CountryInfo Country { get; set; }
+    }
+
     public class BankInfo
     {
         public int BankId { get; set; }
@@ -88,6 +101,15 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public float InstallmentAmount { get; set; }
 
     }
+
+    public class CompanyBankAccount
+    {
+        public int CompanyBankAccountId { get; set; }
+        public string CompanyBankAccountNumber { get; set; }
+        public BankDetails BankDetails { get; set; }
+        public EntryAndUpdateInfo EntryAndUpdate { get; set; }
+    }
+
     public class Payment
     {
         public int TransactionId { get; set; }
@@ -104,21 +126,26 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         public object AlterReasonId { get; internal set; }
         public string AlterReason { get; internal set; }
         public DateTime PaymentStatusChangeDate { get; internal set; }
-        public object CompnanyBankAccountId { get; internal set; }
-        public string CompnanyBankAccount { get; internal set; }
+
+        public CompanyBankAccount CompanyBankAccount { get; set; }
+
+        //public int CompnanyBankAccountId { get; internal set; }
+        //public string CompnanyBankAccount { get; internal set; }
+
         public InstallTypeInfo InstallType { get; set; }
         public InstallmentInfo Installment { get; set; }
         public bool IsRefundTransaction { get; set; }
+        public string RefundFrom { get; set; }
+        public BankDetails BankDetails { get; set; }
 
-        public BankInfo Bank { get; set; }
-        public BranchInfo Branch { get; set; }
-        public DistrictInfo District { get; set; }
-        public CountryInfo Country { get; set; }
+        //public BankInfo Bank { get; set; }
+        //public BranchInfo Branch { get; set; }
+        //public DistrictInfo District { get; set; }
+        //public CountryInfo Country { get; set; }
         public PaymentModeInfo PaymentMode { get; set; }
         public CommonProperties_Recovery CommonProperties { get; set; }
-
         public EntryAndUpdateInfo EntryAndUpdate { get; set; }
-        
+
     }
 
     #endregion
@@ -222,6 +249,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
             return payment.GetMaximumAmountPayable(clientId, installTypeId, installmentId);
         }
 
+        internal int CommitRefundTransaction(Payment p)
+        {
+            return payment.CommitRefundTransaction(p);
+        }
+
         internal void UpdateChequeStatus(Payment p)
         {
             payment.UpdateChequeStatus(p);
@@ -245,6 +277,11 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         internal void DeleteTransaction(int transactionId)
         {
             payment.DeleteTransaction(transactionId);
+        }
+
+        internal string CommitTransferTransaction(int transferFromClientId, int transferToClientId, string transferFromInstallment, string transferToInstallment, string transferFromRemarks, string transferToRemarks, decimal amount, DateTime transferDate)
+        {
+            return payment.CommitTransferTransaction(transferFromClientId, transferToClientId, transferFromInstallment, transferToInstallment, transferFromRemarks, transferToRemarks, amount, transferDate);
         }
 
         internal DataSet GetMoneyReceipt(int transactionId, bool isDuplicate)
@@ -330,6 +367,16 @@ namespace RealEstateManagementSystem.BusinessLogicLayer
         internal bool IsKeyListDelivered(int clientId)
         {
             return payment.IsKeyListDelivered(clientId);
+        }
+
+        internal decimal AmountPaid(int clientId, int installmentId)
+        {
+            return payment.AmountPaid(clientId, installmentId);
+        }
+
+        internal decimal AmountPaidByInstallmentType(int clientId, int installTypeId)
+        {
+            return payment.AmountPaidByInstallmentType(clientId, installTypeId);
         }
     }
 

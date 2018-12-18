@@ -87,6 +87,8 @@
             this.lblCountOfDues = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.lblCurrentDue = new System.Windows.Forms.Label();
+            this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.lineShape10 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.label17 = new System.Windows.Forms.Label();
             this.lblSoldBy = new System.Windows.Forms.Label();
             this.lblReferredBy = new System.Windows.Forms.Label();
@@ -162,16 +164,14 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.ttPayment = new System.Windows.Forms.ToolTip(this.components);
             this.btnNewTransaction = new System.Windows.Forms.Button();
-            this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.lineShape10 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblLoanChequeInfo = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlRegistration = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.lblRegistrationDate = new System.Windows.Forms.Label();
             this.pbHandover = new System.Windows.Forms.PictureBox();
             this.pbKeyList = new System.Windows.Forms.PictureBox();
+            this.lblRegistrationDate = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.ssPayment.SuspendLayout();
             this.panel2.SuspendLayout();
             this.gbClientSummary.SuspendLayout();
@@ -257,6 +257,9 @@
             // 
             // cmbProjectName
             // 
+            this.cmbProjectName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbProjectName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbProjectName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProjectName.FormattingEnabled = true;
             this.cmbProjectName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.cmbProjectName.Location = new System.Drawing.Point(86, 8);
@@ -774,6 +777,25 @@
             this.lblCurrentDue.Size = new System.Drawing.Size(107, 13);
             this.lblCurrentDue.TabIndex = 20;
             this.lblCurrentDue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // shapeContainer4
+            // 
+            this.shapeContainer4.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer4.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer4.Name = "shapeContainer4";
+            this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.lineShape10});
+            this.shapeContainer4.Size = new System.Drawing.Size(194, 61);
+            this.shapeContainer4.TabIndex = 21;
+            this.shapeContainer4.TabStop = false;
+            // 
+            // lineShape10
+            // 
+            this.lineShape10.Name = "lineShape10";
+            this.lineShape10.X1 = -5;
+            this.lineShape10.X2 = 198;
+            this.lineShape10.Y1 = 22;
+            this.lineShape10.Y2 = 22;
             // 
             // label17
             // 
@@ -1526,25 +1548,6 @@
             this.btnNewTransaction.UseVisualStyleBackColor = true;
             this.btnNewTransaction.Click += new System.EventHandler(this.btnNewTransaction_Click);
             // 
-            // shapeContainer4
-            // 
-            this.shapeContainer4.Location = new System.Drawing.Point(0, 0);
-            this.shapeContainer4.Margin = new System.Windows.Forms.Padding(0);
-            this.shapeContainer4.Name = "shapeContainer4";
-            this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.lineShape10});
-            this.shapeContainer4.Size = new System.Drawing.Size(194, 61);
-            this.shapeContainer4.TabIndex = 21;
-            this.shapeContainer4.TabStop = false;
-            // 
-            // lineShape10
-            // 
-            this.lineShape10.Name = "lineShape10";
-            this.lineShape10.X1 = -5;
-            this.lineShape10.X2 = 198;
-            this.lineShape10.Y1 = 22;
-            this.lineShape10.Y2 = 22;
-            // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1555,6 +1558,14 @@
             this.panel4.Size = new System.Drawing.Size(617, 48);
             this.panel4.TabIndex = 11;
             // 
+            // lblLoanChequeInfo
+            // 
+            this.lblLoanChequeInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblLoanChequeInfo.Location = new System.Drawing.Point(87, 6);
+            this.lblLoanChequeInfo.Name = "lblLoanChequeInfo";
+            this.lblLoanChequeInfo.Size = new System.Drawing.Size(523, 36);
+            this.lblLoanChequeInfo.TabIndex = 1;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1563,14 +1574,6 @@
             this.label1.Size = new System.Drawing.Size(79, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Loan Cheque:";
-            // 
-            // lblLoanChequeInfo
-            // 
-            this.lblLoanChequeInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblLoanChequeInfo.Location = new System.Drawing.Point(87, 6);
-            this.lblLoanChequeInfo.Name = "lblLoanChequeInfo";
-            this.lblLoanChequeInfo.Size = new System.Drawing.Size(523, 36);
-            this.lblLoanChequeInfo.TabIndex = 1;
             // 
             // pnlRegistration
             // 
@@ -1583,23 +1586,6 @@
             this.pnlRegistration.Name = "pnlRegistration";
             this.pnlRegistration.Size = new System.Drawing.Size(195, 48);
             this.pnlRegistration.TabIndex = 12;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(0, 17);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(67, 13);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Reg. Date:";
-            // 
-            // lblRegistrationDate
-            // 
-            this.lblRegistrationDate.AutoSize = true;
-            this.lblRegistrationDate.Location = new System.Drawing.Point(63, 17);
-            this.lblRegistrationDate.Name = "lblRegistrationDate";
-            this.lblRegistrationDate.Size = new System.Drawing.Size(0, 13);
-            this.lblRegistrationDate.TabIndex = 1;
             // 
             // pbHandover
             // 
@@ -1620,6 +1606,23 @@
             this.pbKeyList.TabIndex = 9;
             this.pbKeyList.TabStop = false;
             this.pbKeyList.Visible = false;
+            // 
+            // lblRegistrationDate
+            // 
+            this.lblRegistrationDate.AutoSize = true;
+            this.lblRegistrationDate.Location = new System.Drawing.Point(63, 17);
+            this.lblRegistrationDate.Name = "lblRegistrationDate";
+            this.lblRegistrationDate.Size = new System.Drawing.Size(0, 13);
+            this.lblRegistrationDate.TabIndex = 1;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(0, 17);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(67, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Reg. Date:";
             // 
             // frmPayment
             // 

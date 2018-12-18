@@ -14,6 +14,7 @@ namespace RealEstateManagementSystem.Utilities
     public static class clsExtensions
     {
 
+        #region [Batch Control Processing]
         //this.Controls.ClearControls();
         //this.Controls.ClearControls<TextBox>();
         private static Dictionary<Type, Action<Control>> controldefaults = new Dictionary<Type, Action<Control>>() {
@@ -53,7 +54,9 @@ namespace RealEstateManagementSystem.Utilities
                 }
             }
         }
-        #region Handling NULL values from DB
+        #endregion [Batch Control Processing]
+
+        #region [Handling NULL values from DB]
 
         public static bool HandleNULLBoolean(this SqlDataReader dr, string columnName)
         {
@@ -97,16 +100,85 @@ namespace RealEstateManagementSystem.Utilities
         }
 
         #endregion
+
+        #region [Substring shortcuts]
+        /// <summary>
+        /// Get string between [a] and [b]
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>string</returns>
+        public static string Between(this string value, string a, string b)
+        {
+            int posA = value.IndexOf(a);
+            int posB = value.LastIndexOf(b);
+            if (posA == -1)
+            {
+                return "";
+            }
+            if (posB == -1)
+            {
+                return "";
+            }
+            int adjustedPosA = posA + a.Length;
+            if (adjustedPosA >= posB)
+            {
+                return "";
+            }
+            return value.Substring(adjustedPosA, posB - adjustedPosA);
+        }
+
+        /// <summary>
+        /// Get string value after [first] a.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns>string</returns>
+        public static string Before(this string value, string a)
+        {
+            int posA = value.IndexOf(a);
+            if (posA == -1)
+            {
+                return "";
+            }
+            return value.Substring(0, posA);
+        }
+
+        /// <summary>
+        /// Get string value after [last] a.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns>string</returns>
+        public static string After(this string value, string a)
+        {
+            int posA = value.LastIndexOf(a);
+            if (posA == -1)
+            {
+                return "";
+            }
+            int adjustedPosA = posA + a.Length;
+            if (adjustedPosA >= value.Length)
+            {
+                return "";
+            }
+            return value.Substring(adjustedPosA);
+        }
+        #endregion
+
+        #region [Type Conversions]
+        public static bool IsInteger(this string String)
+        {
+            int i = 0;
+            return int.TryParse(String, out i);
+        }
+
         public static string RemoveCommas(this string String)
         {
             return String.Replace(",", "");
         }
+
         public static string RemoveBrackets(this string String)
         {
-            string str = String;
-            str = String.Replace("(", "");
-            str = String.Replace(")", "");
-            return str;
+            return String.Replace("(", "").Replace(")", ""); ;
         }
 
         public static bool ConvertToBoolean(this string str)
@@ -120,6 +192,31 @@ namespace RealEstateManagementSystem.Utilities
             return int.TryParse(str.RemoveCommas(), out i) == true ? Convert.ToInt32(str.RemoveCommas()) : 0;
         }
 
+        public static DateTime ConvertToDateTime(this string str)
+        {
+            DateTime dt = DateTime.Now;
+            return DateTime.TryParse(str, out dt) == true ? Convert.ToDateTime(str.ToString()) : DateTime.Now;
+
+        }
+
+        public static decimal ConvertToDecimal(this string str)
+        {
+            decimal d = 0;
+            return decimal.TryParse(str.RemoveCommas(), out d) == true ? Convert.ToDecimal(str.RemoveCommas()) : 0;
+        }
+
+        public static int ConverBooleanToSmallInt(this bool bln)
+        {
+            return bln == true ? 1 : 0;
+        }
+
+        public static string ReplaceEmptyStringWithNA(this string str)
+        {
+            return string.IsNullOrEmpty(str) ? "N/A" : str;
+        }
+        #endregion
+
+        #region [Decimal Functions]
         /// <summary>
         /// Format Decimal number as Comma-Seperated string format (xx,xx,xxx)
         /// </summary>
@@ -145,32 +242,21 @@ namespace RealEstateManagementSystem.Utilities
             return amount < 0 ?
                 addCurrencyMark == true ? "Tk. -" + Spell.SpellAmount.comma(amount * -1) + "/-" : "-" + Spell.SpellAmount.comma(amount * -1) + "" :
                 addCurrencyMark == true ? "Tk. " + Spell.SpellAmount.comma(amount) + "/-" : Spell.SpellAmount.comma(amount);
-
-
         }
 
         public static string AmountInWords(this decimal amount)
         {
             return amount < 0 ? Spell.SpellAmount.InWrods(amount * -1) + " (Refund)" : Spell.SpellAmount.InWrods(amount);
         }
+        #endregion
 
+        #region [Date Functions]
         public static string ShowAsStandardDateFormat(this string str, bool showWithTime = false)
         {
             DateTime dt = DateTime.Now;
             string strFormat = showWithTime == true ? "dd-MMM-yyyy hh:mm:ss tt" : "dd-MMM-yyyy";
             return DateTime.TryParse(str, out dt) == true ? Convert.ToDateTime(str.ToString()).ToString(strFormat) : str;
-
         }
-
-        public static DateTime ConvertToDateTime(this string str)
-        {
-            DateTime dt = DateTime.Now;
-            return DateTime.TryParse(str, out dt) == true ? Convert.ToDateTime(str.ToString()) : DateTime.Now;
-
-        }
-
-
-
 
         /// <summary>
         /// Return Current date if supplied date is NULL or less than '1900-01-01'
@@ -184,19 +270,17 @@ namespace RealEstateManagementSystem.Utilities
         }
 
 
-
+        public static bool IsBeforeStartOfCurrentMonth(this DateTime date)
+        {
+            DateTime now = DateTime.Now;
+            DateTime startOfCurrentMonth = new DateTime(now.Year, now.Month, 1);
+            return date < startOfCurrentMonth;
+        }
 
 
         public static DateTime ProcessNullDate(this DateTime date)
         {
-            if (!DBNull.Value.Equals(date))
-            {
-                return date;
-            }
-            else
-            {
-                return clsGlobalClass.defaultDate;
-            }
+            return !DBNull.Value.Equals(date) ? date : clsGlobalClass.defaultDate;
         }
 
         /// <summary>
@@ -210,52 +294,8 @@ namespace RealEstateManagementSystem.Utilities
             return DateTime.TryParse(date.ToString(), out dt) != true || DateTime.Compare(date, clsGlobalClass.considerAsNULLDate) >= 0;
         }
 
-        public static string ReplaceEmptyStringWithNA(this string str)
-        {
-            return string.IsNullOrEmpty(str) ? "N/A" : str;
-        }
-
-        public static decimal ConvertToDecimal(this string str)
-        {
-            decimal d = 0;
-            return decimal.TryParse(str.RemoveCommas(), out d) == true ? Convert.ToDecimal(str.RemoveCommas()) : 0;
-        }
-
-        public static int ConverBooleanToSmallInt(this bool bln)
-        {
-            return bln == true ? 1 : 0;
-        }
-
-        public static Exception Log(this Exception ex)
-        {
-            File.AppendAllText("CaughtExceptions" + DateTime.Now.ToString("yyyy-MM-dd") + ".log", DateTime.Now.ToString("HH:mm:ss") + ": " + ex.Message + "\n" + ex.ToString() + "\n");
-            return ex;
-        }
 
 
-        public static Exception ProcessException(this Exception ex, ToolStripStatusLabel tssStatus = null)
-        {
-            string errMsgInitial = string.Empty;
-            int errorId = 0;
-            if (!ex.GetType().IsAssignableFrom(typeof(ApplicationException)))
-            {
-                errorId = clsCommonFunctions.LogError(ex);
-                errMsgInitial = !ex.GetType().IsAssignableFrom(typeof(SqlException))
-                                ? Resources.strSystemErrorMessage
-                                : errMsgInitial = Resources.strFailedMessage;
-            }
-            else { errMsgInitial = Resources.strFailedMessage; }
-            MessageBox.Show(errMsgInitial + ex.Message.ToString() + (errorId > 0 ? " [ErrorId: " + errorId.ToString() + "]" : ""), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            if (tssStatus != null) { tssStatus.Text = Resources.strReadyStatus; }
-            return ex;
-        }
-
-        public static bool IsBeforeStartOfCurrentMonth(this DateTime date)
-        {
-            DateTime now = DateTime.Now;
-            DateTime startOfCurrentMonth = new DateTime(now.Year, now.Month, 1);
-            return date < startOfCurrentMonth;
-        }
 
         public static string MonthName(this int monthNumber, bool fullMonth = false, bool allCaps = false)
         {
@@ -304,8 +344,33 @@ namespace RealEstateManagementSystem.Utilities
             }
             monthName = fullMonth ? monthName.Substring(0, 3) : monthName;
             return allCaps == true ? monthName.ToUpper() : monthName;
+        }
+        #endregion
 
+        #region [Exception Handler]
+        public static Exception Log(this Exception ex)
+        {
+            File.AppendAllText("CaughtExceptions" + DateTime.Now.ToString("yyyy-MM-dd") + ".log", DateTime.Now.ToString("HH:mm:ss") + ": " + ex.Message + "\n" + ex.ToString() + "\n");
+            return ex;
         }
 
+
+        public static Exception ProcessException(this Exception ex, ToolStripStatusLabel tssStatus = null)
+        {
+            string errMsgInitial = string.Empty;
+            int errorId = 0;
+            if (!ex.GetType().IsAssignableFrom(typeof(ApplicationException)))
+            {
+                errorId = clsCommonFunctions.LogError(ex);
+                errMsgInitial = !ex.GetType().IsAssignableFrom(typeof(SqlException))
+                                ? Resources.strSystemErrorMessage
+                                : errMsgInitial = Resources.strFailedMessage;
+            }
+            else { errMsgInitial = Resources.strFailedMessage; }
+            MessageBox.Show(errMsgInitial + ex.Message.ToString() + (errorId > 0 ? " [ErrorId: " + errorId.ToString() + "]" : ""), Resources.strFailedCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (tssStatus != null) { tssStatus.Text = Resources.strReadyStatus; }
+            return ex;
+        }
+        #endregion
     }
 }

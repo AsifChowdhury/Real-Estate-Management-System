@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmUnitRegistration));
             this.cmbProjectName = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnAcknowlegementReceipt = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.lvClientData = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -77,8 +78,7 @@
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.btnAcknowlegementReceipt = new System.Windows.Forms.Button();
+            this.ttRegistrationProcess = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -108,8 +108,6 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btnAcknowlegementReceipt);
-            this.groupBox2.Controls.Add(this.checkBox2);
-            this.groupBox2.Controls.Add(this.checkBox1);
             this.groupBox2.Controls.Add(this.btnPrint);
             this.groupBox2.Controls.Add(this.lvClientData);
             this.groupBox2.Location = new System.Drawing.Point(26, 58);
@@ -119,15 +117,20 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "List of Client(s)";
             // 
-            // checkBox1
+            // btnAcknowlegementReceipt
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(10, 270);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(104, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Selected Only";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.btnAcknowlegementReceipt.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAcknowlegementReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAcknowlegementReceipt.Image = global::RealEstateManagementSystem.Properties.Resources.payment;
+            this.btnAcknowlegementReceipt.Location = new System.Drawing.Point(785, 265);
+            this.btnAcknowlegementReceipt.Name = "btnAcknowlegementReceipt";
+            this.btnAcknowlegementReceipt.Size = new System.Drawing.Size(163, 28);
+            this.btnAcknowlegementReceipt.TabIndex = 4;
+            this.btnAcknowlegementReceipt.Text = " Ack. Receipt";
+            this.btnAcknowlegementReceipt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAcknowlegementReceipt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAcknowlegementReceipt.UseVisualStyleBackColor = true;
+            this.btnAcknowlegementReceipt.Click += new System.EventHandler(this.btnAcknowlegementReceipt_Click);
             // 
             // btnPrint
             // 
@@ -135,13 +138,14 @@
             this.btnPrint.FlatAppearance.BorderSize = 0;
             this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrint.Image = global::RealEstateManagementSystem.Properties.Resources.printer;
-            this.btnPrint.Location = new System.Drawing.Point(224, 265);
+            this.btnPrint.Location = new System.Drawing.Point(10, 265);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(28, 28);
             this.btnPrint.TabIndex = 1;
             this.btnPrint.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPrint.UseVisualStyleBackColor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            this.btnPrint.MouseHover += new System.EventHandler(this.btnPrint_MouseHover);
             // 
             // lvClientData
             // 
@@ -540,29 +544,9 @@
             this.tssStatus.Text = "Ready";
             this.tssStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // checkBox2
+            // ttRegistrationProcess
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(120, 270);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(98, 17);
-            this.checkBox2.TabIndex = 3;
-            this.checkBox2.Text = "With Payment";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // btnAcknowlegementReceipt
-            // 
-            this.btnAcknowlegementReceipt.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAcknowlegementReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAcknowlegementReceipt.Image = global::RealEstateManagementSystem.Properties.Resources.payment;
-            this.btnAcknowlegementReceipt.Location = new System.Drawing.Point(785, 265);
-            this.btnAcknowlegementReceipt.Name = "btnAcknowlegementReceipt";
-            this.btnAcknowlegementReceipt.Size = new System.Drawing.Size(163, 28);
-            this.btnAcknowlegementReceipt.TabIndex = 4;
-            this.btnAcknowlegementReceipt.Text = " Ack. Receipt";
-            this.btnAcknowlegementReceipt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAcknowlegementReceipt.UseVisualStyleBackColor = true;
-            this.btnAcknowlegementReceipt.Click += new System.EventHandler(this.btnAcknowlegementReceipt_Click);
+            this.ttRegistrationProcess.Popup += new System.Windows.Forms.PopupEventHandler(this.ttRegistrationProcess_Popup);
             // 
             // frmUnitRegistration
             // 
@@ -584,7 +568,6 @@
             this.Load += new System.EventHandler(this.frmUnitRegistration_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -642,9 +625,8 @@
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tssStatus;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Button btnAcknowlegementReceipt;
+        private System.Windows.Forms.ToolTip ttRegistrationProcess;
     }
 }

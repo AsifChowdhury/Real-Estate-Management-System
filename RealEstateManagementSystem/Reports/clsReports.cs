@@ -558,7 +558,7 @@ namespace RealEstateManagementSystem.Reports
         {
             ShowReport(new Clients.crptRegistrationList()
                 , bllUnitRegistrationInfo.GetUnitRegistrationList(projectId, clientIds)
-                , tssStatus, false, false, "Registration List", false);
+                , tssStatus, true, true, "Registration List", true);
         }
 
     }

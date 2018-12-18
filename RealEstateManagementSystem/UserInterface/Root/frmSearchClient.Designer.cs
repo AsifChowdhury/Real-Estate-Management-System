@@ -69,15 +69,18 @@
             this.panel1.Location = new System.Drawing.Point(157, 6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(406, 41);
-            this.panel1.TabIndex = 1;
+            this.panel1.TabIndex = 0;
             // 
             // cmbProjectName
             // 
+            this.cmbProjectName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbProjectName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbProjectName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProjectName.FormattingEnabled = true;
             this.cmbProjectName.Location = new System.Drawing.Point(106, 7);
             this.cmbProjectName.Name = "cmbProjectName";
             this.cmbProjectName.Size = new System.Drawing.Size(291, 23);
-            this.cmbProjectName.TabIndex = 1;
+            this.cmbProjectName.TabIndex = 0;
             this.cmbProjectName.SelectionChangeCommitted += new System.EventHandler(this.cmbProjectName_SelectionChangeCommitted);
             // 
             // tabControl1
@@ -88,7 +91,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(730, 117);
-            this.tabControl1.TabIndex = 2;
+            this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -121,7 +124,7 @@
             this.txtClientName.Location = new System.Drawing.Point(353, 53);
             this.txtClientName.Name = "txtClientName";
             this.txtClientName.Size = new System.Drawing.Size(204, 23);
-            this.txtClientName.TabIndex = 4;
+            this.txtClientName.TabIndex = 2;
             this.txtClientName.TextChanged += new System.EventHandler(this.txtClientName_TextChanged);
             // 
             // txtUnitNumber
@@ -129,7 +132,7 @@
             this.txtUnitNumber.Location = new System.Drawing.Point(221, 53);
             this.txtUnitNumber.Name = "txtUnitNumber";
             this.txtUnitNumber.Size = new System.Drawing.Size(56, 23);
-            this.txtUnitNumber.TabIndex = 4;
+            this.txtUnitNumber.TabIndex = 1;
             this.txtUnitNumber.TextChanged += new System.EventHandler(this.txtUnitNumber_TextChanged);
             // 
             // label4
@@ -181,7 +184,7 @@
             this.lvSearchResult.Location = new System.Drawing.Point(4, 117);
             this.lvSearchResult.Name = "lvSearchResult";
             this.lvSearchResult.Size = new System.Drawing.Size(722, 347);
-            this.lvSearchResult.TabIndex = 2;
+            this.lvSearchResult.TabIndex = 3;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.View = System.Windows.Forms.View.Details;
             this.lvSearchResult.SelectedIndexChanged += new System.EventHandler(this.lvSearchResult_SelectedIndexChanged);

@@ -36,6 +36,7 @@ namespace RealEstateManagementSystem.UserInterface.Root
         private frmSummarizedSalesReport summarizedSalesReport = null;
         private frmRecoveryReports recoveryReport = null;
         private frmUnitRegistration unitRegistration = null;
+        private frmAmountTransfer amountTransfer = null;
         public MainScreen()
         {
             InitializeComponent();
@@ -239,13 +240,20 @@ namespace RealEstateManagementSystem.UserInterface.Root
         private void tsmiRecoveryReports_Click(object sender, EventArgs e)
         {
             try { recoveryReport = ShowOrActiveForm(recoveryReport, typeof(frmRecoveryReports)) as frmRecoveryReports; }
-            catch (Exception ex) { ex.ProcessException(); throw; }
+            catch (Exception ex) { ex.ProcessException(); }
         }
 
         private void tsmiRegistrationProcess_Click(object sender, EventArgs e)
         {
             try { unitRegistration = ShowOrActiveForm(unitRegistration, typeof(frmUnitRegistration)) as frmUnitRegistration; }
-            catch (Exception ex) { ex.ProcessException(); throw; }
+            catch (Exception ex) { ex.ProcessException(); }
+        }
+
+        private void tsmiAmountTransfer_Click(object sender, EventArgs e)
+        {
+            try
+            { amountTransfer = ShowOrActiveForm(amountTransfer, typeof(frmAmountTransfer)) as frmAmountTransfer; }
+            catch (Exception ex) { ex.ProcessException(); }
         }
     }
 }

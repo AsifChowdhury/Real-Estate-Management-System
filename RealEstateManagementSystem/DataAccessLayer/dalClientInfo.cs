@@ -1217,6 +1217,7 @@ namespace RealEstateManagementSystem.DataAccessLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "sp_GetUnitRegistrationList";
                 cmd.Parameters.AddWithValue("@projectId", projectId);
+                cmd.Parameters.AddWithValue("@clientIds", clientIds);
                 da.SelectCommand = cmd;
                 da.Fill(dt);
                 return dt;

@@ -933,6 +933,12 @@
     <Compile Include="UserInterface\Accounts\frmChequeManagement.Designer.cs">
       <DependentUpon>frmChequeManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Clients\frmCancelUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Clients\frmCancelUnit.Designer.cs">
+      <DependentUpon>frmCancelUnit.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Clients\frmClientInformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1006,6 +1012,12 @@
     </Compile>
     <Compile Include="UserInterface\Recovery\frmAddInstallment_OA.Designer.cs">
       <DependentUpon>frmAddInstallment_OA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmAmountTransfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Recovery\frmAmountTransfer.Designer.cs">
+      <DependentUpon>frmAmountTransfer.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Recovery\frmDefinition_BankBranch.cs">
       <SubType>Form</SubType>
@@ -1407,6 +1419,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Accounts\frmChequeManagement.resx">
       <DependentUpon>frmChequeManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Clients\frmCancelUnit.resx">
+      <DependentUpon>frmCancelUnit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Clients\frmClientInformation.resx">
       <DependentUpon>frmClientInformation.cs</DependentUpon>
@@ -2096,6 +2111,9 @@
     <EmbeddedResource Include="UserInterface\Recovery\frmAddInstallment_OA.resx">
       <DependentUpon>frmAddInstallment_OA.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\Recovery\frmAmountTransfer.resx">
+      <DependentUpon>frmAmountTransfer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\Recovery\frmDefinition_BankBranch.resx">
       <DependentUpon>frmDefinition_BankBranch.cs</DependentUpon>
     </EmbeddedResource>
@@ -2589,6 +2607,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\registrationprocess-icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moneytransfer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moneytransfer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\amounttransfer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

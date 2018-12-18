@@ -363,6 +363,7 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 Payment trInfo = new Payment { TransactionId = transactionId };
                 payment.GetTransactionDetails(trInfo);
                 cmbInstallType.Text = trInfo.InstallType.InstallTypeName;
+                cmbInstallType_SelectionChangeCommitted(null, null);
                 cmbInstallment.Text = trInfo.Installment.InstallmentName;
                 cmbPaymentMode.Text = trInfo.PaymentMode.PaymentModeName;
                 pnlBankInfo.Enabled = payment.IsBankInfoNeeded(cmbPaymentMode.SelectedValue.ToString().ConvertToInt32());
@@ -374,10 +375,10 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 dtpParticularDate.Value = trInfo.ParticularDate;
                 cmbAccountNumber.Text = trInfo.BankAccountNumber;
                 cmbUpdateReason.Text = trInfo.UpdateReason;
-                cmbBankName.Text = trInfo.Bank.BankName;
-                cmbBranchName.Text = trInfo.Branch.BranchName;
-                cmbDistrictName.Text = trInfo.District.DistrictName;
-                cmbCountryName.Text = trInfo.Country.CountryName;
+                cmbBankName.Text = trInfo.BankDetails.Bank.BankName;
+                cmbBranchName.Text = trInfo.BankDetails.Branch.BranchName;
+                cmbDistrictName.Text = trInfo.BankDetails.District.DistrictName;
+                cmbCountryName.Text = trInfo.BankDetails.Country.CountryName;
                 isRefundTransaction = trInfo.IsRefundTransaction;
                 btnSave.Text = "Update";
 
@@ -450,10 +451,10 @@ namespace RealEstateManagementSystem.UserInterface.Recovery
                 p.Remarks = txtRemarks.Text;
                 p.Installment = new InstallmentInfo { InstallmentId = cmbInstallment.SelectedValue.ToString().ConvertToInt32() };
                 p.PaymentMode = new PaymentModeInfo { PaymentModeId = cmbPaymentMode.SelectedValue.ToString().ConvertToInt32() };
-                p.Bank = new BankInfo { BankId = cmbBankName.SelectedValue.ToString().ConvertToInt32() };
-                p.Branch = new BranchInfo { BranchId = cmbBranchName.SelectedValue.ToString().ConvertToInt32() };
-                p.District = new DistrictInfo { DistrictId = cmbDistrictName.SelectedValue.ToString().ConvertToInt32() };
-                p.Country = new CountryInfo { CountryId = cmbCountryName.SelectedValue.ToString().ConvertToInt32() };
+                p.BankDetails.Bank = new BankInfo { BankId = cmbBankName.SelectedValue.ToString().ConvertToInt32() };
+                p.BankDetails.Branch = new BranchInfo { BranchId = cmbBranchName.SelectedValue.ToString().ConvertToInt32() };
+                p.BankDetails.District = new DistrictInfo { DistrictId = cmbDistrictName.SelectedValue.ToString().ConvertToInt32() };
+                p.BankDetails.Country = new CountryInfo { CountryId = cmbCountryName.SelectedValue.ToString().ConvertToInt32() };
                 p.BankAccountNumber = cmbAccountNumber.Text;
                 p.UpdateReason = transactionId > 0 ? cmbUpdateReason.Text : string.Empty;
                 p.ReturnText = chkReturnInvoice.Checked ? cmbReturnInvoice.Text : "N/A";
